@@ -21,6 +21,10 @@ interface MenuItem {
 const TopHeader = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
+
+  console.log(setIsAdmin,setisLoggedIn);
+  
+
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className="container mx-auto flex justify-between items-center px-4">
