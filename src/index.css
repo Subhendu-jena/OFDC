@@ -1,0 +1,38 @@
+@import "tailwindcss";
+body {
+  min-height: 100vh;
+}
+/* Position slick-prev (left arrow) */
+.slick-prev {
+  left: 10px;
+  z-index: 10;
+  color: black;
+  background-color: rgb(213, 31, 31);
+}
+
+/* Position slick-next (right arrow) */
+.slick-next {
+  right: 10px;
+  z-index: 50;
+  background-color: black;
+  color: black;
+}
+
+.slick-prev{
+  z-index: 20;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(200%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  animation: marquee 4s linear infinite;
+}
+
