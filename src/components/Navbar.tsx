@@ -11,6 +11,8 @@ import {
   Users,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { paths } from '../routes/Path';
+import { Link } from 'react-router-dom';
 
 interface MenuItem {
   label: string;
@@ -77,47 +79,47 @@ const TopHeader = () => {
             !isLoggedIn ? (
               <>
                 <span>/</span>
-                <a
-                  href="/dashboard"
+                <Link
+                  to={paths.dashboard}
                   className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
                 >
                   <User size={16} />
                   <span>Dashboard</span>
-                </a>
+                </Link>
               </>
             ) : (
               <>
                 <span>/</span>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
                 >
                   <User size={16} />
                   <span>User Login</span>
-                </a>
+                </Link>
               </>
             )
           ) : !isLoggedIn ? (
             <>
               <span>/</span>
-              <a
-                href="/dashboard"
+              <Link
+                to={paths.dashboard}
                 className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
               >
                 <Users size={16} />
                 <span>Dashboard</span>
-              </a>
+              </Link>
             </>
           ) : (
             <>
               <span>/</span>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
               >
                 <Users size={16} />
                 <span>Dept. Login</span>
-              </a>
+              </Link>
             </>
           )}
         </div>

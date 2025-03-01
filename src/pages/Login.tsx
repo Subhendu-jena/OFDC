@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Film, Clapperboard, User, Lock, ArrowRight } from 'lucide-react';
 import { paths } from '../routes/Path';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // TypeScript interfaces
 interface FormData {
@@ -129,9 +129,9 @@ const Login: React.FC = () => {
               {/* Register Link */}
               <div className="text-center mt-4">
                 <span className="text-sm text-gray-600">Don't have an account? </span>
-                <a href={paths.register} className="text-sm font-medium text-red-500 hover:text-red-400">
+                <Link to={paths.register} className="text-sm font-medium text-red-500 hover:text-red-400">
                   Sign up now
-                </a>
+                </Link>
               </div>
             </div>
           </form>
