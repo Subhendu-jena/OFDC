@@ -42,13 +42,13 @@ const TopHeader = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <a
-            href="/home"
+          <Link
+            to={paths.home}
             className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
           >
             <Home size={16} />
             <span>Home</span>
-          </a>
+          </Link>
           <span>/</span>
           <div className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer">
             <MessageCircle size={16} />
@@ -60,21 +60,21 @@ const TopHeader = () => {
             <span>Feedback</span>
           </div>
           <span>/</span>
-          <a
-            href="/contact"
+          <Link
+            to="/contact"
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
           >
             <Mail size={16} />
             <span>Contact Us</span>
-          </a>
+          </Link>
           <span>/</span>
-          <a
-            href="/register"
+          <Link
+            to="/register"
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
           >
             <UserPlus size={16} />
             <span>Register</span>
-          </a>
+          </Link>
           {!isAdmin ? (
             !isLoggedIn ? (
               <>
