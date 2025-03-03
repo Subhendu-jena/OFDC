@@ -26,13 +26,14 @@ const HeroSection = () => {
     autoplay: true,
     autoplaySpeed: 5000,
     fade: true,
+    arrows: false,
   };
  const navigate = useNavigate()
   return (
     <div>
       <Slider {...settings}>
         {slides.map((slide, index) => (
-          <div key={index} className="relative h-[50vh] md:h-[77vh]">
+          <div key={index} className="relative h-[100vh] md:h-[77vh]">
             <img
               src={slide.image}
               alt={`Slide ${index + 1}`}
@@ -45,10 +46,10 @@ const HeroSection = () => {
               data-slide={index}
               className="absolute inset-0 flex flex-col items-center justify-center  text-white z-50 animate-fadeInUp"
             >
-              <h3 className="text-6xl font-bold mb-6 text-center">
+              <h3 className="text-3xl md:text-6xl font-bold mb-6 text-center">
                 FILM MAKING IS A MIRACLE
               </h3>
-              <p className="text-xl mb-8 text-center">
+              <p className="text-lg md:text-xl mb-8 text-center">
                 Collaborate with the scenic beauty of Odisha.
               </p>
               <div className="flex gap-4 justify-center flex-wrap">

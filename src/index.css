@@ -3,23 +3,29 @@ body {
   min-height: 100vh;
 }
 /* Position slick-prev (left arrow) */
-.slick-prev {
-  left: 10px;
-  z-index: 10;
-  color: black;
-  background-color: rgb(213, 31, 31);
+.slick-arrow.slick-prev {
+  left: 30px;
+  z-index: 10 !important;
 }
 
 /* Position slick-next (right arrow) */
-.slick-next {
-  right: 10px;
-  z-index: 50;
-  background-color: black;
-  color: black;
+.slick-arrow.slick-next {
+  right: 30px;
+  z-index: 50 !important;
 }
 
-.slick-prev{
-  z-index: 20;
+/* Adjust size of slick arrows */
+.slick-prev::before,
+.slick-next::before {
+  font-size: 30px !important; 
+  opacity: 0.8 !important;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.slick-prev:hover::before,
+.slick-next:hover::before {
+  opacity: 1;
 }
 
 @keyframes marquee {

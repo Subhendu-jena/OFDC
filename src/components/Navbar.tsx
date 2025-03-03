@@ -402,7 +402,7 @@ const MainHeader = () => {
 
 const Navbar = () => {
   return (
-    <header className="w-full relative">
+    <header className="w-full z-50 relative">
       <TopHeader />
       <MainHeader />
     </header>
