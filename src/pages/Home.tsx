@@ -56,8 +56,8 @@ function Home() {
           <EqipmentDirectory />
         </div>
       </section>
-      <section className=" flex justify-center w-full bg-[#d6d7d9] items-start">
-        <div className="max-w-3xl">
+      <section className=" flex justify-center pb-[100px] w-full bg-[#eaebec] items-start">
+        <div className="max-w-4xl">
           <Testimonials />
         </div>
       </section>

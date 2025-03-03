@@ -23,7 +23,7 @@ const QuickLinks: FooterLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="w-full relative bg-gray-900 mt-[100px] text-gray-200">
+    <footer className="w-full relative bg-gray-900 text-gray-200">
       {/* Contact Info Bar */}
       <div className="w-full z-10 absolute -top-14 overflow-hidden px-4">
         <div className="w-full rounded-2xl mx-auto px-4 py-8 grid grid-cols-1 text-white md:grid-cols-4 overflow-hidden  gap-8 bg-gray-800"

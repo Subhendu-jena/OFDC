@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
 function Testimonials() {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -90,28 +89,14 @@ function Testimonials() {
                       alt="logo"
                     />
                     <div
-                      className="absolute left-1/4 bottom-0 transform -translate-x-1/2 translate-y-full 
-                w-0 h-0 border-l-8 border-r-8 border-t-8 border-t-white border-l-transparent border-r-transparent"
+                      className="absolute left-1/5 bottom-0 transform -translate-x-1/2 translate-y-full 
+                w-0 h-0 border-l-16 border-r-16 border-t-16 border-t-white border-l-transparent border-r-transparent"
                     ></div>
                   </div>
                 </div>
               </div>
             ))}
           </Slider>
-        </div>
-      </div>
-
-      <div className="w-full flex justify-center items-center px-2 py-6">
-        <div className="text-center transition duration-300 group mt-8">
-          <Link
-            to=""
-            className="inline-flex items-center justify-center px-6 py-3 text-white font-bold rounded-full bg-gradient-to-r from-red-900/90 to-red-500/90 hover:bg-gradient-to-l transition-all duration-500"
-          >
-            <span>More</span>
-            <span className="ml-2 group-hover:ml-2 transform transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
-          </Link>
         </div>
       </div>
     </div>
