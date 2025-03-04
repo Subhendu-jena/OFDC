@@ -228,7 +228,7 @@ const MainHeader = () => {
       >
         <div className="container mx-auto flex gap-4 justify-between items-center px-4">
           <div className="flex items-center max-w-[300px]">
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img
                 src="https://ofdc.octamy.com/wp-content/uploads/2020/09/odisha-logo-dark-1-svg-3.png"
                 alt="OFDC Logo"
@@ -239,7 +239,7 @@ const MainHeader = () => {
                   Odisha Film Development Corporation
                 </h3>
               </div>
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu toggle button */}
@@ -254,8 +254,8 @@ const MainHeader = () => {
           <nav className="hidden md:flex items-center space-x-4">
             {menuItems.map((item, index) => (
               <div key={index} className="relative group">
-                <a
-                  href={item.url}
+                <Link
+                  to={item.url}
                   className="flex items-center hover:text-orange-400 transition duration-500"
                 >
                   {item.label}
@@ -264,7 +264,7 @@ const MainHeader = () => {
                       <ChevronDown size={16} />
                     </span>
                   )}
-                </a>
+                </Link>
                 {item.children && (
                   <div className="absolute left-0 hidden group-hover:block w-64 bg-transparent transition-all duration-500 mt-0 py-2 z-10">
                     {/* Dropdown menu */}
@@ -273,13 +273,13 @@ const MainHeader = () => {
                       <div className="left-1/5 transform -translate-x-1/2 bottom-full w-0 h-0 border-l-8 border-r-8 border-b-8 border-b-white border-l-transparent border-r-transparent transition-all duration-300 ml-8 -mt-[15px]"></div>
 
                       {item.children.map((child, childIndex) => (
-                        <a
+                        <Link
                           key={childIndex}
-                          href={child.url}
+                          to={child.url}
                           className="block px-4 py-2 text-sm text-black hover:text-orange-500 transition-all duration-300"
                         >
                           {child.label}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -302,13 +302,13 @@ const MainHeader = () => {
           }`}
         >
           <div className="flex justify-between items-center p-4 border-b border-gray-700">
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img
                 src="https://ofdc.octamy.com/wp-content/uploads/2020/09/odisha-logo-dark-1-svg-3.png"
                 alt="OFDC Logo"
                 className="h-12 w-auto"
               />
-            </a>
+            </Link>
             <button
               className="text-white focus:outline-none"
               onClick={() => setMobileMenuOpen(false)}
@@ -320,34 +320,34 @@ const MainHeader = () => {
           {/* Mobile header links */}
           <div className="p-4 border-b border-gray-700">
             <div className="grid grid-cols-2 gap-4">
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="flex items-center space-x-1 text-white hover:text-orange-500"
               >
                 <Home size={16} />
                 <span className="text-sm">Home</span>
-              </a>
-              <a
-                href="/login"
+              </Link>
+              <Link
+                to="/login"
                 className="flex items-center space-x-1 text-white hover:text-orange-500"
               >
                 <User size={16} />
                 <span className="text-sm">Login</span>
-              </a>
-              <a
-                href="/register"
+              </Link>
+              <Link
+                to="/register"
                 className="flex items-center space-x-1 text-white hover:text-orange-500"
               >
                 <UserPlus size={16} />
                 <span className="text-sm">Register</span>
-              </a>
-              <a
-                href="/contact"
+              </Link>
+              <Link
+                to="/contact"
                 className="flex items-center space-x-1 text-white hover:text-orange-500"
               >
                 <Mail size={16} />
                 <span className="text-sm">Contact</span>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -359,9 +359,9 @@ const MainHeader = () => {
                   className="flex justify-between items-center px-4 py-3 text-white"
                   onClick={() => item.children && toggleSubMenu(index)}
                 >
-                  <a href={item.url} className="hover:text-orange-500">
+                  <Link to={item.url} className="hover:text-orange-500">
                     {item.label}
-                  </a>
+                  </Link>
                   {item.children && (
                     <ChevronDown
                       size={16}
@@ -379,13 +379,13 @@ const MainHeader = () => {
                     }`}
                   >
                     {item.children.map((child, childIndex) => (
-                      <a
+                      <Link
                         key={childIndex}
-                        href={child.url}
+                        to={child.url}
                         className="block px-8 py-2 text-sm text-gray-300 hover:text-orange-500"
                       >
                         {child.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
