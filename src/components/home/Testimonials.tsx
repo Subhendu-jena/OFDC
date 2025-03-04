@@ -1,3 +1,4 @@
+import { Quote } from 'lucide-react';
 import Slider from 'react-slick';
 
 function Testimonials() {
@@ -83,14 +84,10 @@ function Testimonials() {
                     <div className="text-xl font-semibold">
                       {testimonial.name}
                     </div>
-                    <img
-                      className="absolute bottom-0 right-0"
-                      src=""
-                      alt="logo"
-                    />
+                    <Quote className=' text-red-600 absolute bottom-4 right-4' size={80} />
                     <div
                       className="absolute left-1/5 bottom-0 transform -translate-x-1/2 translate-y-full 
-                w-0 h-0 border-l-16 border-r-16 border-t-16 border-t-white border-l-transparent border-r-transparent"
+                w-0 h-0 border-l-32 border-r-32 border-t-32 border-t-white border-l-transparent border-r-transparent"
                     ></div>
                   </div>
                 </div>

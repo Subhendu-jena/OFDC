@@ -7,6 +7,7 @@ import {
   Instagram,
   Github,
 } from 'lucide-react';
+import MapComponent from './Map';
 
 interface FooterLink {
   text: string;
@@ -26,8 +27,7 @@ const Footer = () => {
     <footer className="w-full relative bg-gray-900 text-gray-200">
       {/* Contact Info Bar */}
       <div className="w-full z-10 absolute -top-14 overflow-hidden px-4">
-        <div className="w-full rounded-2xl mx-auto px-4 py-8 grid grid-cols-1 text-white md:grid-cols-4 overflow-hidden  gap-8 bg-gray-800"
-        >
+        <div className="w-full rounded-2xl mx-auto px-4 py-8 grid grid-cols-1 text-white md:grid-cols-4 overflow-hidden  gap-8 bg-gray-800">
           <div className="flex items-center  space-x-4 group transition-all duration-300">
             <div className="p-2 border-4 border-orange-400 rounded-full bg-gray-800">
               <MapPin className="w-6 h-6" />
@@ -71,10 +71,10 @@ const Footer = () => {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 pt-22 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="w-full mx-auto px-4 pt-22 pb-12">
+        <div className="flex flex-wrap  gap-12 px-12 items-center justify-center">
           {/* Company Info */}
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-sm">
             <div className="flex items-center space-x-4">
               <img
                 src="https://ofdc.octamy.com/wp-content/uploads/2020/09/odisha-logo-dark-1-svg-3.png"
@@ -110,7 +110,11 @@ const Footer = () => {
           </div>
 
           {/* Categories */}
-          <div>map section</div>
+          <div className=' rounded-2xl overflow-hidden'>
+          <MapComponent height="300px" width="500px" />
+          </div>
+           
+          
         </div>
       </div>
 

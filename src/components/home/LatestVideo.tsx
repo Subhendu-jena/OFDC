@@ -124,14 +124,6 @@ function LatestVideo() {
                       alt={destination.title}
                       className=" w-full h-[300px] object-cover transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white  justify-center items-center flex flex-col transition duration-500">
-                      <h2 className="text-xl font-semibold group-hover:block hidden ">
-                        Places In
-                      </h2>
-                      <h3 className="text-2xl font-bold group-hover:hidden">
-                        {destination.title}
-                      </h3>
-                    </div>
                     <Link
                       to="/"
                       className="absolute inset-0 z-10"

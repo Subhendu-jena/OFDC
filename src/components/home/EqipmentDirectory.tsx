@@ -36,33 +36,22 @@ function EqipmentDirectory() {
   const destinations = [
     {
       name: 'Konark',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Konark_.png',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/paar_4k.jpg',
       role: 'Actor',
     },
     {
       name: 'Bhitarkanika',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2024/12/Bhitarkanika_.png',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/m60.jpg',
       role: 'Actor',
     },
     {
       name: 'Udayagiri',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Udayagiri.png',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/m8.jpg',
       role: 'Actor',
     },
     {
       name: 'Puri Beach',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Puri_.png',
-      role: 'Actor',
-    },
-    {
-      name: 'Putsil',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Pitsil_.png',
-      role: 'Actor',
-    },
-    {
-      name: 'Chilika',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Chilika-1.png',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/m90.jpg',
       role: 'Actor',
     },
   ];
@@ -76,16 +65,15 @@ function EqipmentDirectory() {
         <div className="w-full px-4">
           <Slider {...settings}>
             {destinations.map((destination, index) => (
-              <div key={index} className="px-2">
-                <div className="relative group overflow-hidden  h-[300px]">
+              <div key={index} className="px-2 ">
+                <div className="relative group overflow-hidden h-[300px]">
                   {/* Background Image */}
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 "
                     style={{ backgroundImage: `url(${destination.image})` }}
                   ></div>
 
-                  {/* Overlay with content */}
-                  <div className="absolute inset-0 bg-black/50 "></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
 
                   {/* Additional Text */}
                   <div className="absolute inset-x-0 bottom-0 z-10 text-xl py-4 text-center bg-white  group-hover:block hidden duration-500 ">

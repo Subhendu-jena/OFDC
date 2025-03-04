@@ -23,10 +23,8 @@ interface MenuItem {
 const TopHeader = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
-
   console.log(setIsAdmin,setisLoggedIn);
   
-
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className="container mx-auto flex justify-between items-center px-4">
@@ -134,7 +132,7 @@ const MainHeader = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
+      if (window.scrollY > 2) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -160,9 +158,9 @@ const MainHeader = () => {
   const menuItems: MenuItem[] = [
     {
       label: 'About Us',
-      url: '#',
+      url: '/odisha-at-Glance',
       children: [
-        { label: 'Odisha at a Glance', url: '#' },
+        { label: 'Odisha at a Glance', url: '/odisha-at-Glance' },
         { label: 'Climate', url: '#' },
         { label: 'Geographical Features', url: '#' },
         { label: 'Bio-Diversity', url: '#' },

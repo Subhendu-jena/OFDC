@@ -16,12 +16,25 @@ interface paths {
   login:string;
   register:string;
   bookingForm:string;
+  contactUs:string;
+  odishaAtGlance:string;
+  climate:string;
+  geographicalFeatures:string;
+  bioDiversity:string;
+  cultureHeritage:string;
+  religionCulture:string;
 }
 
 export const paths: paths = {
+  odishaAtGlance:"/odisha-at-Glance",
+  climate:"/climate",
+  geographicalFeatures:"/geo-graphical-feature",
+  bioDiversity:"/bio-diversity",
+  cultureHeritage:"/culture-heritage",
+  religionCulture:"/religion-culture",
   bookingForm:"/booking-form",
-  login:"/",
-  home: '/home',
+  login:"/login",
+  home: '/',
   register:"/register",
   forgotPassword: '/forgot-password',
   overview: '/overview',
@@ -35,5 +48,6 @@ export const paths: paths = {
   co2Avoided:"/co2-avoided",
   mileSaved:"/mile-saved",
   totalUser:"/total-user",
-  totalCreds:"/total-creds"
+  totalCreds:"/total-creds",
+  contactUs:"/contact"
 };

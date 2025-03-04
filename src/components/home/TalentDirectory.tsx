@@ -35,34 +35,28 @@ function TalentDirectory() {
 
   const destinations = [
     {
-      name: 'Konark',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Konark_.png',
+      name: 'Sabyasachi Mohapatra',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Sabyasachi-Mohapatra-500x600.png',
       role:"Actor"
     },
     {
-      name: 'Bhitarkanika',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2024/12/Bhitarkanika_.png',
-         role:"Actor"
+      name: 'Suryamayee Mohapatra',
+      image:'https://ofdc.octamy.com/wp-content/uploads/2020/10/Suryamayee-Mohapatra-500x600.png',
+      role:"Actor"
     },
     {
-      name: 'Udayagiri',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Udayagiri.png',
+      name: 'Anubhav Mohanty',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Anubhav-Mohanty-500x600.png',
        role:"Actor"
     },
     {
-      name: 'Puri Beach',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Puri_.png',
+      name: 'Susant Mishra',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Susant-Mishra-500x600.png',
        role:"Actor"
     },
     {
-      name: 'Putsil',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Pitsil_.png',
-       role:"Actor"
-    },
-    {
-      name: 'Chilika',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Chilika-1.png',
+      name: 'Mihir Das',
+      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Mihir-Das-500x600.png',
        role:"Actor"
     },
   ];
@@ -85,17 +79,12 @@ function TalentDirectory() {
                     style={{ backgroundImage: `url(${destination.image})` }}
                   ></div>
 
-                  {/* Overlay with content */}
-                  <div className="absolute inset-0 bg-black/50 ">
-                    
-                  </div>
-
                   {/* Additional Text */}
-                  <div className="absolute inset-x-0 left-2 right-2 bottom-3 z-10 text-xl py-4 text-center bg-white rounded-xl">
+                  <div className="absolute inset-x-0 left-2 right-2 bottom-3 z-10 text-xl py-4 text-center bg-white rounded-sm">
                    <p className=' text-black text-xl font-semibold'>
                     {destination.name}
                    </p>
-                   <p className=' text-gray-500 text-sm  '>
+                   <p className=' text-gray-500 text-sm pb-3 '>
                     {destination.role}
                    </p>
                   </div>
