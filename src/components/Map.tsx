@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 const MapComponent = ({ width = '100%', height = '400px' }) => {
@@ -7,18 +8,20 @@ const MapComponent = ({ width = '100%', height = '400px' }) => {
   };
 
   const center = {
-    lat: 20.9517, // Latitude for Odisha
-    lng: 85.0985, // Longitude for Odisha
+    lat: 20.9517,
+    lng: 85.0985,
   };
 
+  const mapElement = useMemo(() => {
+    return (
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={9} />
+    );
+  }, []);
+
   return (
-      <LoadScript googleMapsApiKey="AIzaSyDIAvDghqd2fo0U3vI4K4mE6UBTLPcEF80">
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={9}
-        />
-      </LoadScript>
+    <LoadScript googleMapsApiKey="AIzaSyDIAvDghqd2fo0U3vI4K4mE6UBTLPcEF80">
+      {mapElement}
+    </LoadScript>
   );
 };
 
