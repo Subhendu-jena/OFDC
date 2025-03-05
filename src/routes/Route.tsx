@@ -14,6 +14,7 @@ import GeoGraphicalFetures from '../pages/GeoGraphicalFetures';
 import BioDiversity from '../pages/BioDiversity';
 import CulturalHeritage from '../pages/CulturalHeritage';
 import ReligionCulture from '../pages/ReligionCulture';
+import FlimEcoSystem from '../pages/FlimEcoSystem';
 
 const RoutePage: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const RoutePage: React.FC = () => {
           <Route path={paths.bookingForm} element={<BookingForm />} />
           <Route path={paths.dashboard} element={<Dashboard />} />
           <Route path={paths.contactUs} element={<ContactUs />} />
+          <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
           <Route element={<AboutLayout />}>
             <Route path={paths.odishaAtGlance} element={<OdishaAtGlance />} />
             <Route path={paths.climate} element={<Climate />} />

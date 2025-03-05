@@ -23,11 +23,13 @@ interface paths {
   bioDiversity:string;
   cultureHeritage:string;
   religionCulture:string;
+  flimEcoSystem:string;
 }
 
 export const paths: paths = {
   odishaAtGlance:"/odisha-at-Glance",
   climate:"/climate",
+  flimEcoSystem:"/flim-eco-system",
   geographicalFeatures:"/geo-graphical-feature",
   bioDiversity:"/bio-diversity",
   cultureHeritage:"/culture-heritage",

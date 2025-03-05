@@ -170,9 +170,9 @@ const MainHeader = () => {
     },
     {
       label: 'Film Eco System',
-      url: '#',
+      url: paths.flimEcoSystem ,
       children: [
-        { label: 'Film Policy', url: '#' },
+        { label: 'Film Policy', url: paths.flimEcoSystem },
         { label: 'Policy Guidelines', url: '#' },
         { label: 'Odisha and Silver Screen', url: '#' },
       ],
