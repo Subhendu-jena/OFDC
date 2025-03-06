@@ -40,7 +40,11 @@ const Login: React.FC = () => {
         <div className="w-full max-w-md">
           {/* Logo and Title */}
           <div className="flex items-center space-x-2 mb-8">
-            <Film className="h-8 w-8 text-red-500" />
+          <img
+                src="/Logo\OFDC Logo Black.png"
+                alt="OFDC Logo"
+                className="h-12 md:h-20 w-auto"
+              />
             <h1 className="text-2xl font-bold text-gray-800">OFDC</h1>
           </div>
           

@@ -230,9 +230,9 @@ const MainHeader = () => {
           <div className="flex items-center max-w-[300px]">
             <Link to="/" className="flex items-center">
               <img
-                src="https://ofdc.octamy.com/wp-content/uploads/2020/09/odisha-logo-dark-1-svg-3.png"
+                src="/Logo\OFDC Logo White.png"
                 alt="OFDC Logo"
-                className="h-12 md:h-20 w-auto"
+                className="h-12  w-auto"
               />
               <div className="ml-3 hidden sm:block">
                 <h3 className="text-sm md:text-lg font-semibold">
