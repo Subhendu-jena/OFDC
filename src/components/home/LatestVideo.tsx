@@ -73,7 +73,10 @@ function LatestVideo() {
   ];
   return (
     <div className=" w-full">
-      <div className=" w-full flex justify-between text-2xl font-bold text-red-500 items-center px-2 py-6">
+      <div className=" w-full flex justify-between text-2xl font-bold text-red-500 items-center px-2 py-6" 
+      style={{background:"url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)",
+        objectFit:"contain"
+      }}>
         <p>LOCATION VIDEOS</p>
         <p>LATEST SHOOTING</p>
       </div>

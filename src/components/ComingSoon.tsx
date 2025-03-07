@@ -2,7 +2,7 @@ import React from 'react';
 
 const ComingSoon:React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 animate-gradient">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 via-blue-100 to-gray-300 animate-gradient">
       <div className="text-center bg-white bg-opacity-90 p-12 rounded-lg shadow-2xl">
         <h1 className="text-6xl font-bold text-gray-800 mb-4">
           Coming Soon

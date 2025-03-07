@@ -57,7 +57,14 @@ function EqipmentDirectory() {
   ];
 
   return (
-    <div className=" w-full">
+    <div
+      className=" w-full"
+      style={{
+        background:
+          'url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)',
+        objectFit: 'contain',
+      }}
+    >
       <div className=" w-full flex flex-col  items-center px-2 py-6">
         <p className=" text-gray-800 text-4xl font-bold">EQUIPMENT DIRECTORY</p>
       </div>

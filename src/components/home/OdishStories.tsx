@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 function OdishStories() {
   const stories = [
     {
@@ -33,7 +35,11 @@ function OdishStories() {
       <div className="">
         <div className="w-full rounded-lg overflow-hidden">
           {/* Heading Section */}
-          <div className="w-full py-8">
+          <motion.div className="w-full py-8"
+          initial={{ y: "10vh", opacity: 0}}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: "tween", duration: 1 }}
+          >
             <div className="container mx-auto">
               <div className="w-full">
                 <div
@@ -50,9 +56,14 @@ function OdishStories() {
                 </div>
               </div>
             </div>
-          </div>
-          {/* Stories Slider Section */}
-          <div className="w-full py-8 transform transition-all duration-1000 translate-x-0 opacity-100">
+          </motion.div>
+          {/* Stories  Section */}
+          <motion.div
+            className="w-full py-8 transform transition-all duration-1000 translate-x-0 opacity-100"
+            initial={{ x: '90vw', opacity: 0,  }}
+            animate={{ x: 0, opacity: 1,  }}
+            transition={{ type: 'tween', duration: 1 }}
+          >
             <div className="container mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {stories.map((story) => (
@@ -73,7 +84,7 @@ function OdishStories() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

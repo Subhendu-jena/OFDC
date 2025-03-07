@@ -9,7 +9,7 @@ import Testimonials from '../components/home/Testimonials';
 
 function Home() {
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen relative">
       <section>
         <HeroSection />
       </section>
@@ -29,14 +29,16 @@ function Home() {
         </div>
       </section>
       <section className=" flex justify-center w-full items-start">
-        <div className=" max-w-6xl">
-          <OdishStories />
-        </div>
+      <div
+        className="max-w-6xl"
+      >
+        <OdishStories />
+      </div>
       </section>
       <section>
         <MessageFromCm />
       </section>
-      <section className=" flex justify-center w-full bg-red-300 items-start">
+      <section className=" flex justify-center w-full bg-red-200 items-start">
         <div className="max-w-6xl">
           <LocationDirectory />
         </div>
@@ -56,7 +58,9 @@ function Home() {
           <EqipmentDirectory />
         </div>
       </section>
-      <section className=" flex justify-center pb-[100px] w-full bg-[#eaebec] items-start">
+      <section
+        className=" flex justify-center pb-[100px] w-full bg-gray-200 items-start"
+      >
         <div className="max-w-3xl">
           <Testimonials />
         </div>
