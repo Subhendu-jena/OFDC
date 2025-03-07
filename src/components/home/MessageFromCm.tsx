@@ -1,28 +1,43 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 function MessageFromCm() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
   return (
     <div className="relative w-full pb-16">
-      <div className="relative z-10 p-5" style={{background:"url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)"}}>
-        <motion.h2 className="text-4xl font-bold mb-6 text-center animate-fade-in-up"
-        initial={{ y: "10vh", opacity: 0}}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "tween", duration: 1 }}>
+      <div
+        className="relative z-10 p-5"
+        style={{
+          background:
+            'url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)',
+        }}
+      >
+        <motion.h2
+          className="text-4xl font-bold mb-6 text-center"
+          initial={{ y: '10vh', opacity: 0 }}
+          animate={inView ? { y: 0, opacity: 1 } : {}}
+          transition={{ type: 'tween', duration: 1 }}
+        >
           Message From Hon'ble Chief Minister of Odisha
         </motion.h2>
 
         <section className="relative  rounded-lg px-16 py-8 z-10">
           <div className="flex flex-col md:flex-row items-center md:space-x-8">
             {/* Left column with image */}
-            <motion.div className="w-full md:w-2/5 mb-6 md:mb-0 animate-fade-in-left"
-            initial={{ x: "-80vw", opacity: 0}}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ type: "tween", duration: 1 }}
+            <motion.div
+              ref={ref}
+              className="w-full md:w-2/5 mb-6 md:mb-0"
+              initial={{ x: '-20vw', opacity: 0 }}
+              animate={inView ? { x: 0, opacity: 1 } : {}}
+              transition={{ type: 'tween', duration: 1 }}
             >
               <div className="text-center">
                 <img
                   loading="lazy"
-                  className="mx-auto w-full max-w-[250px] duration-1000 transition-all hover:animate-bounce"
+                  className="mx-auto w-full max-w-[250px] transition hover:animate-bounce"
                   src="https://ofdc.octamy.com/wp-content/uploads/2024/12/shrimohanchaaranmajhi.png"
                   alt="Shri Mohan Charan Majhi"
                 />
@@ -32,18 +47,19 @@ function MessageFromCm() {
             {/* Right column with text */}
             <div className="w-full md:w-3/5 animate-fade-in-up">
               <div className="mb-6">
-                <motion.p className="text-gray-600 leading-relaxed text-lg"
-                initial={{ y: "10vh", opacity: 0}}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ type: "tween", duration: 1 }}
+                <motion.p
+                  className="text-gray-600 leading-relaxed text-lg"
+                  initial={{ y: '10vh', opacity: 0 }}
+                  animate={inView?{ y: 0, opacity: 1 }:{}}
+                  transition={{ type: 'tween', duration: 1 }}
                 >
                   Over the years, OFDC has played a crucial role in the
                   evolution of Odia cinema, offering a range of services and
                   initiatives aimed at enhancing the quality and reach of
-                  regional films. To further its mission, OFDC is now
-                  embarking on the design and development of a bilingual web
-                  portal that will serve as a dynamic platform for managing
-                  and disseminating all its content and services.
+                  regional films. To further its mission, OFDC is now embarking
+                  on the design and development of a bilingual web portal that
+                  will serve as a dynamic platform for managing and
+                  disseminating all its content and services.
                 </motion.p>
               </div>
 

@@ -3,7 +3,14 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 const LocationDirectory = () => {
+
+  const { ref, inView } = useInView({
+    triggerOnce: true, 
+    threshold: 0.3,
+  });
+
   const settings = {
     dots: false,
     infinite: true,
@@ -64,11 +71,11 @@ const LocationDirectory = () => {
   ];
 
   return (
-    <div className="py-4">
+    <div className="py-4" ref={ref}>
       <motion.div
         className=" flex flex-col py-8 "
         initial={{ y: '10vh', opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        animate={inView?{ y: 0, opacity: 1 }:{}}
         transition={{ type: 'tween', duration: 1 }}
       >
         <div className="text-xl text-red-500 text-center">
@@ -80,8 +87,8 @@ const LocationDirectory = () => {
       </motion.div>
       <motion.div
         className="w-full px-4"
-        initial={{ x: '100vw', opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
+        initial={{ x: '70vw', opacity: 0 }}
+        animate={inView?{ x: 0, opacity: 1 }:{}}
         transition={{ type: 'tween', duration: 1 }}
       >
         <Slider {...settings}>
