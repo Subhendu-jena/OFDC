@@ -8,7 +8,7 @@ const LocationDirectory = () => {
 
   const { ref, inView } = useInView({
     triggerOnce: true, 
-    threshold: 0.3,
+    threshold: 0.4,
   });
 
   const settings = {
@@ -87,9 +87,9 @@ const LocationDirectory = () => {
       </motion.div>
       <motion.div
         className="w-full px-4"
-        initial={{ x: '70vw', opacity: 0 }}
+        initial={{ x: '10vw', opacity: 0 }}
         animate={inView?{ x: 0, opacity: 1 }:{}}
-        transition={{ type: 'tween', duration: 1 }}
+        transition={{ type: 'tween', duration: .5 }}
       >
         <Slider {...settings}>
           {destinations.map((destination, index) => (
