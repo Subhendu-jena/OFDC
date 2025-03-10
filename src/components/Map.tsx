@@ -17,9 +17,9 @@ const MapComponent = ({ width = '100%', height = '400px' }) => {
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={9} />
     );
   }, []);
-
+  const apiKey =import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   return (
-    <LoadScript googleMapsApiKey="AIzaSyDIAvDghqd2fo0U3vI4K4mE6UBTLPcEF80">
+    <LoadScript googleMapsApiKey={apiKey}>
       {mapElement}
     </LoadScript>
   );
