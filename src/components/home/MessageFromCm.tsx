@@ -10,10 +10,6 @@ function MessageFromCm() {
     <div className="relative w-full pb-16">
       <div
         className="relative z-10 p-5"
-        style={{
-          background:
-            'url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)',
-        }}
       >
         <motion.h2
           className="text-4xl font-bold mb-6 text-center"
@@ -37,7 +33,7 @@ function MessageFromCm() {
               <div className="text-center">
                 <img
                   loading="lazy"
-                  className="mx-auto w-full max-w-[250px] transition hover:animate-bounce"
+                  className="mx-auto w-full max-w-[250px] transition hover:-translate-y-2"
                   src="https://ofdc.octamy.com/wp-content/uploads/2024/12/shrimohanchaaranmajhi.png"
                   alt="Shri Mohan Charan Majhi"
                 />

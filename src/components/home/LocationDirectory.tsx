@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 const LocationDirectory = () => {
-
   const { ref, inView } = useInView({
-    triggerOnce: true, 
-    threshold: 0.4,
+    triggerOnce: true,
+    threshold: 0.3,
   });
 
   const settings = {
@@ -75,7 +74,7 @@ const LocationDirectory = () => {
       <motion.div
         className=" flex flex-col py-8 "
         initial={{ y: '10vh', opacity: 0 }}
-        animate={inView?{ y: 0, opacity: 1 }:{}}
+        animate={inView ? { y: 0, opacity: 1 } : {}}
         transition={{ type: 'tween', duration: 1 }}
       >
         <div className="text-xl text-red-500 text-center">
@@ -85,20 +84,18 @@ const LocationDirectory = () => {
           LOCATION DIRECTORY
         </div>
       </motion.div>
-      <motion.div
-        className="w-full px-4"
-        initial={{ x: '10vw', opacity: 0 }}
-        animate={inView?{ x: 0, opacity: 1 }:{}}
-        transition={{ type: 'tween', duration: .5 }}
-      >
+      <div>
         <Slider {...settings}>
           {destinations.map((destination, index) => (
-            <div key={index} className="px-2">
+            <div
+              key={index}
+              className="px-2"
+            >
               <div className="relative group overflow-hidden rounded-md">
                 <img
                   src={destination.image}
                   alt={destination.title}
-                  className=" w-full h-[300px] object-cover transition-transform duration-500"
+                  className=" w-full h-[300px]  object-cover transition-transform duration-500"
                 />
                 <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white  justify-center items-center flex flex-col transition duration-500">
                   <h2 className="text-xl font-semibold group-hover:block hidden ">
@@ -117,7 +114,7 @@ const LocationDirectory = () => {
             </div>
           ))}
         </Slider>
-      </motion.div>
+      </div>
       <div className="text-center transition duration-300 group mt-8">
         <Link
           to="/location-directory"

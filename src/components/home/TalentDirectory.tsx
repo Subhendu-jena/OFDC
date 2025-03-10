@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 function TalentDirectory() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+
   const settings = {
     dots: true,
     infinite: true,
@@ -36,43 +43,53 @@ function TalentDirectory() {
   const destinations = [
     {
       name: 'Sabyasachi Mohapatra',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Sabyasachi-Mohapatra-500x600.png',
-      role:"Actor"
+      image:
+        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Sabyasachi-Mohapatra-500x600.png',
+      role: 'Actor',
     },
     {
       name: 'Suryamayee Mohapatra',
-      image:'https://ofdc.octamy.com/wp-content/uploads/2020/10/Suryamayee-Mohapatra-500x600.png',
-      role:"Actor"
+      image:
+        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Suryamayee-Mohapatra-500x600.png',
+      role: 'Actor',
     },
     {
       name: 'Anubhav Mohanty',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Anubhav-Mohanty-500x600.png',
-       role:"Actor"
+      image:
+        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Anubhav-Mohanty-500x600.png',
+      role: 'Actor',
     },
     {
       name: 'Susant Mishra',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Susant-Mishra-500x600.png',
-       role:"Actor"
+      image:
+        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Susant-Mishra-500x600.png',
+      role: 'Actor',
     },
     {
       name: 'Mihir Das',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2020/10/Mihir-Das-500x600.png',
-       role:"Actor"
+      image:
+        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Mihir-Das-500x600.png',
+      role: 'Actor',
     },
   ];
 
   return (
-    <div className=" w-full">
-      <div className=" w-full flex flex-col  items-center px-2 py-6">
-        <p className=' text-red-500 font-semibold '>TEAM</p>
-        <p className=' text-gray-800 text-4xl font-bold'>TALENT DIRECTORY</p>
-      </div>
+    <div className=" w-full" ref={ref}>
+      <motion.div
+        className=" w-full flex flex-col  items-center px-2 py-6"
+        initial={{ y: '10vh', opacity: 0 }}
+        animate={inView ? { y: 0, opacity: 1 } : {}}
+        transition={{ type: 'tween', duration: 1 }}
+      >
+        <p className=" text-red-500 font-semibold ">TEAM</p>
+        <p className=" text-gray-800 text-4xl font-bold">TALENT DIRECTORY</p>
+      </motion.div>
       <div className=" w-full flex">
         <div className="w-full px-4">
           <Slider {...settings}>
             {destinations.map((destination, index) => (
               <div key={index} className="px-2">
-                <div className="relative group overflow-hidden  h-[300px]">
+                <div className="relative group overflow-hidden rounded-md h-[300px]">
                   {/* Background Image */}
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
@@ -81,12 +98,12 @@ function TalentDirectory() {
 
                   {/* Additional Text */}
                   <div className="absolute inset-x-0 left-2 right-2 bottom-3 z-10 text-xl py-4 text-center bg-white rounded-sm">
-                   <p className=' text-black text-xl font-semibold'>
-                    {destination.name}
-                   </p>
-                   <p className=' text-gray-500 text-sm pb-3 '>
-                    {destination.role}
-                   </p>
+                    <p className=" text-black text-xl font-semibold">
+                      {destination.name}
+                    </p>
+                    <p className=" text-gray-500 text-sm pb-3 ">
+                      {destination.role}
+                    </p>
                   </div>
                 </div>
               </div>

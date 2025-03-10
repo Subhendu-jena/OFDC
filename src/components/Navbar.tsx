@@ -27,12 +27,12 @@ const TopHeader = () => {
   
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
-      <div className="container mx-auto flex justify-between items-center px-4">
-        <div className="flex items-center space-x-4">
-          <span className="hover:text-orange-500 cursor-pointer">
-            Skip to main Content
+      <div className=" flex justify-between px-16 items-center">
+        <div className="flex items-center ">
+          <span className="hover:text-orange-500 cursor-pointer mr-4">
+            Skip to main Content /
           </span>
-          <div className="flex space-x-2">
+          <div className="flex space-x-4">
             <span className="hover:text-orange-500 cursor-pointer">A-</span>
             <span className="hover:text-orange-500 cursor-pointer">A</span>
             <span className="hover:text-orange-500 cursor-pointer">A+</span>
@@ -143,7 +143,6 @@ const MainHeader = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Prevent scrolling when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -222,11 +221,11 @@ const MainHeader = () => {
   return (
     <>
       <div
-        className={`w-full fixed text-white top-0 z-10 shadow-md py-4 transition-all duration-300 ${
+        className={`w-full fixed text-white top-0 z-10 shadow-md px-12 py-4 transition-all duration-300 ${
           isScrolled ? 'bg-[#11161F]' : 'bg-[#00000085] md:mt-9'
         }`}
       >
-        <div className="container mx-auto flex gap-4 justify-between items-center px-4">
+        <div className=" flex gap-4 justify-between items-center px-4">
           <div className="flex items-center max-w-[300px]">
             <Link to="/" className="flex items-center">
               <img

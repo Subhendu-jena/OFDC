@@ -1,8 +1,14 @@
 import { Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 function LatestVideo() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
   const settings = {
     dots: true,
     infinite: true,
@@ -72,21 +78,37 @@ function LatestVideo() {
     },
   ];
   return (
-    <div className=" w-full">
-      <div className=" w-full flex justify-between text-2xl font-bold text-red-500 items-center px-2 py-6" 
-      style={{background:"url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)",
-        objectFit:"contain"
-      }}>
-        <p>LOCATION VIDEOS</p>
-        <p>LATEST SHOOTING</p>
+    <div className=" w-full" ref={ref}>
+      <div
+        className=" w-full flex justify-between text-2xl font-bold text-red-500 items-center px-2 py-6"
+        style={{
+          background:
+            'url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)',
+          objectFit: 'contain',
+        }}
+      >
+        <motion.p
+          initial={{ y: '10vh', opacity: 0 }}
+          animate={inView ? { y: 0, opacity: 1 } : {}}
+          transition={{ type: 'tween', duration: 1 }}
+        >
+          LOCATION VIDEOS
+        </motion.p>
+        <motion.p
+          initial={{ y: '10vh', opacity: 0 }}
+          animate={inView ? { y: 0, opacity: 1 } : {}}
+          transition={{ type: 'tween', duration: 1 }}
+        >
+          LATEST SHOOTING
+        </motion.p>
       </div>
-      <div className=" w-full flex">
+      <div className=" w-full flex md:flex-row flex-col">
         <div className="w-full sm:w-3/4">
           <div className="w-full px-4">
             <Slider {...settings}>
               {destinations.map((destination, index) => (
                 <div key={index} className="px-2">
-                  <div className="relative group overflow-hidden  h-[300px]">
+                  <div className="relative group overflow-hidden  h-[300px] rounded-xl">
                     {/* Background Image */}
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
@@ -108,7 +130,7 @@ function LatestVideo() {
                       Location Videos
                     </div>
                     <div className="w-30 h-30 flex justify-center items-center absolute right-0 bg-red-400 bottom-0 hover:scale-75 duration-200">
-                      <Youtube size={40} className='text-white' />
+                      <Youtube size={40} className="text-white" />
                     </div>
                   </div>
                 </div>
@@ -121,7 +143,7 @@ function LatestVideo() {
             <Slider {...latestShootingSettings}>
               {destinations.map((destination, index) => (
                 <div key={index} className="px-2">
-                  <div className="relative group overflow-hidden rounded-md">
+                  <div className="relative group overflow-hidden rounded-xl">
                     <img
                       src={destination.image}
                       alt={destination.title}

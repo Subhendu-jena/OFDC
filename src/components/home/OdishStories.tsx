@@ -30,15 +30,20 @@ function OdishStories() {
   return (
     <div
       className="w-full bg-white"
-      style={{ backgroundImage: "url('/api/placeholder/1200/800')" }}
+      style={{
+        background:
+          'url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)',
+        objectFit: 'cover',
+      }}
     >
       <div className="">
         <div className="w-full rounded-lg overflow-hidden">
           {/* Heading Section */}
-          <motion.div className="w-full py-8"
-          initial={{ y: "10vh", opacity: 0}}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ type: "tween", duration: 1 }}
+          <motion.div
+            className="w-full py-8"
+            initial={{ y: '10vh', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: 'tween', duration: 1 }}
           >
             <div className="container mx-auto">
               <div className="w-full">
@@ -60,8 +65,8 @@ function OdishStories() {
           {/* Stories  Section */}
           <motion.div
             className="w-full py-8 transform transition-all duration-1000 translate-x-0 opacity-100"
-            initial={{ x: '90vw', opacity: 0,  }}
-            animate={{ x: 0, opacity: 1,  }}
+            initial={{ x: '90vw', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
             transition={{ type: 'tween', duration: 1 }}
           >
             <div className="container mx-auto">

@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 function EqipmentDirectory() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
   const settings = {
     dots: true,
     infinite: true,
@@ -35,24 +40,23 @@ function EqipmentDirectory() {
 
   const destinations = [
     {
-      name: 'Konark',
+      name: 'M8',
       image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/paar_4k.jpg',
-      role: 'Actor',
     },
     {
-      name: 'Bhitarkanika',
+      name: 'M60',
       image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/m60.jpg',
-      role: 'Actor',
+      
     },
     {
-      name: 'Udayagiri',
+      name: 'M80',
       image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/m8.jpg',
-      role: 'Actor',
+      
     },
     {
-      name: 'Puri Beach',
+      name: 'M90',
       image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/m90.jpg',
-      role: 'Actor',
+      
     },
   ];
 
@@ -64,16 +68,22 @@ function EqipmentDirectory() {
           'url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)',
         objectFit: 'contain',
       }}
+      ref={ref}
     >
-      <div className=" w-full flex flex-col  items-center px-2 py-6">
+      <motion.div
+        initial={{ y: '10vh', opacity: 0 }}
+        animate={inView ? { y: 0, opacity: 1 } : {}}
+        transition={{ type: 'tween', duration: 1 }}
+        className=" w-full flex flex-col  items-center px-2 py-6"
+      >
         <p className=" text-gray-800 text-4xl font-bold">EQUIPMENT DIRECTORY</p>
-      </div>
+      </motion.div>
       <div className=" w-full flex">
         <div className="w-full px-4">
           <Slider {...settings}>
             {destinations.map((destination, index) => (
               <div key={index} className="px-2 ">
-                <div className="relative group overflow-hidden h-[300px]">
+                <div className="relative group overflow-hidden h-[300px] rounded-xl">
                   {/* Background Image */}
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-500 "

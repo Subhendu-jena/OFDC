@@ -26,14 +26,14 @@ const HeroSection = () => {
     autoplay: true,
     autoplaySpeed: 5000,
     fade: true,
-    arrows: false,
+    arrows: true,
   };
  const navigate = useNavigate()
   return (
     <div>
       <Slider {...settings}>
         {slides.map((slide, index) => (
-          <div key={index} className="relative h-[100vh] md:h-[77vh]">
+          <div key={index} className="relative h-[100vh] md:h-[75vh]">
             <img
               src={slide.image}
               alt={`Slide ${index + 1}`}
@@ -44,21 +44,21 @@ const HeroSection = () => {
             {/* Content */}
             <div
               data-slide={index}
-              className="absolute inset-0 flex flex-col items-center justify-center  text-white z-50 animate-fadeInUp"
+              className="absolute inset-0 flex flex-col items-center justify-center  text-white mt-[140px] z-50 animate-fadeInUp"
             >
-              <h3 className="text-3xl md:text-6xl font-bold mb-6 text-center">
+              <h3 className="text-2xl md:text-5xl font-bold mb-6 text-center">
                 FILM MAKING IS A MIRACLE
               </h3>
               <p className="text-lg md:text-xl mb-8 text-center">
                 Collaborate with the scenic beauty of Odisha.
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
-                <button className="px-8 py-3 bg-white text-black rounded-full hover:bg-orange-500 hover:text-white transition-all duration-300"
+                <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white transition-all duration-300"
                 onClick={()=> navigate(paths.bookingForm)}
                 >
                   BOOK LOCATION NOW
                 </button>
-                <button className="px-8 py-3 border-2 border-white rounded-full hover:bg-white hover:text-black transition-all duration-300">
+                <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white   transition-all duration-300">
                   LOCATION BOOKING GUIDELINE
                 </button>
               </div>
