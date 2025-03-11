@@ -1,4 +1,4 @@
-import { Antenna, CircleCheckBig, Eye, Film, Video } from 'lucide-react';
+import { Antenna, CircleCheckBig, Eye, Video } from 'lucide-react';
 
 const OurVisionMision = () => {
   const objectives = [
@@ -43,59 +43,10 @@ const OurVisionMision = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-      {/* Hero Section with Film Background */}
-      <div className="relative overflow-hidden bg-black h-96">
-        {/* Background overlay with brand color */}
-        <div className="absolute inset-0 bg-black opacity-70 z-10"></div>
-
-        {/* Background image (film reel pattern) */}
-        <div className="absolute inset-0 z-0 opacity-30">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <pattern
-              id="filmPattern"
-              patternUnits="userSpaceOnUse"
-              width="100"
-              height="100"
-              viewBox="0 0 100 100"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-              />
-              <circle cx="50" cy="15" r="8" fill="white" />
-              <circle cx="50" cy="85" r="8" fill="white" />
-              <circle cx="15" cy="50" r="8" fill="white" />
-              <circle cx="85" cy="50" r="8" fill="white" />
-            </pattern>
-            <rect width="100%" height="100%" fill="url(#filmPattern)" />
-          </svg>
-        </div>
-
-        {/* Content overlay */}
-        <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4">
-          <div className="mb-6">
-            <Film size={70} className=" text-white" />
-          </div>
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-            Odisha Film Development Corporation
-          </h1>
-          <div
-            className="w-24 h-1 bg-orange-500 mb-6"
-            style={{ backgroundColor: '#F47216' }}
-          ></div>
-          <p className="text-xl text-white max-w-3xl">
-            Building a vibrant cinematic future for Odisha
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen  bg-gray-50 rounded-md font-sans">
 
       {/* Content Tabs Section */}
-      <div className="max-w-6xl mx-auto  -mt-12 px-4 relative z-30">
+      <div className="max-w-6xl mx-auto p-4">
         <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
           <div className="flex flex-col md:flex-row">
             <div
@@ -243,7 +194,7 @@ const OurVisionMision = () => {
       </div>
 
       {/* Decorative Film Elements */}
-      <div className="mt-4 mb-16 relative overflow-hidden">
+      <div className="mt-4 relative overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center opacity-10">
           <Video size={40} />
         </div>

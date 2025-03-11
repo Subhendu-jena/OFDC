@@ -19,7 +19,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="px-4 lg:w-1/4">
+    <div className="px-4 lg:w-1/4 z-10 relative">
       {/* Mobile Toggle Button */}
       <div className='lg:hidden flex justify-end w-full'>
         <button
