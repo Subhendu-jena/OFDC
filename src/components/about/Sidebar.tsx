@@ -19,7 +19,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="px-4 lg:w-1/4 z-10 relative">
+    <div className=" lg:w-1/4 z-10 relative">
       {/* Mobile Toggle Button */}
       <div className='lg:hidden flex justify-end w-full'>
         <button
@@ -32,14 +32,14 @@ const Sidebar = () => {
 
       {/* Sidebar Menu */}
       <div
-        className={`bg-white h-[99%] p-4 rounded-lg shadow-md 
+        className={`bg-white h-[99%] p-4 rounded-lg px-4 shadow-md 
           ${isOpen ? 'block' : 'hidden'} lg:block`}
       >
         <ul className="space-y-3">
           {menuItems.map((item, index) => (
             <li
               key={index}
-              className={`flex justify-between items-center p-2 rounded-md cursor-pointer ${
+              className={`flex justify-between items-center px-4 py-2 rounded-md cursor-pointer ${
                 path.includes(item.url)
                   ? 'bg-red-500 text-white'
                   : 'text-gray-700 hover:bg-blue-50'
