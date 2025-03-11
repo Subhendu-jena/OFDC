@@ -9,7 +9,7 @@ import Testimonials from '../components/home/Testimonials';
 
 function Home() {
   return (
-    <div className="w-full min-h-screen relative">
+    <div className="w-full min-h-screen relative overflow-x-hidden">
       <section>
         <HeroSection />
       </section>
@@ -32,7 +32,7 @@ function Home() {
       <section
         className=" flex justify-center w-full items-start"
       >
-        <div className="max-w-6xl">
+        <div className="xl:max-w-6xl w-full">
           <OdishStories />
         </div>
       </section>

@@ -1,23 +1,40 @@
-import { MoveRightIcon } from 'lucide-react';
+import { useState } from 'react';
+import { MoveRightIcon, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { paths } from '../../routes/Path';
 
 const Sidebar = () => {
-  const menuItems = [
-    { label: 'Odisha at a Glance', url:paths.odishaAtGlance },
-    { label: 'Climate', url: paths.climate },
-    { label: 'Geographical Features', url: paths.geographicalFeatures },
-    { label: 'Bio-Diversity', url:paths.bioDiversity },
-    { label: 'Cultural Heritage', url: paths.cultureHeritage},
-    { label: 'Religion & Culture', url: paths.religionCulture },
-  ];
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const path = location.pathname;
-  
+
+  const menuItems = [
+    { label: ' A Cursory Look', url: paths.aCursoryLook },
+    { label: 'Our Vision & Mission', url: paths.ourVisionMission },
+    { label: 'Achievments', url: paths.achievments },
+    { label: 'Leadership', url: paths.leadership },
+    { label: 'Former Chairpersons', url: paths.formerChairpersons },
+    { label: 'Former Managing Directors', url: paths.formerManagingDirectors},
+    { label: "Who's Who", url: paths.whoIsWho },
+  ];
+
   return (
-    <div className="w-full lg:w-1/4 xl:w-1/4 p-4">
-      <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-        {/* Sidebar Menu */}
+    <div className="px-4 lg:w-1/4">
+      {/* Mobile Toggle Button */}
+      <div className='lg:hidden flex justify-end w-full'>
+        <button
+          className=" flex items-center p-2 bg-red-500 text-white rounded-md"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Sidebar Menu */}
+      <div
+        className={`bg-white h-[99%] p-4 rounded-lg shadow-md 
+          ${isOpen ? 'block' : 'hidden'} lg:block`}
+      >
         <ul className="space-y-3">
           {menuItems.map((item, index) => (
             <li

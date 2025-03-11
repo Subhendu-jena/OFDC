@@ -65,7 +65,7 @@ const ContactUs: React.FC = () => {
       <section className="bg-gray-200 pt-16 pb-8 w-full flex justify-center">
         <div className="flex md:flex-row max-w-5xl flex-col gap-4">
           {/* Address Card */}
-          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
+          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
             <div className="bg-red-400 rounded-full p-4 mt-[-180px] absolute">
               <MapPin
                 className="text-white group-hover:animate-pulse"
@@ -77,7 +77,7 @@ const ContactUs: React.FC = () => {
           </div>
 
           {/* Email Card */}
-          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative border border-red-400 border-b-2 w-[350px] h-[200px]">
+          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative border-red-400 border-b-2 w-[350px] h-[200px]">
             <div className="bg-red-400 rounded-full p-4 mt-[-180px] absolute">
               <Mail className="text-white animate-pulse" size={50} />
             </div>
@@ -86,7 +86,7 @@ const ContactUs: React.FC = () => {
           </div>
 
           {/* Phone Card */}
-          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
+          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
             <div className="bg-red-400 rounded-full p-4 mt-[-180px] absolute">
               <PhoneCall
                 className="text-white group-hover:animate-pulse"

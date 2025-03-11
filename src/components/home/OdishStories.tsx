@@ -36,7 +36,7 @@ function OdishStories() {
         objectFit: 'cover',
       }}
     >
-      <div className="">
+      <div className="w-full">
         <div className="w-full rounded-lg overflow-hidden">
           {/* Heading Section */}
           <motion.div
@@ -45,7 +45,7 @@ function OdishStories() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'tween', duration: 1 }}
           >
-            <div className="container mx-auto">
+            <div className="w-full">
               <div className="w-full">
                 <div
                   className={`text-center transform transition-transform duration-1000 ${true ? 'translate-x-0' : '-translate-x-full'}`}

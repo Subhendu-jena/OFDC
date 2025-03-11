@@ -7,14 +7,15 @@ import Home from '../pages/Home';
 import BookingForm from '../pages/BookingForm';
 import Dashboard from '../pages/Dashboard';
 import ContactUs from '../pages/ContactUs';
-import OdishaAtGlance from '../pages/OdishaAtGlance';
+import OdishaAtGlance from '../pages/about/OdishaAtGlance';
 import AboutLayout from '../layout/about/AboutLayout';
-import Climate from '../pages/Climate';
-import GeoGraphicalFetures from '../pages/GeoGraphicalFetures';
-import BioDiversity from '../pages/BioDiversity';
-import CulturalHeritage from '../pages/CulturalHeritage';
-import ReligionCulture from '../pages/ReligionCulture';
+import OurVisionMision from '../pages/about/OurVisionMision';
+import Leadership from '../pages/about/Leadership';
+import CulturalHeritage from '../pages/about/CulturalHeritage';
+import ReligionCulture from '../pages/about/ReligionCulture';
 import FlimEcoSystem from '../pages/FlimEcoSystem';
+import WhosWho from '../pages/about/WhosWho';
+import Achievments from '../pages/about/Achievments';
 
 const RoutePage: React.FC = () => {
   return (
@@ -29,12 +30,22 @@ const RoutePage: React.FC = () => {
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
           <Route element={<AboutLayout />}>
-            <Route path={paths.odishaAtGlance} element={<OdishaAtGlance />} />
-            <Route path={paths.climate} element={<Climate />} />
-            <Route path={paths.geographicalFeatures} element={<GeoGraphicalFetures />} />
-            <Route path={paths.bioDiversity} element={<BioDiversity />} />
-            <Route path={paths.cultureHeritage} element={<CulturalHeritage />} />
-            <Route path={paths.religionCulture} element={<ReligionCulture />} />
+            <Route path={paths.aCursoryLook} element={<OdishaAtGlance />} />
+            <Route path={paths.ourVisionMission} element={<OurVisionMision />} />
+            <Route path={paths.achievments} element={<Achievments />} />
+            <Route path={paths.leadership} element={<Leadership />} />
+            <Route
+              path={paths.formerChairpersons}
+              element={<CulturalHeritage />}
+            />
+            <Route
+              path={paths.formerManagingDirectors}
+              element={<ReligionCulture />}
+            />
+            <Route
+              path={paths.whoIsWho}
+              element={<WhosWho />}
+            />
           </Route>
         </Route>
       </Routes>

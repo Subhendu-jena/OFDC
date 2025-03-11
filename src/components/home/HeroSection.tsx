@@ -30,7 +30,7 @@ const HeroSection = () => {
   };
  const navigate = useNavigate()
   return (
-    <div>
+    <div className=' w-full'>
       <Slider {...settings}>
         {slides.map((slide, index) => (
           <div key={index} className="relative h-[100vh] md:h-[75vh]">

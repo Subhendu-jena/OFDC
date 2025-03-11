@@ -27,7 +27,7 @@ const LocationDirectory = () => {
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 824,
         settings: {
           slidesToShow: 2,
         },
@@ -84,18 +84,18 @@ const LocationDirectory = () => {
           LOCATION DIRECTORY
         </div>
       </motion.div>
-      <div>
-        <Slider {...settings}>
+      <div className=' px-4 flex justify-center items-center w-full'>
+        <Slider {...settings} className=' flex justify-center items-center w-full'>
           {destinations.map((destination, index) => (
             <div
               key={index}
-              className="px-2"
+              className="px-2 max-w-[270px]"
             >
               <div className="relative group overflow-hidden rounded-md">
                 <img
                   src={destination.image}
                   alt={destination.title}
-                  className=" w-full h-[300px]  object-cover transition-transform duration-500"
+                  className=" w-full h-[300px] object-cover transition-transform duration-500"
                 />
                 <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white  justify-center items-center flex flex-col transition duration-500">
                   <h2 className="text-xl font-semibold group-hover:block hidden ">

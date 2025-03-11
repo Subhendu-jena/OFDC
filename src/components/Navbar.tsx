@@ -23,8 +23,8 @@ interface MenuItem {
 const TopHeader = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
-  console.log(setIsAdmin,setisLoggedIn);
-  
+  console.log(setIsAdmin, setisLoggedIn);
+
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className=" flex justify-between px-16 items-center">
@@ -59,7 +59,7 @@ const TopHeader = () => {
           </div>
           <span>/</span>
           <Link
-            to="/contact"
+            to={paths.contactUs}
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
           >
             <Mail size={16} />
@@ -157,19 +157,20 @@ const MainHeader = () => {
   const menuItems: MenuItem[] = [
     {
       label: 'About Us',
-      url: '/odisha-at-Glance',
+      url: paths.aCursoryLook,
       children: [
-        { label: 'Odisha at a Glance', url: '/odisha-at-Glance' },
-        { label: 'Climate', url: '#' },
-        { label: 'Geographical Features', url: '#' },
-        { label: 'Bio-Diversity', url: '#' },
-        { label: 'Cultural Heritage', url: '#' },
-        { label: 'Religion & Culture', url: '#' },
+        { label: ' A Cursory Look', url: paths.aCursoryLook },
+        { label: 'Our Vision & Mission', url: paths.ourVisionMission },
+        { label: 'Achievments', url: paths.achievments },
+        { label: 'Leadership', url: paths.leadership },
+        { label: 'Former Chairpersons', url: paths.formerChairpersons },
+        { label: 'Former Managing Directors', url: paths.formerManagingDirectors },
+        { label: "Who's Who", url: paths.whoIsWho },
       ],
     },
     {
       label: 'Film Eco System',
-      url: paths.flimEcoSystem ,
+      url: paths.flimEcoSystem,
       children: [
         { label: 'Film Policy', url: paths.flimEcoSystem },
         { label: 'Policy Guidelines', url: '#' },
