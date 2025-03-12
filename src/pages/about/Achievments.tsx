@@ -129,7 +129,7 @@ const Achievements = () => {
     },
   ];
   return (
-    <div className="min-h-screen rounded-md bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Achievements Grid */}
       <div className="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8 ">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -160,45 +160,6 @@ const Achievements = () => {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Bottom Banner */}
-      <div className="bg-gray-900 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className="bg-gradient-to-r from-orange-600 to-orange-500 rounded-xl shadow-2xl p-8 md:p-12 relative overflow-hidden"
-            style={{ backgroundColor: '#F47216' }}
-          >
-            {/* Decorative Film Icons */}
-            <div className="absolute -right-12 -top-12 opacity-10">
-              <Film size={120} color="white" />
-            </div>
-            <div className="absolute -left-8 -bottom-8 opacity-10">
-              <Clapperboard size={100} color="white" />
-            </div>
-
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between">
-              <div className="mb-8 md:mb-0 md:mr-8">
-                <h2 className="text-3xl font-bold text-white mb-4">
-                  Elevating Odisha's Cinema
-                </h2>
-                <p className="text-white text-lg opacity-90">
-                  Through our initiatives, OFDC remains committed to nurturing a
-                  vibrant and sustainable film industry in Odisha.
-                </p>
-              </div>
-              <div className="flex-shrink-0">
-                <a
-                  href="#"
-                  className="inline-block bg-white text-orange-600 font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                  style={{ color: '#F47216' }}
-                >
-                  Explore More
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

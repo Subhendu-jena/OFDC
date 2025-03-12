@@ -72,10 +72,9 @@ const independentDirectors = [
     image:""
   },
 ];
-
 const Leadership = () => {
   return (
-    <div className="bg-white rounded-md min-h-screen py-2 max-w-5xl">
+    <div className="bg-white min-h-screen py-2 max-w-5xl">
       {/* Header Section */}
       <div className="px-12 mb-4">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">

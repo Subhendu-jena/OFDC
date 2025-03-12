@@ -2,7 +2,7 @@ import React from 'react';
 
 const OdishaAtGlance: React.FC = () => {
   return (
-    <div className="bg-gray-100  min-h-screen rounded-md pb-24">
+    <div className="bg-gray-100  min-h-screen  pb-24">
       <div className="max-w-6xl mx-auto px-4">
         {/* Page Title */}
         <h1 className="text-3xl font-bold text-red-500 mb-8">

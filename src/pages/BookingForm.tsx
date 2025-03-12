@@ -19,9 +19,6 @@ const BookingForm = () => {
       <div className="container mx-auto ">
         <div className="bg-white text-gray-800 p-4 rounded-xl shadow-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-red-600 border-b-2 border-red-200 pb-3"> Booking Form</h2>
-          <p className="text-lg font-semibold text-center mb-6 text-red-400 border-b-2 border-red-100 pb-3">*** Please try to keep 3 time slots of 3 hours each with a Gap of 1 Hour. 
-          Like : 10 am to 1 pm ; 2 pm to 5 pm ; 6 pm to 9 pm. </p>
-          {/* Booking Type Selection */}
           <div className="mb-8">
             <h3 className="text-lg font-medium mb-3 text-gray-700">Select Booking Type:</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
