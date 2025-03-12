@@ -1,9 +1,52 @@
-import ComingSoon from "../../components/ComingSoon"
+import TableComponent from "../../components/Table"
 
 function ReligionCulture() {
+  const columns = [
+    { label: 'Sl No.', field: 'id' },
+    { label: 'Name of Chairperson', field: 'name' },
+    { label: 'From', field: 'from' },
+    { label: 'To', field: 'to' },
+  ];
+  const dataTable = [
+    { id: 1, name: 'Sri Nilamadhab Mohanty, IAS', from: '22.04.1976', to: '23.03.1977' },
+    { id: 2, name: 'Sri Girish Chandra Patra, IAS', from: '24.03.1977', to: '25.05.1978' },
+    { id: 3, name: 'Sri Pradyumna Kumar Mishra', from: '26.05.1978', to: '30.09.1989' },
+    { id: 4, name: 'Sri Narendra Kumar Mishra, OAS', from: '01.10.1989', to: '10.05.1990' },
+    { id: 5, name: 'Sri Pradyumna Kumar Mishra', from: '11.05.1990', to: '14.10.1990' },
+    { id: 6, name: 'Sri Debendra Kumar Mishra, OAS', from: '15.10.1990', to: '28.04.1991' },
+    { id: 7, name: 'Sri Jayant Kumar Dev, IAS', from: '29.04.1991', to: '02.07.1991' },
+    { id: 8, name: 'Sri Barada Chandra Das, OAS', from: '03.07.1991', to: '12.10.1993' },
+    { id: 9, name: 'Sri Pradyumna Kumar Mishra', from: '13.10.1993', to: '20.11.1995' },
+    { id: 10, name: 'Sri Bata Krishna Tripathy, IPS', from: '21.11.1995', to: '03.07.1998' },
+    { id: 11, name: 'Sri Sanjeev Chopra, IAS', from: '04.07.1998', to: '11.08.1998' },
+    { id: 12, name: 'Sri Bata Krishna Tripathy, IPS', from: '12.08.1998', to: '21.10.1998' },
+    { id: 13, name: 'Sri Gopal Chandra Nanda, IPS', from: '22.10.1998', to: '19.03.1999' },
+    { id: 14, name: 'Sri Nikunja Kishore Sundaray, IAS', from: '20.03.1999', to: '28.05.1999' },
+    { id: 15, name: 'Sri M. Nageswar Rao, IPS', from: '29.05.1999', to: '24.01.2000' },
+    { id: 16, name: 'Sri Nikunja Kishore Sundaray, IAS', from: '25.01.2000', to: '17.08.2000' },
+    { id: 17, name: 'Sri Parag Gupta, IAS', from: '18.08.2000', to: '28.02.2002' },
+    { id: 18, name: 'Sri Surendra Nath Tripathy, IAS', from: '21.03.2002', to: '23.07.2003' },
+    { id: 19, name: 'Sri Jagdish Prasad Agarwala, OAS', from: '23.07.2003', to: '13.09.2004' },
+    { id: 20, name: 'Sri Nikunja Bihari Dhal, IAS', from: '21.09.2004', to: '01.12.2005' },
+    { id: 21, name: 'Sri Rabi Narayan Dash, IAS', from: '02.12.2005', to: '30.11.2009' },
+    { id: 22, name: 'Sri Debi Prasad Mohanty, OAS', from: '09.12.2009', to: '30.06.2011' },
+    { id: 23, name: 'Sri Prana Krushna Behera, OAS', from: '26.08.2011', to: '24.01.2012' },
+    { id: 24, name: 'Sri Suresh Chandra Suar, OAS', from: '27.01.2012', to: '31.03.2013' },
+    { id: 25, name: 'Sri Nityananda Palai, IAS', from: '07.05.2013', to: '31.05.2013' },
+    { id: 26, name: 'Sri Pratap Chandra Dash, OAS', from: '31.05.2013', to: '02.12.2013' },
+    { id: 27, name: 'Sri Nityananda Palai, IAS', from: '02.12.2013', to: '03.03.2014' },
+    { id: 28, name: 'Sri Bibhuti Bhusan Behera, OAS', from: '03.03.2014', to: '21.06.2014' },
+    { id: 29, name: 'Sri Pradeep Kumar Dash, OAS', from: '23.06.2014', to: '27.01.2015' },
+    { id: 30, name: 'Sri Bibhuti Bhusan Behera, OAS', from: '28.01.2015', to: '13.10.2017' },
+    { id: 31, name: 'Sri Prasanna Kumar Jena, IAS', from: '13.12.2017', to: '22.11.2018' },
+    { id: 32, name: 'Sri Nitin Bhanudas Jawale, IAS', from: '24.11.2018', to: '30.06.2021' },
+    { id: 33, name: 'Sri Bhupendra Singh Poonia, IAS', from: '05.07.2021', to: '22.08.2024' },
+  ];
+  
+  
   return (
     <div>
-      <ComingSoon/>
+      <TableComponent columns={columns} data={dataTable}/>
     </div>
   )
 }

@@ -206,7 +206,7 @@ const MainHeader = () => {
       ],
     },
     {
-      label: 'Latest Shooting',
+      label: 'Kalinga Studio',
       url: '#',
     },
   ];

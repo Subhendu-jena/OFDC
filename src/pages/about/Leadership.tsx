@@ -103,7 +103,7 @@ const Leadership = () => {
       <div className=" py-4">
         <div className=" text-2xl font-semibold pl-12 py-3">Chairman</div>
         <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-6">
-          <Card name={Chairman.name} position={Chairman.position} />
+          <Card name={Chairman.name} position={Chairman.position} image={Chairman.image} />
         </div>
       </div>
       {/* managing Director Grid */}
@@ -115,6 +115,7 @@ const Leadership = () => {
           <Card
             name={managingDirector.name}
             position={managingDirector.position}
+            image={managingDirector.image}
           />
         </div>
       </div>
@@ -125,7 +126,7 @@ const Leadership = () => {
         </div>
         <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-6">
           {nominee.map((nom, i) => (
-            <Card key={i} name={nom.name} position={nom.position} />
+            <Card key={i} name={nom.name} position={nom.position} image={nom.image} />
           ))}
         </div>
       </div>
@@ -136,7 +137,7 @@ const Leadership = () => {
         </div>
         <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-6">
           {independentDirectors.map((nom, i) => (
-            <Card key={i} name={nom.name} position={nom.position} />
+            <Card key={i} name={nom.name} position={nom.position} image={nom.image} />
           ))}
         </div>
       </div>
@@ -146,11 +147,11 @@ const Leadership = () => {
 
 export default Leadership;
 
-const Card = ({ name, position }: { name: string; position: string }) => {
+const Card = ({ name, position,image }: { name: string; position: string,image:string }) => {
   return (
     <div className="bg-white rounded-sm shadow-md text-center transition transform hover:scale-105  w-[255px]">
       <img
-        src="https://dg1ya6cdc7ief.cloudfront.net/Upload/Board_of_Director_Images/a75e26863e734f58af39eb7bd836dc1b_20240826054146939.jpg"
+        src={image}
         alt="DP"
         className=" w-full"
       />
