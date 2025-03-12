@@ -227,7 +227,7 @@ const MainHeader = () => {
         }`}
       >
         <div className=" flex gap-4 justify-between items-center px-4">
-          <div className="flex items-center max-w-[300px]">
+          <div className="flex items-center max-w-[400px]">
             <Link to="/" className="flex items-center">
               <img
                 src="/Logo\OFDC Logo White.png"
