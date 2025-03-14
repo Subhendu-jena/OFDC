@@ -21,7 +21,7 @@ const OdishaAtGlance: React.FC = () => {
   return (
     <div className="bg-gray-100  min-h-screen  pb-24">
       <div className="max-w-6xl mx-auto px-2">
-        <div className="bg-white shadow-lg rounded-lg p-8">
+        <section className="bg-white shadow-lg rounded-lg p-8">
           {/* Introduction */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-red-500 mb-4">
@@ -33,7 +33,7 @@ const OdishaAtGlance: React.FC = () => {
                 alt="Kalinga Studio"
                 className="w-full md:w-1/2 rounded-lg shadow-md"
               />
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed text-justify">
                 The Odisha Film Development Corporation Ltd. (OFDC) has made
                 significant strides over the years in promoting the Odia Film
                 Industries. Established on 22nd April, 1976 following its
@@ -48,8 +48,8 @@ const OdishaAtGlance: React.FC = () => {
               </p>
             </div>
           </section>
-        </div>
-        <div className=" grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 justify-items-center gap-x-6 mt-24 gap-y-24 px-6 ">
+        </section>
+        <section className=" grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 justify-items-center gap-x-6 mt-24 gap-y-24 px-6 ">
           {content.map((data, i) => (
             <div
               key={i}
@@ -64,13 +64,13 @@ const OdishaAtGlance: React.FC = () => {
                 {data.title}
               </div>
               <div className="mt-4 pb-8 pt-8 px-2 relative">
-                <p className=" relative text-[13px] z-10 pr-6">
+                <p className=" relative text-[13px] text-justify z-10 pr-6">
                   {data.description}
                 </p>
               </div>
             </div>
           ))}
-        </div>
+        </section>
       </div>
     </div>
   );

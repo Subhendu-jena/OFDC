@@ -210,9 +210,7 @@ const MainHeader = () => {
       url: '#',
     },
   ];
-
   const [openSubMenus, setOpenSubMenus] = useState<number[]>([]);
-
   const toggleSubMenu = (index: number) => {
     setOpenSubMenus((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
@@ -256,7 +254,7 @@ const MainHeader = () => {
               <div key={index} className="relative group">
                 <Link
                   to={item.url}
-                  className="flex items-center hover:text-orange-400 transition duration-500"
+                  className="flex text-sm items-center hover:text-orange-400 transition duration-500"
                 >
                   {item.label}
                   {item.children && (
