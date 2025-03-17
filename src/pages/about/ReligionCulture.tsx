@@ -45,7 +45,7 @@ function ReligionCulture() {
   
   
   return (
-    <div>
+    <div className="bg-white">
       <TableComponent columns={columns} data={dataTable}/>
     </div>
   )

@@ -33,9 +33,11 @@ const ContactUs: React.FC = () => {
   };
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const [loading, setLoading] = useState(true);
-  setTimeout(() => {
-    window.location.reload();
-  }, 3000);
+  const handleMapLoad = () => {
+    console.log('Google Map Loaded');
+    setLoading(false);
+  };
+  
   return (
     <div className="w-full">
       {/* Header Section */}
@@ -154,7 +156,7 @@ const ContactUs: React.FC = () => {
               mapContainerStyle={containerStyle}
               center={center}
               zoom={9}
-              onLoad={() => setLoading(false)}
+              onLoad={handleMapLoad}
             />
           </LoadScript>
         </div>

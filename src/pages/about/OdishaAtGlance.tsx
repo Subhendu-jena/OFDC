@@ -19,9 +19,9 @@ const OdishaAtGlance: React.FC = () => {
     },
   ];
   return (
-    <div className="bg-gray-100  min-h-screen  pb-24">
+    <div className=" bg-white min-h-screen  pb-24">
       <div className="max-w-6xl mx-auto px-2">
-        <section className="bg-white shadow-lg rounded-lg p-8">
+        <section className=" shadow-lg rounded-lg p-8">
           {/* Introduction */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-red-500 mb-4">

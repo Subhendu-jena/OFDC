@@ -22,7 +22,7 @@ const AboutLayout: React.FC = () => {
       </div>
 
       {/* Main Content - Ensure it starts after the fixed section */}
-      <div className="flex bg-gray-100 flex-col lg:flex-row min-h-screen z-30 pt-[50vh]">
+      <div className="flex bg-white flex-col lg:flex-row min-h-screen z-30 pt-[50vh]">
         <Sidebar />
 
           <main className="flex-1 relative z-20">
