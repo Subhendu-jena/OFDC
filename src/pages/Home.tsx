@@ -67,7 +67,7 @@ function Home() {
         </div>
       </section>
       <section className=" flex justify-center pb-4 w-full bg-gray-200 items-start">
-        <div className="max-w-3xl">
+        <div className="max-w-6xl">
           <Testimonials />
         </div>
       </section>

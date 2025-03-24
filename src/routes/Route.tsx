@@ -16,6 +16,11 @@ import ReligionCulture from '../pages/about/ReligionCulture';
 import FlimEcoSystem from '../pages/FlimEcoSystem';
 import WhosWho from '../pages/about/WhosWho';
 import Achievments from '../pages/about/Achievments';
+import KalingaStudiosOverview from '../pages/kalingaStudio/Overview';
+import ObjectivesPage from '../pages/kalingaStudio/Objectives';
+import StudiosPastGlory from '../pages/kalingaStudio/StudiosPastGlory';
+import BoardOfDirectors from '../pages/kalingaStudio/BoardOfDirectors';
+import WhoIsWho from '../pages/kalingaStudio/WhoIsWho';
 
 const RoutePage: React.FC = () => {
   return (
@@ -29,6 +34,12 @@ const RoutePage: React.FC = () => {
           <Route path={paths.dashboard} element={<Dashboard />} />
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
+          <Route path={paths.overview} element={<KalingaStudiosOverview />}/>
+          <Route path={paths.objectives} element={<ObjectivesPage />}/>
+          <Route path={paths.studiosPastGlory} element={<StudiosPastGlory />}/>
+          <Route path={paths.boardOfDirectors} element={<BoardOfDirectors />}/>
+          <Route path={paths.whosWho} element={<WhoIsWho />}/>
+
           <Route element={<AboutLayout />}>
             <Route path={paths.aCursoryLook} element={<OdishaAtGlance />} />
             <Route path={paths.ourVisionMission} element={<OurVisionMision />} />

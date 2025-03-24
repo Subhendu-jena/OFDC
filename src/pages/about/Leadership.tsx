@@ -77,10 +77,10 @@ const Leadership = () => {
     <div className="bg-white min-h-screen py-2">
       {/* Header Section */}
       <div className="px-12 mb-4">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 mt-4">
           Leadership
         </h1>
-        <p className="text-lg text-gray-600 w-full">
+        <p className="text-lg text-gray-600 w-full leading-relaxed text-justify">
           At OFDC, strong leadership is the foundation of our success. Our Board
           of Directors and Management Team bring a wealth of experience,
           strategic vision, and commitment to excellence, ensuring that we

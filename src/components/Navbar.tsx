@@ -208,6 +208,13 @@ const MainHeader = () => {
     {
       label: 'Kalinga Studio',
       url: '#',
+      children: [
+        { label: 'Overview', url: paths.overview },
+        { label: 'Objectives', url: paths.objectives },
+        { label: 'Studios Past Glory', url: paths.studiosPastGlory },
+        { label: 'Board of Directors', url: paths.boardOfDirectors },
+        { label: "Who's Who", url: paths.whosWho },
+      ],
     },
   ];
   const [openSubMenus, setOpenSubMenus] = useState<number[]>([]);

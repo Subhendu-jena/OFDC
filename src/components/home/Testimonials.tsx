@@ -11,10 +11,10 @@ function Testimonials() {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 6000,
     arrows: true,
   };
 
@@ -68,7 +68,6 @@ function Testimonials() {
         <p className=" text-red-500 font-semibold ">Our Testimonials</p>
         <p className=" text-gray-800 text-4xl font-bold">WHAT THEY SAY</p>
       </motion.div>
-      <div className=" w-full">
         <div className="w-full ">
           <Slider {...settings}>
             {testimonials.map((testimonial, index) => (
@@ -105,7 +104,6 @@ function Testimonials() {
             ))}
           </Slider>
         </div>
-      </div>
     </div>
   );
 }

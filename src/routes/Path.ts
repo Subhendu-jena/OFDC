@@ -13,6 +13,11 @@ interface paths {
   formerManagingDirectors:string;
   whoIsWho:string;
   flimEcoSystem:string;
+  overview:string;
+  objectives:string;
+  studiosPastGlory:string;
+  boardOfDirectors:string;
+  whosWho:string;
 }
 
 export const paths: paths = {
@@ -29,5 +34,10 @@ export const paths: paths = {
   bookingForm:"/booking-form",
   login:"/login",
   register:"/register",
-  contactUs:"/contact-us"
+  contactUs:"/contact-us",
+  overview:"/overview",
+  objectives:"/objectives",
+  studiosPastGlory:"/studios-past-glory",
+  boardOfDirectors:"/board-of-directors",
+  whosWho:"/whos-who"
 };
