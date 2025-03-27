@@ -32,18 +32,22 @@ function WorkShopOrSeminar() {
     {
       name: 'Name of the Applicant',
       label: 'Name of the Applicant',
+      type: 'text',
     },
     {
       name: 'Whatsapp No.',
       label: 'Whatsapp No.',
+      type: 'number',
     },
     {
       name: 'Alternative Contact No.',
       label: 'Alternative Contact No.',
+      type: 'number',
     },
     {
       name: 'Email Id',
       label: 'Email Id',
+      type: 'email',
     },
   ];
 
@@ -51,18 +55,22 @@ function WorkShopOrSeminar() {
     {
       name: 'Billing Name',
       label: 'Billing Name',
+      type: 'text',
     },
     {
       name: 'Contact No.',
       label: 'Contact No.',
+      type: 'number',
     },
     {
       name: 'GSTIN (If Any)',
       label: 'GSTIN (If Any)',
+      type: 'text',
     },
     {
       name: 'Email Id',
       label: 'Email Id',
+      type: 'email',
     },
   ];
 
@@ -106,7 +114,7 @@ function WorkShopOrSeminar() {
               Applicant Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AppliCationDetails.map(({ name, label }, index) => (
+              {AppliCationDetails.map(({ name, label,type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -115,7 +123,7 @@ function WorkShopOrSeminar() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                    type={type}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -163,7 +171,7 @@ function WorkShopOrSeminar() {
               Billing Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {BillingDetails.map(({ name, label }, index) => (
+              {BillingDetails.map(({ name, label,type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -172,7 +180,7 @@ function WorkShopOrSeminar() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                    type={type}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -217,7 +225,7 @@ function WorkShopOrSeminar() {
             <h3 className="text-lg font-semibold border-b pb-2 mb-4 text-red-600">
               Booking Details
             </h3>
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            {/* <div className="grid grid-cols-3 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
                 Purpose of Booking (in Detail):
               </label>
@@ -228,7 +236,7 @@ function WorkShopOrSeminar() {
                 rows={3}
                 required
               ></textarea>
-            </div>
+            </div> */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               {BookingDetails.map(({ name, label, type }, index) => (
                 <div

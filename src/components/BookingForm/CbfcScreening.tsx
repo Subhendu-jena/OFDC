@@ -37,22 +37,27 @@ function CbfcScreening() {
     {
       name: 'Name of the Film',
       label: 'Name of the Film',
+      type: 'text',
     },
     {
       name: 'Language of the Film',
       label: 'Language of the Film',
+      type: 'text',
     },
     {
       name: 'Duration of the Film ',
       label: 'Duration of the Film ',
+      type:'time'
     },
     {
       name: 'Aspect Ratio',
       label: 'Aspect Ratio',
+      type: 'text',
     },
     {
       name: 'Name of the Director',
       label: 'Name of the Director',
+      type: 'text',
     },
   ];
 
@@ -60,26 +65,32 @@ function CbfcScreening() {
     {
       name: 'Name of the Producer',
       label: 'Name of the Producer',
+      type: 'text',
     },
     {
       name: 'Name of the Production House ',
       label: 'Name of the Production House ',
+      type: 'text',
     },
     {
       name: 'Whatsapp No.',
       label: 'Whatsapp No.',
+      type: 'number',
     },
     {
       name: 'Alternative Contact No.',
       label: 'Alternative Contact No.',
+      type: 'number',
     },
     {
       name: 'Email Id',
       label: 'Email Id',
+      type: 'email',
     },
     {
       name: 'GSTIN (If any) ',
       label: 'GSTIN (If any) ',
+      type:'text'
     },
   ];
 
@@ -126,7 +137,7 @@ function CbfcScreening() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                     type={ScreeningDetails[index].type || "text"}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -178,7 +189,7 @@ function CbfcScreening() {
               Production Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ProductionDetails.map(({ name, label }, index) => (
+              {ProductionDetails.map(({ name, label,type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -187,7 +198,7 @@ function CbfcScreening() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                    type={type}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -217,7 +228,7 @@ function CbfcScreening() {
             <h3 className="text-lg font-semibold border-b pb-2 mb-4 text-red-600">
               Booking Details
             </h3>
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            {/* <div className="grid grid-cols-3 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
                 Purpose of Booking (in Detail):
               </label>
@@ -228,7 +239,7 @@ function CbfcScreening() {
                 rows={3}
                 required
               ></textarea>
-            </div>
+            </div> */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               {BookingDetails.map(({ name, label, type }, index) => (
                 <div
@@ -252,7 +263,7 @@ function CbfcScreening() {
           </div>
 
           {/* Document Uploads Section */}
-          <div className="p-5 bg-white rounded-lg shadow mt-6">
+          <div className="p-5 bg-white rounded-lg shadow ">
             <h3 className="text-lg font-semibold border-b pb-2 mb-4 text-red-600">
               Document Uploads
             </h3>
@@ -273,6 +284,7 @@ function CbfcScreening() {
                   <input
                     type="file"
                     name={name}
+                  accept="application/pdf,image/svg+xml,image/png"
                     className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                     onChange={handleChange}
                   />

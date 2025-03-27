@@ -59,66 +59,81 @@ export default function FlimTradeShow() {
     {
       name: 'Name of the Applicant',
       label: 'Name of the Applicant',
+      type: 'text',
     },
     {
       name: 'Whatsapp No.',
       label: 'Whatsapp No.',
+      type: 'number',
     },
     {
       name: 'Alternative Contact No.',
       label: 'Alternative Contact No.',
+      type: 'number',
     },
     {
       name: 'Email Id',
       label: 'Email Id',
+      type: 'email',
     },
   ];
   const ScreeningDetails = [
     {
       name: 'Name of the Film',
       label: 'Name of the Film',
+      type: 'text',
     },
     {
       name: 'Language of the Film',
       label: 'Language of the Film',
+      type: 'text',
     },
     {
       name: 'Duration of the Film ',
       label: 'Duration of the Film ',
+      type: 'text',
     },
     {
       name: 'Aspect Ratio',
       label: 'Aspect Ratio',
+      type: 'text',
     },
     {
       name: 'Name of the Director',
       label: 'Name of the Director',
+      type: 'text',
     },
   ];
   const ProductionDetails = [
     {
       name: 'Name of the Producer',
       label: 'Name of the Producer',
+      type: 'text',
     },
     {
       name: 'Name of the Production House ',
       label: 'Name of the Production House ',
+      type: 'text',
     },
     {
       name: 'Whatsapp No.',
       label: 'Whatsapp No.',
+      type: 'number',
     },
     {
       name: 'Alternative Contact No.',
       label: 'Alternative Contact No.',
+      type: 'number',
     },
     {
       name: 'Email Id',
       label: 'Email Id',
+      type: 'email',
     },
     {
       name: 'GSTIN (If any) ',
       label: 'GSTIN (If any) ',
+      type: 'text',
     },
   ];
   const Requirements = [
@@ -130,18 +145,22 @@ export default function FlimTradeShow() {
     {
       name: 'Billing Name',
       label: 'Billing Name',
+      type:'text'
     },
     {
       name: 'Contact No.',
       label: 'Contact No.',
+      type: 'number',
     },
     {
       name: 'GSTIN (If Any)',
       label: 'GSTIN (If Any)',
+      type: 'text',
     },
     {
       name: 'Email Id',
       label: 'Email Id',
+      type: 'email',
     },
   ];
 
@@ -179,7 +198,7 @@ export default function FlimTradeShow() {
               Applicant Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AppliCationDetails.map(({ name, label }, index) => (
+              {AppliCationDetails.map(({ name, label,type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -188,7 +207,7 @@ export default function FlimTradeShow() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                    type={type}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -238,7 +257,7 @@ export default function FlimTradeShow() {
               Screening Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ScreeningDetails.map(({ name, label }, index) => (
+              {ScreeningDetails.map(({ name, label,type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -247,7 +266,7 @@ export default function FlimTradeShow() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                    type={type}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -299,7 +318,7 @@ export default function FlimTradeShow() {
               Production Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ProductionDetails.map(({ name, label }, index) => (
+              {ProductionDetails.map(({ name, label,type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -308,7 +327,7 @@ export default function FlimTradeShow() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                    type={type}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -339,7 +358,7 @@ export default function FlimTradeShow() {
               Billing Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {BillingDetails.map(({ name, label }, index) => (
+              {BillingDetails.map(({ name, label,type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -348,7 +367,7 @@ export default function FlimTradeShow() {
                     {label} :
                   </label>
                   <input
-                    type="text"
+                    type={type}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -423,7 +442,7 @@ export default function FlimTradeShow() {
             <h3 className="text-lg font-semibold border-b pb-2 mb-4 text-red-600">
               Booking Details
             </h3>
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            {/* <div className="grid grid-cols-3 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
                 Purpose of Booking (in Detail):
               </label>
@@ -434,7 +453,7 @@ export default function FlimTradeShow() {
                 rows={3}
                 required
               ></textarea>
-            </div>
+            </div> */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
               {BookingDetails.map(({ name, label, type }, index) => (
                 <div
