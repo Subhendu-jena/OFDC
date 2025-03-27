@@ -21,6 +21,21 @@ import ObjectivesPage from '../pages/kalingaStudio/Objectives';
 import StudiosPastGlory from '../pages/kalingaStudio/StudiosPastGlory';
 import BoardOfDirectors from '../pages/kalingaStudio/BoardOfDirectors';
 import WhoIsWho from '../pages/kalingaStudio/WhoIsWho';
+import KalingaStudioLayout from '../layout/KalingaStudioLayout.tsx/KalingaStudioLayout';
+import OdishaIndiasBestKeptSecret from '../pages/discoverOdisha/OdishaIndiasBestKeptSecret';
+import EchoesOfHistory from '../pages/discoverOdisha/EchoesOfHistory';
+import DiscoverOdishaLayout from '../layout/discoverOdisha/DiscoverOdishaLayout';
+import Climate from '../pages/discoverOdisha/Climate';
+import CulturalLegacy from '../pages/discoverOdisha/CulturalLegacy';
+import GeographicalFeature from '../pages/discoverOdisha/GeographicalFeature';
+import MajorFestivals from '../pages/discoverOdisha/MajorFestivals';
+import CinematicHeritage from '../pages/discoverOdisha/CinematicHeritage';
+import OdiaFilmArchiveLayout from '../layout/odiaFilmArchive/OdiaFilmArchiveLayout';
+import ArchivalGallery from '../pages/odiaFilmArchive/ArchivalGallery';
+import ArchivesInsight from '../pages/odiaFilmArchive/ArchivesInsight';
+import KeyPriorities from '../pages/odiaFilmArchive/KeyPriorities';
+import OdiaFilmAnthology from '../pages/odiaFilmArchive/OdiaFilmAnthology';
+import VaultofPreservedFilms from '../pages/odiaFilmArchive/VaultofPreservedFilms';
 
 const RoutePage: React.FC = () => {
   return (
@@ -34,15 +49,61 @@ const RoutePage: React.FC = () => {
           <Route path={paths.dashboard} element={<Dashboard />} />
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
-          <Route path={paths.overview} element={<KalingaStudiosOverview />}/>
-          <Route path={paths.objectives} element={<ObjectivesPage />}/>
-          <Route path={paths.studiosPastGlory} element={<StudiosPastGlory />}/>
-          <Route path={paths.boardOfDirectors} element={<BoardOfDirectors />}/>
-          <Route path={paths.whosWho} element={<WhoIsWho />}/>
+          {/* OdiaFilmArchiveLayout */}
+          <Route element={<OdiaFilmArchiveLayout />}>
+            <Route path={paths.archivalGallery} element={<ArchivalGallery />} />
+            <Route path={paths.archivesInsight} element={<ArchivesInsight />} />
+            <Route path={paths.keyPriorities} element={<KeyPriorities />} />
+            <Route
+              path={paths.odiaFilmAnthology}
+              element={<OdiaFilmAnthology />}
+            />
+            <Route
+              path={paths.vaultofPreservedFilms}
+              element={<VaultofPreservedFilms />}
+            />
+          </Route>
 
+          {/* DiscoverOdishaLayout */}
+          <Route element={<DiscoverOdishaLayout />}>
+            <Route
+              path={paths.odishaIndiasBestKeptSecret}
+              element={<OdishaIndiasBestKeptSecret />}
+            />
+            <Route path={paths.echoesofhistory} element={<EchoesOfHistory />} />
+            <Route path={paths.climate} element={<Climate />} />
+            <Route path={paths.culturalLegacy} element={<CulturalLegacy />} />
+            <Route
+              path={paths.geographicalFeature}
+              element={<GeographicalFeature />}
+            />
+            <Route path={paths.majorFestivals} element={<MajorFestivals />} />
+            <Route
+              path={paths.cinematicHeritage}
+              element={<CinematicHeritage />}
+            />
+          </Route>
+          {/* KalingaStudioLayout */}
+          <Route element={<KalingaStudioLayout />}>
+            <Route path={paths.overview} element={<KalingaStudiosOverview />} />
+            <Route path={paths.objectives} element={<ObjectivesPage />} />
+            <Route
+              path={paths.studiosPastGlory}
+              element={<StudiosPastGlory />}
+            />
+            <Route
+              path={paths.boardOfDirectors}
+              element={<BoardOfDirectors />}
+            />
+            <Route path={paths.whosWho} element={<WhoIsWho />} />
+          </Route>
+          {/* AboutLayout */}
           <Route element={<AboutLayout />}>
             <Route path={paths.aCursoryLook} element={<OdishaAtGlance />} />
-            <Route path={paths.ourVisionMission} element={<OurVisionMision />} />
+            <Route
+              path={paths.ourVisionMission}
+              element={<OurVisionMision />}
+            />
             <Route path={paths.achievments} element={<Achievments />} />
             <Route path={paths.leadership} element={<Leadership />} />
             <Route
@@ -53,10 +114,7 @@ const RoutePage: React.FC = () => {
               path={paths.formerManagingDirectors}
               element={<ReligionCulture />}
             />
-            <Route
-              path={paths.whoIsWho}
-              element={<WhosWho />}
-            />
+            <Route path={paths.whoIsWho} element={<WhosWho />} />
           </Route>
         </Route>
       </Routes>

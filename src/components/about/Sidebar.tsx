@@ -1,22 +1,16 @@
 import { useState } from 'react';
 import { MoveRightIcon, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { paths } from '../../routes/Path';
-
-const Sidebar = () => {
+interface MenuItem {
+  label: string;
+  url: string;
+}
+const Sidebar = ({menuItems} : { menuItems: MenuItem[] })=> {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const path = location.pathname;
 
-  const menuItems = [
-    { label: ' A Cursory Look', url: paths.aCursoryLook },
-    { label: 'Our Vision & Mission', url: paths.ourVisionMission },
-    { label: 'Achievments', url: paths.achievments },
-    { label: 'Leadership', url: paths.leadership },
-    { label: 'Former Chairpersons', url: paths.formerChairpersons },
-    { label: 'Former Managing Directors', url: paths.formerManagingDirectors},
-    { label: "Who's Who", url: paths.whoIsWho },
-  ];
+
 
   return (
     <div className=" lg:w-[22%] z-10 relative">

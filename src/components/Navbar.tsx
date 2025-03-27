@@ -198,11 +198,28 @@ const MainHeader = () => {
       ],
     },
     {
-      label: 'Resources',
+      label: 'Odia Film Archive',
       url: '#',
       children: [
-        { label: 'Type of Equipment', url: '#' },
-        { label: 'Equipment Lists', url: '#' },
+        { label: 'Archives Insight', url: paths.archivesInsight },
+        { label: 'Key Priorities', url: paths.keyPriorities },
+        { label: 'Vault of Preserved Films', url: paths.vaultofPreservedFilms },
+        { label: 'Odia Film Anthology', url: paths.odiaFilmAnthology },
+        { label: 'Archival Gallery', url: paths.archivalGallery },
+      ],
+    },
+    {
+      label: 'Discover Odisha',
+      url: '#',
+      children: [
+        { label: "ODISHA : India's Best Kept Secret", url: paths.odishaIndiasBestKeptSecret },
+        { label: 'Echoes of History', url: paths.echoesofhistory },
+        { label: 'Climate', url:paths.climate },
+        { label: 'Geographical Feature', url: paths.geographicalFeature },
+        { label: 'Cultural Legacy', url: paths.culturalLegacy },
+        { label: 'Major Festivals', url: paths.majorFestivals },
+        { label: 'Cinematic Heritage', url: paths.cinematicHeritage },
+        // { label: 'Explore Odisha', url: },
       ],
     },
     {

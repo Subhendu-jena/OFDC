@@ -10,7 +10,6 @@ import {
   Bookmark,
   Globe,
 } from 'lucide-react';
-import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 
 const BoardOfDirectors: React.FC = () => {
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
@@ -24,7 +23,7 @@ const BoardOfDirectors: React.FC = () => {
       id: 1,
       position: 'Chairman, OFDC',
       name: 'Vacant',
-      localName: 'ଅଧ୍ୟକ୍ଷ, ଓଡିଶା ଚଳଚ୍ଚିତ୍ର ଉନ୍ନୟନ ନିଗମ ଲିମିଟେଡ',
+      // localName: 'ଅଧ୍ୟକ୍ଷ, ଓଡିଶା ଚଳଚ୍ଚିତ୍ର ଉନ୍ନୟନ ନିଗମ ଲିମିଟେଡ',
       imageUrl: '/api/placeholder/200/200',
       isVacant: true,
       category: 'leadership',
@@ -33,7 +32,7 @@ const BoardOfDirectors: React.FC = () => {
       id: 2,
       position: 'Managing Director, OFDC Ltd.',
       name: 'Sri Samarth Verma, IAS',
-      localName: 'ଶ୍ରୀ ସମର୍ଥ ବର୍ମା, ଭା.ପ୍ର.ସେ. ପରିଚାଳନା ନିର୍ଦ୍ଦେଶକ',
+      // localName: 'ଶ୍ରୀ ସମର୍ଥ ବର୍ମା, ଭା.ପ୍ର.ସେ. ପରିଚାଳନା ନିର୍ଦ୍ଦେଶକ',
       imageUrl: 'https://odishanewstune.com/wp-content/uploads/2019/02/Verma-.jpg',
       isVacant: false,
       category: 'leadership',
@@ -44,8 +43,8 @@ const BoardOfDirectors: React.FC = () => {
       position:
         'Special Secretary to Govt. Industries Department Govt. of Odisha',
       name: 'Sri Subhendra Kumar Nayak, OAS',
-      localName:
-        'ଶ୍ରୀ ଶୁଭେନ୍ଦ୍ର କୁମାର ନାୟକ, ଓ.ପ୍ର.ସେ. ସ୍ଵତନ୍ତ୍ର ଶାସନ ସଚିବ ଶିଳ୍ପ ବିଭାଗ, ଓଡିଶା ସରକାର',
+      // localName:
+      //   'ଶ୍ରୀ ଶୁଭେନ୍ଦ୍ର କୁମାର ନାୟକ, ଓ.ପ୍ର.ସେ. ସ୍ଵତନ୍ତ୍ର ଶାସନ ସଚିବ ଶିଳ୍ପ ବିଭାଗ, ଓଡିଶା ସରକାର',
       imageUrl: '/api/placeholder/200/200',
       isVacant: false,
       category: 'government',
@@ -56,8 +55,8 @@ const BoardOfDirectors: React.FC = () => {
       position:
         'Additional Secretary to Govt. Public Enterprise Department Govt. of Odisha',
       name: 'Sri Susanta Kumar Singh, OAS (SAG)',
-      localName:
-        'ଶ୍ରୀ ସୁଶାନ୍ତ କୁମାର ସିଂ, ଓ.ପ୍ର.ସେ. (ଏସ୍.ଏ.ଜି.) ଅତିରିକ୍ତ ଶାସନ ସଚିବ ସାଧାରଣ ଉଦ୍ୟୋଗ ବିଭାଗ, ଓଡିଶା ସରକାର',
+      // localName:
+      //   'ଶ୍ରୀ ସୁଶାନ୍ତ କୁମାର ସିଂ, ଓ.ପ୍ର.ସେ. (ଏସ୍.ଏ.ଜି.) ଅତିରିକ୍ତ ଶାସନ ସଚିବ ସାଧାରଣ ଉଦ୍ୟୋଗ ବିଭାଗ, ଓଡିଶା ସରକାର',
       imageUrl: 'https://img-cdn.thepublive.com/fit-in/1280x720/filters:format(webp)/sambad-english/media/post_attachments/wp-content/uploads/2020/08/susanta-singh.jpg',
       isVacant: false,
       category: 'government',
@@ -67,7 +66,7 @@ const BoardOfDirectors: React.FC = () => {
       id: 5,
       position: 'Director Doordarshan Kendra, Bhubaneswar Govt. of India',
       name: 'Director',
-      localName: 'ନିର୍ଦ୍ଦେଶକ ଦୂରଦର୍ଶନ କେନ୍ଦ୍ର, ଭୁବନେଶ୍ୱର ଭାରତ ସରକାର',
+      // localName: 'ନିର୍ଦ୍ଦେଶକ ଦୂରଦର୍ଶନ କେନ୍ଦ୍ର, ଭୁବନେଶ୍ୱର ଭାରତ ସରକାର',
       imageUrl: '/api/placeholder/200/200',
       isVacant: false,
       category: 'government',
@@ -77,12 +76,12 @@ const BoardOfDirectors: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <KHeroSection
+      {/* <KHeroSection
         subHead1="Board of Directors"
         heading="Meet the Visionaries"
         subHead2="Meet the visionary leaders guiding the Odisha Film Development Corporation Ltd. toward excellence in film production and promotion."
         tag="Directors"
-      />
+      /> */}
       {/* Main Content */}
       <main className="container mx-auto max-w-6xl px-6 py-12 mt-8">
         {/* Introduction */}
@@ -164,9 +163,9 @@ const BoardOfDirectors: React.FC = () => {
                     >
                       {director.name}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-2">
+                    {/* <p className="text-sm text-gray-500 mb-2">
                       {director.localName}
-                    </p>
+                    </p> */}
                     <p
                       className={`text-sm font-medium ${
                         director.category === 'leadership'

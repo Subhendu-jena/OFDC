@@ -2,7 +2,17 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../../components/about/Sidebar';
 import { Film } from 'lucide-react';
+import { paths } from '../../routes/Path';
 const AboutLayout: React.FC = () => {
+  const menuItems = [
+    { label: ' A Cursory Look', url: paths.aCursoryLook },
+    { label: 'Our Vision & Mission', url: paths.ourVisionMission },
+    { label: 'Achievments', url: paths.achievments },
+    { label: 'Leadership', url: paths.leadership },
+    { label: 'Former Chairpersons', url: paths.formerChairpersons },
+    { label: 'Former Managing Directors', url: paths.formerManagingDirectors},
+    { label: "Who's Who", url: paths.whoIsWho },
+  ];
   return (
     <div className="w-full">
       <div className="fixed top-0 left-0 w-full h-[50vh] bg-black flex items-center justify-center z-10">
@@ -23,7 +33,7 @@ const AboutLayout: React.FC = () => {
 
       {/* Main Content - Ensure it starts after the fixed section */}
       <div className="flex bg-white flex-col lg:flex-row min-h-screen z-30 pt-[50vh]">
-        <Sidebar />
+        <Sidebar menuItems={menuItems}/>
 
           <main className="flex-1 relative z-20">
           <Outlet />
