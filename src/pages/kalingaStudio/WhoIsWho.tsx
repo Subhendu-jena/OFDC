@@ -10,10 +10,8 @@ import {
   Building,
   Star,
   Calendar,
-  ExternalLink,
-  Zap
+Zap
 } from 'lucide-react';
-import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 interface Official {
   id: number;
   name: string;
@@ -102,7 +100,7 @@ const WhoIsWho:React.FC = () => {
   
   return (
     <div className="min-h-screen bg-gray-50 relative">
-      <KHeroSection subHead1="Odisha Film Development Corporation" heading="Who's Who" subHead2="Find officials and their contact information" tag="Officials" />
+      {/* <KHeroSection subHead1="Odisha Film Development Corporation" heading="Who's Who" subHead2="Find officials and their contact information" tag="Officials" /> */}
       
       {/* Main Content */}
       <main className="relative z-10 container mx-auto max-w-6xl px-6 py-12 grid gap-12">
@@ -156,15 +154,6 @@ const WhoIsWho:React.FC = () => {
               <Star size={20} className="mr-2" />
               Official Directory
             </h2>
-            <a 
-              href="https://industries.odisha.gov.in/about-us/whos-who/web-directory" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-white text-sm flex items-center hover:underline"
-            >
-              View on Portal
-              <ExternalLink size={14} className="ml-1" />
-            </a>
           </div>
           
           <div className="overflow-x-auto">

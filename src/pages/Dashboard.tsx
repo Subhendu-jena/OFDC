@@ -9,7 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import TableComponent from '../components/Table';
+import TableComponent, { Official } from '../components/Table';
 import { useState } from 'react';
 
 const Dashboard = () => {
@@ -35,15 +35,15 @@ const Dashboard = () => {
     { label: 'Status', field: 'status', align: 'center' },
   ];
 
-  const dataTable = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'Active' },
+  const dataTable:Official[] = [
+    { slNo: 1, name: 'John Doe', email: 'john@example.com', status: 'Active' },
     {
-      id: 2,
+      slNo: 2,
       name: 'Jane Smith',
       email: 'jane@example.com',
       status: 'Inactive',
     },
-    { id: 3, name: 'Sam Wilson', email: 'sam@example.com', status: 'Pending' },
+    { slNo: 3, name: 'Sam Wilson', email: 'sam@example.com', status: 'Pending' },
   ];
 
   const [filter, setFilter] = useState('monthly');

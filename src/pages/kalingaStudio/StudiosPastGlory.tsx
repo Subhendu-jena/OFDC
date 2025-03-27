@@ -1,6 +1,6 @@
 import React from 'react';
 import { Film, Award, Camera, MapPin, Star } from 'lucide-react';
-import KHeroSection from '../../components/KalingaStudio/KHeroSection';
+// import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import { motion } from 'framer-motion';
 
 const StudiosPastGlory: React.FC = () => {
@@ -49,12 +49,12 @@ const StudiosPastGlory: React.FC = () => {
 
   return (
     <div className="bg-white text-gray-800 font-sans">
-      <KHeroSection
+      {/* <KHeroSection
         subHead1="Studio’s Past Glory"
         heading="The Legacy of Odia Cinema World"
         subHead2="From 'Sita Bibaha' in 1934 to the digital era, shaping the cinematic landscape of Odisha and beyond."
         tag="History"
-      />
+      /> */}
 
       <section id="history" className="pt-20 pb-24 relative">
         {/* Background elements */}
@@ -124,8 +124,8 @@ const StudiosPastGlory: React.FC = () => {
                 className="w-1/4 px-2 relative z-10"
               >
                 {/* Year marker */}
-                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 p-5 rounded-full bg-red-400 flex items-center justify-center z-20">
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center border-2 border-red-400">
+                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 p-8 rounded-full bg-red-400 flex items-center justify-center z-20">
+                  <div className="w-8 h-8 p-6 rounded-full bg-white flex items-center justify-center border-2 border-red-400">
                     <span className="text-xs font-bold">{item.year}</span>
                   </div>
                 </div>

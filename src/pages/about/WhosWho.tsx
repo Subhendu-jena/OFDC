@@ -1,4 +1,5 @@
-import TableComponent from '../../components/Table'
+import TableComponent, { Official } from '../../components/Table'
+
 
 function WhosWho() {
   const columns = [
@@ -9,7 +10,7 @@ function WhosWho() {
     { field: "email", label: "Email Id" },
   ];
   
-  const data = [
+  const data:Official[] = [
     { slNo: 1, name: "-Vacant-", designation: "Chairman", contactNo: "0671-2305169, 2306532", email: "" },
     { slNo: 2, name: "Sri Samarth Verma, IAS", designation: "Managing Director", contactNo: "0671-2305169, 2306532", email: "mdodfilm@gmail.com" },
     { slNo: 3, name: "Sri B.M.B Pattnaik", designation: "Officer on Special Duty", contactNo: "9437208372", email: "" },
