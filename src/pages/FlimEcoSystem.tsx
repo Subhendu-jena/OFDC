@@ -113,24 +113,34 @@ import React from 'react';
 const FlimEcoSystem = () => {
   return (
     <div className="w-50 h-screen p-20">
-      <div className="grid grid-cols-3 gap-0">
-        <div></div>
-        <div>
+      <div className="grid grid-cols-5 gap-0  align-center">
+        <div className="w-[200px] h-[40px] flex mt-15 z-100">
+          <div className="w-[200px] bg-[#6ea56c] rounded-tl-lg"></div>
           <div
-            className="bg-black p-5"
+            className="bg-[#6ea56c] p-5"
+            style={{
+              clipPath: 'polygon(100% 50%, 0% 100%, 0% 0%)',
+            }}
+          ></div>
+        </div>
+        <div className="pl-5">
+          <div
+            className="bg-[#548453] p-5"
             style={{ clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)' }}
           ></div>
-          <div className="h-[100px] w-[10px] bg-black m-0 p-0"></div>
+          <div className="h-[100px] w-[40px] bg-[#548453] m-0 p-0"></div>
           <div
-            className="bg-black p-5 mt-[-20px] "
+            className="bg-[#548453] p-5 mt-[-20px] "
             style={{
               clipPath:
                 'polygon(100% 100%, 100% 50%, 50% 50%, 0% 50%, 0% 100%, 50% 50%)',
+                // 'polygon(100% 0%, 0% 0%, 0% 100%, 0% 100%, 50% 50%)',
             }}
           ></div>
         </div>
         <div></div>
       </div>
+      <div className="w-[30px] mt-[-60px] z-100 h-[10px] bg-[#365535] rounded-bl-lg"></div>
     </div>
   );
 };
