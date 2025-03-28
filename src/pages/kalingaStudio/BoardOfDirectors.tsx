@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import {
   UserCircle,
   Award,
-  Building,
-  Briefcase,
   ChevronDown,
   ChevronUp,
   GraduationCap,
   Bookmark,
   Globe,
 } from 'lucide-react';
-
+import subhendra from "../../assets/ProfileImages/Sri Subhendra Kumar Nayak, OAS.png"
 const BoardOfDirectors: React.FC = () => {
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
@@ -45,7 +43,7 @@ const BoardOfDirectors: React.FC = () => {
       name: 'Sri Subhendra Kumar Nayak, OAS',
       // localName:
       //   'ଶ୍ରୀ ଶୁଭେନ୍ଦ୍ର କୁମାର ନାୟକ, ଓ.ପ୍ର.ସେ. ସ୍ଵତନ୍ତ୍ର ଶାସନ ସଚିବ ଶିଳ୍ପ ବିଭାଗ, ଓଡିଶା ସରକାର',
-      imageUrl: '/api/placeholder/200/200',
+      imageUrl: `${subhendra}`,
       isVacant: false,
       category: 'government',
       bio: 'Brings extensive experience in industrial policy development and implementation.',
@@ -67,7 +65,7 @@ const BoardOfDirectors: React.FC = () => {
       position: 'Director Doordarshan Kendra, Bhubaneswar Govt. of India',
       name: 'Director',
       // localName: 'ନିର୍ଦ୍ଦେଶକ ଦୂରଦର୍ଶନ କେନ୍ଦ୍ର, ଭୁବନେଶ୍ୱର ଭାରତ ସରକାର',
-      imageUrl: '/api/placeholder/200/200',
+      imageUrl: '',
       isVacant: false,
       category: 'government',
       bio: "Brings media expertise and broadcasting experience to enhance OFDC's outreach.",
@@ -107,14 +105,7 @@ const BoardOfDirectors: React.FC = () => {
               <UserCircle size={20} className="mr-2" />
               <span>All Directors</span>
             </button>
-            <button className="px-6 py-3 bg-white text-red-500 rounded-full shadow-md hover:shadow-lg transition-all flex items-center">
-              <Briefcase size={20} className="mr-2" />
-              <span>Leadership</span>
-            </button>
-            <button className="px-6 py-3 bg-white text-red-500 rounded-full shadow-md hover:shadow-lg transition-all flex items-center">
-              <Building size={20} className="mr-2" />
-              <span>Government Nominees</span>
-            </button>
+           
           </div>
         </div>
 
@@ -148,7 +139,7 @@ const BoardOfDirectors: React.FC = () => {
                       <UserCircle size={96} className="text-gray-400" />
                     ) : (
                       <img
-                        src={director.imageUrl}
+                        src={director.imageUrl || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
                         alt={director.name}
                         className="w-full h-full object-cover"
                       />

@@ -8,22 +8,28 @@ import {
   TreePine,
   Building,
 } from 'lucide-react';
-
+import kalingastudio from '../../assets/KalingaAssets/kalingaStudio.jpg';
 const KalingaStudiosOverview = () => {
   return (
     <div className="w-full px-5">
       <div className="min-h-screen bg-gray-50">
-       
-
-        <section id="about" className=" md:py-24 bg-white">
+        <section id="about" className=" md:py-10 bg-white">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row gap-12 items-center">
               <div className="md:w-1/2">
-                <img
+                {/* <img
                   src="https://img-cdn.thepublive.com/fit-in/1200x675/filters:format(webp)/sambad-english/media/post_banners/wp-content/uploads/2023/10/kalinga-studio-750x430-1.jpg"
                   alt="Kalinga Studios"
                   className="rounded-lg shadow-xl w-full"
-                />
+                /> */}
+                <div className="relative ">
+                  <img
+                    src={kalingastudio}
+                    alt="Sample"
+                    className="w-full h-full grayscale-60 object-cover rounded-lg"
+                  />
+                  {/* <div className="absolute inset-0 bg-black bg-opacity-50"></div> */}
+                </div>
               </div>
               <div className="md:w-1/2">
                 <span className="text-red-500 font-semibold">ABOUT US</span>
@@ -208,69 +214,77 @@ const KalingaStudiosOverview = () => {
               </div>
 
               <div className="bg-gray-50 rounded-xl p-8 border-t-4 border-red-500 hover:shadow-lg transition-shadow">
-               <div className='grid grid-cols-7'> <div className="bg-red-100  col-span-2 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                  <TreePine className="h-8 w-8 text-red-500" />
-                </div>
-                <div className='col-span-5'>
-                  <h3 className="text-xl font-bold mb-4">Zone 2 (Phase-1)</h3>
-                  <ul className="space-y-3 text-gray-700">
-                    <li className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                      <span>Outdoor Shooting Locales</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                      <span>Performance Stage</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                      <span>Theme-based Gardens</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                      <span>Public Entertainment Area</span>
-                    </li>
-                  </ul>
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <span className="inline-block bg-red-100 text-red-600 px-3 py-1 text-sm font-medium rounded-full">
-                      Currently In Development
-                    </span>
+                <div className="grid grid-cols-7">
+                  {' '}
+                  <div className="bg-red-100  col-span-2 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <TreePine className="h-8 w-8 text-red-500" />
                   </div>
-                </div></div>
+                  <div className="col-span-5">
+                    <h3 className="text-xl font-bold mb-4">Zone 2 (Phase-1)</h3>
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                        <span>Outdoor Shooting Locales</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                        <span>Performance Stage</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                        <span>Theme-based Gardens</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                        <span>Public Entertainment Area</span>
+                      </li>
+                    </ul>
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <span className="inline-block bg-red-100 text-red-600 px-3 py-1 text-sm font-medium rounded-full">
+                        Currently In Development
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="bg-gray-50 rounded-xl p-8 border-t-4 border-gray-300 hover:shadow-lg transition-shadow">
-               <div className='grid grid-cols-7'> <div className="bg-gray-200 col-span-2 rounded-full w-16 h-16 flex items-center justify-center mb-6">
-                  <Building className="h-8 w-8 text-gray-500" />
+                <div className="grid grid-cols-7">
+                  {' '}
+                  <div className="bg-gray-200 col-span-2 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <Building className="h-8 w-8 text-gray-500" />
+                  </div>
+                  <div className="col-span-5">
+                    <h3 className="text-xl font-bold mb-4">Zone 3 (Phase-2)</h3>
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                        <span>Commercial Real Estate</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                        <span>Retail and Office Space</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                        <span>Food Court</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                        <span>Open Area for Social Gatherings</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
+                        <span>4-Star Hotel</span>
+                      </li>
+                    </ul>
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <span className="inline-block bg-gray-200 text-gray-600 px-3 py-1 text-sm font-medium rounded-full">
+                        Future Development
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className='col-span-5'><h3 className="text-xl font-bold mb-4">Zone 3 (Phase-2)</h3>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                    <span>Commercial Real Estate</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                    <span>Retail and Office Space</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                    <span>Food Court</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                    <span>Open Area for Social Gatherings</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ChevronRight className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                    <span>4-Star Hotel</span>
-                  </li>
-                </ul>
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <span className="inline-block bg-gray-200 text-gray-600 px-3 py-1 text-sm font-medium rounded-full">
-                    Future Development
-                  </span>
-                </div></div></div>
               </div>
             </div>
           </div>

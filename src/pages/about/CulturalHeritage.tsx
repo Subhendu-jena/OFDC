@@ -38,7 +38,7 @@ function CulturalHeritage() {
     
   return (
     <div className=' bg-white'>
-      <TableComponent columns={columns} data={dataTable} />
+      <TableComponent columns={columns} data={dataTable} Heading='Former Chairpersons' />
     </div>
   )
 }

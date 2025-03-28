@@ -82,7 +82,7 @@ const OurVisionMision = () => {
   return (
     <div className="min-h-screen bg-white font-sans">
       {/* Content Tabs Section */}
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-8xl mx-auto px-4">
         <div className=" shadow-2xl overflow-hidden">
           <div className="flex flex-col">
             <div

@@ -1,78 +1,85 @@
-const Chairman = {
-  id: 1,
-  name: 'Vacant',
-  position: 'Chairman, OFDC',
-  translation: 'ଅଧ୍ୟକ୍ଷ, ଓଡିଶା ଚଳଚ୍ଚିତ୍ର ଉନ୍ନୟନ ନିଗମ ଲିମିଟେଡ',
-  image:""
-};
-const managingDirector = {
-  id: 2,
-  name: 'Sri Samarth Verma, IAS',
-  position: 'Managing Director, OFDC Ltd.',
-  translation: 'ଶ୍ରୀ ସମର୍ଥ ବର୍ମା, ଭା.ପ୍ର.ସେ. | ପରିଚାଳନା ନିର୍ଦ୍ଦେଶକ',
-  image:""
-};
-const nominee = [
-  {
-    id: 3,
-    name: 'Sri Subhendra Kumar Nayak, OAS',
-    position: 'Special Secretary to Govt., Industries Department',
-    translation: 'ଶ୍ରୀ ଶୁଭେନ୍ଦ୍ର କୁମାର ନାୟକ, ଓ.ପ୍ର.ସେ. | ସ୍ଵତନ୍ତ୍ର ଶାସନ ସଚିବ',
+import React from "react";
+import subhendra from "../../assets/ProfileImages/Sri Subhendra Kumar Nayak, OAS.png"
+import saroj from "../../assets/ProfileImages/Sri Saroj Kumar Samal, IAS.png"
+import samarth from "../../assets/ProfileImages/Sri Samarth Verma, IAS.png"
+import dillip from "../../assets/ProfileImages/Sri Dillip Kumar Mishra.jpeg"
+import bijendra from "../../assets/ProfileImages/Bijendra Mohanty].png"
+import mansi from "../../assets/ProfileImages/Mansi Nimbhal, IAS.png"
+const Leadership:React.FC = () => {
+  const Chairman = {
+    id: 1,
+    name: 'Vacant',
+    position: 'Chairman, OFDC',
+    translation: 'ଅଧ୍ୟକ୍ଷ, ଓଡିଶା ଚଳଚ୍ଚିତ୍ର ଉନ୍ନୟନ ନିଗମ ଲିମିଟେଡ',
     image:""
-  },
-  {
-    id: 4,
-    name: 'Sri Susanta Kumar Singh, OAS (SAG)',
-    position: 'Additional Secretary to Govt., Public Enterprise Dept.',
-    translation: 'ଶ୍ରୀ ସୁଶାନ୍ତ କୁମାର ସିଂ, ଓ.ପ୍ର.ସେ. (ଏସ୍.ଏ.ଜି.)',
-    image:""
-  },
-  {
-    id: 5,
-    name: 'Dr. Bijay Ketan Upadhyaya, IAS',
-    position: 'Director, Odia Language, Literature & Culture Dept.',
-    translation: 'ଡ଼. ବିଜୟ କେତନ ଉପଧ୍ୟାୟ, ଭା.ପ୍ର.ସେ.',
-    image:""
-  },
-  {
-    id: 6,
-    name: 'Director',
-    position: 'Tourism Department, Govt. of Odisha',
-    translation: 'ନିର୍ଦ୍ଦେଶକ, ପର୍ଯ୍ୟଟନ ବିଭାଗ',
-    image:""
-  },
-  {
-    id: 7,
-    name: 'Sri Saroj Kumar Samal, IAS',
-    position: 'Director, Information & Public Relation Department',
-    translation: 'ଶ୍ରୀ ସରୋଜ କୁମାର ସାମଲ, ଭା.ପ୍ର.ସେ.',
-    image:""
-  },
-  {
-    id: 8,
-    name: 'Director',
-    position: 'Biju Pattanaik Film and Television Institute of Odisha',
-    translation: 'ନିର୍ଦ୍ଦେଶକ, ବିଜୁ ପଟ୍ଟନାୟକ ଫିଲ୍ମ ଆଣ୍ଡ ଟେଲିଭିଜନ୍ ଇନଷ୍ଟିଚ୍ୟୁଟ୍',
-    image:""
-  },
-];
-const independentDirectors = [
-  {
-    id: 9,
-    name: 'Sri Dillip Kumar Mishra',
-    position: 'Chairman, Utkal Cine Chamber of Commerce',
-    translation: 'ଶ୍ରୀ ଦିଲ୍ଲୀପ କୁମାର ମିଶ୍ର',
-    image:""
-  },
-  {
-    id: 10,
-    name: 'Sri Bijendra Kumar Mohanty',
-    position: 'Proprietor, Sriya-Swati-Stutee Cineplex',
-    translation: 'ଶ୍ରୀ ବିଜେନ୍ଦ୍ର କୁମାର ମହାନ୍ତି',
-    image:""
-  },
-];
-const Leadership = () => {
+  };
+  const managingDirector = {
+    id: 2,
+    name: 'Sri Samarth Verma, IAS',
+    position: 'Managing Director, OFDC Ltd.',
+    translation: 'ଶ୍ରୀ ସମର୍ଥ ବର୍ମା, ଭା.ପ୍ର.ସେ. | ପରିଚାଳନା ନିର୍ଦ୍ଦେଶକ',
+    image:`${samarth}`
+  };
+  const nominee = [
+    {
+      id: 3,
+      name: 'Sri Subhendra Kumar Nayak, OAS',
+      position: 'Special Secretary to Govt., Industries Department',
+      translation: 'ଶ୍ରୀ ଶୁଭେନ୍ଦ୍ର କୁମାର ନାୟକ, ଓ.ପ୍ର.ସେ. | ସ୍ଵତନ୍ତ୍ର ଶାସନ ସଚିବ',
+      image:`${subhendra}`
+    },
+    {
+      id: 4,
+      name: 'Sri Susanta Kumar Singh, OAS (SAG)',
+      position: 'Additional Secretary to Govt., Public Enterprise Dept.',
+      translation: 'ଶ୍ରୀ ସୁଶାନ୍ତ କୁମାର ସିଂ, ଓ.ପ୍ର.ସେ. (ଏସ୍.ଏ.ଜି.)',
+      image:""
+    },
+    {
+      id: 5,
+      name: 'Dr. Bijay Ketan Upadhyaya, IAS',
+      position: 'Director, Odia Language, Literature & Culture Dept.',
+      translation: 'ଡ଼. ବିଜୟ କେତନ ଉପଧ୍ୟାୟ, ଭା.ପ୍ର.ସେ.',
+      image:""
+    },
+    {
+      id: 6,
+      name: 'Director',
+      position: 'Tourism Department, Govt. of Odisha',
+      translation: 'ନିର୍ଦ୍ଦେଶକ, ପର୍ଯ୍ୟଟନ ବିଭାଗ',
+      image:""
+    },
+    {
+      id: 7,
+      name: 'Sri Saroj Kumar Samal, IAS',
+      position: 'Director, Information & Public Relation Department',
+      translation: 'ଶ୍ରୀ ସରୋଜ କୁମାର ସାମଲ, ଭା.ପ୍ର.ସେ.',
+      image:`${saroj}`
+    },
+    {
+      id: 8,
+      name: 'Director',
+      position: 'Biju Pattanaik Film and Television Institute of Odisha',
+      translation: 'ନିର୍ଦ୍ଦେଶକ, ବିଜୁ ପଟ୍ଟନାୟକ ଫିଲ୍ମ ଆଣ୍ଡ ଟେଲିଭିଜନ୍ ଇନଷ୍ଟିଚ୍ୟୁଟ୍',
+      image:""
+    },
+  ];
+  const independentDirectors = [
+    {
+      id: 9,
+      name: 'Sri Dillip Kumar Mishra',
+      position: 'Chairman, Utkal Cine Chamber of Commerce',
+      translation: 'ଶ୍ରୀ ଦିଲ୍ଲୀପ କୁମାର ମିଶ୍ର',
+      image:`${dillip}`
+    },
+    {
+      id: 10,
+      name: 'Sri Bijendra Kumar Mohanty',
+      position: 'Proprietor, Sriya-Swati-Stutee Cineplex',
+      translation: 'ଶ୍ରୀ ବିଜେନ୍ଦ୍ର କୁମାର ମହାନ୍ତି',
+      image:`${bijendra}`
+    },
+  ];
   return (
     <div className="bg-white min-h-screen py-2">
       {/* Header Section */}
@@ -151,9 +158,9 @@ const Card = ({ name, position,image }: { name: string; position: string,image:s
   return (
     <div className="bg-white rounded-sm shadow-md text-center transition transform hover:scale-105  w-[255px]">
       <img
-        src={image}
+        src={image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" }
         alt="DP"
-        className=" w-full"
+        className=" w-full h-50"
       />
 
       <p className="text-lg pt-2 font-semibold px-2 text-gray-800">{name}</p>

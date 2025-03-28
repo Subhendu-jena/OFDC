@@ -187,7 +187,7 @@
 
 
 import  { useState, useEffect } from 'react';
-import { ChevronDown, Mail, Phone, Star, User } from 'lucide-react';
+import { ChevronDown, Heading, Mail, Phone, Star, User } from 'lucide-react';
 export interface Official {
   slNo?: number;
   id?: string;
@@ -212,7 +212,7 @@ interface TableProps {
   data: Official[];
 }
 
-const TableComponent = ({ columns, data }:TableProps) => {
+const TableComponent = ({ Heading, columns, data }: TableProps & { Heading: string }) => {
   const [searchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Official[]>([]);
   const [selectedOfficial, setSelectedOfficial] = useState<Official>();
@@ -236,7 +236,7 @@ const TableComponent = ({ columns, data }:TableProps) => {
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center">
             <h2 className="text-xl font-bold text-white flex items-center">
               <Star size={20} className="mr-2" />
-              Official Directory
+             {Heading}
             </h2>
           </div>
       {/* <input
@@ -259,7 +259,8 @@ const TableComponent = ({ columns, data }:TableProps) => {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className={`bg-white rounded-2xl shadow-xl overflow-hidden`}
+         style={{ transition: 'all 0.5s ease' }}>
           {filteredData.length > 0 ? (
             filteredData.map((official:Official, index) => (
               <tr key={official.id} className="hover:bg-gray-50">
@@ -272,7 +273,7 @@ const TableComponent = ({ columns, data }:TableProps) => {
                           <User size={24} className="text-gray-400" />
                         </div>
                       ) : (
-                        <img src={official.imageUrl} alt={official.name} className="h-full w-full object-cover" />
+                        <img src={official.imageUrl || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt={official.name} className="h-full w-full object-cover" />
                       )}
                     </div>
                     <div className="ml-4">
@@ -281,12 +282,25 @@ const TableComponent = ({ columns, data }:TableProps) => {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4">
+                {/* <td className="px-6 py-4">
                   <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                    {official.department}
+                    {official.designation}
                   </span>
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-900">
+                </td> */}
+                 
+  {(official.department || official.from) && (
+                 <td className="px-6 py-4">
+    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+      {official.department || official.from}
+    </span>
+</td>
+  )}
+               {official.to ? <td className="px-6 py-4">
+                  <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                    {official.to}
+                  </span>
+                </td> :""}
+               {official.contactNo ? <td className="px-6 py-4 text-sm text-gray-900">
                   <div className="flex items-center">
                     <Phone size={14} className="mr-1 text-gray-500" />
                     {official.contactNo}
@@ -299,8 +313,9 @@ const TableComponent = ({ columns, data }:TableProps) => {
                       </a>
                     </div>
                   )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                </td> : <td className="px-6 py-4 text-sm text-gray-900">
+                  </td>}
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <button
                     onClick={() => setSelectedOfficial(official)}
                     className={`px-3 py-1 rounded-full flex items-center transition-colors ${
@@ -317,7 +332,7 @@ const TableComponent = ({ columns, data }:TableProps) => {
                       }`}
                     />
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))
           ) : (
