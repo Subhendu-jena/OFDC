@@ -9,6 +9,7 @@ import {
   Building,
 } from 'lucide-react';
 import kalingastudio from '../../assets/KalingaAssets/kalingaStudio.jpg';
+import TimeLine from '../../components/KalingaStudio/TimeLine';
 const KalingaStudiosOverview = () => {
   return (
     <div className="w-full px-5">
@@ -157,7 +158,7 @@ const KalingaStudiosOverview = () => {
             </div>
           </div>
         </section>
-
+<TimeLine/>
         {/* Development Phases */}
         <section id="phases" className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
