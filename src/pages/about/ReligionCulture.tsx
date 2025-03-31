@@ -46,7 +46,7 @@ function ReligionCulture() {
   
   return (
     <div className="bg-white">
-      <TableComponent columns={columns} data={dataTable}/>
+      <TableComponent columns={columns} data={dataTable} Heading="Former Managing Directors"/>
     </div>
   )
 }

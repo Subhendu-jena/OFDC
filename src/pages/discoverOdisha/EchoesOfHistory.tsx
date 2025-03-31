@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {  MapPin,  Dot } from 'lucide-react';
+import { MapPin, Dot } from 'lucide-react';
+import bg from '../../../src/assets/BG/background(1).png';
 interface Section {
   title: string;
   description: string;
@@ -131,19 +132,21 @@ const EchoesOfHistory: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
-          Odisha: A Cinematic Canvas
-        </h1>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {Object.keys(sections).map((key) => {
-            const section = sections[key];
-            return (
-              <div
-                key={key}
-                onClick={() => setActiveSection(key)}
-                className={`
+          <img src={bg } alt="" className='absolute h-130 w-full ' />
+      <div className="max-w-6xl mx-auto relative z-100">
+        <div >
+          {' '}
+          <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
+            Odisha: A Cinematic Canvas
+          </h1>
+          <div className="grid md:grid-cols-3 gap-8">
+            {Object.keys(sections).map((key) => {
+              const section = sections[key];
+              return (
+                <div
+                  key={key}
+                  onClick={() => setActiveSection(key)}
+                  className={`
                   cursor-pointer p-6 rounded-xl shadow-lg transition-all duration-300
                   ${
                     activeSection === key
@@ -151,27 +154,28 @@ const EchoesOfHistory: React.FC = () => {
                       : 'bg-gray-100 hover:bg-gray-200'
                   }
                 `}
-              >
-                <div className="flex items-center mb-4">
-                  <h2 className="ml-4 text-2xl font-semibold text-gray-800">
-                    {section.title}
-                  </h2>
+                >
+                  <div className="flex items-center mb-4">
+                    <h2 className="ml-4 text-2xl font-semibold text-gray-800">
+                      {section.title}
+                    </h2>
+                  </div>
+                  <p className="text-gray-600 mb-4">{section.description}</p>
+                  <div className="space-y-2">
+                    {section.locations.map((location) => (
+                      <div
+                        key={location}
+                        className="flex items-center text-gray-700"
+                      >
+                        <MapPin className="w-4 h-4 mr-2 text-amber-500" />
+                        {location}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <p className="text-gray-600 mb-4">{section.description}</p>
-                <div className="space-y-2">
-                  {section.locations.map((location) => (
-                    <div
-                      key={location}
-                      className="flex items-center text-gray-700"
-                    >
-                      <MapPin className="w-4 h-4 mr-2 text-amber-500" />
-                      {location}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         <section className="container mx-auto py-16 px-4">

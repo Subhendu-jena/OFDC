@@ -5,9 +5,8 @@ function WhosWho() {
   const columns = [
     { field: "slNo", label: "Sl No." },
     { field: "name", label: "Name" },
-    { field: "designation", label: "Designation" },
     { field: "contactNo", label: "Contact No." },
-    { field: "email", label: "Email Id" },
+
   ];
   
   const data:Official[] = [
@@ -31,7 +30,7 @@ function WhosWho() {
   
   return (
     <div className=' bg-white'>
-      <TableComponent columns={columns} data={data}/>
+      <TableComponent columns={columns} data={data} Heading='WHO IS WHO'/>
     </div>
   )
 }

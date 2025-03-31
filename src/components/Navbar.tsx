@@ -244,11 +244,11 @@ const MainHeader = () => {
   return (
     <>
       <div
-        className={`w-full fixed text-white top-0 z-10 shadow-md px-12 py-4 transition-all duration-300 ${
+        className={`w-full fixed text-white top-0 z-10 shadow-md px-12 py-4 transition-all duration-300 lg:text-sm ${
           isScrolled ? 'bg-[#11161F]' : 'bg-[#00000085] md:mt-9'
         }`}
       >
-        <div className=" flex gap-4 justify-between items-center px-4">
+        <div className=" flex gap-4 justify-between items-center px-4 ">
           <div className="flex items-center max-w-[400px]">
             <Link to="/" className="flex items-center">
               <img
@@ -257,7 +257,7 @@ const MainHeader = () => {
                 className="h-12  w-auto"
               />
               <div className="ml-3 hidden sm:block">
-                <h3 className="text-sm md:text-lg font-semibold">
+                <h3 className="text-sm md:text-lg  font-semibold">
                   Odisha Film Development Corporation
                 </h3>
               </div>
