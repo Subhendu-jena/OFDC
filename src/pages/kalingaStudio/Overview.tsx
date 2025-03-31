@@ -62,9 +62,9 @@ const KalingaStudiosOverview = () => {
         </section>
 
         {/* History Timeline */}
-        <section id="history" className="py-16 md:py-10 bg-gray-50">
+        <section id="history" className=" md:py-10 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto ">
               <span className="text-red-500 font-semibold">OUR JOURNEY</span>
               <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-6">
                 Kalinga Studios Timeline
@@ -74,91 +74,11 @@ const KalingaStudiosOverview = () => {
                 has been at the forefront of Odisha's film industry evolution.
               </p>
             </div>
+<TimeLine/>
 
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-red-200"></div>
-
-              {/* Timeline Items */}
-              <div className="space-y-12">
-                <div className="relative flex items-center justify-between flex-col md:flex-row">
-                  <div className="md:w-5/12 mb-8 md:mb-0 md:pr-8 md:text-right">
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                      <h3 className="text-xl font-bold mb-2">Establishment</h3>
-                      <p className="text-gray-600 mb-2">July 25, 1980</p>
-                      <p className="text-gray-700">
-                        Established as a joint venture between OFDC and M/s.
-                        Sarada Enterprises
-                      </p>
-                    </div>
-                  </div>
-                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                    <div className="bg-red-500 w-6 h-6 rounded-full"></div>
-                  </div>
-                  <div className="md:w-5/12 md:pl-8"></div>
-                </div>
-
-                <div className="relative flex items-center justify-between flex-col md:flex-row">
-                  <div className="md:w-5/12 mb-8 md:mb-0"></div>
-                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                    <div className="bg-red-500 w-6 h-6 rounded-full"></div>
-                  </div>
-                  <div className="md:w-5/12 md:pl-8">
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                      <h3 className="text-xl font-bold mb-2">
-                        Commercial Operations
-                      </h3>
-                      <p className="text-gray-600 mb-2">May 5, 1982</p>
-                      <p className="text-gray-700">
-                        Started commercial operations and began serving the
-                        Odisha film industry
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="relative flex items-center justify-between flex-col md:flex-row">
-                  <div className="md:w-5/12 mb-8 md:mb-0 md:pr-8 md:text-right">
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                      <h3 className="text-xl font-bold mb-2">
-                        Full OFDC Acquisition
-                      </h3>
-                      <p className="text-gray-600 mb-2">July 1983</p>
-                      <p className="text-gray-700">
-                        OFDC acquired all shares, making it a fully owned
-                        subsidiary
-                      </p>
-                    </div>
-                  </div>
-                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                    <div className="bg-red-500 w-6 h-6 rounded-full"></div>
-                  </div>
-                  <div className="md:w-5/12 md:pl-8"></div>
-                </div>
-
-                <div className="relative flex items-center justify-between flex-col md:flex-row">
-                  <div className="md:w-5/12 mb-8 md:mb-0"></div>
-                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                    <div className="bg-red-500 w-6 h-6 rounded-full"></div>
-                  </div>
-                  <div className="md:w-5/12 md:pl-8">
-                    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                      <h3 className="text-xl font-bold mb-2">
-                        Renovation Project
-                      </h3>
-                      <p className="text-gray-600 mb-2">Present</p>
-                      <p className="text-gray-700">
-                        Currently undergoing renovation to become a world-class,
-                        ultra-modern film studio complex
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </section>
-<TimeLine/>
         {/* Development Phases */}
         <section id="phases" className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
@@ -352,3 +272,88 @@ const KalingaStudiosOverview = () => {
 };
 
 export default KalingaStudiosOverview;
+
+
+
+
+// <div className="relative">
+//               {/* Timeline Line */}
+//               <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-red-200"></div>
+
+//               {/* Timeline Items */}
+//               <div className="space-y-12">
+//                 <div className="relative flex items-center justify-between flex-col md:flex-row">
+//                   <div className="md:w-5/12 mb-8 md:mb-0 md:pr-8 md:text-right">
+//                     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+//                       <h3 className="text-xl font-bold mb-2">Establishment</h3>
+//                       <p className="text-gray-600 mb-2">July 25, 1980</p>
+//                       <p className="text-gray-700">
+//                         Established as a joint venture between OFDC and M/s.
+//                         Sarada Enterprises
+//                       </p>
+//                     </div>
+//                   </div>
+//                   <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+//                     <div className="bg-red-500 w-6 h-6 rounded-full"></div>
+//                   </div>
+//                   <div className="md:w-5/12 md:pl-8"></div>
+//                 </div>
+
+//                 <div className="relative flex items-center justify-between flex-col md:flex-row">
+//                   <div className="md:w-5/12 mb-8 md:mb-0"></div>
+//                   <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+//                     <div className="bg-red-500 w-6 h-6 rounded-full"></div>
+//                   </div>
+//                   <div className="md:w-5/12 md:pl-8">
+//                     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+//                       <h3 className="text-xl font-bold mb-2">
+//                         Commercial Operations
+//                       </h3>
+//                       <p className="text-gray-600 mb-2">May 5, 1982</p>
+//                       <p className="text-gray-700">
+//                         Started commercial operations and began serving the
+//                         Odisha film industry
+//                       </p>
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 <div className="relative flex items-center justify-between flex-col md:flex-row">
+//                   <div className="md:w-5/12 mb-8 md:mb-0 md:pr-8 md:text-right">
+//                     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+//                       <h3 className="text-xl font-bold mb-2">
+//                         Full OFDC Acquisition
+//                       </h3>
+//                       <p className="text-gray-600 mb-2">July 1983</p>
+//                       <p className="text-gray-700">
+//                         OFDC acquired all shares, making it a fully owned
+//                         subsidiary
+//                       </p>
+//                     </div>
+//                   </div>
+//                   <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+//                     <div className="bg-red-500 w-6 h-6 rounded-full"></div>
+//                   </div>
+//                   <div className="md:w-5/12 md:pl-8"></div>
+//                 </div>
+
+//                 <div className="relative flex items-center justify-between flex-col md:flex-row">
+//                   <div className="md:w-5/12 mb-8 md:mb-0"></div>
+//                   <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+//                     <div className="bg-red-500 w-6 h-6 rounded-full"></div>
+//                   </div>
+//                   <div className="md:w-5/12 md:pl-8">
+//                     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+//                       <h3 className="text-xl font-bold mb-2">
+//                         Renovation Project
+//                       </h3>
+//                       <p className="text-gray-600 mb-2">Present</p>
+//                       <p className="text-gray-700">
+//                         Currently undergoing renovation to become a world-class,
+//                         ultra-modern film studio complex
+//                       </p>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>

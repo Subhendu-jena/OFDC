@@ -4,7 +4,7 @@ import saroj from "../../assets/ProfileImages/Sri Saroj Kumar Samal, IAS.png"
 import samarth from "../../assets/ProfileImages/Sri Samarth Verma, IAS.png"
 import dillip from "../../assets/ProfileImages/Sri Dillip Kumar Mishra.jpeg"
 import bijendra from "../../assets/ProfileImages/Bijendra Mohanty].png"
-import mansi from "../../assets/ProfileImages/Mansi Nimbhal, IAS.png"
+// import mansi from "../../assets/ProfileImages/Mansi Nimbhal, IAS.png"
 const Leadership:React.FC = () => {
   const Chairman = {
     id: 1,

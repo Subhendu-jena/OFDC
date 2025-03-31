@@ -187,7 +187,7 @@
 
 
 import  { useState, useEffect } from 'react';
-import { ChevronDown, Heading, Mail, Phone, Star, User } from 'lucide-react';
+import {  Mail, Phone, Star, User } from 'lucide-react';
 export interface Official {
   slNo?: number;
   id?: string;
@@ -215,7 +215,6 @@ interface TableProps {
 const TableComponent = ({ Heading, columns, data }: TableProps & { Heading: string }) => {
   const [searchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Official[]>([]);
-  const [selectedOfficial, setSelectedOfficial] = useState<Official>();
 
   useEffect(() => {
     if (searchTerm.trim() === '') {

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+// import NightSky from '../components/DiscoverOdisha/Nightsky';
 
 export default function OdishaFilmPolicy() {
   return (
@@ -25,7 +26,8 @@ export default function OdishaFilmPolicy() {
             </aside>
 
             {/* Main Content */}
-            <section className="md:col-span-3">
+            <section className="relative  md:col-span-3">
+              {/* <NightSky /> */}
               <header className="bg-gray-800 text-white py-4 px-6 flex items-center">
                 <h1 className="text-xl font-bold">
                   Odisha State Film Policy 2019
