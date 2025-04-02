@@ -78,11 +78,11 @@ const TopHeader = () => {
               <>
                 <span>/</span>
                 <Link
-                  to={paths.dashboard}
+                  to={paths.userDashboard}
                   className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
                 >
                   <User size={16} />
-                  <span>Dashboard</span>
+                  <span>User Dashboard</span>
                 </Link>
               </>
             ) : (

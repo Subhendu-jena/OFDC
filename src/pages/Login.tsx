@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Film, Clapperboard, User, Lock, ArrowRight } from 'lucide-react';
 import { paths } from '../routes/Path';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 // TypeScript interfaces
 interface FormData {
@@ -10,12 +10,12 @@ interface FormData {
   rememberMe: boolean;
 }
 
-const Login: React.FC = () => {
+const Login: React.FC = ({onLogin}:any) => {
   // State for form data
   const [formData, setFormData] = useState<FormData>({
-    email: '',
-    password: '',
-    rememberMe: false,
+    email: 'biswajit@gmail.com',
+    password: 'Abcd@123',
+    rememberMe: true,
   });
   
   // Handle input changes
@@ -131,11 +131,11 @@ const Login: React.FC = () => {
               </button>
               
               {/* Register Link */}
-              <div className="text-center mt-4">
+              <div className="text-center mt-4" onClick={() => onLogin()}>
                 <span className="text-sm text-gray-600">Don't have an account? </span>
-                <Link to={paths.register} className="text-sm font-medium text-red-500 hover:text-red-400">
+                {/* <Link to={paths.register} className="text-sm font-medium text-red-500 hover:text-red-400"> */}
                   Sign up now
-                </Link>
+                {/* </Link> */}
               </div>
             </div>
           </form>

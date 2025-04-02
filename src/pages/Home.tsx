@@ -21,9 +21,8 @@ function Home() {
         <div className="w-full md:w-[85%] justify-between h-10 flex flex-col ">
           <div className="bg-[#F47216] h-[80%] items-center flex overflow-hidden">
             {' '}
-            <div className=" whitespace-nowrap text-white font-semibold animate-marquee">
-              Slider text
-            </div>
+            <div className=" whitespace-nowrap text-white font-semibold animate-marquee"> Welcome to the Soul of Incredible India - Odisha! Explore the beauty of culture and nature with Tourist Villages in Odisha  under Mission Youth. To know more, visit  
+            <a href="www.odishatouristvillages.in" style={{color: "white", textDecoration: "underline", fontWeight: "bold"}}> www.odishatouristvillages.in</a></div>
           </div>
           <div className="h-[20%] bg-[#FC3C3C]"></div>
         </div>

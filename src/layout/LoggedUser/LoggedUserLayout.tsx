@@ -4,12 +4,12 @@ import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import {  useEffect } from 'react';
 import { paths } from '../../routes/Path';
-const KalingaStudioLayout = () => {
+const LoggedUserLayout = () => {
   const title =  window.location.pathname;
   const navigate = useNavigate();
   const section = [
     {
-      page: '/overview',
+      page: '/user-dashboard',  
       subHead1: 'Established 1980',
       subHead2:
         'An ultra-modern, state-of-the-art film studio complex in the heart of Bhubaneswar, Odisha.',
@@ -17,7 +17,7 @@ const KalingaStudioLayout = () => {
       tag: 'Developments',
     },
     {
-      page: '/objectives',
+      page: '/booking-history',
       subHead1: 'Our Mission',
       subHead2:
         ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',
@@ -25,7 +25,7 @@ const KalingaStudioLayout = () => {
       tag: 'Objectives',
     },
     {
-      page: '/studios-past-glory',
+      page: '/new-booking',
       subHead1: 'Studio’s Past Glory',
       heading: 'The Legacy of Odia Cinema World',
       subHead2:
@@ -33,7 +33,7 @@ const KalingaStudioLayout = () => {
       tag: 'History',
     },
     {
-      page: '/board-of-directors',
+      page: '/payment-history',
       subHead1: 'Board of Directors',
       heading: 'Meet the Visionaries',
       subHead2:
@@ -41,7 +41,7 @@ const KalingaStudioLayout = () => {
       tag: 'Directors',
     },
     {
-      page: '/whos-who',
+      page: '/profile',
       subHead1: 'Odisha Film Development Corporation',
       heading: "Who's Who",
       subHead2: 'Find officials and their contact information',
@@ -49,11 +49,11 @@ const KalingaStudioLayout = () => {
     },
   ];
   const menuItems = [
-    { label: 'Overview', url: paths.overview },
-    { label: 'Objectives', url: paths.objectives },
-    { label: 'Studios Past Glory', url: paths.studiosPastGlory },
-    { label: 'Board of Directors', url: paths.boardOfDirectors },
-    { label: "Who's Who", url: paths.whosWho },
+    { label: 'User Dashboard', url: paths.userDashboard },
+    { label: 'New Bookings', url: paths.newBooking },
+    { label: 'Booking History', url: paths.bookingHistory },
+    { label: 'Payment History', url: paths.paymentHistory },
+    { label: "Profile", url: paths.profile },
   ];
   const currentSection = section.find((sec) => sec.page === title);
   useEffect (() => {
@@ -64,13 +64,14 @@ const KalingaStudioLayout = () => {
     <div className="w-full">
         {currentSection && (
         <KHeroSection
-          subHead1={currentSection.subHead1}
-          subHead2={currentSection.subHead2}
-          heading={currentSection.heading}
-          tag={currentSection.tag}
+          subHead1=''
+          subHead2=''
+          heading="User Dashboard"
+          tag=''
           link=''
+          user={true}
         />
-      ) }
+     ) } 
   
 
       {/* Main Content - Ensure it starts after the fixed section */}
@@ -85,4 +86,4 @@ const KalingaStudioLayout = () => {
   );
 };
 
-export default KalingaStudioLayout;
+export default LoggedUserLayout;
