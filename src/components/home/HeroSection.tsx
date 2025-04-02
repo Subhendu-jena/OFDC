@@ -56,7 +56,7 @@ const HeroSection = () => {
                 <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white transition-all duration-300"
                 onClick={()=> navigate(paths.bookingForm)}
                 >
-                  BOOK LOCATION NOW
+                  BOOK FOR PREVIEW SCREEN
                 </button>
                 <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white   transition-all duration-300">
                   LOCATION BOOKING GUIDELINE

@@ -30,6 +30,11 @@ interface paths {
   odiaFilmAnthology: string;
   vaultofPreservedFilms: string;
   archivalGallery: string;
+  userDashboard: string;
+  bookingHistory: string;
+  paymentHistory: string;
+  newBooking: string;
+  profile: string;
 }
 
 export const paths: paths = {
@@ -64,4 +69,9 @@ export const paths: paths = {
   odiaFilmAnthology: '/odia-film-anthology',
   vaultofPreservedFilms: '/vault-of-preserved-films',
   archivalGallery: '/archival-gallery',
+  userDashboard: '/user-dashboard',
+  bookingHistory: '/booking-history',
+  paymentHistory: '/payment-history',
+  newBooking: '/new-booking',
+  profile: '/profile',
 };

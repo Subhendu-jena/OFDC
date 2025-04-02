@@ -36,19 +36,56 @@ import ArchivesInsight from '../pages/odiaFilmArchive/ArchivesInsight';
 import KeyPriorities from '../pages/odiaFilmArchive/KeyPriorities';
 import OdiaFilmAnthology from '../pages/odiaFilmArchive/OdiaFilmAnthology';
 import VaultofPreservedFilms from '../pages/odiaFilmArchive/VaultofPreservedFilms';
+import UserDashboard from '../pages/User/UserDashboard';
+import LoggedUserLayout from '../layout/LoggedUser/LoggedUserLayout';
+import UserBookingHistory from '../pages/User/UserBookingHistory';
+import UserPaymentHistory from '../pages/User/UserPaymentHistory';
+import UserProfile from '../pages/User/UserProfile';
 
 const RoutePage: React.FC = () => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // useEffect(() => {
+  //   const storedLogin = localStorage.getItem("isLoggedIn");
+  //   if (storedLogin === "true") setIsLoggedIn(true);
+  // }, []);
+
+  // const handleLogin = () => {
+  //   localStorage.setItem("isLoggedIn", "true");
+  //   setIsLoggedIn(true);
+  //   console.log(localStorage.getItem("isLoggedIn"),"dfdd");
+  // };
+
+  // const handleLogout = () => {
+  //   localStorage.removeItem("isLoggedIn");
+  //   setIsLoggedIn(false);
+  // };
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={paths.login} element={<Login />} />
+       
         <Route path={paths.register} element={<RegisterPage />} />
+
+        {/* {isLoggedIn ? (
+          <Route path={paths.userDashboard} element={<UserDashboard 
+            // onLogout={handleLogout}
+            />} />
+      ) : (
+        )} */}
+
+        <Route path={paths.login} element={<Login  />}/>
         <Route element={<Layout />}>
           <Route path={paths.home} element={<Home />} />
           <Route path={paths.bookingForm} element={<BookingForm />} />
           <Route path={paths.dashboard} element={<Dashboard />} />
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
+         <Route  element={<LoggedUserLayout />} >
+         <Route path={paths.userDashboard} element={<UserDashboard />} />
+         <Route path={paths.bookingHistory} element={<UserBookingHistory />} />
+          <Route path={paths.paymentHistory} element={<UserPaymentHistory />} />
+          <Route path={paths.newBooking} element={<BookingForm />} />
+          <Route path={paths.profile} element={<UserProfile />} />
+         </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
             <Route path={paths.archivalGallery} element={<ArchivalGallery />} />
