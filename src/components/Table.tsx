@@ -16,7 +16,7 @@ const TableComponent = ({
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
-
+  const [isOn, setIsOn] = useState(false);
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredData(data);
@@ -202,6 +202,30 @@ const TableComponent = ({
                     )}
                   </td>
                 )}
+                {official.action && (<td className="px-6 py-4">
+                  <label className=" cursor-pointer">
+      <div className="relative">
+        <input
+          type="checkbox"
+          className="sr-only"
+          checked={isOn}
+          onChange={() => setIsOn(!isOn)}
+        />
+        <div
+          className={`w-12 h-6 bg-gray-300 rounded-full transition ${
+            isOn ? "bg-red-300" : "bg-gray-300"
+          }`}
+        ></div>
+        <div
+          className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md transition ${
+            isOn ? "translate-x-6" : ""
+          }`}
+        ></div>
+      </div>
+      {/* <span className="ml-3 text-sm font-medium">{isOn ? "On" : "Off"}</span> */}
+    </label>
+    </td>
+ )} 
               </tr>
             ))
           ) : (
