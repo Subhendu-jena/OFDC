@@ -9,11 +9,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import TableComponent from '../components/Table';
 import { useState } from 'react';
-import { Official } from '../types/global';
+import TableComponent from '../../components/Table';
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const data = [
     { name: 'Jan 01', blog: 400, social: 20 },
     { name: 'Jan 02', blog: 450, social: 35 },
@@ -30,22 +29,28 @@ const Dashboard = () => {
   ];
 
   const columns = [
-    { label: 'ID', field: 'id' },
-    { label: 'Name', field: 'name' },
-    { label: 'Email', field: 'email' },
-    { label: 'Status', field: 'status', align: 'center' },
+    { label: 'Sl No.', field: 'slNo' },
+    { label: 'Booking Type', field: 'bookingType' },
+    { label: 'Applicant Name', field: 'applicantName' },
+    { label: 'Booking Date', field: 'bookingDate' },
+    { label: 'Payment Mode', field: 'paymentMode' },
+    { label: 'Paid On', field: 'paidOn' },
+    { label: 'Transcation Status', field: 'transcationStatus' },
   ];
-
-  const dataTable:Official[] = [
-    { slNo: 1, name: 'John Doe', email: 'john@example.com', status: 'Active' },
-    {
-      slNo: 2,
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      status: 'Inactive',
-    },
-    { slNo: 3, name: 'Sam Wilson', email: 'sam@example.com', status: 'Pending' },
-  ];
+  const dataTable = [
+    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',transcationStatus: 'Success' },
+    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',transcationStatus: 'Pending' },
+    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',transcationStatus: 'Failed' },
+    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',transcationStatus: 'Success' },
+    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',transcationStatus: 'Success' },
+    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',transcationStatus: 'Pending' },
+    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',transcationStatus: 'Failed' },
+    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',transcationStatus: 'Success' },
+    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',transcationStatus: 'Success' },
+    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',transcationStatus: 'Pending' },
+    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',transcationStatus: 'Failed' },
+    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',transcationStatus: 'Success' },
+  ]
 
   const [filter, setFilter] = useState('monthly');
   const cardData: any = [
@@ -89,7 +94,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="mt-30 p-4 space-y-6 mx-auto">
+    <div className="bg-white p-4 space-y-6 mx-auto">
       <div className="mt-2 flex justify-end">
         <select
           className="border outline-none border-amber-500 text-amber-600 p-2 rounded-md "
@@ -193,10 +198,10 @@ const Dashboard = () => {
       {/* Data Table */}
       <div className="bg-white p-4 rounded-lg shadow-md">
         <h6 className="text-lg font-semibold mb-4">Recent Transactions</h6>
-        <TableComponent columns={columns} data={dataTable} Heading='Transcation History'/>
+        <TableComponent columns={columns} data={dataTable} Heading='Transcation History' maxline={5}/>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

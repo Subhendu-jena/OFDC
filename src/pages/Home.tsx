@@ -45,8 +45,8 @@ function Home() {
         <MessageFromCm />
       </section>
 
-      <section className=" flex justify-center w-full bg-red-200 items-start">
-        <div className="max-w-6xl">
+      <section className=" flex justify-center w-full bg-[url('/sea-bg.jpg')] items-start z-0">
+        <div className="max-w-6xl z-100">
           <LocationDirectory />
         </div>
       </section>

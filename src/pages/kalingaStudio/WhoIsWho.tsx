@@ -380,7 +380,8 @@
 
 
 import React from 'react'
-import TableComponent, { Official } from '../../components/Table';
+import TableComponent from '../../components/Table';
+import { Official } from '../../types/global';
 
 const WhoIsWho:React.FC  = () => {
     const columns = [

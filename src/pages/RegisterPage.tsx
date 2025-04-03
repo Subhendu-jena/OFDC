@@ -6,19 +6,11 @@ import {
   Mail,
   ListFilter,
   ArrowRight,
+  PhoneCall,
 } from 'lucide-react';
 import { paths } from '../routes/Path';
 import { Link } from 'react-router-dom';
-
-// TypeScript interfaces
-interface FormData {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  role: string;
-  termsAccepted: boolean;
-}
+import { FormData } from '../types/global';
 
 const RegisterPage: React.FC = () => {
   // State for form data
@@ -27,6 +19,7 @@ const RegisterPage: React.FC = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    phoneNumber: '',
     role: 'viewer',
     termsAccepted: false,
   });
@@ -127,6 +120,30 @@ const RegisterPage: React.FC = () => {
                     required
                     className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     placeholder="Enter your email"
+                  />
+                </div>
+              </div>
+              {/* Phone Number Field */}
+              <div>
+                <label
+                  htmlFor="phoneNumber"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Phone Number
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <PhoneCall className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="number"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    required
+                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    placeholder="Enter your phone number"
                   />
                 </div>
               </div>

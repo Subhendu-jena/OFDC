@@ -1,4 +1,5 @@
-import TableComponent, { Official } from '../../components/Table'
+import TableComponent from '../../components/Table'
+import { Official } from '../../types/global';
 
 
 function WhosWho() {

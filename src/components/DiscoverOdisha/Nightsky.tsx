@@ -1,9 +1,8 @@
 // src/components/NightSky.js
 import React from 'react';
 import './NightSky.css'; // Import custom styles for animations
-interface NightSkyProps {
-    numShootingStars?: number;
-  }
+import { NightSkyProps } from '../../types/global';
+
 const NightSky:React.FC = ({ numShootingStars = 5 }: NightSkyProps) => {
   // Create an array of shooting stars based on `numShootingStars`
   const shootingStars = Array.from({ length: numShootingStars }, (_, index) => (

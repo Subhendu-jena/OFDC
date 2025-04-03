@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { MapPin, Dot } from 'lucide-react';
 import bg from '../../../src/assets/BG/background(1).png';
-interface Section {
-  title: string;
-  description: string;
-  locations: string[];
-}
+import { Section } from '../../types/global';
+
 const EchoesOfHistory: React.FC = () => {
   const [activeSection, setActiveSection] = useState('history');
 

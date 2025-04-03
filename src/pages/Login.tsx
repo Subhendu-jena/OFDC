@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import { Film, Clapperboard, User, Lock, ArrowRight } from 'lucide-react';
 import { paths } from '../routes/Path';
 import {  useNavigate } from 'react-router-dom';
-
-// TypeScript interfaces
-interface FormData {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
+import { LoginData } from '../types/global';
 
 const Login: React.FC = ({onLogin}:any) => {
   // State for form data
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<LoginData>({
     email: 'biswajit@gmail.com',
     password: 'Abcd@123',
     rememberMe: true,

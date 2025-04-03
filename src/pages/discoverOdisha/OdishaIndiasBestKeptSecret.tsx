@@ -1,55 +1,49 @@
 import React, { useState } from 'react';
-import { 
-  Clapperboard, 
-  Film, 
-  Play 
-} from 'lucide-react';
-export interface CinematicLocation {
-name: string;
-description: string;
-videoUrl: string;
-video?: string;
-highlights: string[];
-}
-const OdishaIndiasBestKeptSecret:React.FC = () => {
+import { Clapperboard, Film, Play } from 'lucide-react';
+import { CinematicLocation } from '../../types/global';
+
+const OdishaIndiasBestKeptSecret: React.FC = () => {
   const [activeVideo, setActiveVideo] = useState<CinematicLocation>();
 
   const cinematicLocations = [
     {
-      name: "Sun Temple, Konark",
-      description: "Where ancient architecture meets cinematic brilliance",
-      videoUrl: "https://media.istockphoto.com/id/96668487/photo/ancient-hindu-sun-temple-at-konark.jpg?s=1024x1024&w=is&k=20&c=AL84r4P0OmuFkelTqvNGUp5mi0Y-o6wdGBPg8KagEI4=",
-      video:"https://youtu.be/FmxbaEbiDqg?t=5",
+      name: 'Sun Temple, Konark',
+      description: 'Where ancient architecture meets cinematic brilliance',
+      videoUrl:
+        'https://media.istockphoto.com/id/96668487/photo/ancient-hindu-sun-temple-at-konark.jpg?s=1024x1024&w=is&k=20&c=AL84r4P0OmuFkelTqvNGUp5mi0Y-o6wdGBPg8KagEI4=',
+      video: 'https://youtu.be/FmxbaEbiDqg?t=5',
       highlights: [
-        "UNESCO World Heritage Site",
-        "Golden Hour Cinematography",
-        "Architectural Marvel"
-      ]
+        'UNESCO World Heritage Site',
+        'Golden Hour Cinematography',
+        'Architectural Marvel',
+      ],
     },
     {
-      name: "Chilika Lake",
-      description: "A canvas of natural beauty and untold stories",
-      videoUrl: "https://media.istockphoto.com/id/1128484961/photo/beautiful-sunrise-at-chilika-lake-india.jpg?s=1024x1024&w=is&k=20&c=BUrKWgFfbzHm32u9kuOsUaDlfi0FUqYOc4KwmoSYBA0=",
+      name: 'Chilika Lake',
+      description: 'A canvas of natural beauty and untold stories',
+      videoUrl:
+        'https://media.istockphoto.com/id/1128484961/photo/beautiful-sunrise-at-chilika-lake-india.jpg?s=1024x1024&w=is&k=20&c=BUrKWgFfbzHm32u9kuOsUaDlfi0FUqYOc4KwmoSYBA0=',
       highlights: [
         "Asia's Largest Lagoon",
-        "Diverse Ecosystem",
-        "Scenic Landscapes"
-      ]
+        'Diverse Ecosystem',
+        'Scenic Landscapes',
+      ],
     },
     {
-      name: "Tribal Heartlands",
-      description: "Raw cultural narratives waiting to be filmed",
-      videoUrl: "https://media.istockphoto.com/id/1436784554/photo/zhangjiajie-national-forest-park-hunan-china-wulingyuan-district-zhangjiajie-national-forest.jpg?s=1024x1024&w=is&k=20&c=FhgGop8sPb97ltXZaRU4gUJ0ROg1ICNbEVjiIFb37NM=",
+      name: 'Tribal Heartlands',
+      description: 'Raw cultural narratives waiting to be filmed',
+      videoUrl:
+        'https://media.istockphoto.com/id/1436784554/photo/zhangjiajie-national-forest-park-hunan-china-wulingyuan-district-zhangjiajie-national-forest.jpg?s=1024x1024&w=is&k=20&c=FhgGop8sPb97ltXZaRU4gUJ0ROg1ICNbEVjiIFb37NM=',
       highlights: [
-        "Authentic Tribal Cultures",
-        "Unexplored Traditions",
-        "Living Documentaries"
-      ]
-    }
+        'Authentic Tribal Cultures',
+        'Unexplored Traditions',
+        'Living Documentaries',
+      ],
+    },
   ];
 
   return (
-    <div className="min-h-screen  text-white m-5" >
+    <div className="min-h-screen  text-white m-5">
       {/* Immersive Hero Section */}
       {/* <header className="relative h-screen overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-80"></div>
@@ -84,29 +78,27 @@ const OdishaIndiasBestKeptSecret:React.FC = () => {
         <h2 className="text-4xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-red-600">
           Cinematic Locations
         </h2>
-        
+
         <div className="grid md:grid-cols-3 gap-8">
           {cinematicLocations.map((location, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               onClick={() => setActiveVideo(location)}
               className="group relative overflow-hidden rounded-xl shadow-2xl cursor-pointer transform hover:scale-105 transition-all duration-300"
             >
               <div className="absolute inset-0 bg-black opacity-40 group-hover:opacity-60 transition-opacity z-10"></div>
-              
-              <img 
-                src={location.videoUrl} 
-                alt={location.name} 
+
+              <img
+                src={location.videoUrl}
+                alt={location.name}
                 className="w-full h-96 object-cover"
               />
-              
+
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                 <h3 className="text-3xl font-bold mb-4 text-white">
                   {location.name}
                 </h3>
-                <p className="text-gray-200 mb-4">
-                  {location.description}
-                </p>
+                <p className="text-gray-200 mb-4">{location.description}</p>
                 <div className="flex items-center space-x-3">
                   <Play className="w-8 h-8 text-amber-400" />
                   <span className="text-white">View Cinematic Potential</span>
@@ -121,26 +113,20 @@ const OdishaIndiasBestKeptSecret:React.FC = () => {
       {activeVideo && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex justify-center items-center">
           <div className="relative max-w-4xl w-full">
-            <button 
+            <button
               onClick={() => setActiveVideo}
               className="absolute -top-12 right-0 text-white text-2xl font-bold"
             >
               Close
             </button>
-            <video 
-              controls 
-              autoPlay 
-              className="w-full rounded-xl"
-            >
+            <video controls autoPlay className="w-full rounded-xl">
               <source src={activeVideo.video} type="video/mp4" />
             </video>
             <div className="mt-6 text-center">
               <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-red-600 mb-4">
                 {activeVideo.name}
               </h3>
-              <p className="text-xl text-gray-300">
-                {activeVideo.description}
-              </p>
+              <p className="text-xl text-gray-300">{activeVideo.description}</p>
             </div>
           </div>
         </div>
@@ -159,7 +145,8 @@ const OdishaIndiasBestKeptSecret:React.FC = () => {
                 Film-Friendly Policies
               </h3>
               <p className="text-gray-300">
-                Seamless permissions, attractive incentives, and comprehensive support from Odisha Film Development Corporation
+                Seamless permissions, attractive incentives, and comprehensive
+                support from Odisha Film Development Corporation
               </p>
             </div>
             <div className="bg-gray-800 rounded-xl p-8 transform hover:scale-105 transition-all">
@@ -168,14 +155,13 @@ const OdishaIndiasBestKeptSecret:React.FC = () => {
                 World-Class Infrastructure
               </h3>
               <p className="text-gray-300">
-                State-of-the-art production facilities, diverse locations, and expert local crew support
+                State-of-the-art production facilities, diverse locations, and
+                expert local crew support
               </p>
             </div>
           </div>
         </div>
       </section>
-
-      
     </div>
   );
 };
