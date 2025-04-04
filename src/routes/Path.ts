@@ -35,6 +35,12 @@ interface paths {
   paymentHistory: string;
   newBooking: string;
   profile: string;
+  adminDashboard: string;
+  allBookings: string;
+  paymentDetails: string;
+  calender: string;
+  confirmation: string; 
+  preview: string;
 }
 
 export const paths: paths = {
@@ -74,4 +80,10 @@ export const paths: paths = {
   paymentHistory: '/payment-history',
   newBooking: '/new-booking',
   profile: '/profile',
+  adminDashboard: '/admin-dashboard',
+  allBookings: '/all-bookings',
+  paymentDetails: '/payment-details',
+  calender: '/calender',
+  confirmation: '/confirmation',
+  preview: '/preview',
 };

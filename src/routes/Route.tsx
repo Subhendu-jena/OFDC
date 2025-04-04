@@ -41,6 +41,13 @@ import LoggedUserLayout from '../layout/LoggedUser/LoggedUserLayout';
 import UserBookingHistory from '../pages/User/UserBookingHistory';
 import UserPaymentHistory from '../pages/User/UserPaymentHistory';
 import UserProfile from '../pages/User/UserProfile';
+import AdminLayout from '../layout/admin/AdminLayout';
+import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminBookingHistory from '../pages/admin/AdminBookingHistory';
+import AdminPaymentHistory from '../pages/admin/AdminPaymentHistory';
+import Confirmation from '../components/BookingForm/Confirmation';
+import Preview from '../components/BookingForm/Preview';
+import AdminCalender from '../pages/admin/AdminCalender';
 
 const RoutePage: React.FC = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,7 +69,6 @@ const RoutePage: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-       
         <Route path={paths.register} element={<RegisterPage />} />
 
         {/* {isLoggedIn ? (
@@ -72,20 +78,41 @@ const RoutePage: React.FC = () => {
       ) : (
         )} */}
 
-        <Route path={paths.login} element={<Login  />}/>
+        <Route path={paths.login} element={<Login />} />
         <Route element={<Layout />}>
           <Route path={paths.home} element={<Home />} />
           <Route path={paths.bookingForm} element={<BookingForm />} />
           <Route path={paths.dashboard} element={<Dashboard />} />
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
-         <Route  element={<LoggedUserLayout />} >
-         <Route path={paths.userDashboard} element={<UserDashboard />} />
-         <Route path={paths.bookingHistory} element={<UserBookingHistory />} />
-          <Route path={paths.paymentHistory} element={<UserPaymentHistory />} />
-          <Route path={paths.newBooking} element={<BookingForm />} />
-          <Route path={paths.profile} element={<UserProfile />} />
-         </Route>
+          {/* AdminLayout */}
+          <Route  element={<AdminLayout />}>
+            <Route path={paths.adminDashboard} element={<AdminDashboard />} />
+            <Route path={paths.allBookings} element={<AdminBookingHistory />} />
+            <Route
+              path={paths.paymentDetails}
+              element={<AdminPaymentHistory />}
+            />
+            <Route path={paths.calender} element={<AdminCalender />} />
+          </Route>
+          {/* LoggedUserLayout */}
+          <Route element={<LoggedUserLayout />}>
+            <Route path={paths.userDashboard} element={<UserDashboard />} />
+            <Route
+              path={paths.bookingHistory}
+              element={<UserBookingHistory />}
+            />
+            <Route
+              path={paths.paymentHistory}
+              element={<UserPaymentHistory />}
+            />
+            <Route path={paths.newBooking} element={<BookingForm />} />
+            <Route path={paths.profile} element={<UserProfile />} />
+
+            <Route path={paths.preview} element={<Preview />} />
+            <Route path={paths.confirmation} element={<Confirmation />} />
+
+          </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
             <Route path={paths.archivalGallery} element={<ArchivalGallery />} />

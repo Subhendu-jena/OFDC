@@ -13,12 +13,9 @@ import {
 import { useEffect, useState } from 'react';
 import { paths } from '../routes/Path';
 import { Link } from 'react-router-dom';
+import { MenuItem } from '../types/global';
 
-interface MenuItem {
-  label: string;
-  url: string;
-  children?: MenuItem[];
-}
+
 
 const TopHeader = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -199,7 +196,7 @@ const MainHeader = () => {
     },
     {
       label: 'Odia Film Archive',
-      url: '#',
+      url: paths.archivesInsight,
       children: [
         { label: 'Archives Insight', url: paths.archivesInsight },
         { label: 'Key Priorities', url: paths.keyPriorities },
@@ -210,7 +207,7 @@ const MainHeader = () => {
     },
     {
       label: 'Discover Odisha',
-      url: '#',
+      url: paths.odishaIndiasBestKeptSecret,
       children: [
         { label: "ODISHA : India's Best Kept Secret", url: paths.odishaIndiasBestKeptSecret },
         { label: 'Echoes of History', url: paths.echoesofhistory },
@@ -224,7 +221,7 @@ const MainHeader = () => {
     },
     {
       label: 'Kalinga Studio',
-      url: '#',
+      url: paths.overview,
       children: [
         { label: 'Overview', url: paths.overview },
         { label: 'Objectives', url: paths.objectives },
@@ -273,12 +270,12 @@ const MainHeader = () => {
           </button>
 
           {/* Desktop navigation */}
-          <nav className="hidden md:flex items-center space-x-4">
+          <nav className="hidden md:flex items-center space-x-4 md:space-x-2">
             {menuItems.map((item, index) => (
               <div key={index} className="relative group">
                 <Link
                   to={item.url}
-                  className="flex text-sm items-center hover:text-orange-400 transition duration-500"
+                  className="flex text-md items-center md:text-sm hover:text-orange-400 transition duration-500"
                 >
                   {item.label}
                   {item.children && (

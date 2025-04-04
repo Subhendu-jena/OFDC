@@ -1,17 +1,12 @@
 import { useState } from 'react';
 import { MoveRightIcon, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-interface MenuItem {
-  label: string;
-  url: string;
-}
+import { MenuItem } from '../../types/global';
+
 const Sidebar = ({menuItems} : { menuItems: MenuItem[] })=> {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const path = location.pathname;
-
-
-
   return (
     <div className=" lg:w-[22%] z-10 relative">
       {/* Mobile Toggle Button */}
@@ -53,7 +48,7 @@ const Sidebar = ({menuItems} : { menuItems: MenuItem[] })=> {
           </div>
           <div>
             <h3 className="text-lg font-semibold">
-              <a href="/contact" className="underline">
+              <a href="/contact-us" className="underline">
                 Get Any Help?
               </a>
             </h3>

@@ -12,7 +12,7 @@ const profile = {
 
 const userProfile: React.FC = () => {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string>();
 
   const handleImageChange = ({event}:any) => {
     const file = event.target.files[0]; // Get the selected file

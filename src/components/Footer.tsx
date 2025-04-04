@@ -8,11 +8,7 @@ import {
   Github,
 } from 'lucide-react';
 import MapComponent from './Map';
-
-interface FooterLink {
-  text: string;
-  href: string;
-}
+import { FooterLink } from '../types/global';
 
 const QuickLinks: FooterLink[] = [
   { text: 'About us', href: '/about' },
