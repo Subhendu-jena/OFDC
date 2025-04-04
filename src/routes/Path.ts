@@ -38,7 +38,9 @@ interface paths {
   adminDashboard: string;
   allBookings: string;
   paymentDetails: string;
-  calender: string; 
+  calender: string;
+  confirmation: string; 
+  preview: string;
 }
 
 export const paths: paths = {
@@ -82,4 +84,6 @@ export const paths: paths = {
   allBookings: '/all-bookings',
   paymentDetails: '/payment-details',
   calender: '/calender',
+  confirmation: '/confirmation',
+  preview: '/preview',
 };

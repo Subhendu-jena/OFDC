@@ -45,7 +45,9 @@ import AdminLayout from '../layout/admin/AdminLayout';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminBookingHistory from '../pages/admin/AdminBookingHistory';
 import AdminPaymentHistory from '../pages/admin/AdminPaymentHistory';
-import ComingSoon from '../components/ComingSoon';
+import Confirmation from '../components/BookingForm/Confirmation';
+import Preview from '../components/BookingForm/Preview';
+import AdminCalender from '../pages/admin/AdminCalender';
 
 const RoutePage: React.FC = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -91,7 +93,7 @@ const RoutePage: React.FC = () => {
               path={paths.paymentDetails}
               element={<AdminPaymentHistory />}
             />
-            <Route path={paths.calender} element={<ComingSoon />} />
+            <Route path={paths.calender} element={<AdminCalender />} />
           </Route>
           {/* LoggedUserLayout */}
           <Route element={<LoggedUserLayout />}>
@@ -106,6 +108,10 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.newBooking} element={<BookingForm />} />
             <Route path={paths.profile} element={<UserProfile />} />
+
+            <Route path={paths.preview} element={<Preview />} />
+            <Route path={paths.confirmation} element={<Confirmation />} />
+
           </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>

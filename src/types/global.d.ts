@@ -107,7 +107,7 @@ export interface IUser {
   email: string;
   phoneNo: string;
   profilePhoto?: string;
-  _id: string;
+  // _id: string;
 }
 
 export interface loginResponse {

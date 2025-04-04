@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CbfcScreening() {
   const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ function CbfcScreening() {
     singers: '',
     filmPoster: null,
   });
-
+const [selectedSlot,setSelectedSlot]=useState('');
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
     setFormData({
@@ -26,9 +27,10 @@ function CbfcScreening() {
       [name]: type === 'file' ? files[0] : value,
     });
   };
-
+  const navigate = useNavigate();
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    navigate('/preview');
     console.log('Form Data Submitted:', formData);
     alert('Form submitted successfully!');
   };
@@ -47,7 +49,7 @@ function CbfcScreening() {
     {
       name: 'Duration of the Film ',
       label: 'Duration of the Film ',
-      type:'time'
+      type: 'time',
     },
     {
       name: 'Aspect Ratio',
@@ -90,7 +92,7 @@ function CbfcScreening() {
     {
       name: 'GSTIN (If any) ',
       label: 'GSTIN (If any) ',
-      type:'text'
+      type: 'text',
     },
   ];
 
@@ -100,16 +102,16 @@ function CbfcScreening() {
       label: 'Booking Date',
       type: 'Date',
     },
-    {
-      name: 'from',
-      label: 'From',
-      type: 'time',
-    },
-    {
-      name: 'to',
-      label: 'To',
-      type: 'time',
-    },
+    // {
+    //   name: 'from',
+    //   label: 'From',
+    //   type: 'time',
+    // },
+    // {
+    //   name: 'to',
+    //   label: 'To',
+    //   type: 'time',
+    // },
   ];
 
   return (
@@ -117,10 +119,7 @@ function CbfcScreening() {
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
         For CBFC SCREENING
       </h2>
-      <form
-        className="space-y-6 "
-        onSubmit={handleSubmit}
-      >
+      <form className="space-y-6 " onSubmit={handleSubmit}>
         <div className="space-y-6 grid gap-2 grid-cols-1 xl:grid-cols-2">
           {/* Film Details */}
           <div className="p-5 bg-white rounded-lg shadow">
@@ -137,7 +136,7 @@ function CbfcScreening() {
                     {label} :
                   </label>
                   <input
-                     type={ScreeningDetails[index].type || "text"}
+                    type={ScreeningDetails[index].type || 'text'}
                     name={name}
                     placeholder={name}
                     onChange={handleChange}
@@ -189,7 +188,7 @@ function CbfcScreening() {
               Production Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ProductionDetails.map(({ name, label,type }, index) => (
+              {ProductionDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -240,7 +239,7 @@ function CbfcScreening() {
                 required
               ></textarea>
             </div> */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
               {BookingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
@@ -259,6 +258,26 @@ function CbfcScreening() {
                   />
                 </div>
               ))}
+              <div className="grid grid-cols-3 mt-4 items-center ">
+                <label
+                  htmlFor=""
+                  className="text-gray-700 font-medium col-span-1"
+                >
+                  Available Slots :
+                </label>
+                <div className="col-span-2">
+                  {' '}
+                  <div className="flex justify-around">
+                    {['10AM-2PM', '2PM-6PM', '6PM-10PM'].map((slot) => (
+                      <button   onClick={() => setSelectedSlot(slot)}
+                      className={`border rounded-2xl px-5 py-1 cursor-pointer transition-all duration-200
+                        ${selectedSlot === slot ? 'bg-red-400 text-white border-red-400' : 'bg-white text-black border-gray-300'}`}>
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -284,7 +303,7 @@ function CbfcScreening() {
                   <input
                     type="file"
                     name={name}
-                  accept="application/pdf,image/svg+xml,image/png"
+                    accept="application/pdf,image/svg+xml,image/png"
                     className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                     onChange={handleChange}
                   />

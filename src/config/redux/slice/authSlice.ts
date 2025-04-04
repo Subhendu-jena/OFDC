@@ -83,17 +83,26 @@ export const signUp = createAsyncThunk<
 >('/user/register', async (data, { rejectWithValue }) => {
   try {
     const { data: result } = await signUpController({ data: data });
-    const signUpResponse = result as signUpResponse;
+    if (result) {
+      // Check if result has the expected properties
+      if ('user' in result && 'token' in result) {
+        const signUpResponse = result as signUpResponse;
 
-    return {
-      user: {
-        email: signUpResponse.user.email,
-        name: signUpResponse.user.name,
-        id: signUpResponse.user._id,
-        phoneNo: signUpResponse.user.phoneNo,
-      },
-      token: signUpResponse.token,
-    };
+        return {
+          user: {
+            email: signUpResponse.user.email,
+            name: signUpResponse.user.name,
+            id: signUpResponse.user._id,
+            phoneNo: signUpResponse.user.phoneNo,
+          },
+          token: signUpResponse.token,
+        };
+      } else {
+        return rejectWithValue('Invalid response from signUpController');
+      }
+    } else {
+                          return rejectWithValue('No response from signUpController');
+    }
   } catch (error) {
     return rejectWithValue(
       (error as Error).message || 'An error occurred during login.'

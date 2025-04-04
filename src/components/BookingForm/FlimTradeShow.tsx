@@ -38,7 +38,7 @@ export default function FlimTradeShow() {
     songlines: null,
     poster: null,
   });
-
+const [selectedSlot, setSelectedSlot] = useState('');
   const handleChange = (e: any) => {
     const { name, value, type, checked, files } = e.target;
     if (type === 'checkbox') {
@@ -170,16 +170,16 @@ export default function FlimTradeShow() {
       label: 'Booking Date',
       type: 'Date',
     },
-    {
-      name: 'from',
-      label: 'From',
-      type: 'time',
-    },
-    {
-      name: 'to',
-      label: 'To',
-      type: 'time',
-    },
+    // {
+    //   name: 'from',
+    //   label: 'From',
+    //   type: 'time',
+    // },
+    // {
+    //   name: 'to',
+    //   label: 'To',
+    //   type: 'time',
+    // },
   ];
 
   return (
@@ -454,7 +454,7 @@ export default function FlimTradeShow() {
                 required
               ></textarea>
             </div> */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+               <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
               {BookingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
@@ -473,6 +473,26 @@ export default function FlimTradeShow() {
                   />
                 </div>
               ))}
+              <div className="grid grid-cols-3 mt-4 items-center ">
+                <label
+                  htmlFor=""
+                  className="text-gray-700 font-medium col-span-1"
+                >
+                  Available Slots :
+                </label>
+                <div className="col-span-2">
+                  {' '}
+                  <div className="flex justify-around">
+                    {['10AM-2PM', '2PM-6PM', '6PM-10PM'].map((slot) => (
+                      <button   onClick={() => setSelectedSlot(slot)}
+                      className={`border rounded-2xl px-5 py-1 cursor-pointer transition-all duration-200
+                        ${selectedSlot === slot ? 'bg-red-400 text-white border-red-400' : 'bg-white text-black border-gray-300'}`}>
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
