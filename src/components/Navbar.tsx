@@ -196,7 +196,7 @@ const MainHeader = () => {
     },
     {
       label: 'Odia Film Archive',
-      url: '#',
+      url: paths.archivesInsight,
       children: [
         { label: 'Archives Insight', url: paths.archivesInsight },
         { label: 'Key Priorities', url: paths.keyPriorities },
@@ -207,7 +207,7 @@ const MainHeader = () => {
     },
     {
       label: 'Discover Odisha',
-      url: '#',
+      url: paths.odishaIndiasBestKeptSecret,
       children: [
         { label: "ODISHA : India's Best Kept Secret", url: paths.odishaIndiasBestKeptSecret },
         { label: 'Echoes of History', url: paths.echoesofhistory },
@@ -221,7 +221,7 @@ const MainHeader = () => {
     },
     {
       label: 'Kalinga Studio',
-      url: '#',
+      url: paths.overview,
       children: [
         { label: 'Overview', url: paths.overview },
         { label: 'Objectives', url: paths.objectives },

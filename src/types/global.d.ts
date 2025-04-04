@@ -1,10 +1,9 @@
 export interface FormData {
-  username: string;
+  name: string;
   email: string;
   password: string;
-  phoneNumber: string;
+  phoneNo: string;
   confirmPassword: string;
-  role: string;
   termsAccepted: boolean;
 }
 export interface MenuItem {
@@ -72,4 +71,56 @@ export interface CinematicLocation {
   videoUrl: string;
   video?: string;
   highlights: string[];
+}
+
+export interface ErrorResponse<T> {
+  success: false;
+  message: string;
+  data?: T;
+}
+export interface SuccessResponse<T> {
+  success: true;
+  message: string;
+  data: T;
+}
+export interface DeleteApiCallerProps {
+  uri: string;
+  token?: string | number;
+}
+export interface signUpResponse {
+  user: {
+    name: string;
+    email: string;
+    phoneNo: string;
+    _id: string;
+  };
+  token: string;
+}
+export interface signupData {
+  name: string;
+  email: string;
+  password: string;
+  phoneNo: string;
+}
+export interface IUser {
+  name: string;
+  email: string;
+  phoneNo: string;
+  profilePhoto?: string;
+  _id: string;
+}
+
+export interface loginResponse {
+  user: {
+    name: string;
+    email: string;
+    phoneNo: string;
+    _id: string;
+  };
+  token: string;
+}
+export interface loginData {
+  identifier: string;
+  password: string;
+  rememberMe: boolean;
 }

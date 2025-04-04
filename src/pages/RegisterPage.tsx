@@ -4,27 +4,25 @@ import {
   User,
   Lock,
   Mail,
-  ListFilter,
   ArrowRight,
   PhoneCall,
 } from 'lucide-react';
 import { paths } from '../routes/Path';
-import { Link } from 'react-router-dom';
-import { FormData } from '../types/global';
+import { Link, Navigate } from 'react-router-dom';
+import { FormData, signupData } from '../types/global';
+import { signUpController } from '../config/controller';
 
 const RegisterPage: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<FormData>({
-    username: '',
+    name : '',
     email: '',
     password: '',
     confirmPassword: '',
-    phoneNumber: '',
-    role: 'viewer',
+    phoneNo: '',
     termsAccepted: false,
   });
 
-  // Handle input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -40,18 +38,25 @@ const RegisterPage: React.FC = () => {
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Basic validation
+    
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match");
       return;
+      
     }
-
-    console.log('Registration form submitted:', formData);
-    // Add your registration logic here
+     signUpController({
+      data:{
+       ...formData,
+      } ,
+     } as  { data: signupData }).then((res) => {
+      console.log(res, 'res');
+     })
+     console.log('Registration form submitted:', formData);
+Navigate
   };
 
   return (
+    
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
       {/* Left side - Registration Form */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-10">
@@ -77,10 +82,10 @@ const RegisterPage: React.FC = () => {
               {/* Username Field */}
               <div>
                 <label
-                  htmlFor="username"
+                  htmlFor="name"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Username
+                  Full name
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -88,13 +93,13 @@ const RegisterPage: React.FC = () => {
                   </div>
                   <input
                     type="text"
-                    id="username"
-                    name="username"
-                    value={formData.username}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     required
                     className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                    placeholder="Choose a username"
+                    placeholder="Enter your fullname"
                   />
                 </div>
               </div>
@@ -126,7 +131,7 @@ const RegisterPage: React.FC = () => {
               {/* Phone Number Field */}
               <div>
                 <label
-                  htmlFor="phoneNumber"
+                  htmlFor="phoneNo"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Phone Number
@@ -137,9 +142,9 @@ const RegisterPage: React.FC = () => {
                   </div>
                   <input
                     type="number"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
+                    id="phoneNo"
+                    name="phoneNo"
+                    value={formData.phoneNo}
                     onChange={handleChange}
                     required
                     className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
@@ -199,7 +204,7 @@ const RegisterPage: React.FC = () => {
               </div>
 
               {/* Role Selection */}
-              <div>
+              {/* <div>
                 <label
                   htmlFor="role"
                   className="block text-sm font-medium text-gray-700 mb-1"
@@ -223,7 +228,7 @@ const RegisterPage: React.FC = () => {
                     <option value="creator">Content Creator</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
 
               {/* Terms and Conditions */}
               <div className="flex items-center">

@@ -3,13 +3,14 @@ import { Film, Clapperboard, User, Lock, ArrowRight } from 'lucide-react';
 import { paths } from '../routes/Path';
 import {  useNavigate } from 'react-router-dom';
 import { LoginData } from '../types/global';
+import { loginController } from '../config/controller';
 
 const Login: React.FC = ({onLogin}:any) => {
   // State for form data
   const [formData, setFormData] = useState<LoginData>({
-    email: 'biswajit@gmail.com',
-    password: 'Abcd@123',
-    rememberMe: true,
+    email: '',
+    password: '',
+    rememberMe: false,
   });
   
   // Handle input changes
@@ -23,8 +24,19 @@ const Login: React.FC = ({onLogin}:any) => {
  const navigate = useNavigate()
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const payload = {
+      identifier: formData.email,  // 🔁 renamed here
+      password: formData.password,
+      rememberMe: formData.rememberMe,
+    };
+  
+    loginController({ data: payload })
+      .then((response) => {
+        console.log(response, 'response');
+      });
+  
     console.log('Form submitted:', formData);
-    navigate(paths.home)
+    navigate(paths.userDashboard)
   };
 
   return (

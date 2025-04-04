@@ -34,12 +34,9 @@
 // // Export reducer
 // export default authSlice.reducer;
 
-
-
-
-
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { loginController, signUpController } from '../../controller';
+import { IUser, loginData, loginResponse, signupData, signUpResponse } from '../../../types/global';
 
 interface IAuthState {
   user: IUser | null;
@@ -57,62 +54,59 @@ const initialState: IAuthState = {
 
 export const login = createAsyncThunk<
   { user: IUser; token: string },
-  LoginData,
+  loginData,
   { rejectValue: string }
->("auth/signIn", async (data, { rejectWithValue }) => {
+>('/user/signIn', async (data, { rejectWithValue }) => {
   try {
     const { data: result } = await loginController({ data: data });
-    const loginResponse = result as ILoginResponse;
+    const loginResponse = result as loginResponse;
 
     return {
       user: {
         email: loginResponse.user.email,
-        name: `${loginResponse.user.name} `,
+        name: loginResponse.user.name,
         id: loginResponse.user._id,
-        profilePhoto: loginResponse.user.profilePhoto ?? "",
-        phoneNo: loginResponse.user.phone,
+        phoneNo: loginResponse.user.phoneNo,
       },
       token: loginResponse.token,
     };
   } catch (error) {
     return rejectWithValue(
-      (error as Error)?.message || "An error occurred during login."
+      (error as Error)?.message || 'An error occurred during login.'
     );
   }
 });
 export const signUp = createAsyncThunk<
   { user: IUser; token: string },
-  ISignupData,
+  signupData,
   { rejectValue: string }
->("auth/signUp", async (data, { rejectWithValue }) => {
+>('/user/register', async (data, { rejectWithValue }) => {
   try {
-    
     const { data: result } = await signUpController({ data: data });
-    const signUpResponse = result as ISignupResponse;
+    const signUpResponse = result as signUpResponse;
 
     return {
       user: {
         email: signUpResponse.user.email,
-        name: `${signUpResponse.user.firstName} ${signUpResponse.user.lastName}`,
-        phoneNo: signUpResponse.user.phone,
-        profilePhoto: signUpResponse.user.profilePhoto ?? " ",
+        name: signUpResponse.user.name,
         id: signUpResponse.user._id,
+        phoneNo: signUpResponse.user.phoneNo,
       },
       token: signUpResponse.token,
     };
   } catch (error) {
     return rejectWithValue(
-      (error as Error).message || "An error occurred during login."
+      (error as Error).message || 'An error occurred during login.'
     );
   }
 });
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     logout: () => initialState,
-    
+
     setUser: (state, action) => {
       if (state.user) {
         state.user = { ...state.user, ...action.payload };
@@ -133,11 +127,11 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
-        state.error = action.payload || "An error occurred during login.";
+        state.error = action.payload || 'An error occurred during login.';
         state.isAuthLoading = false;
       });
   },
 });
 
-export const { logout, setUser } = authSlice.actions; 
+export const { logout, setUser } = authSlice.actions;
 export default authSlice.reducer;
