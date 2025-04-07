@@ -30,7 +30,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
   const navigate = useNavigate();
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    navigate('/preview');
+    navigate('/preview?edit=true');
     console.log('Form Data Submitted:', formData);
     alert('Form submitted successfully!');
   };
@@ -115,7 +115,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
   ];
 
   return (
-    <div className=" bg-gray-50  rounded-lg">
+    <div className=" bg-gray-50   text-sm rounded-lg">
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
         For CBFC SCREENING
       </h2>
@@ -132,13 +132,14 @@ const [selectedSlot,setSelectedSlot]=useState('');
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
                 >
-                  <label className="text-gray-700 font-medium col-span-1">
+                  <label className="text-gray-700 text-sm col-span-1">
                     {label} :
                   </label>
                   <input
                     type={ScreeningDetails[index].type || 'text'}
                     name={name}
                     placeholder={name}
+                    lang="en-GB"
                     onChange={handleChange}
                     className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                     required
@@ -146,12 +147,12 @@ const [selectedSlot,setSelectedSlot]=useState('');
                 </div>
               ))}
               <div className="grid grid-cols-3 mt-4 items-center gap-4">
-                <label className="text-gray-700 font-medium col-span-1">
+                <label className="text-gray-700  text-sm font-medium col-span-1">
                   Sound Format :
                 </label>
                 <select
                   name="category"
-                  className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                  className="w-full  text-sm py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                   onChange={handleChange}
                   required
                 >
@@ -163,12 +164,12 @@ const [selectedSlot,setSelectedSlot]=useState('');
                 </select>
               </div>
               <div className="grid grid-cols-3 mt-4 items-center gap-4">
-                <label className="text-gray-700 font-medium col-span-1">
+                <label className="text-gray-700  text-sm col-span-1">
                   Format of the Film :
                 </label>
                 <select
                   name="category"
-                  className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                  className="w-full py-2 px-2  text-sm text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                   onChange={handleChange}
                   required
                 >

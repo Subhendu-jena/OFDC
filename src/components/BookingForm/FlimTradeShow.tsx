@@ -183,7 +183,7 @@ const [selectedSlot, setSelectedSlot] = useState('');
   ];
 
   return (
-    <div className=" bg-gray-50  rounded-lg">
+    <div className=" bg-gray-50  rounded-lg  text-sm">
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
         Film Trade Show
       </h2>

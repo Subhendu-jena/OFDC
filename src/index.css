@@ -1,6 +1,7 @@
 @import "tailwindcss";
 body {
   min-height: 100vh;
+  
 }
 /* Position slick-prev (left arrow) */
 .slick-arrow.slick-prev {

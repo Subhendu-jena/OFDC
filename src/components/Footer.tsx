@@ -5,10 +5,12 @@ import {
   Twitter,
   Facebook,
   Instagram,
-  Github,
 } from 'lucide-react';
 import MapComponent from './Map';
 import { FooterLink } from '../types/global';
+import { CircleArrowOutDownRight } from 'lucide-react';
+import { paths } from '../routes/Path';
+import { Youtube } from 'lucide-react';
 
 const QuickLinks: FooterLink[] = [
   { text: 'About us', href: '/about' },
@@ -20,7 +22,7 @@ const QuickLinks: FooterLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="w-full relative bg-gray-900 text-gray-200">
+    <footer className="w-full relative bg-gray-700 text-gray-200">
       {/* Contact Info Bar */}
       <div className="w-full z-10 absolute -top-14 overflow-hidden px-4">
         <div className="w-full rounded-2xl mx-auto px-4 py-8 grid grid-cols-1 text-white md:grid-cols-4 overflow-hidden  gap-8 bg-gray-800">
@@ -66,14 +68,15 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="w-full mx-auto px-4 pt-22 pb-12">
-        <div className="flex flex-wrap  gap-12 px-12 items-center justify-center">
+      {/* Main Footer Content */} 
+        <img src="/foot.jpg" alt=""  className='absolute  w-full h-127 object-fill'/>
+      <div className="w-full mx-auto pt-22  px-12 relative ">
+        <div className="grid grid-cols-1 md:grid-cols-3  gap-12  ">
           {/* Company Info */}
-          <div className="space-y-6 max-w-sm">
+          <div className=" space-y-6">
             <div className="flex items-center space-x-4">
               <img
-                src="https://ofdc.octamy.com/wp-content/uploads/2020/09/odisha-logo-dark-1-svg-3.png"
+                src="/Logo\OFDC Logo White.png"
                 alt="OFDC Logo"
                 className="w-16 h-16 object-contain"
               />
@@ -81,7 +84,7 @@ const Footer = () => {
                 Odisha Film Development Corporation
               </h3>
             </div>
-            <p className="text-gray-400">
+            <p className="text-gray-100 text-sm">
               Odisha Film Development Corporation is a promotional agency for
               the growth and development of film industry in Odisha established
               in 1976.
@@ -96,9 +99,9 @@ const Footer = () => {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors duration-300"
+                    className="text-gray-100 hover:text-white transition-colors  text-sm duration-300 flex flex-row gap-2 items-center"
                   >
-                    {link.text}
+                   <div><CircleArrowOutDownRight size={16} /> </div><div>{link.text}</div>
                   </a>
                 </li>
               ))}
@@ -107,18 +110,8 @@ const Footer = () => {
 
           {/* Categories */}
           <div className=' rounded-2xl overflow-hidden'>
-          <MapComponent height="300px" width="500px" />
-          </div>
-           
-          
-        </div>
-      </div>
-
-      {/* Footer Bottom */}
-      <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400">© Copyright 2024 by Qwegle</p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
+          <MapComponent height="300px" width="100%" />
+          <div className="flex space-x-4 mt-10 md:mt-5 justify-end">
             <a
               href="#"
               className="p-2 hover:text-blue-400 transition-colors duration-300"
@@ -141,10 +134,23 @@ const Footer = () => {
               href="#"
               className="p-2 hover:text-gray-400 transition-colors duration-300"
             >
-              <Github className="w-5 h-5" />
+              <Youtube className="w-5 h-5" />
             </a>
           </div>
+          </div>
+           
+          
         </div>
+
+      {/* Footer Bottom */}
+      <div className="border-t border-gray-400 text-white pt-3 mt-1 text-sm">
+        <div className="grid grid-cols-2 justify-between items-center mx-auto text-white md:flex md:space-x-4">
+          <p className="">Copyright ©2025 <a href={paths.home} className='text-red-400'>OFDC</a> Odisha, All Rights Reserved.
+          </p>
+          <p>Developed by <a  className='text-red-400'>QWEGLE</a></p>
+       
+        </div>
+      </div>
       </div>
     </footer>
   );

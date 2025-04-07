@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Star, User } from 'lucide-react';
+import { Mail, Phone, Star, User,ScanEye  } from 'lucide-react';
 import { Official, TableProps } from '../types/global';
+import { paths } from '../routes/Path';
+import {  useNavigate } from 'react-router-dom';
 
 const TableComponent = ({
   Heading,
   columns,
   data,
   search,
-  maxline
+  maxline,
 }: TableProps & { Heading: string }) => {
   const itemsPerPage = maxline ?? 10;
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,7 +18,7 @@ const TableComponent = ({
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
-  const [isOn, setIsOn] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredData(data);
@@ -33,7 +35,7 @@ const TableComponent = ({
   }, [searchTerm, data]);
 
   return (
-    <div className="bg-white  shadow-xl overflow-hidden min-h-screen p-4">
+    <div className=" overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
         <h2 className="text-xl font-bold text-white flex items-center">
           <Star size={20} className="mr-2" />
@@ -49,9 +51,9 @@ const TableComponent = ({
           className="w-90 px-4 py-2 m-4  border rounded-lg"
         />
       )}
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse ">
         <thead>
-          <tr className="bg-gray-50">
+          <tr >
             {columns.map((column, index) => (
               <th
                 key={index}
@@ -63,7 +65,7 @@ const TableComponent = ({
           </tr>
         </thead>
         <tbody
-          className={`bg-white rounded-2xl shadow-xl overflow-hidden`}
+          className={` rounded-2xl  overflow-hidden`}
           style={{ transition: 'all 0.5s ease' }}
         >
           {currentData.length > 0 ? (
@@ -99,7 +101,7 @@ const TableComponent = ({
                       </div>
                     </div>
                   </div>
-                  
+
                   {official.bookingType && (
                     <div className="text-sm font-medium text-gray-900">
                       {official.bookingType}
@@ -164,9 +166,9 @@ const TableComponent = ({
 
                 {official.view && (
                   <td className="px-6 py-4 text-sm text-gray-900">
-                    <a href="" className="underline">
-                      View details
-                    </a>
+                    <button  className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl text-sm cursor-pointer" onClick={()=> navigate(paths.preview)}>
+                    <ScanEye />
+                    </button>
                   </td>
                 )}
                 {(official.department || official.from) && (
@@ -202,30 +204,32 @@ const TableComponent = ({
                     )}
                   </td>
                 )}
-                {official.action && (<td className="px-6 py-4">
-                  <label className=" cursor-pointer">
-      <div className="relative">
-        <input
-          type="checkbox"
-          className="sr-only"
-          checked={isOn}
-          onChange={() => setIsOn(!isOn)}
-        />
-        <div
-          className={`w-12 h-6 bg-gray-300 rounded-full transition ${
-            isOn ? "bg-red-300" : "bg-gray-300"
-          }`}
-        ></div>
-        <div
-          className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md transition ${
-            isOn ? "translate-x-6" : ""
-          }`}
-        ></div>
-      </div>
-      {/* <span className="ml-3 text-sm font-medium">{isOn ? "On" : "Off"}</span> */}
-    </label>
-    </td>
- )} 
+                {official.action && (
+                  <td className="px-6 py-4 flex items-center gap-4 ">
+                    {/* <label className=" cursor-pointer">
+                      <div className="relative">
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={isOn}
+                          onChange={() => setIsOn(!isOn)}
+                        />
+                        <div
+                          className={`w-12 h-6 bg-gray-300 rounded-full transition ${
+                            isOn ? 'bg-red-300' : 'bg-gray-300'
+                          }`}
+                        ></div>
+                        <div
+                          className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-md transition ${
+                            isOn ? 'translate-x-6' : ''
+                          }`}
+                        ></div>
+                      </div>
+                    </label> */}
+                  {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl text-sm cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
+                  <button className='border p-2 rounded-2xl text-sm cursor-pointer' >Decline</button> */}
+                  </td>
+                )}
               </tr>
             ))
           ) : (

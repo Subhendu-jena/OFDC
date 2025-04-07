@@ -33,6 +33,8 @@ const KHeroSection: React.FC<{
           // <div>
             <img src={img || ''} alt="" 
               className="absolute top-0 left-0 w-full h-[50vh]  object-fill"
+              // className={`absolute top-0 left-0 w-full h-[50vh]  object-fill {!img ? 'mt-30'}`}
+
              />
           // </div> 
         ) }
