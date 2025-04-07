@@ -53,7 +53,7 @@ const AdminLayout = () => {
   )
   return (
     <div className="w-full">
-        {currentSection && (
+        {currentSection ? (
         <KHeroSection
           subHead1=''
           subHead2=''
@@ -62,7 +62,7 @@ const AdminLayout = () => {
           link=''
           user={true}
         />
-     ) } 
+     ):(<div className='mt-20'></div>) } 
   
 
       {/* Main Content - Ensure it starts after the fixed section */}

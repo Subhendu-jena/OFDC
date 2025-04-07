@@ -44,9 +44,10 @@ function Home() {
       >
         <MessageFromCm />
       </section>
-
-      <section className=" flex justify-center w-full bg-[url('/sea-bg.jpg')] items-start ">
-        <div className="max-w-6xl ">
+      {/* bg-[url('/sea-bg.png')] object-cover */}
+      <section className="relative flex justify-center w-full  h-full items-start ">
+        <img src="/sea-bg.png" alt="" className='absolute top-0 left-0  h-[132%] w-full ' />
+        <div className="max-w-6xl h-full  ">
           <LocationDirectory />
         </div>
       </section>
@@ -55,8 +56,11 @@ function Home() {
           <LatestVideo />
         </div>
       </section>
-      <section className=" flex justify-center w-full items-start">
-        <div className="max-w-6xl">
+      <section className="relative flex justify-center   w-full items-start">
+      {/* bg-[url('/light.jpg')] */}
+      {/* <img src="/light.jpg" alt="" className='absolute top-0 left-0  h-full w-full ' /> */}
+
+        <div className="max-w-6xl  h-[132%] bg-cover bg-center">
           <TalentDirectory />
         </div>
       </section>

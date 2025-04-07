@@ -62,11 +62,11 @@ const dataTable = [
 const UserDashboard:React.FC=()=> {
   const navigate=useNavigate();
   return (
-    <div className="pt-10 p-4 space-y-6 mx-auto bg-white">
+    <div className="pt-10  bg-white">
       {/* Header */}
 
       {/* Dashboard Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-8xl mx-auto px-4 sm:px-6 lg: py-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-8">
           Welcome back, Director!
         </h2>

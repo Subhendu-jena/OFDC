@@ -241,7 +241,7 @@ const MainHeader = () => {
   return (
     <>
       <div
-        className={`w-full fixed text-white top-0 z-10 shadow-md px-12 py-4 transition-all duration-300 lg:text-sm ${
+        className={`w-full fixed text-white top-0 z-100 shadow-md px-12 py-4 transition-all duration-300 lg:text-sm ${
           isScrolled ? 'bg-[#11161F]' : 'bg-[#00000085] md:mt-9'
         }`}
       >
@@ -419,7 +419,7 @@ const MainHeader = () => {
 
 const Navbar = () => {
   return (
-    <header className="w-full z-50 relative">
+    <header className="w-full z-100 relative">
       <TopHeader />
       <MainHeader />
     </header>

@@ -74,7 +74,7 @@ function TalentDirectory() {
   ];
 
   return (
-    <div className=" w-full" ref={ref}>
+    <div className=" w-full mt-18" ref={ref}>
       <motion.div
         className=" w-full flex flex-col  items-center px-2 py-6"
         initial={{ y: '10vh', opacity: 0 }}
