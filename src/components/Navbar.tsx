@@ -275,7 +275,7 @@ const MainHeader = () => {
               <div key={index} className="relative group">
                 <Link
                   to={item.url}
-                  className="flex text-md items-center md:text-sm hover:text-orange-400 transition duration-500"
+                  className="flex text-sm items-center md:text-sm hover:text-orange-400 transition duration-500"
                 >
                   {item.label}
                   {item.children && (

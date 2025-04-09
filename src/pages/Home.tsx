@@ -1,3 +1,4 @@
+import GoToTop from '../components/goToTop/GoToTop';
 import EqipmentDirectory from '../components/home/EqipmentDirectory';
 import HeroSection from '../components/home/HeroSection';
 import LatestVideo from '../components/home/LatestVideo';
@@ -13,7 +14,6 @@ function Home() {
       <section>
         <HeroSection />
       </section>
-      {/* Latest News */}
       <section className=" flex flex-col md:flex-row justify-between -mt-2">
         <button className=" w-full md:w-[15%] px-4  text-white font-bold bg-[#0B0035] text-lg">
           Latest News
@@ -44,7 +44,6 @@ function Home() {
       >
         <MessageFromCm />
       </section>
-      {/* bg-[url('/sea-bg.png')] object-cover */}
       <section className="relative flex justify-center w-full  h-full items-start ">
         <img src="/sea-bg.png" alt="" className='absolute top-0 left-0  h-[132%] w-full ' />
         <div className="max-w-6xl h-full  ">
@@ -57,9 +56,6 @@ function Home() {
         </div>
       </section>
       <section className="relative flex justify-center   w-full items-start">
-      {/* bg-[url('/light.jpg')] */}
-      {/* <img src="/light.jpg" alt="" className='absolute top-0 left-0  h-full w-full ' /> */}
-
         <div className="max-w-6xl  h-[132%] bg-cover bg-center">
           <TalentDirectory />
         </div>
@@ -74,6 +70,7 @@ function Home() {
           <Testimonials />
         </div>
       </section>
+      <GoToTop/>
     </div>
   );
 }

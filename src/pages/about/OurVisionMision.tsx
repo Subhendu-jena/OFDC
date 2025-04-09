@@ -103,7 +103,7 @@ const OurVisionMision = () => {
                       <div>
                         <CheckCheck size={15} className="text-red-400 mr-2" />
                       </div>
-                      <span className="text-md text-white">{item.text}</span>
+                      <span className="text-sm text-white">{item.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -116,7 +116,7 @@ const OurVisionMision = () => {
                 className="mt-8 pb-2 pt-4 border-t border-gray-200"
                 style={{ borderColor: 'rgba(244, 114, 22, 0.3)' }}
               >
-                <p className="text-md px-2 text-gray-700 italic">
+                <p className="text-sm px-2 text-gray-700 italic">
                   Through its initiatives, OFDC remains committed to nurturing a
                   vibrant and sustainable film industry in Odisha.
                 </p>

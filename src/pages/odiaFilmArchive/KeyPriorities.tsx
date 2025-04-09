@@ -22,7 +22,7 @@ const KeyPriorities:React.FC = () => {
   {data.map((locations) => (
     <div className="flex ">
       <Dot size={20} className="text-black" />
-      <p className="text-gray-500 text-md">{locations}</p>
+      <p className="text-gray-500 text-sm ">{locations}</p>
     </div>
   ))}
 </div></div>

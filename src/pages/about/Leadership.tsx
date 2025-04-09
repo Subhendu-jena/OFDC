@@ -160,7 +160,7 @@ const Card = ({ name, position,image }: { name: string; position: string,image:s
       <img
         src={image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" }
         alt="DP"
-        className=" w-full h-50"
+        className=" w-full h-50 rounded-t-4xl"
       />
 
       <p className="text-lg pt-2 font-semibold px-2 text-gray-800">{name}</p>

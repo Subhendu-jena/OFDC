@@ -124,3 +124,12 @@ export interface loginData {
   password: string;
   rememberMe: boolean;
 }
+export interface director {
+  url?: string;
+  id: number;
+  position: string;
+  name: string;
+  imageUrl: string;
+  isVacant?: boolean;
+}
+
