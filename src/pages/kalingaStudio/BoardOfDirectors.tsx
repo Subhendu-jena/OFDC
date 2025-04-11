@@ -4,18 +4,17 @@ import {
   Award,  
 } from 'lucide-react';
 import { getAllBoardofDirectors } from '../../config/controller';
-import { director } from '../../types/global';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 const BoardOfDirectors: React.FC = () => {
 const [loading, setLoading] = useState(false);
-const [data, setData] = useState<director[]>([]);
+const [data, setData] = useState<any>([]);
   useEffect(() => {
       setLoading(true);
       getAllBoardofDirectors()
       .then(({ data }) => {
         if (data) {
-            console.log(data, "data");
+          console.log(data,"daata")
             setData(data);
         }
       })
@@ -26,6 +25,7 @@ const [data, setData] = useState<director[]>([]);
           setLoading(false);
         });
   },[]);
+  const card = data[0]?.boardOfDirectors || [];
   return (
    <>
    {loading ? <Loader /> :  <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -57,7 +57,7 @@ const [data, setData] = useState<director[]>([]);
 
         {/* Directors Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-          {data?.map((director) => (
+          {card?.map((director:any) => (
             <div
               key={director.id}
               className={`rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 bg-gray-50 border-2 border-dashed border-gray-300 }`}
@@ -77,7 +77,7 @@ const [data, setData] = useState<director[]>([]);
                       <UserCircle size={96} className="text-gray-400" />
                     ) : (
                       <img
-                      src={ director.imageUrl?(STRAPI_API_BASE_URL + director?.imageUrl[0]?.url) : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png "}
+                      src={ director.imgUrl?(STRAPI_API_BASE_URL + director?.imgUrl?.url) : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png "}
                         alt={director.name}
                         className="w-full h-full object-cover"
                       />
@@ -98,7 +98,7 @@ const [data, setData] = useState<director[]>([]);
                     <p
                       className={`text-sm font-medium text-yellow-600`}
                     >
-                      {director.position}
+                      {director.designation}
                     </p>
                   </div>
                 </div>

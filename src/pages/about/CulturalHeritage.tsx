@@ -56,9 +56,10 @@ function CulturalHeritage() {
               setLoading(false);
             });
       },[]);
+      const card = data[0]?.formerChairpersons  || [];
   return (
    <>{loading ? <Loader /> :  <div className=' bg-white'>
-    <TableComponent columns={columns} data={data} Heading='Former Chairpersons' />
+    <TableComponent columns={columns} data={card} Heading='Former Chairpersons' />
   </div>}</>
   )
 }

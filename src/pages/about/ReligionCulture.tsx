@@ -64,6 +64,7 @@ function ReligionCulture() {
         setLoading(false);
       });
   }, []);
+  const card = data[0]?.formerManagingDirectors || [];
   return (
     <>
       {loading ? (
@@ -72,7 +73,7 @@ function ReligionCulture() {
         <div className="bg-white">
           <TableComponent
             columns={columns}
-            data={data}
+            data={card}
             Heading="Former Managing Directors"
           />
         </div>

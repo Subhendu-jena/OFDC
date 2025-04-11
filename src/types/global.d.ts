@@ -32,6 +32,7 @@ export interface Official {
   transcationStatus?: string;
   applicantName?: string;
   action?: boolean;
+  url?: string;
 }
 interface TableProps {
   columns: Column[];

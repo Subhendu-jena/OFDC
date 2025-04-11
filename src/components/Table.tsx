@@ -3,6 +3,7 @@ import { Mail, Phone, Star, User,ScanEye  } from 'lucide-react';
 import { Official, TableProps } from '../types/global';
 import { paths } from '../routes/Path';
 import {  useNavigate } from 'react-router-dom';
+import { STRAPI_API_BASE_URL } from '../config/httpClient';
 
 const TableComponent = ({
   Heading,
@@ -33,7 +34,7 @@ const TableComponent = ({
     }
     setCurrentPage(1); // Reset to first page on search
   }, [searchTerm, data]);
-
+// console.log(data[0].imgUrl.url || 'http://localhost:1337');
   return (
     <div className=" overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
@@ -69,7 +70,7 @@ const TableComponent = ({
           style={{ transition: 'all 0.5s ease' }}
         >
           {currentData.length > 0 ? (
-            currentData.map((official: Official, index) => (
+            currentData.map((official: any, index) => (
               <tr key={official.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {index + 1}
@@ -84,10 +85,11 @@ const TableComponent = ({
                       </div>
                     ) : (
                       <img
-                        src={
-                          official.imageUrl ||
-                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                        }
+                      src={
+                        official?.imageUrl?.url
+                          ? STRAPI_API_BASE_URL + official.imageUrl.url
+                          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                      }
                         alt={official.name}
                         className="h-12 w-12 rounded-full object-cover"
                       />
