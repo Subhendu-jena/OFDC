@@ -1,34 +1,30 @@
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { odishaStories } from '../../config/controller';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+import { Loader } from 'lucide-react';
 
 function OdishStories() {
-  const stories = [
-    {
-      id: 1,
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/09/New-Project-2.png',
-      alt: 'Odisha Story 1',
-    },
-    {
-      id: 2,
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/09/New-Project-3.png',
-      alt: 'Odisha Story 2',
-    },
-    {
-      id: 3,
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/09/New-Project-9.png',
-      alt: 'Odisha Story 3',
-    },
-    {
-      id: 4,
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/09/New-Project-4.png',
-      alt: 'Odisha Story 4',
-    },
-  ];
+  
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>([]);
+    useEffect(() => {
+      setLoading(true);
+      odishaStories()
+        .then(({ data }) => {
+          if (data) {
+            setData(data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, []);
   return (
-    <div
+    <>{loading ? (<Loader/>):(<div
       className="w-full bg-white"
       style={{
         background:
@@ -71,7 +67,7 @@ function OdishStories() {
           >
             <div className="container mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {stories.map((story) => (
+                {data[0]?.images.map((story: any) => (
                   <div
                     key={story.id}
                     className="w-full hover:shadow-lg transition-shadow duration-300"
@@ -80,8 +76,8 @@ function OdishStories() {
                       <div className="relative overflow-hidden rounded-lg">
                         <img
                           className="w-full h-auto transform hover:scale-125 transition-transform duration-4000 min-h-[300px]"
-                          src={story.image}
-                          alt={story.alt}
+                          src={STRAPI_API_BASE_URL + story.url || STRAPI_API_BASE_URL + story.url}
+                          alt={story.url}
                         />
                       </div>
                     </div>
@@ -92,7 +88,7 @@ function OdishStories() {
           </motion.div>
         </div>
       </div>
-    </div>
+    </div>)}</>
   );
 }
 

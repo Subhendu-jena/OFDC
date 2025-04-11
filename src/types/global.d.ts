@@ -32,6 +32,7 @@ export interface Official {
   transcationStatus?: string;
   applicantName?: string;
   action?: boolean;
+  url?: string;
 }
 interface TableProps {
   columns: Column[];
@@ -124,3 +125,12 @@ export interface loginData {
   password: string;
   rememberMe: boolean;
 }
+export interface director {
+  url?: string;
+  id: number;
+  position: string;
+  name: string;
+  imageUrl: string;
+  isVacant?: boolean;
+}
+

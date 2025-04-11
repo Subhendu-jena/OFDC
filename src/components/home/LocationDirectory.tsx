@@ -4,6 +4,10 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useEffect, useState } from 'react';
+import { locationDirectory } from '../../config/controller';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+import { Loader } from 'lucide-react';
 const LocationDirectory = () => {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -41,34 +45,25 @@ const LocationDirectory = () => {
     ],
   };
 
-  const destinations = [
-    {
-      title: 'Konark',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Konark_.png',
-    },
-    {
-      title: 'Bhitarkanika',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2024/12/Bhitarkanika_.png',
-    },
-    {
-      title: 'Udayagiri',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Udayagiri.png',
-    },
-    {
-      title: 'Puri Beach',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Puri_.png',
-    },
-    {
-      title: 'Putsil',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Pitsil_.png',
-    },
-    {
-      title: 'Chilika',
-      image: 'https://ofdc.octamy.com/wp-content/uploads/2024/12/Chilika-1.png',
-    },
-  ];
-
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>([]);
+  useEffect(() => {
+    setLoading(true);
+    locationDirectory()
+      .then(({ data }) => {
+        if (data) {
+          // console.log(data, 'wwwww');
+          setData(data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+  const card = data[0]?.locations || [];
   return (
     <>
       {' '}
@@ -85,64 +80,70 @@ const LocationDirectory = () => {
           ></path>
         </svg>
       </div> */}
-
-      <div className="py-4 relative" ref={ref}>
-        <motion.div
-          className=" flex flex-col py-8 "
-          initial={{ y: '10vh', opacity: 0 }}
-          animate={inView ? { y: 0, opacity: 1 } : {}}
-          transition={{ type: 'tween', duration: 1 }}
-        >
-          <div className="text-xl text-red-500 text-center">
-            Around the Odisha
-          </div>
-          <div className="text-2xl text-white font-bold md:text-4xl text-center">
-            LOCATION DIRECTORY
-          </div>
-        </motion.div>
-        <div className=" px-4 flex justify-center items-center w-full">
-          <Slider
-            {...settings}
-            className=" flex justify-center items-center w-full"
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="py-4 relative" ref={ref}>
+          <motion.div
+            className=" flex flex-col py-8 "
+            initial={{ y: '10vh', opacity: 0 }}
+            animate={inView ? { y: 0, opacity: 1 } : {}}
+            transition={{ type: 'tween', duration: 1 }}
           >
-            {destinations.map((destination, index) => (
-              <div key={index} className="px-2 max-w-[270px]">
-                <div className="relative group overflow-hidden rounded-md">
-                  <img
-                    src={destination.image}
-                    alt={destination.title}
-                    className=" w-full h-[300px] object-cover transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white  justify-center items-center flex flex-col transition duration-500">
-                    <h2 className="text-xl font-semibold group-hover:block hidden ">
-                      Places In
-                    </h2>
-                    <h3 className="text-2xl font-bold group-hover:hidden">
-                      {destination.title}
-                    </h3>
+            <div className="text-xl text-red-500 text-center">
+              Around the Odisha
+            </div>
+            <div className="text-2xl text-white font-bold md:text-4xl text-center">
+              LOCATION DIRECTORY
+            </div>
+          </motion.div>
+          <div className=" px-4 flex justify-center items-center w-full">
+            <Slider
+              {...settings}
+              className=" flex justify-center items-center w-full"
+            >
+              {card.map((destination: any, index: number) => (
+                <div key={index} className="px-2 max-w-[270px]">
+                  <div className="relative group overflow-hidden rounded-md">
+                    <img
+                      src={
+                        STRAPI_API_BASE_URL + destination?.image?.url ||
+                        STRAPI_API_BASE_URL + destination?.image
+                      }
+                      alt={destination.name}
+                      className=" w-full h-[300px] object-cover transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white  justify-center items-center flex flex-col transition duration-500">
+                      <h2 className="text-xl font-semibold group-hover:block hidden ">
+                        Places In
+                      </h2>
+                      <h3 className="text-2xl font-bold group-hover:hidden">
+                        {destination.name}
+                      </h3>
+                    </div>
+                    <Link
+                      to="/location-directory"
+                      className="absolute inset-0 z-10"
+                      aria-label={`Visit ${destination.name}`}
+                    ></Link>
                   </div>
-                  <Link
-                    to="/location-directory"
-                    className="absolute inset-0 z-10"
-                    aria-label={`Visit ${destination.title}`}
-                  ></Link>
                 </div>
-              </div>
-            ))}
-          </Slider>
+              ))}
+            </Slider>
+          </div>
+          <div className="text-center transition duration-300 group mt-8">
+            <Link
+              to="/location-directory"
+              className="inline-flex items-center justify-center px-6 py-3 text-white font-bold rounded-full bg-gradient-to-r from-red-900/90 to-red-500/90 hover:bg-gradient-to-l transition-all duration-500"
+            >
+              <span>More</span>
+              <span className="ml-2 group-hover:ml-2 transform transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
+          </div>
         </div>
-        <div className="text-center transition duration-300 group mt-8">
-          <Link
-            to="/location-directory"
-            className="inline-flex items-center justify-center px-6 py-3 text-white font-bold rounded-full bg-gradient-to-r from-red-900/90 to-red-500/90 hover:bg-gradient-to-l transition-all duration-500"
-          >
-            <span>More</span>
-            <span className="ml-2 group-hover:ml-2 transform transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
-          </Link>
-        </div>
-      </div>
+      )}
     </>
   );
 };

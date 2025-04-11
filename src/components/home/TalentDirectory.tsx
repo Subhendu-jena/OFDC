@@ -2,13 +2,16 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useEffect, useState } from 'react';
+import { talentDirectory } from '../../config/controller';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+import { Loader } from 'lucide-react';
 
 function TalentDirectory() {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
   });
-
   const settings = {
     dots: true,
     infinite: true,
@@ -39,42 +42,28 @@ function TalentDirectory() {
       },
     ],
   };
-
-  const destinations = [
-    {
-      name: 'Sabyasachi Mohapatra',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Sabyasachi-Mohapatra-500x600.png',
-      role: 'Actor',
-    },
-    {
-      name: 'Suryamayee Mohapatra',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Suryamayee-Mohapatra-500x600.png',
-      role: 'Actor',
-    },
-    {
-      name: 'Anubhav Mohanty',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Anubhav-Mohanty-500x600.png',
-      role: 'Actor',
-    },
-    {
-      name: 'Susant Mishra',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Susant-Mishra-500x600.png',
-      role: 'Actor',
-    },
-    {
-      name: 'Mihir Das',
-      image:
-        'https://ofdc.octamy.com/wp-content/uploads/2020/10/Mihir-Das-500x600.png',
-      role: 'Actor',
-    },
-  ];
-
+ 
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>([]);
+  useEffect(() => {
+    setLoading(true);
+    talentDirectory()
+      .then(({ data }) => {
+        if (data) {
+          // console.log(data, 'wwwww');
+          setData(data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+  const card = data[0]?.talentDirectory || [];
   return (
-    <div className=" w-full mt-18" ref={ref}>
+    <>{loading ? (<Loader/>):(<div className=" w-full mt-18" ref={ref}>
       <motion.div
         className=" w-full flex flex-col  items-center px-2 py-6"
         initial={{ y: '10vh', opacity: 0 }}
@@ -87,13 +76,13 @@ function TalentDirectory() {
       <div className=" w-full flex">
         <div className="w-full px-4">
           <Slider {...settings}>
-            {destinations.map((destination, index) => (
+            {card.map((destination:any, index:number) => (
               <div key={index} className="px-2">
                 <div className="relative group overflow-hidden rounded-md h-[300px]">
                   {/* Background Image */}
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
-                    style={{ backgroundImage: `url(${destination.image})` }}
+                    style={{ backgroundImage: `url(${STRAPI_API_BASE_URL}${destination?.image?.url})` }}              
                   ></div>
 
                   {/* Additional Text */}
@@ -102,7 +91,7 @@ function TalentDirectory() {
                       {destination.name}
                     </p>
                     <p className=" text-gray-500 text-sm pb-3 ">
-                      {destination.role}
+                      {destination.designation}
                     </p>
                   </div>
                 </div>
@@ -125,7 +114,8 @@ function TalentDirectory() {
           </Link>
         </div>
       </div>
-    </div>
+    </div>)}
+    </>
   );
 }
 
