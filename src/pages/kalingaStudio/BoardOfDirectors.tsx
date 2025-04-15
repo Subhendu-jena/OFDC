@@ -3,7 +3,7 @@ import {
   UserCircle,
   Award,  
 } from 'lucide-react';
-import { getAllBoardofDirectors } from '../../config/controller';
+import { getAllBoardofDirectors } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 const BoardOfDirectors: React.FC = () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import TableComponent from '../../components/Table';
-import { getAllManagingDirectors } from '../../config/controller';
+import { getAllManagingDirectors } from '../../config/strapiController';
 import { Loader } from 'lucide-react';
 
 function ReligionCulture() {

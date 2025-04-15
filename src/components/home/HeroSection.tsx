@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { paths } from '../../routes/Path';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { herosection } from '../../config/controller';
+import { herosection } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 

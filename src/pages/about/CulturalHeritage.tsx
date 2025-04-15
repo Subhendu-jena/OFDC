@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import TableComponent from '../../components/Table'
-import { getAllFormerChairpersons } from '../../config/controller';
+import { getAllFormerChairpersons } from '../../config/strapiController';
 import { Loader } from 'lucide-react';
 
 function CulturalHeritage() {

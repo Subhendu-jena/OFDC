@@ -53,7 +53,7 @@ export const apiCaller = <T>({
       data,
     };
 
-    console.log(config, ":config");
+    // console.log(config, ":config");
 
     axios(config)
       .then((response) => resolve(response.data))
@@ -79,7 +79,7 @@ export const strapiCaller = <T>({
       data,
     };
 
-    console.log(config, ":config");
+    // console.log(config, ":config");
 
     axios(config)
       .then((response) => resolve(response.data))

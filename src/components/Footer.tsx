@@ -12,7 +12,7 @@ import { CircleArrowOutDownRight } from 'lucide-react';
 import { paths } from '../routes/Path';
 import { Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { contact } from '../config/controller';
+import { contact } from '../config/strapiController';
 
 const QuickLinks: FooterLink[] = [
   { text: 'About us', href: '/about' },
@@ -28,7 +28,7 @@ const Footer = () => {
     contact()
       .then(({ data }) => {
         if (data) {
-          console.log(data, 'wwww11w');
+          // console.log(data, 'wwww11w');
           setData(data);
         }
       })

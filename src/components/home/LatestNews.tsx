@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { latestNews } from '../../config/controller';
+import { latestNews } from '../../config/strapiController';
 
 const LatestNews: React.FC = () => {
     const [data, setData] = useState<any>([]);
@@ -7,7 +7,7 @@ const LatestNews: React.FC = () => {
         latestNews()
           .then(({ data }) => {
             if (data) {
-              console.log(data, 'data');
+              // console.log(data, 'data');
               setData(data);
             }
           })

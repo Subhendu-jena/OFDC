@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react';
-import { equipmentDirectory } from '../../config/controller';
+import { equipmentDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 function EqipmentDirectory() {

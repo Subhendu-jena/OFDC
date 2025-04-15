@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { leaderships } from '../../config/controller';
+import { leaderships } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 const Leadership: React.FC = () => {

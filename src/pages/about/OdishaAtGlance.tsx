@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { aCursoryLook } from '../../config/strapiController';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 
 const OdishaAtGlance: React.FC = () => {
   const content = [
@@ -18,9 +20,28 @@ const OdishaAtGlance: React.FC = () => {
         'In order to encourage the talents of the industry and to boost skill development, students continuing their education in various wings of film production in different institutions of the country are being provided with scholarships.',
     },
   ];
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>([]);
+  useEffect(() => {
+    setLoading(true);
+    aCursoryLook()
+      .then(({ data }) => {
+        if (data) {
+          console.log(data, 'data');
+          setData(data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+  const card = data[0]?.cursoryLookCard
   return (
     <div className=" bg-white min-h-screen  pb-24">
-      <div className="max-w-6xl mx-auto px-2">
+      <div className="max-w-7xl mx-auto px-2">
         <section className=" shadow-lg rounded-lg p-8">
           {/* Introduction */}
           <section className="mb-8">
@@ -29,28 +50,18 @@ const OdishaAtGlance: React.FC = () => {
             </h2>
             <div className="flex flex-col md:flex-row items-center gap-6">
               <img
-                src="https://img-cdn.thepublive.com/fit-in/1200x675/filters:format(webp)/sambad-english/media/post_banners/wp-content/uploads/2023/10/kalinga-studio-750x430-1.jpg"
+                src={data[0]?.image && (STRAPI_API_BASE_URL+ data[0]?.image?.url)}
                 alt="Kalinga Studio"
                 className="w-full md:w-1/2 rounded-lg shadow-md"
               />
-              <p className="text-gray-700 leading-relaxed text-justify">
-                The Odisha Film Development Corporation Ltd. (OFDC) has made
-                significant strides over the years in promoting the Odia Film
-                Industries. Established on 22nd April, 1976 following its
-                incorporation as a public sector undertaking of the Government
-                of Odisha, it has achieved milestones like setting up of Kalinga
-                Studio which provided complete facilities for indoor and outdoor
-                shooting, editing, dubbing, and music recordings. Such
-                infrastructure building enhances cost-effectiveness and
-                efficiency in Odia film production in comparison to other
-                regional film industries such as those in Tamil Nadu and West
-                Bengal.
+              <p className="text-gray-700 h-full leading-relaxed text-justify">
+               {data[0]?.description}
               </p>
             </div>
           </section>
         </section>
         <section className=" grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 justify-items-center gap-x-6 mt-24 gap-y-24 px-6 ">
-          {content.map((data, i) => (
+          {card?.map((data: any, i: number) => (
             <div
               key={i}
               className="relative transition duration-300 hover:scale-105 bg-white rounded-br-[50%] shadow-lg px-4"
@@ -61,11 +72,11 @@ const OdishaAtGlance: React.FC = () => {
                   clipPath: 'polygon(0% 0%, 100% 30%, 98% 100%, 10% 100%)',
                 }}
               >
-                {data.title}
+                {data?.cardHead}
               </div>
               <div className="mt-4 pb-8 pt-8 px-2 relative">
                 <p className=" relative text-[13px] text-justify z-10 pr-6">
-                  {data.description}
+                  {data?.cardBody}
                 </p>
               </div>
             </div>
