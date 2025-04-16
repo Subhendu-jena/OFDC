@@ -47,7 +47,7 @@ export const contact = async (): Promise<ApiResponse<[]>> => {
   };
   export const talentDirectory = async (): Promise<ApiResponse<[]>> => {
     return strapiCaller({
-      uri: `/api/talent-directories?populate[talentDirectory][populate]=image`,
+      uri: `/api/talent-directories?populate[talentDirectory][populate]=*`,
     });
   };
   export const equipmentDirectory = async (): Promise<ApiResponse<[]>> => {
@@ -69,6 +69,28 @@ export const contact = async (): Promise<ApiResponse<[]>> => {
   export const aCursoryLook = async (): Promise<ApiResponse<[]>> => {
     return strapiCaller({
       uri: `/api/about-us-a-cursory-looks?populate=*`,
+    });
+  };
+  export const whoIsWhoAboutUS = async (): Promise<ApiResponse<[]>> => {
+    return strapiCaller({
+      uri: `/api/who-is-who-about-uses?populate[whoIsWho][populate]=*`
+    });
+  };
+  export const whoIsWhoKalingaStudio = async (): Promise<ApiResponse<[]>> => {
+    return strapiCaller({
+      uri: `/api/who-is-who-kalinga-studios?populate[whoIsWho][populate]=*`
+    });
+  };
+  
+  export const ourVisionandMission = async (): Promise<ApiResponse<[]>> => {
+    return strapiCaller({
+      uri: `/api/about-us-our-mission-and-visions?populate=*`
+    });
+  };
+  
+  export const achivements = async (): Promise<ApiResponse<[]>> => {
+    return strapiCaller({
+      uri: `/api/about-us-achivements?populate=*`
     });
   };
   

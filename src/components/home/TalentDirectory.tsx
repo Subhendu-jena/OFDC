@@ -50,7 +50,6 @@ function TalentDirectory() {
     talentDirectory()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, 'wwwww');
           setData(data);
         }
       })
@@ -62,6 +61,7 @@ function TalentDirectory() {
       });
   }, []);
   const card = data[0]?.talentDirectory || [];
+  console.log(card[0]?.imgUrl?.url, 'wwwww');
   return (
     <>{loading ? (<Loader/>):(<div className=" w-full mt-18" ref={ref}>
       <motion.div
@@ -82,7 +82,7 @@ function TalentDirectory() {
                   {/* Background Image */}
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
-                    style={{ backgroundImage: `url(${STRAPI_API_BASE_URL}${destination?.image?.url})` }}              
+                    style={{ backgroundImage: `url(${STRAPI_API_BASE_URL}${destination?.imgUrl?.url})` }}              
                   ></div>
 
                   {/* Additional Text */}

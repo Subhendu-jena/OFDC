@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Mail, Phone, Star, User,ScanEye  } from 'lucide-react';
-import { Official, TableProps } from '../types/global';
+import {  TableProps } from '../types/global';
 import { paths } from '../routes/Path';
 import {  useNavigate } from 'react-router-dom';
 import { STRAPI_API_BASE_URL } from '../config/httpClient';
@@ -14,7 +14,7 @@ const TableComponent = ({
 }: TableProps & { Heading: string }) => {
   const itemsPerPage = maxline ?? 10;
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState<Official[]>([]);
+  const [filteredData, setFilteredData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -25,16 +25,15 @@ const TableComponent = ({
       setFilteredData(data);
     } else {
       const lowercasedFilter = searchTerm.toLowerCase();
-      const filtered = data.filter((item) =>
+      const filtered = data.filter((item:any) =>
         Object.values(item).some((value) =>
           value?.toString().toLowerCase().includes(lowercasedFilter)
         )
       );
       setFilteredData(filtered);
     }
-    setCurrentPage(1); // Reset to first page on search
+    setCurrentPage(1); 
   }, [searchTerm, data]);
-// console.log(data[0].imgUrl.url || 'http://localhost:1337');
   return (
     <div className=" overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
@@ -70,7 +69,7 @@ const TableComponent = ({
           style={{ transition: 'all 0.5s ease' }}
         >
           {currentData.length > 0 ? (
-            currentData.map((official: any, index) => (
+            currentData.map((official: any, index: number) => (
               <tr key={official.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {index + 1}
@@ -86,8 +85,8 @@ const TableComponent = ({
                     ) : (
                       <img
                       src={
-                        official?.imageUrl?.url
-                          ? STRAPI_API_BASE_URL + official.imageUrl.url
+                        official?.imgUrl?.url
+                          ? STRAPI_API_BASE_URL+official?.imgUrl?.url
                           : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                       }
                         alt={official.name}
@@ -113,6 +112,11 @@ const TableComponent = ({
                 {official.applicantName && (
                   <td className="px-6 py-4 text-sm text-gray-900">
                     {official.applicantName}
+                  </td>
+                )}
+                {official.talentType && (
+                  <td className="px-6 py-4 text-sm text-gray-900">
+                    {official.talentType}
                   </td>
                 )}
                 {official.bookingDate && (
@@ -187,11 +191,11 @@ const TableComponent = ({
                     </span>
                   </td>
                 )}
-                {official.contactNo && (
+                {official.contact && (
                   <td className="px-6 py-4 text-sm text-gray-900">
                     <div className="flex items-center">
                       <Phone size={14} className="mr-1 text-gray-500" />
-                      {official.contactNo}
+                      {official.contact}
                     </div>
                     {official.email && (
                       <div className="text-sm text-gray-500 flex items-center">

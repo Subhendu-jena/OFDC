@@ -2,7 +2,6 @@ import React from 'react';
 import archive from '../../assets/acrhive.jpg';
 import { motion } from 'framer-motion';
 import { Archive, Camera, Film } from 'lucide-react';
-import { CornerDownRight } from 'lucide-react';
 const ArchivesInsight: React.FC = () => {
   const archiveSections = [
     {
@@ -42,7 +41,6 @@ const ArchivesInsight: React.FC = () => {
           </div>
           <div className="m-2 col-span-3">
             <p className="text-gray-700 mb-4 text-justify p-1">
-            <CornerDownRight className="flex" />
               The Odia Film Archive plays a crucial role in preserving the rich
               cinematic heritage of Odisha. As the repository of Odia films,
               documentaries, and other audiovisual materials, the archive is

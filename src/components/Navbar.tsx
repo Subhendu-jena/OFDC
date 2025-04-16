@@ -176,18 +176,18 @@ const MainHeader = () => {
     },
     {
       label: 'Location Directory',
-      url: '#',
+      url: paths.locationDirectory,
       children: [
-        { label: 'Location Category', url: '#' },
+        { label: 'Location Category', url: paths.locationDirectory },
         { label: 'Book a Location', url: '#' },
         { label: 'Location Booking Guideline', url: '#' },
       ],
     },
     {
       label: 'Talent Directory',
-      url: '#',
+      url: paths.talentlist,
       children: [
-        { label: 'Talent List', url: '#' },
+        { label: 'Talent List', url: paths.talentlist },
         { label: 'Individual', url: '#' },
         { label: 'Group', url: '#' },
         { label: 'Agency', url: '#' },

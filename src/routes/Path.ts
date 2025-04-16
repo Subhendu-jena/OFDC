@@ -41,6 +41,8 @@ interface paths {
   calender: string;
   confirmation: string; 
   preview: string;
+  talentlist: string;
+  locationDirectory: string;
 }
 
 export const paths: paths = {
@@ -86,4 +88,6 @@ export const paths: paths = {
   calender: '/calender',
   confirmation: '/confirmation',
   preview: '/preview',
+  talentlist: '/talent-list',
+  locationDirectory: '/location-directory',
 };

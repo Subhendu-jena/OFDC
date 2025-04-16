@@ -21,7 +21,7 @@ import ObjectivesPage from '../pages/kalingaStudio/Objectives';
 import StudiosPastGlory from '../pages/kalingaStudio/StudiosPastGlory';
 import BoardOfDirectors from '../pages/kalingaStudio/BoardOfDirectors';
 import WhoIsWho from '../pages/kalingaStudio/WhoIsWho';
-import KalingaStudioLayout from '../layout/KalingaStudioLayout.tsx/KalingaStudioLayout';
+import KalingaStudioLayout from '../layout/KalingaStudioLayout/KalingaStudioLayout';
 import OdishaIndiasBestKeptSecret from '../pages/discoverOdisha/OdishaIndiasBestKeptSecret';
 import EchoesOfHistory from '../pages/discoverOdisha/EchoesOfHistory';
 import DiscoverOdishaLayout from '../layout/discoverOdisha/DiscoverOdishaLayout';
@@ -48,6 +48,10 @@ import AdminPaymentHistory from '../pages/admin/AdminPaymentHistory';
 import Confirmation from '../components/BookingForm/Confirmation';
 import Preview from '../components/BookingForm/Preview';
 import AdminCalender from '../pages/admin/AdminCalender';
+import TalentLayout from '../layout/talentLayout/TalentLayout';
+import TalentList from '../pages/talentList/TalentList';
+import LocationLayout from '../layout/locationLayout/LocationLayout';
+import LocationCategory from '../pages/locationDirectory/LocationCategory';
 
 const RoutePage: React.FC = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -86,7 +90,7 @@ const RoutePage: React.FC = () => {
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
           {/* AdminLayout */}
-          <Route  element={<AdminLayout />}>
+          <Route element={<AdminLayout />}>
             <Route path={paths.adminDashboard} element={<AdminDashboard />} />
             <Route path={paths.allBookings} element={<AdminBookingHistory />} />
             <Route
@@ -111,7 +115,6 @@ const RoutePage: React.FC = () => {
 
             <Route path={paths.preview} element={<Preview />} />
             <Route path={paths.confirmation} element={<Confirmation />} />
-
           </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
@@ -179,6 +182,13 @@ const RoutePage: React.FC = () => {
               element={<ReligionCulture />}
             />
             <Route path={paths.whoIsWho} element={<WhosWho />} />
+          </Route>
+          {/* Talentlayout */}
+          <Route element={<TalentLayout />}>
+            <Route path={paths.talentlist} element={<TalentList />} />
+          </Route>
+          <Route element={<LocationLayout />}>
+            <Route path={paths.locationDirectory} element={<LocationCategory />} />
           </Route>
         </Route>
       </Routes>

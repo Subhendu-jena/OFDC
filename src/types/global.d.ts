@@ -17,7 +17,7 @@ export interface Official {
   name?: string;
   designation?: string;
   department?: string;
-  contactNo?: string;
+  contact?: string;
   email?: string;
   imageUrl?: string;
   status?: string;
@@ -36,7 +36,7 @@ export interface Official {
 }
 interface TableProps {
   columns: Column[];
-  data: Official[];
+  data: any;
   search?: Boolean;
   maxline?: number;
 }
