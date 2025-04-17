@@ -22,7 +22,7 @@ const LocationLayout = () => {
       tag: 'Odisha',
     },
     {
-      page: '/key-priorities',
+      page: '/location-details',
       subHead1: 'Our Mission',
       subHead2:
         ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',

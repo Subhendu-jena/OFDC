@@ -72,7 +72,7 @@ function LatestVideo() {
         setLoading(false);
       });
   }, []);
-  const card = data[0]?.locations || [];
+  const card = data[0]?.locationsCard || [];
   return (
     <>
       {loading ? (
@@ -113,7 +113,7 @@ function LatestVideo() {
                         <div
                           className="absolute inset-0 bg-cover bg-center transition-transform duration-500"
                           style={{
-                            backgroundImage: `url(${STRAPI_API_BASE_URL}${destination?.image?.url})`,
+                            backgroundImage: `url(${STRAPI_API_BASE_URL}${destination?.images[0]?.url})`,
                           }}
                         ></div>
 
@@ -123,7 +123,7 @@ function LatestVideo() {
                             Places In
                           </h2>
                           <h3 className="text-2xl font-bold group-hover:hidden">
-                            {destination.name}
+                            {destination?.title}
                           </h3>
                         </div>
 
@@ -148,16 +148,16 @@ function LatestVideo() {
                       <div className="relative group overflow-hidden rounded-xl">
                         <img
                           src={
-                            STRAPI_API_BASE_URL + destination?.image?.url ||
-                            STRAPI_API_BASE_URL + destination?.image?.url
+                            STRAPI_API_BASE_URL + destination?.images[0]?.url ||
+                            STRAPI_API_BASE_URL + destination?.images[0]?.url
                           }
-                          alt={destination.name}
+                          alt={destination?.title}
                           className=" w-full h-[300px] object-cover transition-transform duration-500"
                         />
                         <Link
                           to="/"
                           className="absolute inset-0 z-10"
-                          aria-label={`Visit ${destination.name}`}
+                          aria-label={`Visit ${destination?.title}`}
                         ></Link>
                       </div>
                     </div>

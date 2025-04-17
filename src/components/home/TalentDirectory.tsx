@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { talentDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
+import { paths } from '../../routes/Path';
 
 function TalentDirectory() {
   const { ref, inView } = useInView({
@@ -104,7 +105,7 @@ function TalentDirectory() {
       <div className="w-full flex justify-center items-center px-2 py-6">
         <div className="text-center transition duration-300 group mt-8">
           <Link
-            to="/location-directory"
+            to={paths.talentlist}
             className="inline-flex items-center justify-center px-6 py-3 text-white font-bold rounded-full bg-gradient-to-r from-red-900/90 to-red-500/90 hover:bg-gradient-to-l transition-all duration-500"
           >
             <span>More</span>

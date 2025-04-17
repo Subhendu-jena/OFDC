@@ -42,7 +42,7 @@ export const contact = async (): Promise<ApiResponse<[]>> => {
   };
   export const locationDirectory = async (): Promise<ApiResponse<[]>> => {
     return strapiCaller({
-      uri: `/api/location-directories?populate[locations][populate]=image`,
+      uri: `/api/location-directories?populate[locationsCard][populate]=*`,
     });
   };
   export const talentDirectory = async (): Promise<ApiResponse<[]>> => {

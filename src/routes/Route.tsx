@@ -52,6 +52,7 @@ import TalentLayout from '../layout/talentLayout/TalentLayout';
 import TalentList from '../pages/talentList/TalentList';
 import LocationLayout from '../layout/locationLayout/LocationLayout';
 import LocationCategory from '../pages/locationDirectory/LocationCategory';
+import LocationDetails from '../components/locationCard/LocationDetails';
 
 const RoutePage: React.FC = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -189,6 +190,7 @@ const RoutePage: React.FC = () => {
           </Route>
           <Route element={<LocationLayout />}>
             <Route path={paths.locationDirectory} element={<LocationCategory />} />
+            <Route path={paths.locationDetails} element={<LocationDetails />} />
           </Route>
         </Route>
       </Routes>

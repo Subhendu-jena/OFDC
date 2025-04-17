@@ -43,6 +43,7 @@ interface paths {
   preview: string;
   talentlist: string;
   locationDirectory: string;
+  locationDetails: string;
 }
 
 export const paths: paths = {
@@ -90,4 +91,5 @@ export const paths: paths = {
   preview: '/preview',
   talentlist: '/talent-list',
   locationDirectory: '/location-directory',
+  locationDetails: '/location-details',
 };

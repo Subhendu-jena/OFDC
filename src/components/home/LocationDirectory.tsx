@@ -63,7 +63,7 @@ const LocationDirectory = () => {
         setLoading(false);
       });
   }, []);
-  const card = data[0]?.locations || [];
+  const card = data[0]?.locationsCard || [];
   return (
     <>
       {' '}
@@ -107,10 +107,10 @@ const LocationDirectory = () => {
                   <div className="relative group overflow-hidden rounded-md">
                     <img
                       src={
-                        STRAPI_API_BASE_URL + destination?.image?.url ||
-                        STRAPI_API_BASE_URL + destination?.image
+                        STRAPI_API_BASE_URL + destination?.images[0]?.url ||
+                        STRAPI_API_BASE_URL + destination?.images[0]
                       }
-                      alt={destination.name}
+                      alt={destination?.title}
                       className=" w-full h-[300px] object-cover transition-transform duration-500"
                     />
                     <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white  justify-center items-center flex flex-col transition duration-500">
@@ -118,13 +118,13 @@ const LocationDirectory = () => {
                         Places In
                       </h2>
                       <h3 className="text-2xl font-bold group-hover:hidden">
-                        {destination.name}
+                        {destination?.title}
                       </h3>
                     </div>
                     <Link
                       to="/location-directory"
                       className="absolute inset-0 z-10"
-                      aria-label={`Visit ${destination.name}`}
+                      aria-label={`Visit ${destination.title}`}
                     ></Link>
                   </div>
                 </div>

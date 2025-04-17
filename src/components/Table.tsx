@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Star, User,ScanEye  } from 'lucide-react';
-import {  TableProps } from '../types/global';
+import { Mail, Phone, Star, User, ScanEye } from 'lucide-react';
+import { TableProps } from '../types/global';
 import { paths } from '../routes/Path';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { STRAPI_API_BASE_URL } from '../config/httpClient';
 
 const TableComponent = ({
@@ -25,14 +25,14 @@ const TableComponent = ({
       setFilteredData(data);
     } else {
       const lowercasedFilter = searchTerm.toLowerCase();
-      const filtered = data.filter((item:any) =>
+      const filtered = data.filter((item: any) =>
         Object.values(item).some((value) =>
           value?.toString().toLowerCase().includes(lowercasedFilter)
         )
       );
       setFilteredData(filtered);
     }
-    setCurrentPage(1); 
+    setCurrentPage(1);
   }, [searchTerm, data]);
   return (
     <div className=" overflow-hidden min-h-screen p-4">
@@ -53,7 +53,7 @@ const TableComponent = ({
       )}
       <table className="w-full border-collapse ">
         <thead>
-          <tr >
+          <tr>
             {columns.map((column, index) => (
               <th
                 key={index}
@@ -83,15 +83,29 @@ const TableComponent = ({
                         </div>
                       </div>
                     ) : (
-                      <img
-                      src={
-                        official?.imgUrl?.url
-                          ? STRAPI_API_BASE_URL+official?.imgUrl?.url
-                          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                      }
-                        alt={official.name}
-                        className="h-12 w-12 rounded-full object-cover"
-                      />
+                      <div className='relative group inline-block'>
+                        {' '}
+                        <img
+                          src={
+                            official?.imgUrl?.url
+                              ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                          }
+                          alt={official.name}
+                          className=" h-12 w-12 rounded-full object-cover cursor-pointer"
+                        />
+                        <div className="absolute z-50 hidden group-hover:block left-14 top-0">
+                          <img
+                           src={
+                            official?.imgUrl?.url
+                              ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                          }
+                          alt={official.name}
+                            className="w-48 h-auto rounded shadow-lg border border-gray-300 bg-white"
+                          />
+                        </div>
+                      </div>
                     )}
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">
@@ -172,8 +186,11 @@ const TableComponent = ({
 
                 {official.view && (
                   <td className="px-6 py-4 text-sm text-gray-900">
-                    <button  className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl text-sm cursor-pointer" onClick={()=> navigate(paths.preview)}>
-                    <ScanEye />
+                    <button
+                      className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl text-sm cursor-pointer"
+                      onClick={() => navigate(paths.preview)}
+                    >
+                      <ScanEye />
                     </button>
                   </td>
                 )}
@@ -232,7 +249,7 @@ const TableComponent = ({
                         ></div>
                       </div>
                     </label> */}
-                  {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl text-sm cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
+                    {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl text-sm cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
                   <button className='border p-2 rounded-2xl text-sm cursor-pointer' >Decline</button> */}
                   </td>
                 )}
