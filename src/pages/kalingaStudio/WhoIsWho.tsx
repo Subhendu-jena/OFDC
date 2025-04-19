@@ -8,7 +8,8 @@ const WhoIsWho: React.FC = () => {
   const columns = [
     { label: 'Sl No.', field: 'id' },
     { label: 'Name of Chairperson', field: 'name' },
-    { label: 'contact', field: 'to' },
+    { label: 'Email Id', field: 'emailId' },
+    { label: 'Phone No', field: 'phoneNo' },
   ];
   // const dataTable : Official[] = [
   //   {

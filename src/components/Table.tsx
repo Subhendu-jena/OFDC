@@ -83,7 +83,7 @@ const TableComponent = ({
                         </div>
                       </div>
                     ) : (
-                      <div className='relative group inline-block'>
+                      <div className="relative group inline-block">
                         {' '}
                         <img
                           src={
@@ -96,12 +96,12 @@ const TableComponent = ({
                         />
                         <div className="absolute z-50 hidden group-hover:block left-14 top-0">
                           <img
-                           src={
-                            official?.imgUrl?.url
-                              ? STRAPI_API_BASE_URL + official?.imgUrl?.url
-                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                          }
-                          alt={official.name}
+                            src={
+                              official?.imgUrl?.url
+                                ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+                                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                            }
+                            alt={official.name}
                             className="w-48 h-auto rounded shadow-lg border border-gray-300 bg-white"
                           />
                         </div>
@@ -208,13 +208,26 @@ const TableComponent = ({
                     </span>
                   </td>
                 )}
+                {official.email && (
+                  <td className="px-6 py-4">
+                    <div className="text-sm text-gray-500 flex items-center">
+                      <Mail size={14} className="mr-1 text-gray-500" />
+                      <a
+                        href={`mailto:${official.email}`}
+                        className="hover:text-red-500"
+                      >
+                        {official.email || 'N/A'}
+                      </a>
+                    </div>
+                  </td>
+                )}
                 {official.contact && (
                   <td className="px-6 py-4 text-sm text-gray-900">
                     <div className="flex items-center">
                       <Phone size={14} className="mr-1 text-gray-500" />
                       {official.contact}
                     </div>
-                    {official.email && (
+                    {/* {official.email && (
                       <div className="text-sm text-gray-500 flex items-center">
                         <Mail size={14} className="mr-1 text-gray-500" />
                         <a
@@ -224,7 +237,7 @@ const TableComponent = ({
                           {official.email}
                         </a>
                       </div>
-                    )}
+                    )} */}
                   </td>
                 )}
                 {official.action && (

@@ -3,12 +3,12 @@ import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
 
-function LocationCard({ cardData }: any) {
+function LocationCard({ cardData,setSelectedProduct }: any) {
   const navigate=useNavigate()
   return (
     <>
     {cardData.map((card: any, index: number) => (
-        <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow" onClick={() => {navigate(paths.locationDetails)}} key={index}>
+        <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow" onClick={() => setSelectedProduct(card)} key={index}>
           {' '}
           <div className="relative" key={index}>
             {/* Main images */}

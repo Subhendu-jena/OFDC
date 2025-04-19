@@ -8,7 +8,8 @@ const TalentList:React.FC = () => {
         { label: 'Sl No.', field: 'id' },
         { label: 'Name of the Talent', field: 'name' },
         { label: 'Talent Type', field: 'talentType' },
-        { label: 'Contact', field: 'contact' },
+        { label: 'Email id', field: 'emailId' },
+        { label: 'Phone No', field: 'phoneNo' },
       ];
     
        const [loading, setLoading] = useState(false);
