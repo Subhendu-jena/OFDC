@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import TableComponent from '../../components/Table'
+import TableComponent from '../../components/Table';
 import { whoIsWhoAboutUS } from '../../config/strapiController';
 import { Loader } from 'lucide-react';
 // import { Official } from '../../types/global';
 
-
 function WhosWho() {
   const columns = [
-    { field: "slNo", label: "Sl No." },
-    { field: "name", label: "Name" },
-    { field: "contact", label: "Contact No." },
+    { field: 'slNo', label: 'Sl No.' },
+    { field: 'name', label: 'Name' },
+    { label: 'Phone No', field: 'phoneNo' },
+    { label: 'Email Id', field: 'emailId' },
   ];
-  
+
   // const data:Official[] = [
   //   { slNo: 1, name: "-Vacant-", designation: "Chairman", contact: "0671-2305169, 2306532", email: "" },
   //   { slNo: 2, name: "Sri Samarth Verma, IAS", designation: "Managing Director", contact: "0671-2305169, 2306532", email: "mdodfilm@gmail.com" },
@@ -30,7 +30,7 @@ function WhosWho() {
   //   { slNo: 15, name: "Sri D. Kama Kumar Reddy", designation: "Watchman-cum-Mali", contact: "", email: "" },
   //   { slNo: 16, name: "Sri N. Santosh", designation: "Sweeper", contact: "", email: "" },
   // ];
-  
+
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
   useEffect(() => {
@@ -61,6 +61,6 @@ function WhosWho() {
       )}
     </>
   );
-};
+}
 
-export default WhosWho
+export default WhosWho;

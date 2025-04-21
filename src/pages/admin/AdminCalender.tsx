@@ -1,6 +1,22 @@
 import React, { useState } from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns';
-import { ChevronLeft, ChevronRight, Clock, X, Plus, Calendar as CalendarIcon } from 'lucide-react';
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  isSameMonth,
+  isSameDay,
+  addMonths,
+  subMonths,
+} from 'date-fns';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  X,
+  Plus,
+  Calendar as CalendarIcon,
+} from 'lucide-react';
 
 interface Slot {
   id: string;
@@ -13,7 +29,7 @@ interface DaySlots {
   [key: string]: Slot[];
 }
 
-const AdminCalender:React.FC=()=> {
+const AdminCalender: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [slots, setSlots] = useState<DaySlots>({});
@@ -21,11 +37,13 @@ const AdminCalender:React.FC=()=> {
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [noteText, setNoteText] = useState('');
 
-  const timeSlots = ['10:00 AM', '2:00 PM', '6:00 PM'];
+  const timeSlots = ['10AM-1PM', '2PM-5PM', '6PM-9PM'];
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
+  const startWeekDay = monthStart.getDay(); // 0 (Sun) to 6 (Sat)
   const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
+  const paddedDays = Array(startWeekDay).fill(null).concat(daysInMonth);
 
   const handlePreviousMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
@@ -33,18 +51,18 @@ const AdminCalender:React.FC=()=> {
   const handleDateClick = (date: Date) => {
     if (isSameMonth(date, currentDate)) {
       setSelectedDate(date);
-      
+
       // Initialize slots for the selected date if they don't exist
       const dateKey = format(date, 'yyyy-MM-dd');
       if (!slots[dateKey]) {
-        setSlots(prev => ({
+        setSlots((prev) => ({
           ...prev,
-          [dateKey]: timeSlots.map(time => ({
+          [dateKey]: timeSlots.map((time) => ({
             id: `${dateKey}-${time}`,
             time,
             note: '',
-            isBooked: false
-          }))
+            isBooked: false,
+          })),
         }));
       }
     }
@@ -59,13 +77,13 @@ const AdminCalender:React.FC=()=> {
   const handleSaveNote = () => {
     if (selectedSlot && selectedDate) {
       const dateKey = format(selectedDate, 'yyyy-MM-dd');
-      setSlots(prev => ({
+      setSlots((prev) => ({
         ...prev,
-        [dateKey]: prev[dateKey].map(slot =>
+        [dateKey]: prev[dateKey].map((slot) =>
           slot.id === selectedSlot.id
             ? { ...slot, note: noteText, isBooked: true }
             : slot
-        )
+        ),
       }));
       setShowNoteModal(false);
       setNoteText('');
@@ -105,43 +123,57 @@ const AdminCalender:React.FC=()=> {
           {/* Calendar Grid */}
           <div className="p-6">
             <div className="grid grid-cols-7 gap-1 mb-4">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                <div key={day} className="text-center text-sm font-medium text-gray-500">
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+                <div
+                  key={day}
+                  className="text-center text-sm font-medium text-gray-500"
+                >
                   {day}
                 </div>
               ))}
             </div>
             <div className="grid grid-cols-7 gap-1">
-              {daysInMonth.map((date) => {
-                const isSelected = selectedDate && isSameDay(date, selectedDate);
+              {paddedDays.map((date, index) => {
+                if (!date) {
+                  return <div key={`empty-${index}`} />;
+                }
+
+                const isSelected =
+                  selectedDate && isSameDay(date, selectedDate);
                 const isCurrentMonth = isSameMonth(date, currentDate);
                 const dateKey = format(date, 'yyyy-MM-dd');
-                const hasBookings = slots[dateKey]?.some(slot => slot.isBooked);
+                const hasBookings = slots[dateKey]?.some(
+                  (slot) => slot.isBooked
+                );
 
                 return (
                   <button
                     key={date.toString()}
                     onClick={() => handleDateClick(date)}
                     className={`
-                      p-2 h-24 text-left border rounded-lg transition
-                      ${isSelected ? 'border-red-500 bg-red-50' : 'border-gray-200'}
-                      ${isCurrentMonth ? 'bg-white' : 'bg-gray-50 text-gray-400'}
-                      hover:border-red-500 hover:bg-red-50
-                    `}
+        p-2 h-24 text-left border rounded-lg transition
+        ${isSelected ? 'border-red-500 bg-red-50' : 'border-gray-200'}
+        ${isCurrentMonth ? 'bg-white' : 'bg-gray-50 text-gray-400'}
+        hover:border-red-500 hover:bg-red-50
+      `}
                   >
-                    <span className={`text-sm ${hasBookings ? 'font-bold text-red-600' : ''}`}>
+                    <span
+                      className={`text-sm ${hasBookings ? 'font-bold text-red-600' : ''}`}
+                    >
                       {format(date, 'd')}
                     </span>
-                    {isCurrentMonth && slots[dateKey]?.map(slot => (
-                      slot.isBooked && (
-                        <div
-                          key={slot.id}
-                          className="mt-1 px-1 py-0.5 text-xs bg-red-100 text-red-700 rounded"
-                        >
-                          {slot.time}
-                        </div>
-                      )
-                    ))}
+                    {isCurrentMonth &&
+                      slots[dateKey]?.map(
+                        (slot) =>
+                          slot.isBooked && (
+                            <div
+                              key={slot.id}
+                              className="mt-1 px-1 py-0.5 text-xs bg-red-100 text-red-700 rounded"
+                            >
+                              {slot.time}
+                            </div>
+                          )
+                      )}
                   </button>
                 );
               })}
@@ -155,7 +187,7 @@ const AdminCalender:React.FC=()=> {
                 Available Slots for {format(selectedDate, 'MMMM d, yyyy')}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {slots[format(selectedDate, 'yyyy-MM-dd')]?.map(slot => (
+                {slots[format(selectedDate, 'yyyy-MM-dd')]?.map((slot) => (
                   <div
                     key={slot.id}
                     className={`
@@ -169,7 +201,9 @@ const AdminCalender:React.FC=()=> {
                       <span className="font-medium">{slot.time}</span>
                     </div>
                     {slot.note && (
-                      <p className="text-sm text-gray-600 line-clamp-2">{slot.note}</p>
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {slot.note}
+                      </p>
                     )}
                     {!slot.isBooked && (
                       <div className="mt-2 flex items-center gap-1 text-sm text-red-600">
@@ -192,7 +226,9 @@ const AdminCalender:React.FC=()=> {
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">
-                  {selectedSlot?.isBooked ? 'Edit Booking Note' : 'Add Booking Note'}
+                  {selectedSlot?.isBooked
+                    ? 'Edit Booking Note'
+                    : 'Add Booking Note'}
                 </h3>
                 <button
                   onClick={() => setShowNoteModal(false)}
@@ -227,6 +263,6 @@ const AdminCalender:React.FC=()=> {
       )}
     </div>
   );
-}
+};
 
 export default AdminCalender;

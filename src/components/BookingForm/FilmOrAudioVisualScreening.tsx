@@ -240,7 +240,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
                 <div className="col-span-2">
                   {' '}
                   <div className="flex justify-around">
-                    {['10AM-2PM', '2PM-6PM', '6PM-10PM'].map((slot) => (
+                    {['10AM-1PM', '2PM-5PM', '6PM-9PM'].map((slot) => (
                       <button   onClick={() => setSelectedSlot(slot)}
                       className={`border rounded-2xl px-5 py-1 cursor-pointer transition-all duration-200
                         ${selectedSlot === slot ? 'bg-red-400 text-white border-red-400' : 'bg-white text-black border-gray-300'}`}>

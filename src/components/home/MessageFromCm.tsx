@@ -81,7 +81,7 @@ function MessageFromCm() {
                   </div>
 
                   <h2 className="text-xl font-bold text-gray-800 mb-2">
-                    {data?.cm?.name || 'Unable to load name'}
+                    {data?.cm?.title || 'Unable to load name'}
                   </h2>
 
                   <h3 className="text-lg font-medium text-gray-700">

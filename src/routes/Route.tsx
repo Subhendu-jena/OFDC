@@ -53,6 +53,8 @@ import TalentList from '../pages/talentList/TalentList';
 import LocationLayout from '../layout/locationLayout/LocationLayout';
 import LocationCategory from '../pages/locationDirectory/LocationCategory';
 import LocationDetails from '../components/locationCard/LocationDetails';
+import ScrollToTop from '../components/home/ScrollToTop';
+import PetroleumSalesChart from '../pages/test';
 
 const RoutePage: React.FC = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -73,8 +75,10 @@ const RoutePage: React.FC = () => {
   // };
   return (
     <BrowserRouter>
+    <ScrollToTop/>
       <Routes>
         <Route path={paths.register} element={<RegisterPage />} />
+        <Route path={paths.test} element={<PetroleumSalesChart />} />
 
         {/* {isLoggedIn ? (
           <Route path={paths.userDashboard} element={<UserDashboard 

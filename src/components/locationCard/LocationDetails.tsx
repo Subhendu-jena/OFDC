@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   MapPin,
   Phone,
@@ -77,9 +77,10 @@ const settings = {
   arrows: true,
 };
 interface LocationDetailsProps {
-  locationData: LocationCard;
+  locationData?: LocationCard;
+  setSelectedProduct?:any;
 }
-const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData }) => {
+const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData,setSelectedProduct }) => {
   const activeLocation = locationData;
   const amenities = [
     { icon: Wifi, name: 'Free Wi-Fi' },
@@ -91,15 +92,14 @@ const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData }) => {
   ];
 
   // Placeholder images for demonstration
-  const demoImages = [
-    'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1624806992066-5ffcf7ca186b?auto=format&fit=crop&q=80',
-  ];
+  // const demoImages = [
+  //   'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&q=80',
+  //   'https://images.unsplash.com/photo-1624806992066-5ffcf7ca186b?auto=format&fit=crop&q=80',
+  // ];
   console.log(activeLocation?.images[0]?.url, 'activeLocation?.images');
-  const url = activeLocation?.images[0]?.url || demoImages[0];
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div><ArrowLeft /></div>
+    <div className="min-h-screen bg-gray-50 mt-2">
+      <div className='p-3 bg-red-700 w-fit rounded-3xl' onClick={() => setSelectedProduct(null)}><ArrowLeft /></div>
       {/* Image Carousel */}
       {/* <Swiper
           modules={[Navigation, Pagination, Autoplay]}
@@ -119,7 +119,7 @@ const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData }) => {
                 </SwiperSlide>
                 ))}
                 </Swiper> */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-2">
         <div className="w-full bg-black ">
           <Slider
             {...settings}
@@ -145,33 +145,33 @@ const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData }) => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-3xl font-bold text-gray-900">
-                {activeLocation.title}
+                {activeLocation?.title}
               </h2>
-              {activeLocation.subTitle && (
+              {activeLocation?.subTitle && (
                 <p className="text-lg text-gray-600 mt-1">
-                  {activeLocation.subTitle}
+                  {activeLocation?.subTitle}
                 </p>
               )}
             </div>
             <div
-              className={`px-4 py-2 rounded-full ${activeLocation.isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+              className={`px-4 py-2 rounded-full ${activeLocation?.isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
             >
-              {activeLocation.isOpen ? 'Open' : 'Closed'}
+              {activeLocation?.isOpen ? 'Open' : 'Closed'}
             </div>
           </div>
 
           {/* Contact Information */}
           <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6 mb-8">
-            {activeLocation.location && (
+            {activeLocation?.location && (
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-red-600" />
-                <span className="text-gray-700">{activeLocation.location}</span>
+                <span className="text-gray-700">{activeLocation?.location}</span>
               </div>
             )}
-            {activeLocation.phone && (
+            {activeLocation?.phone && (
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-red-600" />
-                <span className="text-gray-700">{activeLocation.phone}</span>
+                <span className="text-gray-700">{activeLocation?.phone}</span>
               </div>
             )}
 
@@ -194,10 +194,10 @@ const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData }) => {
               {/* About Section */}
               <div>
                 <h3 className="text-xl font-semibold mb-4">
-                  About {activeLocation.title}
+                  About {activeLocation?.title}
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
-                  {activeLocation.title} is one of Odisha's most iconic
+                  {activeLocation?.title} is one of Odisha's most iconic
                   destinations, known for its rich cultural heritage and
                   historical significance. Visitors can explore the magnificent
                   architecture, learn about the local history, and experience

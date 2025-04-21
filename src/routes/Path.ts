@@ -44,6 +44,7 @@ interface paths {
   talentlist: string;
   locationDirectory: string;
   locationDetails: string;
+  test: string;
 }
 
 export const paths: paths = {
@@ -92,4 +93,5 @@ export const paths: paths = {
   talentlist: '/talent-list',
   locationDirectory: '/location-directory',
   locationDetails: '/location-details',
+  test: '/test',
 };

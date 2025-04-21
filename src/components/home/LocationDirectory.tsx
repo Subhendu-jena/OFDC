@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 import { locationDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
-const LocationDirectory = () => {
+import { paths } from '../../routes/Path';
+const LocationDirectory = ({setSelectedProduct}:any) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
@@ -83,7 +84,7 @@ const LocationDirectory = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="py-4 relative" ref={ref}>
+        <div className="py-4 relative" ref={ref} onClick={() => setSelectedProduct(card)}>
           <motion.div
             className=" flex flex-col py-8 "
             initial={{ y: '10vh', opacity: 0 }}
@@ -121,11 +122,11 @@ const LocationDirectory = () => {
                         {destination?.title}
                       </h3>
                     </div>
-                    <Link
-                      to="/location-directory"
+                    {/* <Link
+                      // to={paths.locationDirectory }  
                       className="absolute inset-0 z-10"
                       aria-label={`Visit ${destination.title}`}
-                    ></Link>
+                    ></Link> */}
                   </div>
                 </div>
               ))}

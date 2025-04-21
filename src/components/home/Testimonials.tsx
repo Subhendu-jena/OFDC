@@ -79,7 +79,7 @@ function Testimonials() {
                     <div className="flex flex-col gap-4 rounded-lg pr-4 mx-16 bg-white pl-20 py-8  relative">
                       <div className="text-xl">{testimonial.description}</div>
                       <div className="text-xl font-semibold">
-                        {testimonial.name}
+                        {testimonial?.title}
                       </div>
                       <Quote
                         className=" text-red-600 absolute bottom-4 right-4"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import LocationCard from '../../components/locationCard/LocationCard';
 import { locationDirectory } from '../../config/strapiController';
 import LocationDetails from '../../components/locationCard/LocationDetails';
+import { Loader } from 'lucide-react';
 
 const LocationCategory: React.FC = () => {
   // const featuredLocations = [
@@ -38,7 +39,6 @@ const LocationCategory: React.FC = () => {
     locationDirectory()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, 'wwwww');
           setData(data);
         }
       })
@@ -53,22 +53,23 @@ const LocationCategory: React.FC = () => {
 
   return (
     <>
-      {' '}
-      {/* <div className="col-span-1 lg:col-span-3">
-    <h3 className="text-2xl font-semibold text-gray-900 mb-6">Featured Locations</h3>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
-      {selectedProduct ? (
-        <LocationDetails locationData={selectedProduct} />
+      {loading ? (
+        <Loader className="w-10 h-10" />
+      ) : selectedProduct ? (
+        <LocationDetails locationData={selectedProduct} setSelectedProduct={()=>setSelectedProduct(null)}/>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-4 px-6 gap-6 mt-10">
-          <LocationCard
-            cardData={card}
-            setSelectedProduct={setSelectedProduct}
-          />
-        </div>
+        <>
+          <h3 className="px-4 pt-2 text-2xl font-semibold text-gray-900 mb-6">
+            Featured Locations
+          </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-4 px-6 gap-6 mt-10">
+            <LocationCard
+              cardData={card}
+              setSelectedProduct={setSelectedProduct}
+            />
+          </div>
+        </>
       )}
-      {/* </div>
-      </div> */}
     </>
   );
 };

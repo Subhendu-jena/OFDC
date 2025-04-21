@@ -76,37 +76,37 @@ const TableComponent = ({
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center">
-                    {official.bookingType ? null : official.isVacant ? (
-                      <div className="h-12 w-12 rounded-full bg-gray-100 border border-gray-200 overflow-hidden">
-                        <div className="h-full w-full flex items-center justify-center">
-                          <User size={24} className="text-gray-400" />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="relative group inline-block">
-                        {' '}
-                        <img
-                          src={
-                            official?.imgUrl?.url
-                              ? STRAPI_API_BASE_URL + official?.imgUrl?.url
-                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                          }
-                          alt={official.name}
-                          className=" h-12 w-12 rounded-full object-cover cursor-pointer"
-                        />
-                        <div className="absolute z-50 hidden group-hover:block left-14 top-0">
-                          <img
-                            src={
-                              official?.imgUrl?.url
-                                ? STRAPI_API_BASE_URL + official?.imgUrl?.url
-                                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                            }
-                            alt={official.name}
-                            className="w-48 h-auto rounded shadow-lg border border-gray-300 bg-white"
-                          />
-                        </div>
-                      </div>
-                    )}
+                  {official.bookingType ? null : official.isVacant ? (
+  <div className="h-12 w-12 rounded-full bg-gray-100 border border-gray-200 overflow-hidden">
+    <div className="h-full w-full flex items-center justify-center">
+      <User size={24} className="text-gray-400" />
+    </div>
+  </div>
+) : (
+  <div className="relative group inline-block">
+    <img
+      src={
+        official?.imgUrl?.url
+          ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+      }
+      alt={official.name}
+      className="h-12 w-12 rounded-full object-cover cursor-pointer"
+    />
+    <div className="absolute z-1000 hidden group-hover:block left-14 top-0">
+      <img
+        src={
+          official?.imgUrl?.url
+            ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+            : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+        }
+        alt={official.name}
+        className="w-44 h-auto rounded shadow-lg border border-gray-300 bg-white"
+      />
+    </div>
+  </div>
+)}
+
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">
                         {official.name}
@@ -208,19 +208,7 @@ const TableComponent = ({
                     </span>
                   </td>
                 )}
-                {official.email && (
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-500 flex items-center">
-                      <Mail size={14} className="mr-1 text-gray-500" />
-                      <a
-                        href={`mailto:${official.email}`}
-                        className="hover:text-red-500"
-                      >
-                        {official.email || 'N/A'}
-                      </a>
-                    </div>
-                  </td>
-                )}
+                
                 {official.contact && (
                   <td className="px-6 py-4 text-sm text-gray-900">
                     <div className="flex items-center">
@@ -238,6 +226,19 @@ const TableComponent = ({
                         </a>
                       </div>
                     )} */}
+                  </td>
+                )}
+                {official.email && (
+                  <td className="px-6 py-4">
+                    <div className="text-sm text-gray-500 flex items-center">
+                      <Mail size={14} className="mr-1 text-gray-500" />
+                      <a
+                        href={`mailto:${official.email}`}
+                        className="hover:text-red-500"
+                      >
+                        {official.email === null ? null : official.email}
+                      </a>
+                    </div>
                   </td>
                 )}
                 {official.action && (

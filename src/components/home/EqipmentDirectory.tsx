@@ -108,7 +108,7 @@ function EqipmentDirectory() {
                         </button>
 
                         <p className=" text-black text-4xl py-8 font-bold">
-                          {destination.name}
+                          {destination?.title}
                         </p>
                       </div>
                     </div>
