@@ -134,3 +134,7 @@ export interface director {
   isVacant?: boolean;
 }
 
+export interface contactUsData {
+  name: string;
+  email: string;
+  message: string;}

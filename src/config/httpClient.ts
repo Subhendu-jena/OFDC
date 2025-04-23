@@ -2,7 +2,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { DeleteApiCallerProps, ErrorResponse, SuccessResponse } from "../types/global";
 
-export const API_BASE_URL = "http://localhost:5000/api/v1";
+// export const API_BASE_URL = "http://localhost:5000/api/v1";
+export const API_BASE_URL = "http://192.168.29.184:3000/api/v1";
 export const STRAPI_API_BASE_URL = "http://localhost:1337";
 
 export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse<T>;

@@ -64,7 +64,7 @@ function TalentDirectory() {
   const card = data[0]?.talentDirectory || [];
   console.log(card[0]?.imgUrl?.url, 'wwwww');
   return (
-    <>{loading ? (<Loader/>):(<div className=" w-full mt-18" ref={ref}>
+    <>{loading ? (<Loader/>):(<div className=" w-full" ref={ref}>
       <motion.div
         className=" w-full flex flex-col  items-center px-2 py-6"
         initial={{ y: '10vh', opacity: 0 }}

@@ -56,7 +56,7 @@ const StudiosPastGlory: React.FC = () => {
         tag="History"
       /> */}
 
-      <section id="history" className="pt-20 pb-24 relative">
+      <section id="history" className=" relative">
         {/* Background elements */}
         <div className="absolute inset-0 bg-gray-50">
           <div className="absolute left-0 top-0 w-full h-full opacity-10">
@@ -157,7 +157,7 @@ const StudiosPastGlory: React.FC = () => {
       {/* Achievement Section with 3D Card effect */}
       <section
         id="achievements"
-        className="py-24 relative bg-gradient-to-b from-white to-gray-100"
+        className=" relative bg-gradient-to-b from-white to-gray-100"
       >
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
@@ -327,11 +327,6 @@ const StudiosPastGlory: React.FC = () => {
                       {facility.description}
                     </p>
 
-                    <div className="mt-auto">
-                      <button className="py-2 px-4 bg-transparent border border-red-500 text-red-500 rounded-full text-sm hover:bg-red-50 hover:text-red-600 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                        Explore Facility
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -365,7 +360,7 @@ const StudiosPastGlory: React.FC = () => {
                   className={`group relative overflow-hidden h-10 w-60 bg-white rounded-xl hover:bg-red-50 transition-colors duration-300 shadow-md ${
                     director.image ? '' : 'p-4'
                   }`}
-                  style={{ height: index % 2 === 0 ? '200px' : '240px' }}
+                  style={{ height:'240px' }}
                 >
                   {director.image && (
                     <img

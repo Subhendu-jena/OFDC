@@ -1,12 +1,9 @@
 import {
-  Mail,
-  MapPin,
-  Phone,
   Twitter,
   Facebook,
   Instagram,
 } from 'lucide-react';
-import MapComponent from './Map';
+// import MapComponent from './Map';
 import { FooterLink } from '../types/global';
 import { CircleArrowOutDownRight } from 'lucide-react';
 import { paths } from '../routes/Path';
@@ -34,16 +31,15 @@ const Footer = () => {
       })
       .catch((error) => {
         console.log(error);
-      })
-      
+      });
   }, []);
   // const card = data[0]?.socialLinks;
   // console.log(card,"fdsjkg")
   return (
     <footer className="w-full relative bg-gray-700 text-gray-200">
       {/* Contact Info Bar */}
-      <div className="w-full z-10 absolute -top-14 overflow-hidden px-4">
-        <div className="w-full rounded-2xl mx-auto px-4 py-8 grid grid-cols-1 text-white md:grid-cols-4 overflow-hidden  gap-8 bg-gray-800">
+      {/* <div className="w-full z-10 absolute -top-14 overflow-hidden px-4">
+        <div className="w-full rounded-2xl mx-auto px-4 py-8 grid grid-cols-1 text-white md:grid-cols-3   overflow-hidden pl-8  gap-10 bg-gray-800">
           <div className="flex items-center  space-x-4 group transition-all duration-300">
             <div className="p-2 border-4 border-orange-400 rounded-full bg-gray-800">
               <MapPin className="w-6 h-6" />
@@ -84,7 +80,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Footer Content */}
       <img
@@ -107,6 +103,18 @@ const Footer = () => {
               </h3>
             </div>
             <p className="text-gray-100 text-sm">{data.footerDescription}</p>
+            <div>
+              <h3 className="font-semibold underline">Office Address</h3>
+              <p className="">{data.address}</p>
+            </div>
+            <div>
+              {' '}
+              <h3 className="font-semibold underline">Contact</h3>
+              <div className=" flex space-x-4">
+                <p>+91-{data.mobileNumber}</p>
+                <p className="">{data.officeEmail}</p>
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -131,7 +139,8 @@ const Footer = () => {
 
           {/* Categories */}
           <div className=" rounded-2xl overflow-hidden">
-            <MapComponent height="300px" width="100%" />
+            {/* <MapComponent height="300px" width="100%" /> */}
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.7477523235925!2d85.873862!3d20.4755511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a191275d382521f%3A0x229b980f193231ef!2sChalachitra%20Bhawan!5e0!3m2!1sen!2sin!4v1745414819968!5m2!1sen!2sin" width="800" height="300" style={{border:'0' }}  loading="lazy" ></iframe>
             <div className="flex space-x-4 mt-10 md:mt-5 justify-end">
               <a
                 href={data.twitter}

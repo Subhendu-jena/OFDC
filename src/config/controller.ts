@@ -1,4 +1,4 @@
-import { loginData, loginResponse, signupData } from '../types/global';
+import { contactUsData, loginData, loginResponse, signupData } from '../types/global';
 import { apiCaller, ApiResponse } from './httpClient';
 
 export const loginController = async ({
@@ -19,6 +19,17 @@ export const signUpController = async ({
 }): Promise<ApiResponse<signupData>> => {
   return apiCaller({
     uri: '/user/register',
+    method: 'POST',
+    data,
+  });
+};
+export const contactUs = async ({
+  data,
+}: {
+  data: contactUsData;
+}): Promise<ApiResponse<signupData>> => {
+  return apiCaller({
+    uri: '/mail/send-message',
     method: 'POST',
     data,
   });
