@@ -44,6 +44,7 @@ interface paths {
   talentlist: string;
   locationDirectory: string;
   locationDetails: string;
+  filmEcoSystem: string;
   test: string;
 }
 
@@ -93,5 +94,6 @@ export const paths: paths = {
   talentlist: '/talent-list',
   locationDirectory: '/location-directory',
   locationDetails: '/location-details',
+  filmEcoSystem: '/film-eco-system',
   test: '/test',
 };

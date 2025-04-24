@@ -29,7 +29,6 @@ function Testimonials() {
     testimonialsApi()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, 'wwwww');
           setData(data);
         }
       })

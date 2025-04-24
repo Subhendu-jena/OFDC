@@ -49,7 +49,6 @@ function EqipmentDirectory() {
     equipmentDirectory()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, 'wwwww');
           setData(data);
         }
       })

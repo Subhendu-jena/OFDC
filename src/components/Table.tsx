@@ -4,6 +4,8 @@ import { TableProps } from '../types/global';
 import { paths } from '../routes/Path';
 import { useNavigate } from 'react-router-dom';
 import { STRAPI_API_BASE_URL } from '../config/httpClient';
+import { ChevronRight } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 
 const TableComponent = ({
   Heading,
@@ -283,25 +285,25 @@ const TableComponent = ({
           {' '}
           <div className="flex justify-center items-center gap-4 mt-4">
             <button
-              className="px-3 py-1 bg-red-300 text-red-800 rounded disabled:opacity-50"
+              className="px-1 py-1 rounded-4xl bg-red-300 text-red-800  disabled:opacity-50"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
             >
-              Previous
+              <ChevronLeft />
             </button>
 
-            <span className="font-semibold">
-              Page {currentPage} of {totalPages}
+            <span className="font-medium">
+             {currentPage} of {totalPages}
             </span>
 
             <button
-              className="px-3 py-1 bg-red-300 text-red-800 rounded disabled:opacity-50"
+              className="px-1 py-1  rounded-4xl bg-red-300 text-red-800  disabled:opacity-50"
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
             >
-              Next
+              <ChevronRight />
             </button>
           </div>
         </div>

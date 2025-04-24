@@ -62,7 +62,6 @@ function TalentDirectory() {
       });
   }, []);
   const card = data[0]?.talentDirectory || [];
-  console.log(card[0]?.imgUrl?.url, 'wwwww');
   return (
     <>{loading ? (<Loader/>):(<div className=" w-full" ref={ref}>
       <motion.div

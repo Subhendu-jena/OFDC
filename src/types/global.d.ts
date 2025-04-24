@@ -112,13 +112,11 @@ export interface IUser {
 }
 
 export interface loginResponse {
-  user: {
     name: string;
     email: string;
     phoneNo: string;
     _id: string;
-  };
-  token: string;
+    token?: string;
 }
 export interface loginData {
   identifier: string;

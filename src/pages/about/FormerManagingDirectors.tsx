@@ -3,7 +3,7 @@ import TableComponent from '../../components/Table';
 import { getAllManagingDirectors } from '../../config/strapiController';
 import { Loader } from 'lucide-react';
 
-function ReligionCulture() {
+function FormerManagingDirectors() {
   const columns = [
     { label: 'Sl No.', field: 'id' },
     { label: 'Name of Chairperson', field: 'name' },
@@ -82,4 +82,4 @@ function ReligionCulture() {
   );
 }
 
-export default ReligionCulture;
+export default FormerManagingDirectors;

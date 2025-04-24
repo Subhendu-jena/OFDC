@@ -53,7 +53,6 @@ const LocationDirectory = ({setSelectedProduct}:any) => {
     locationDirectory()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, 'wwwww');
           setData(data);
         }
       })

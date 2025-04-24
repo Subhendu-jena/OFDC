@@ -12,10 +12,10 @@ import { useEffect, useState } from 'react';
 import { contact } from '../config/strapiController';
 
 const QuickLinks: FooterLink[] = [
-  { text: 'About us', href: '/about' },
+  { text: 'About us', href: paths.aCursoryLook },
   { text: 'Climate', href: '/climate' },
   { text: 'Geographical Features', href: '/features' },
-  { text: 'Contact us', href: '/contact' },
+  { text: 'Contact us', href: '/contact-us' },
   { text: 'How it works', href: '/how-it-works' },
 ];
 

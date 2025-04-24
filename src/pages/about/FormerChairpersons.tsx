@@ -4,7 +4,9 @@ import { getAllFormerChairpersons } from '../../config/strapiController';
 import { Loader } from 'lucide-react';
 import { Official } from '../../types/global';
 
-function CulturalHeritage() {
+
+
+function FormerChairpersons() {
   const columns = [
     { label: 'Sl No.', field: 'id' },
     { label: 'Name of Chairperson', field: 'name' },
@@ -66,4 +68,4 @@ function CulturalHeritage() {
   )
 }
 
-export default CulturalHeritage
+export default FormerChairpersons

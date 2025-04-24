@@ -3,7 +3,7 @@ import { aCursoryLook } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 
-const OdishaAtGlance: React.FC = () => {
+const ACursoryLook: React.FC = () => {
   // const content = [
   //   {
   //     title: 'Subsidies and Incentives',
@@ -97,4 +97,4 @@ const OdishaAtGlance: React.FC = () => {
   );
 };
 
-export default OdishaAtGlance;
+export default ACursoryLook;

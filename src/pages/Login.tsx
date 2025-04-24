@@ -25,7 +25,7 @@ const Login: React.FC = ({onLogin}:any) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const payload = {
-      identifier: formData.email,  // 🔁 renamed here
+      identifier: formData.email,  
       password: formData.password,
       rememberMe: formData.rememberMe,
     };
@@ -33,9 +33,13 @@ const Login: React.FC = ({onLogin}:any) => {
     loginController({ data: payload })
       .then((response) => {
         console.log(response, 'response');
+        if (response?.token) {
+          sessionStorage.setItem('token', response?.token);
+          sessionStorage.setItem('userID', response?.user?._id);
+          console.log('Token saved:', response?.token);
+        }
       });
-  
-    console.log('Form submitted:', formData);
+        // console.log('Form submitted:', formData);
     navigate(paths.userDashboard)
   };
 

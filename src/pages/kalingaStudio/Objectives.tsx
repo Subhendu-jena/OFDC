@@ -41,7 +41,7 @@ const ObjectivesPage: React.FC = () => {
       icon: <Users className="h-8 w-8" />,
       color: 'bg-blue-500',
       image:
-        'https://files.oaiusercontent.com/file-VWd3HT7Pcvr41MGhz7yS8T?se=2025-03-21T12%3A20%3A16Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dd3c5c93d-00b5-4aa3-b3ba-acec5363ccae.webp&sig=DlXEGbvCbKL1caqTBpwndkkX4a%2BS6qyTS2Zss3t%2BBIA%3D',
+        'https://images.unsplash.com/photo-1662435859606-86662d1c686b?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     },
     {
       id: 3,
@@ -78,7 +78,7 @@ const ObjectivesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Objectives Introduction */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className=" bg-white py-5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-6">
@@ -119,7 +119,7 @@ const ObjectivesPage: React.FC = () => {
       </section>
 
       {/* Featured Objective */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="grid md:grid-cols-2">
@@ -155,10 +155,10 @@ const ObjectivesPage: React.FC = () => {
       </section>
 
       {/* Detailed Objectives */}
-      <section id="objectives" className="py-16 md:py-24">
+      <section id="objectives" className="py-10 md:py-10">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="space-y-24">
+            <div className="spa">
               {objectives.map((objective, index) => (
                 <div
                   key={index}
@@ -203,11 +203,11 @@ const ObjectivesPage: React.FC = () => {
                       <h4 className="font-semibold mb-3">Key Initiatives:</h4>
                       <ul className="space-y-2">
                         {[...Array(3)].map((_, i) => (
-                          <li key={i} className="flex items-start">
+                          <li key={i} className="flex items-start space-x-2">
                             <ChevronRight
                               className={`h-5 w-5 ${objective.color} text-opacity-80 mt-0.5 flex-shrink-0`}
-                            />
-                            <span className="text-gray-700">
+                            /> 
+                            <span className="text-gray-700 ">
                               {index === 0 &&
                                 i === 0 &&
                                 'Providing subsidized rates for Odia film productions'}

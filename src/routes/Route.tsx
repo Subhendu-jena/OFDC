@@ -7,12 +7,12 @@ import Home from '../pages/Home';
 import BookingForm from '../pages/BookingForm';
 import Dashboard from '../pages/Dashboard';
 import ContactUs from '../pages/ContactUs';
-import OdishaAtGlance from '../pages/about/OdishaAtGlance';
+import OdishaAtGlance from '../pages/about/ACursoryLook';
 import AboutLayout from '../layout/about/AboutLayout';
 import OurVisionMision from '../pages/about/OurVisionMision';
 import Leadership from '../pages/about/Leadership';
-import CulturalHeritage from '../pages/about/CulturalHeritage';
-import ReligionCulture from '../pages/about/ReligionCulture';
+import CulturalHeritage from '../pages/about/FormerChairpersons';
+import ReligionCulture from '../pages/about/FormerManagingDirectors';
 import FlimEcoSystem from '../pages/FlimEcoSystem';
 import WhosWho from '../pages/about/WhosWho';
 import Achievments from '../pages/about/Achievments';
@@ -55,6 +55,8 @@ import LocationCategory from '../pages/locationDirectory/LocationCategory';
 import LocationDetails from '../components/locationCard/LocationDetails';
 import ScrollToTop from '../components/home/ScrollToTop';
 import PetroleumSalesChart from '../pages/test';
+import ProtectedRoute from './ProtectedRoute';
+// import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 
 const RoutePage: React.FC = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -73,12 +75,52 @@ const RoutePage: React.FC = () => {
   //   localStorage.removeItem("isLoggedIn");
   //   setIsLoggedIn(false);
   // };
+  const token = sessionStorage.getItem('token');
+  // console.log(token, 'token');
   return (
     <BrowserRouter>
-    <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
-        <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.test} element={<PetroleumSalesChart />} />
+        <Route path={paths.register} element={<RegisterPage />} />
+        <Route path={paths.login} element={<Login />} />
+        {/* {token ? (
+          <>
+            <Route element={<AdminLayout />}>
+              <Route path={paths.adminDashboard} element={<AdminDashboard />} />
+              <Route
+                path={paths.allBookings}
+                element={<AdminBookingHistory />}
+              />
+              <Route
+                path={paths.paymentDetails}
+                element={<AdminPaymentHistory />}
+              />
+              <Route path={paths.calender} element={<AdminCalender />} />
+            </Route>
+
+            <Route element={<LoggedUserLayout />}>
+              <Route path={paths.userDashboard} element={<UserDashboard />} />
+              <Route
+                path={paths.bookingHistory}
+                element={<UserBookingHistory />}
+              />
+              <Route
+                path={paths.paymentHistory}
+                element={<UserPaymentHistory />}
+              />
+              <Route path={paths.newBooking} element={<BookingForm />} />
+              <Route path={paths.profile} element={<UserProfile />} />
+              <Route path={paths.preview} element={<Preview />} />
+              <Route path={paths.confirmation} element={<Confirmation />} />
+            </Route>
+          </>
+        ) : (
+          <>
+            <Route path={paths.register} element={<RegisterPage />} />
+            <Route path={paths.login} element={<Login />} />
+          </>
+        )} */}
 
         {/* {isLoggedIn ? (
           <Route path={paths.userDashboard} element={<UserDashboard 
@@ -86,14 +128,7 @@ const RoutePage: React.FC = () => {
             />} />
       ) : (
         )} */}
-
-        <Route path={paths.login} element={<Login />} />
-        <Route element={<Layout />}>
-          <Route path={paths.home} element={<Home />} />
-          <Route path={paths.bookingForm} element={<BookingForm />} />
-          <Route path={paths.dashboard} element={<Dashboard />} />
-          <Route path={paths.contactUs} element={<ContactUs />} />
-          <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
+        <Route element={<ProtectedRoute />}>
           {/* AdminLayout */}
           <Route element={<AdminLayout />}>
             <Route path={paths.adminDashboard} element={<AdminDashboard />} />
@@ -104,6 +139,7 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.calender} element={<AdminCalender />} />
           </Route>
+
           {/* LoggedUserLayout */}
           <Route element={<LoggedUserLayout />}>
             <Route path={paths.userDashboard} element={<UserDashboard />} />
@@ -117,10 +153,16 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.newBooking} element={<BookingForm />} />
             <Route path={paths.profile} element={<UserProfile />} />
-
             <Route path={paths.preview} element={<Preview />} />
             <Route path={paths.confirmation} element={<Confirmation />} />
           </Route>
+        </Route>
+        <Route element={<Layout />}>
+          <Route path={paths.home} element={<Home />} />
+          <Route path={paths.bookingForm} element={<BookingForm />} />
+          <Route path={paths.dashboard} element={<Dashboard />} />
+          <Route path={paths.contactUs} element={<ContactUs />} />
+          <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
             <Route path={paths.archivalGallery} element={<ArchivalGallery />} />
@@ -135,7 +177,6 @@ const RoutePage: React.FC = () => {
               element={<VaultofPreservedFilms />}
             />
           </Route>
-
           {/* DiscoverOdishaLayout */}
           <Route element={<DiscoverOdishaLayout />}>
             <Route
@@ -192,10 +233,18 @@ const RoutePage: React.FC = () => {
           <Route element={<TalentLayout />}>
             <Route path={paths.talentlist} element={<TalentList />} />
           </Route>
+          {/* LocationLayout */}
           <Route element={<LocationLayout />}>
-            <Route path={paths.locationDirectory} element={<LocationCategory />} />
+            <Route
+              path={paths.locationDirectory}
+              element={<LocationCategory />}
+            />
             <Route path={paths.locationDetails} element={<LocationDetails />} />
           </Route>
+          {/* FilmEcoSystemLayout */}
+          {/* <Route element={<FilmEcoSystemLayout />}>
+            <Route path={paths.filmEcoSystem} element={<FilmEcoSystem />} />
+          </Route> */}
         </Route>
       </Routes>
     </BrowserRouter>

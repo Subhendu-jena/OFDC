@@ -21,7 +21,7 @@ const TopHeader = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
   console.log(setIsAdmin, setisLoggedIn);
-
+const token = sessionStorage.getItem('token');  
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className=" flex justify-between px-16 items-center">
@@ -62,6 +62,17 @@ const TopHeader = () => {
             <Mail size={16} />
             <span>Contact Us</span>
           </Link>
+          <div
+           onClick={() => {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('userID');
+            window.location.reload();
+          }}
+            className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+          >
+            <Mail size={16} />
+            <span>Logout</span>
+          </div>
           <span>/</span>
           <Link
             to="/register"

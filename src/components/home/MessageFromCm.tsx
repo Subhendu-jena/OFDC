@@ -17,7 +17,6 @@ function MessageFromCm() {
     messageCM()
       .then(({ data }) => {
         if (data) {
-          console.log(data, 'data');
           setData(data);
         }
       })

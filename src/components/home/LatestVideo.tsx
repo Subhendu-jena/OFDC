@@ -61,7 +61,6 @@ function LatestVideo() {
     locationDirectory()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, 'wwwww');
           setData(data);
         }
       })
