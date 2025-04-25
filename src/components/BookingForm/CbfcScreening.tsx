@@ -49,7 +49,7 @@ function CbfcScreening() {
         date: selectedDate,
       });
 
-      if (response?.success) {
+      if (response?.success && Array.isArray(response?.data)) {
         const booked = response?.data?.map(
           (booking: any) => booking?.bookingDetails?.timeSlot
         );
@@ -102,7 +102,7 @@ function CbfcScreening() {
       });
 
       if (response.success) {
-        navigate('/success-page'); // or wherever you want to redirect
+        navigate('/confirmation', { state: { bookingDetails: response } });
       } else {
         console.error('Submission failed:', response.message);
         alert('Submission failed. Please try again.');
@@ -339,10 +339,14 @@ function CbfcScreening() {
                               setSelectedSlot(slot);
                             }
                           }}
-                          className={`border rounded-2xl px-5 py-1 transition-all duration-200${ isBooked ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
-                : isSelected
-                  ? 'bg-red-400 text-white border-red-400'
-                  : 'bg-white text-black border-gray-300 hover:border-red-400'}`}disabled={isBooked}
+                          className={`border rounded-2xl px-5 py-1 transition-all duration-200${
+                            isBooked
+                              ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+                              : isSelected
+                                ? 'bg-red-400 text-white border-red-400'
+                                : 'bg-white text-black border-gray-300 hover:border-red-400'
+                          }`}
+                          disabled={isBooked}
                         >
                           {slot}
                         </button>

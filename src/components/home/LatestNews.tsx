@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { latestNews } from '../../config/strapiController';
+import { useFontSize } from './FontSizeContext';
 
 const LatestNews: React.FC = () => {
     const [data, setData] = useState<any>([]);
+     const { fontSize } = useFontSize();
       useEffect(() => {
         latestNews()
           .then(({ data }) => {
@@ -18,7 +20,8 @@ const LatestNews: React.FC = () => {
       }, []);
   return (
     <>
-      <button className=" w-full md:w-[15%] px-4  text-white font-bold bg-[#0B0035] text-lg">
+      <button className=" w-full md:w-[15%] px-4  text-white font-bold bg-[#0B0035] text-lg"
+       style={{ fontSize: `${fontSize}px` }}>
         Latest News
       </button>
       <div className="w-full md:w-[85%] justify-between h-10 flex flex-col ">
@@ -33,6 +36,7 @@ const LatestNews: React.FC = () => {
                 color: 'white',
                 textDecoration: 'underline',
                 fontWeight: 'bold',
+                marginLeft: '10px', 
               }}
             >
               {data[0]?.link}

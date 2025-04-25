@@ -3,37 +3,12 @@ import { Calendar, FileText, Film, Users, Upload } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { paths } from '../../routes/Path';
 
-interface FormData {
-  // Film Details
-  filmTitle?: string;
-  language?: string;
-  duration?: string;
-  soundFormat?: string;
-  filmFormat?: string;
 
-  // Production Details
-  producerName?: string;
-  productionHouse?: string;
-  contactNumber?: string;
-  email?: string;
-  applicantAddress?: string;
-
-  // Booking Details
-  screeningDate?: string;
-  screeningTime?: string;
-  numberOfPeople?: string;
-
-  // File uploads
-  synopsis?: File;
-  castCredits?: File;
-  songlines?: File;
-  poster?: File;
-}
 
 const Preview: React.FC = () => {
   const [searchParams] = useSearchParams();
   const edit = searchParams.get('edit') === 'true';
-  const [formData] = useState<FormData>({});
+  const [formData,] = useState<any>({});
   const navigate = useNavigate();
 const [cancel,setcancel]=useState(false);
   const handleEdit = () => {

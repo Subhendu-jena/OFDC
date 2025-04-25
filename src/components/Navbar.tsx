@@ -14,14 +14,13 @@ import { useEffect, useState } from 'react';
 import { paths } from '../routes/Path';
 import { Link } from 'react-router-dom';
 import { MenuItem } from '../types/global';
-
-
+import { useFontSize } from './home/FontSizeContext';
 
 const TopHeader = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
   console.log(setIsAdmin, setisLoggedIn);
-const token = sessionStorage.getItem('token');  
+  const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className=" flex justify-between px-16 items-center">
@@ -30,9 +29,24 @@ const token = sessionStorage.getItem('token');
             Skip to main Content /
           </span>
           <div className="flex space-x-4">
-            <span className="hover:text-orange-500 cursor-pointer">A-</span>
-            <span className="hover:text-orange-500 cursor-pointer">A</span>
-            <span className="hover:text-orange-500 cursor-pointer">A+</span>
+            <button
+              onClick={decreaseFontSize}
+              className="hover:text-orange-500 cursor-pointer"
+            >
+              A-
+            </button>
+            <button
+              onClick={resetFontSize}
+              className="hover:text-orange-500 cursor-pointer"
+            >
+              A
+            </button>
+            <button
+              onClick={increaseFontSize}
+              className="hover:text-orange-500 cursor-pointer"
+            >
+              A+
+            </button>
           </div>
         </div>
 
@@ -42,7 +56,7 @@ const token = sessionStorage.getItem('token');
             className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
           >
             <Home size={16} />
-            <span>Home</span>
+            <h5>Home</h5>
           </Link>
           <span>/</span>
           <div className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer">
@@ -63,11 +77,11 @@ const token = sessionStorage.getItem('token');
             <span>Contact Us</span>
           </Link>
           <div
-           onClick={() => {
-            sessionStorage.removeItem('token');
-            sessionStorage.removeItem('userID');
-            window.location.reload();
-          }}
+            onClick={() => {
+              sessionStorage.removeItem('token');
+              sessionStorage.removeItem('userID');
+              window.location.reload();
+            }}
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
           >
             <Mail size={16} />
@@ -172,7 +186,10 @@ const MainHeader = () => {
         { label: 'Achievments', url: paths.achievments },
         { label: 'Leadership', url: paths.leadership },
         { label: 'Former Chairpersons', url: paths.formerChairpersons },
-        { label: 'Former Managing Directors', url: paths.formerManagingDirectors },
+        {
+          label: 'Former Managing Directors',
+          url: paths.formerManagingDirectors,
+        },
         { label: "Who's Who", url: paths.whoIsWho },
       ],
     },
@@ -220,9 +237,12 @@ const MainHeader = () => {
       label: 'Discover Odisha',
       url: paths.odishaIndiasBestKeptSecret,
       children: [
-        { label: "ODISHA : India's Best Kept Secret", url: paths.odishaIndiasBestKeptSecret },
+        {
+          label: "ODISHA : India's Best Kept Secret",
+          url: paths.odishaIndiasBestKeptSecret,
+        },
         { label: 'Echoes of History', url: paths.echoesofhistory },
-        { label: 'Climate', url:paths.climate },
+        { label: 'Climate', url: paths.climate },
         { label: 'Geographical Feature', url: paths.geographicalFeature },
         { label: 'Cultural Legacy', url: paths.culturalLegacy },
         { label: 'Major Festivals', url: paths.majorFestivals },

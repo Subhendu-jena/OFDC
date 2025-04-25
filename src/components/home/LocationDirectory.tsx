@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { locationDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
-import { paths } from '../../routes/Path';
+import { useFontSize } from './FontSizeContext';
 const LocationDirectory = ({setSelectedProduct}:any) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -48,6 +48,7 @@ const LocationDirectory = ({setSelectedProduct}:any) => {
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
+  const { fontSize } = useFontSize();
   useEffect(() => {
     setLoading(true);
     locationDirectory()
@@ -90,10 +91,10 @@ const LocationDirectory = ({setSelectedProduct}:any) => {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ type: 'tween', duration: 1 }}
           >
-            <div className="text-xl text-red-500 text-center">
+            <div className="text-xl text-red-500 text-center"  style={{ fontSize: `${fontSize + 4}px` }}>
               Around the Odisha
             </div>
-            <div className="text-2xl text-white font-bold md:text-4xl text-center">
+            <div className="text-2xl text-white font-bold md:text-4xl text-center"  style={{ fontSize: `${fontSize + 20}px` }}>
               LOCATION DIRECTORY
             </div>
           </motion.div>
@@ -114,10 +115,10 @@ const LocationDirectory = ({setSelectedProduct}:any) => {
                       className=" w-full h-[300px] object-cover transition-transform duration-500"
                     />
                     <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white  justify-center items-center flex flex-col transition duration-500">
-                      <h2 className="text-xl font-semibold group-hover:block hidden ">
+                      <h2 className="text-xl font-semibold group-hover:block hidden "  style={{ fontSize: `${fontSize + 4}px` }}>
                         Places In
                       </h2>
-                      <h3 className="text-2xl font-bold group-hover:hidden">
+                      <h3 className="text-2xl font-bold group-hover:hidden"  style={{ fontSize: `${fontSize + 8}px` }}>
                         {destination?.title}
                       </h3>
                     </div>

@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react';
 import { locationDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
+import { useFontSize } from './FontSizeContext';
 
 function LatestVideo() {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<any>([]); 
+  const { fontSize } = useFontSize();
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
@@ -84,6 +86,7 @@ function LatestVideo() {
               background:
                 'url(https://ofdc.octamy.com/wp-content/uploads/2020/09/bg-map.png)',
               objectFit: 'contain',
+               fontSize: `${fontSize + 8}px` 
             }}
           >
             <motion.p
@@ -118,10 +121,10 @@ function LatestVideo() {
 
                         {/* Overlay with content */}
                         <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-white p-4 transition duration-500">
-                          <h2 className="text-xl font-semibold group-hover:block hidden">
+                          <h2 className="text-xl font-semibold group-hover:block hidden"  style={{ fontSize: `${fontSize + 4}px` }}>
                             Places In
                           </h2>
-                          <h3 className="text-2xl font-bold group-hover:hidden">
+                          <h3 className="text-2xl font-bold group-hover:hidden"  style={{ fontSize: `${fontSize + 8}px` }}>
                             {destination?.title}
                           </h3>
                         </div>

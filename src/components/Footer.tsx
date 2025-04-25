@@ -102,7 +102,7 @@ const Footer = () => {
                 Odisha Film Development Corporation
               </h3>
             </div>
-            <p className="text-gray-100 text-sm">{data.footerDescription}</p>
+            <p className="text-gray-100 text-10px">{data.footerDescription}</p>
             <div>
               <h3 className="font-semibold underline">Office Address</h3>
               <p className="">{data.address}</p>

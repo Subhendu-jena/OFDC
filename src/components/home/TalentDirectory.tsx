@@ -7,12 +7,14 @@ import { talentDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 import { paths } from '../../routes/Path';
+import { useFontSize } from './FontSizeContext';
 
 function TalentDirectory() {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
   });
+  const { fontSize } = useFontSize();
   const settings = {
     dots: true,
     infinite: true,
@@ -70,8 +72,8 @@ function TalentDirectory() {
         animate={inView ? { y: 0, opacity: 1 } : {}}
         transition={{ type: 'tween', duration: 1 }}
       >
-        <p className=" text-red-500 font-semibold ">TEAM</p>
-        <p className=" text-gray-800 text-4xl font-bold">TALENT DIRECTORY</p>
+        <p className=" text-red-500 font-semibold "  style={{ fontSize: `${fontSize }px` }}>TEAM</p>
+        <p className=" text-gray-800 text-4xl font-bold"  style={{ fontSize: `${fontSize + 20}px` }}>TALENT DIRECTORY</p>
       </motion.div>
       <div className=" w-full flex">
         <div className="w-full px-4">
@@ -87,10 +89,10 @@ function TalentDirectory() {
 
                   {/* Additional Text */}
                   <div className="absolute inset-x-0 left-2 right-2 bottom-3 z-10 text-xl py-4 text-center bg-white rounded-sm">
-                    <p className=" text-black text-xl font-semibold">
+                    <p className=" text-black text-xl font-semibold"  style={{ fontSize: `${fontSize + 4}px` }}>
                       {destination.name}
                     </p>
-                    <p className=" text-gray-500 text-sm pb-3 ">
+                    <p className=" text-gray-500 text-sm pb-3 "  style={{ fontSize: `${fontSize - 2}px` }}>
                       {destination.designation}
                     </p>
                   </div>

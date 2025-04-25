@@ -5,6 +5,7 @@ import { messageCM } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 import curve from '../../../public/curve.png';
+import { useFontSize } from './FontSizeContext';
 function MessageFromCm() {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -12,6 +13,7 @@ function MessageFromCm() {
   });
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
+  const { fontSize } = useFontSize();
   useEffect(() => {
     setLoading(true);
     messageCM()
@@ -39,8 +41,10 @@ function MessageFromCm() {
               initial={{ y: '10vh', opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ type: 'tween', duration: 1 }}
-            >
+            ><h4  style={{ fontSize: `${fontSize+14}px` }}>
+
               Message From Hon'ble Chief Minister of Odisha
+            </h4>
             </motion.h2>
 
             <section className="relative  rounded-lg px-16 py-8 z-10">
@@ -74,16 +78,16 @@ function MessageFromCm() {
                       initial={{ y: '10vh', opacity: 0 }}
                       animate={inView ? { y: 0, opacity: 1 } : {}}
                       transition={{ type: 'tween', duration: 1 }}
-                    >
+                      style={{ fontSize: `${fontSize + 2}px` }} >
                       {data?.cm?.description || 'Unable to load description'}
                     </motion.p>
                   </div>
 
-                  <h2 className="text-xl font-bold text-gray-800 mb-2">
+                  <h2 className="text-xl font-bold text-gray-800 mb-2"  style={{ fontSize: `${fontSize + 4}px` }}>
                     {data?.cm?.title || 'Unable to load name'}
                   </h2>
 
-                  <h3 className="text-lg font-medium text-gray-700">
+                  <h3 className="text-lg font-medium text-gray-700"  style={{ fontSize: `${fontSize + 2}px` }}>
                     Hon'ble Chief Minister of Odisha
                   </h3>
                 </div>

@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import { odishaStories } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
+import { useFontSize } from './FontSizeContext';
 
 function OdishStories() {
   
   const [loading, setLoading] = useState(false);
+   const { fontSize } = useFontSize();
   const [data, setData] = useState<any>([]);
     useEffect(() => {
       setLoading(true);
@@ -47,11 +49,13 @@ function OdishStories() {
                   className={`text-center transform transition-transform duration-1000 ${true ? 'translate-x-0' : '-translate-x-full'}`}
                 >
                   <div className="inline-block mb-3">
-                    <div className="text-[#FC3C3C] font-semibold text-xl">
+                    <div className="text-[#FC3C3C] font-semibold "
+                     style={{ fontSize: `${fontSize + 4}px` }}>
                       <span>ODISHA</span>
                     </div>
                   </div>
-                  <h2 className="text-2xl md:text-4xl font-bold text-gray-800 ">
+                  <h2 className="text-2xl md:text-4xl font-bold text-gray-800 "
+                   style={{ fontSize: `${fontSize + 20}px` }}>
                     <span>Odisha: Stories Beyond The Lens</span>
                   </h2>
                 </div>

@@ -1,51 +1,132 @@
 import { useState } from 'react';
+import { bookingForm, getAllSlotByDate } from '../../config/controller';
+import { useNavigate } from 'react-router-dom';
 
 function WorkShopOrSeminar() {
-  const [formData, setFormData] = useState({
-    applicantName: '',
-    applicantAddress: '',
-    whatsapp: '',
-    altContact: '',
+  const [formData, setFormData] = useState<any>({
+    nameOfApplicant: '',
+    whatsappNo: '',
+    altContactNo: '',
     email: '',
-    gstin: '',
-    purpose: '',
+    postalAddress: '',
+    podiumWithMic: false,
+    cordlessMic: false,
+    screeningFacilities: false,
+    billingName: '',
+    billingContactNo: '',
+    GSTIN: '',
+    billingEmail: '',
+    category: 'INDIVIDUAL',
+    billingPostalAddress: '',
     bookingDate: '',
-    bookingTimeFrom: '',
-    bookingTimeTo: '',
   });
-const [selectedSlot,setSelectedSlot]=useState('');
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const token = sessionStorage.getItem('token');
+  const userId = sessionStorage.getItem('userID');
+  const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value, type, checked, files } = e.target;
+    if (type === 'checkbox') {
+      setFormData({ ...formData, [name]: checked });
+    } else if (type === 'file') {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleCheckDateChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const selectedDate = e.target.value;
+    setSelectedDate(selectedDate);
+    try {
+      const response = await getAllSlotByDate({
+        token: token,
+        date: selectedDate,
+      });
+
+      if (response?.success && Array.isArray(response?.data)) {
+        const booked = response?.data?.map(
+          (booking: any) => booking?.bookingDetails?.timeSlot
+        );
+        setBookedSlots(booked);
+      }
+    } catch (error) {
+      console.error('Error fetching slots:', error);
+    }
+  };
+  const navigate = useNavigate();
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const formattedData = {
+      bookedBy: userId,
+      bookingType: 'Workshop Or Seminar',
+      applicantDetails: {
+        nameOfApplicant: formData.nameOfApplicant,
+        whatsappNo: formData.whatsappNo,
+        altContactNo: formData.altContactNo,
+        email: formData.email,
+        postalAddress: formData.postalAddress,
+      },
+      requirements: {
+        podiumWithMic: formData.podiumWithMic,
+        cordlessMic: formData.cordlessMic,
+        screeningFacilities: formData.screeningFacilities,
+      },
+      billingDetails: {
+        billingName: formData.billingName,
+        contactNo: formData.billingContactNo,
+        GSTIN: formData.GSTIN,
+        email: formData.billingEmail,
+        category: formData.category,
+        postalAddress: formData.billingPostalAddress,
+      },
+      bookingDetails: {
+        bookingDate: selectedDate,
+        timeSlot: selectedSlot,
+      },
+    };
+    try {
+      const response = await bookingForm({
+        token: token,
+        data: formattedData,
+      });
+
+      if (response.success) {
+        navigate('/confirmation', { state: { bookingDetails: response } });
+      } else {
+        console.error('Submission failed:', response.message);
+        alert('Submission failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // alert('An error occurred. Please try again.');
+    }
     console.log('Form Submitted:', formData);
     // Handle form submission (e.g., send data to backend)
   };
 
   const AppliCationDetails = [
     {
-      name: 'Name of the Applicant',
+      name: 'nameOfApplicant',
       label: 'Name of the Applicant',
       type: 'text',
     },
     {
-      name: 'Whatsapp No.',
+      name: 'whatsappNo',
       label: 'Whatsapp No.',
       type: 'number',
     },
     {
-      name: 'Alternative Contact No.',
+      name: 'altContactNo',
       label: 'Alternative Contact No.',
       type: 'number',
     },
     {
-      name: 'Email Id',
+      name: 'email',
       label: 'Email Id',
       type: 'email',
     },
@@ -53,22 +134,22 @@ const [selectedSlot,setSelectedSlot]=useState('');
 
   const BillingDetails = [
     {
-      name: 'Billing Name',
+      name: 'billingName',
       label: 'Billing Name',
       type: 'text',
     },
     {
-      name: 'Contact No.',
+      name: 'billingContactNo',
       label: 'Contact No.',
       type: 'number',
     },
     {
-      name: 'GSTIN (If Any)',
+      name: 'GSTIN',
       label: 'GSTIN (If Any)',
       type: 'text',
     },
     {
-      name: 'Email Id',
+      name: 'billingEmail',
       label: 'Email Id',
       type: 'email',
     },
@@ -80,20 +161,10 @@ const [selectedSlot,setSelectedSlot]=useState('');
       label: 'Booking Date',
       type: 'Date',
     },
-    // {
-    //   name: 'from',
-    //   label: 'From',
-    //   type: 'time',
-    // },
-    // {
-    //   name: 'to',
-    //   label: 'To',
-    //   type: 'time',
-    // },
   ];
 
   const Requirements = [
-    { name: 'podiumMic', label: 'Podium with Mic' },
+    { name: 'podiumWithMic', label: 'Podium with Mic' },
     { name: 'cordlessMic', label: '2 Cordless Mic' },
     { name: 'screeningFacilities', label: 'Screening Facilities' },
   ];
@@ -103,10 +174,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
         For Workshop Or Seminar
       </h2>
-      <form
-        className="space-y-6"
-        onSubmit={handleSubmit}
-      >
+      <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="space-y-6 grid gap-2 grid-cols-1 xl:grid-cols-2">
           {/* Applicant Details */}
           <div className="p-5 bg-white rounded-lg shadow">
@@ -114,7 +182,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
               Applicant Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AppliCationDetails.map(({ name, label,type }, index) => (
+              {AppliCationDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -138,7 +206,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
                 Complete Postal Address :
               </label>
               <textarea
-                name="applicantAddress"
+                name="postalAddress"
                 onChange={handleChange}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
@@ -171,7 +239,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
               Billing Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {BillingDetails.map(({ name, label,type }, index) => (
+              {BillingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
@@ -212,7 +280,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
                 Complete Postal Address :
               </label>
               <textarea
-                name="applicantAddress"
+                name="billingPostalAddress"
                 onChange={handleChange}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
@@ -237,7 +305,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
                 required
               ></textarea>
             </div> */}
-               <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
               {BookingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
@@ -250,7 +318,7 @@ const [selectedSlot,setSelectedSlot]=useState('');
                     type={type}
                     name={name}
                     placeholder={name}
-                    onChange={handleChange}
+                    onChange={handleCheckDateChange}
                     className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                     required
                   />
@@ -264,15 +332,32 @@ const [selectedSlot,setSelectedSlot]=useState('');
                   Available Slots :
                 </label>
                 <div className="col-span-2">
-                  {' '}
                   <div className="flex justify-around">
-                    {['10AM-1PM', '2PM-5PM', '6PM-9PM'].map((slot) => (
-                      <button   onClick={() => setSelectedSlot(slot)}
-                      className={`border rounded-2xl px-5 py-1 cursor-pointer transition-all duration-200
-                        ${selectedSlot === slot ? 'bg-red-400 text-white border-red-400' : 'bg-white text-black border-gray-300'}`}>
-                        {slot}
-                      </button>
-                    ))}
+                    {allSlots.map((slot) => {
+                      const isBooked = bookedSlots.includes(slot);
+                      const isSelected = selectedSlot === slot;
+
+                      return (
+                        <button
+                          key={slot}
+                          onClick={() => {
+                            if (!isBooked) {
+                              setSelectedSlot(slot);
+                            }
+                          }}
+                          className={`border rounded-2xl px-5 py-1 transition-all duration-200${
+                            isBooked
+                              ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+                              : isSelected
+                                ? 'bg-red-400 text-white border-red-400'
+                                : 'bg-white text-black border-gray-300 hover:border-red-400'
+                          }`}
+                          disabled={isBooked}
+                        >
+                          {slot}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

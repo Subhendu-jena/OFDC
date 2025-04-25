@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { bookingForm, getAllSlotByDate } from '../../config/controller';
+import { useNavigate } from 'react-router-dom';
 
 function FilmOrAudioVisualScreening() {
   const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ const token = sessionStorage.getItem('token');
 const userId = sessionStorage.getItem('userID');
 const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
 const [selectedDate, setSelectedDate] = useState<string | null>(null);
+const navigate=useNavigate()
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -36,12 +38,13 @@ const [selectedDate, setSelectedDate] = useState<string | null>(null);
         date: selectedDate,
       });
 
-      if (response?.success) {
+      if (response?.success && Array.isArray(response?.data)) {
         const booked = response?.data?.map(
           (booking: any) => booking?.bookingDetails?.timeSlot
         );
         setBookedSlots(booked);
       }
+      
     } catch (error) {
       console.error('Error fetching slots:', error);
     }
@@ -78,7 +81,7 @@ const [selectedDate, setSelectedDate] = useState<string | null>(null);
           });
     
           if (response.success) {
-            navigate('/success-page'); // or wherever you want to redirect
+            navigate('/confirmation', { state: { bookingDetails: response } });
           } else {
             console.error('Submission failed:', response.message);
             alert('Submission failed. Please try again.');
@@ -246,7 +249,7 @@ const [selectedDate, setSelectedDate] = useState<string | null>(null);
                 Complete Postal Address :
               </label>
               <textarea
-                name="postalAddress"
+                name="billingPostalAddress"
                 onChange={handleChange}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}

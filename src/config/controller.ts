@@ -42,7 +42,7 @@ export const bookingForm = async ({
   token,
   data,
 }: {
-  data: FormData;
+  data: any;
   token: string | null;
 }): Promise<ApiResponse<signupData>> => {
   return apiCaller({
