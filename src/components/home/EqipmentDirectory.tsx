@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 import { equipmentDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
+import { useFontSize } from './FontSizeContext';
 function EqipmentDirectory() {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
   });
+  const { fontSize } = useFontSize();
   const settings = {
     dots: true,
     infinite: true,
@@ -80,7 +82,7 @@ function EqipmentDirectory() {
             transition={{ type: 'tween', duration: 1 }}
             className=" w-full flex flex-col  items-center px-2 py-6"
           >
-            <p className=" text-gray-800 text-4xl font-bold">
+            <p className=" text-gray-800 text-4xl font-bold" style={{ fontSize: `${fontSize + 20}px` }}>
               EQUIPMENT DIRECTORY
             </p>
           </motion.div>
@@ -106,7 +108,7 @@ function EqipmentDirectory() {
                           →
                         </button>
 
-                        <p className=" text-black text-4xl py-8 font-bold">
+                        <p className=" text-black text-4xl py-8 font-bold" style={{ fontSize: `${fontSize + 20}px` }}>
                           {destination?.title}
                         </p>
                       </div>

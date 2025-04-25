@@ -9,10 +9,11 @@ import {
   ChevronRight,
   ArrowRight,
 } from 'lucide-react';
+import { useFontSize } from '../../components/home/FontSizeContext';
 
 const ObjectivesPage: React.FC = () => {
   const [activeObjective, setActiveObjective] = useState(0);
-
+  const { fontSize } = useFontSize();
   const objectives = [
     {
       id: 0,
@@ -84,10 +85,10 @@ const ObjectivesPage: React.FC = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-6">
               <Target className="h-8 w-8 text-red-500" />
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6" style={{ fontSize: `${fontSize + 32}px` }}>
               Strategic Objectives
             </h2>
-            <p className="text-xl text-gray-600 mb-12">
+            <p className="text-xl text-gray-600 mb-12" style={{ fontSize: `${fontSize + 4}px` }}>
               Kalinga Studios is dedicated to transforming Odisha's film
               industry through a comprehensive set of strategic objectives that
               focus on infrastructure, talent development, and technological
@@ -108,6 +109,7 @@ const ObjectivesPage: React.FC = () => {
                   </div>
                   <span
                     className={`text-sm mt-2 font-medium ${activeObjective === index ? 'text-white' : 'text-gray-700'}`}
+                    style={{ fontSize: `${fontSize -2}px` }}
                   >
                     {objective.title.split(' ')[0]}
                   </span>
@@ -129,10 +131,10 @@ const ObjectivesPage: React.FC = () => {
                 >
                   {objectives[activeObjective].icon}
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{ fontSize: `${fontSize + 14}px` }}>
                   {objectives[activeObjective].title}
                 </h3>
-                <p className="text-gray-600 text-lg mb-6">
+                <p className="text-gray-600 text-lg mb-6" style={{ fontSize: `${fontSize + 2}px` }}>
                   {objectives[activeObjective].description}
                 </p>
                 <a
@@ -192,10 +194,10 @@ const ObjectivesPage: React.FC = () => {
                     >
                       Objective {index + 1}
                     </span>
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{ fontSize: `${fontSize + 8}px` }}>
                       {objective.title}
                     </h3>
-                    <p className="text-gray-600 text-lg mb-6">
+                    <p className="text-gray-600 text-lg mb-6" style={{ fontSize: `${fontSize + 2}px` }}>
                       {objective.description}
                     </p>
 

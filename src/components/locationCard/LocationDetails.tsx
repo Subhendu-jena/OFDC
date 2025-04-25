@@ -14,6 +14,7 @@ import {
 import Slider from 'react-slick';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { ArrowLeft } from 'lucide-react';
+import { useFontSize } from '../home/FontSizeContext';
 
 interface Image {
   url: string;
@@ -81,6 +82,7 @@ interface LocationDetailsProps {
   setSelectedProduct?:any;
 }
 const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData,setSelectedProduct }) => {
+  const { fontSize } = useFontSize();
   const activeLocation = locationData;
   const amenities = [
     { icon: Wifi, name: 'Free Wi-Fi' },
@@ -144,11 +146,11 @@ const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData,setSelec
           {/* Title and Status */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900">
+              <h2 className="text-3xl font-bold text-gray-900" style={{ fontSize: `${fontSize + 14}px` }}>
                 {activeLocation?.title}
               </h2>
               {activeLocation?.subTitle && (
-                <p className="text-lg text-gray-600 mt-1">
+                <p className="text-lg text-gray-600 mt-1" style={{ fontSize: `${fontSize + 2}px` }}>
                   {activeLocation?.subTitle}
                 </p>
               )}

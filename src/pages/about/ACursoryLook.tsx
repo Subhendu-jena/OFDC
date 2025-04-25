@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { aCursoryLook } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
+import { useFontSize } from '../../components/home/FontSizeContext';
 
 const ACursoryLook: React.FC = () => {
   // const content = [
@@ -23,6 +24,7 @@ const ACursoryLook: React.FC = () => {
   // ];
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
+  const { fontSize } = useFontSize();
   useEffect(() => {
     setLoading(true);
     aCursoryLook()
@@ -50,7 +52,7 @@ const ACursoryLook: React.FC = () => {
             <section className=" shadow-lg rounded-lg p-8">
               {/* Introduction */}
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-red-500 mb-4">
+                <h2 className="text-2xl font-semibold text-red-500 mb-4" style={{ fontSize: `${fontSize + 8}px` }}>
                   A Cursory Look
                 </h2>
                 <div className="flex flex-col md:flex-row items-center gap-6">
@@ -78,12 +80,13 @@ const ACursoryLook: React.FC = () => {
                     className="absolute left-4 bg-orange-500 text-white text-center w-full pt-6 pb-4 -mt-10 font-semibold  shadow-black text-sm  shadow-2xl pl-4"
                     style={{
                       clipPath: 'polygon(0% 0%, 100% 30%, 98% 100%, 10% 100%)',
+                      fontSize: `${fontSize - 2}px` 
                     }}
                   >
                     {data?.cardHead}
                   </div>
                   <div className="mt-4 pb-8 pt-8 px-2 relative">
-                    <p className=" relative text-[13px] text-justify z-10 pr-6">
+                    <p className=" relative  text-justify z-10 pr-6" style={{ fontSize: `${fontSize -2}px` }}>
                       {data?.cardBody}
                     </p>
                   </div>

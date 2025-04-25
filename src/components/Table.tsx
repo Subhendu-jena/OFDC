@@ -59,7 +59,7 @@ const TableComponent = ({
             {columns.map((column, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider"
+                className="px-6 py-3 text-left   font-medium text-gray-500 tracking-wider"
               >
                 {column.label}
               </th>
@@ -73,7 +73,7 @@ const TableComponent = ({
           {currentData.length > 0 ? (
             currentData.map((official: any, index: number) => (
               <tr key={official.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap   text-gray-900">
                   {index + 1}
                 </td>
                 <td className="px-6 py-4">
@@ -110,55 +110,55 @@ const TableComponent = ({
 )}
 
                     <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="  font-medium text-gray-900">
                         {official.name}
                       </div>
-                      <div className="text-sm text-red-500 font-medium">
+                      <div className="  text-red-500 font-medium">
                         {official.designation}
                       </div>
                     </div>
                   </div>
 
                   {official.bookingType && (
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="  font-medium text-gray-900">
                       {official.bookingType}
                     </div>
                   )}
                 </td>
                 {official.applicantName && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.applicantName}
                   </td>
                 )}
                 {official.talentType && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.talentType}
                   </td>
                 )}
                 {official.bookingDate && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.bookingDate}
                   </td>
                 )}
                 {official.screeningDate && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.screeningDate}
                   </td>
                 )}
                 {official.paymentMode && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.paymentMode}
                   </td>
                 )}
                 {official.paidOn && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.paidOn}
                   </td>
                 )}
                 {official?.status && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     <div
-                      className={`px-2 py-1 text-xs rounded-full w-max inline-block ${
+                      className={`px-2 py-1   rounded-full w-max inline-block ${
                         official.status === 'Completed'
                           ? 'bg-green-100 text-green-800'
                           : official.status === 'Pending'
@@ -171,9 +171,9 @@ const TableComponent = ({
                   </td>
                 )}
                 {official?.transcationStatus && (
-                  <td className="px-9 py-4 text-sm text-gray-900 ">
+                  <td className="px-9 py-4   text-gray-900 ">
                     <div
-                      className={`px-2 py-1 text-xs rounded-full w-max inline-block ${
+                      className={`px-2 py-1   rounded-full w-max inline-block ${
                         official.transcationStatus === 'Success'
                           ? 'bg-green-100 text-green-800'
                           : official.transcationStatus === 'Failed'
@@ -187,9 +187,9 @@ const TableComponent = ({
                 )}
 
                 {official.view && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     <button
-                      className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl text-sm cursor-pointer"
+                      className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
                       onClick={() => navigate(paths.preview)}
                     >
                       <ScanEye />
@@ -198,27 +198,27 @@ const TableComponent = ({
                 )}
                 {(official.department || official.from) && (
                   <td className="px-6 py-4">
-                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                    <span className="px-2 py-1  font-semibold rounded-full bg-red-100 text-red-800">
                       {official.department || official.from}
                     </span>
                   </td>
                 )}
                 {official.to && (
                   <td className="px-6 py-4">
-                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                    <span className="px-2 py-1   font-semibold rounded-full bg-red-100 text-red-800">
                       {official.to}
                     </span>
                   </td>
                 )}
                 
                 {official.contact && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     <div className="flex items-center">
                       <Phone size={14} className="mr-1 text-gray-500" />
                       {official.contact}
                     </div>
                     {/* {official.email && (
-                      <div className="text-sm text-gray-500 flex items-center">
+                      <div className="  text-gray-500 flex items-center">
                         <Mail size={14} className="mr-1 text-gray-500" />
                         <a
                           href={`mailto:${official.email}`}
@@ -232,7 +232,7 @@ const TableComponent = ({
                 )}
                 {official.email && (
                   <td className="px-6 py-4">
-                    <div className="text-sm text-gray-500 flex items-center">
+                    <div className=" text-gray-500 flex items-center">
                       <Mail size={14} className="mr-1 text-gray-500" />
                       <a
                         href={`mailto:${official.email}`}
@@ -265,8 +265,8 @@ const TableComponent = ({
                         ></div>
                       </div>
                     </label> */}
-                    {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl text-sm cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
-                  <button className='border p-2 rounded-2xl text-sm cursor-pointer' >Decline</button> */}
+                    {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl   cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
+                  <button className='border p-2 rounded-2xl   cursor-pointer' >Decline</button> */}
                   </td>
                 )}
               </tr>

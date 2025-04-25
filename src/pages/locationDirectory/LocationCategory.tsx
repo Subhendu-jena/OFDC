@@ -3,6 +3,7 @@ import LocationCard from '../../components/locationCard/LocationCard';
 import { locationDirectory } from '../../config/strapiController';
 import LocationDetails from '../../components/locationCard/LocationDetails';
 import { Loader } from 'lucide-react';
+import { useFontSize } from '../../components/home/FontSizeContext';
 
 const LocationCategory: React.FC = () => {
   // const featuredLocations = [
@@ -34,6 +35,7 @@ const LocationCategory: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const { fontSize } = useFontSize();
   useEffect(() => {
     setLoading(true);
     locationDirectory()
@@ -59,7 +61,7 @@ const LocationCategory: React.FC = () => {
         <LocationDetails locationData={selectedProduct} setSelectedProduct={()=>setSelectedProduct(null)}/>
       ) : (
         <>
-          <h3 className="px-4 pt-2 text-2xl font-semibold text-gray-900 mb-6">
+          <h3 className="px-4 pt-2 text-2xl font-semibold text-gray-900 mb-6" style={{ fontSize: `${fontSize + 8}px` }}>
             Featured Locations
           </h3>
           <div className="grid grid-cols-1 lg:grid-cols-4 px-6 gap-6 mt-10">

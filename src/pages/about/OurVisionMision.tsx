@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { ourVisionandMission } from '../../config/strapiController';
 import { TvIcon } from 'lucide-react';
 import { Loader } from 'lucide-react';
+import { useFontSize } from '../../components/home/FontSizeContext';
 
 const OurVisionMision = () => {
   // const objectives = [
@@ -84,6 +85,7 @@ const OurVisionMision = () => {
   };
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
+  const { fontSize } = useFontSize();
   useEffect(() => {
     setLoading(true);
     ourVisionandMission()
@@ -116,7 +118,7 @@ const OurVisionMision = () => {
                 >
                   <img className=" w-full h-16" src="/backstair.png" alt="" />
                   <div className="flex items-center justify-center mb-8">
-                    <h2 className="text-4xl font-bold text-white">
+                    <h2 className="text-4xl font-bold text-white" style={{ fontSize: `${fontSize + 20}px` }}>
                       Our Mission
                     </h2>
                   </div>
@@ -133,7 +135,7 @@ const OurVisionMision = () => {
                               className="text-red-400 mr-2"
                             />
                           </div>
-                          <span className="text-sm text-white">
+                          <span className="text-sm text-white" style={{ fontSize: `${fontSize - 2}px` }}>
                             {item.points}
                           </span>
                         </li>
@@ -184,11 +186,12 @@ const OurVisionMision = () => {
                           <div className=" text-4xl flex justify-center items-center left-[35%] p-4 w-18 h-18 absolute bg-white rounded-full text-red-500 group-hover:text-white group-hover:bg-red-400 cursor-pointer -mt-16 transition duration-500 font-bold group-hover:scale-110 group-hover:-mt-18">
                             <TvIcon size={40} />
                           </div>
-                          <div className="text-lg font-semibold pt-6">
+                          <div className="text-lg font-semibold pt-6" style={{ fontSize: `${fontSize + 2}px` }}>
                             {text?.heading}
                           </div>
                           <div
                             className={`text-sm ${showDes == index ? '' : 'line-clamp-3'}`}
+                            style={{ fontSize: `${fontSize - 2}px` }}
                           >
                             {text?.description}
                           </div>

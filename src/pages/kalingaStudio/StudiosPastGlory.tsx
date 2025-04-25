@@ -2,9 +2,10 @@ import React from 'react';
 import { Film, Award, Camera, MapPin, Star } from 'lucide-react';
 // import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import { motion } from 'framer-motion';
+import { useFontSize } from '../../components/home/FontSizeContext';
 
 const StudiosPastGlory: React.FC = () => {
-
+  const { fontSize } = useFontSize();
   const filmmakers = [
     {
       name: 'Mrinal Sen',
@@ -79,7 +80,7 @@ const StudiosPastGlory: React.FC = () => {
         <div className="container mx-auto px-6 py-8 relative z-10">
           <div className="text-center mb-20">
             <h2 className="inline-block text-3xl md:text-5xl font-bold relative">
-              <span className="relative z-10">OUR LEGACY</span>
+              <span className="relative z-10" style={{ fontSize: `${fontSize + 32 }px` }}>OUR LEGACY</span>
               <div className="absolute -bottom-3 left-0 w-full h-3 bg-red-300 opacity-50 z-0"></div>
             </h2>
           </div>
@@ -126,7 +127,7 @@ const StudiosPastGlory: React.FC = () => {
                 {/* Year marker */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 p-8 rounded-full bg-red-400 flex items-center justify-center z-20">
                   <div className="w-8 h-8 p-6 rounded-full bg-white flex items-center justify-center border-2 border-red-400">
-                    <span className="text-xs font-bold">{item.year}</span>
+                    <span className="text-xs font-bold" >{item.year}</span>
                   </div>
                 </div>
                 <div className="absolute top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 z-10"></div>
@@ -143,10 +144,10 @@ const StudiosPastGlory: React.FC = () => {
                     marginTop: item.position === 'top' ? '-0px' : '250px',
                   }}
                 >
-                  <h3 className="text-lg font-bold text-red-500 mb-2">
+                  <h3 className="text-lg font-bold text-red-500 mb-2" style={{ fontSize: `${fontSize + 2}px` }}>
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <p className="text-sm text-gray-600" style={{ fontSize: `${fontSize -2}px` }}>{item.description}</p>
                 </motion.div>
               </motion.div>
             ))}

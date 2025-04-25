@@ -1,7 +1,9 @@
 import { Heart, MapPin, Phone, Star } from 'lucide-react';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+import { useFontSize } from '../home/FontSizeContext';
 
 function LocationCard({ cardData,setSelectedProduct }: any) {
+  const { fontSize } = useFontSize();
   return (
     <>
     {cardData.map((card: any, index: number) => (
@@ -51,7 +53,7 @@ function LocationCard({ cardData,setSelectedProduct }: any) {
           <div className="p-4">
             {/* Title & Subtitle */}
             <div className="mb-3">
-              <h3 className="text-xl font-semibold text-gray-900">{card?.title}</h3>
+              <h3 className="text-xl font-semibold text-gray-900" style={{ fontSize: `${fontSize + 4}px` }}>{card?.title}</h3>
               <p className="text-gray-500">{card?.subtitle}</p>
             </div>
 

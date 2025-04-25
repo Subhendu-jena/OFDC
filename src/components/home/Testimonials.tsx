@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 import { testimonialsApi } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
+import { useFontSize } from './FontSizeContext';
 function Testimonials() {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
   });
+  const { fontSize } = useFontSize();
   const settings = {
     dots: false,
     infinite: true,
@@ -52,8 +54,8 @@ function Testimonials() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ type: 'tween', duration: 1 }}
           >
-            <p className=" text-red-500 font-semibold ">Our Testimonials</p>
-            <p className=" text-gray-800 text-4xl font-bold">WHAT THEY SAY</p>
+            <p className=" text-red-500 font-semibold " style={{ fontSize: `${fontSize}px` }}>Our Testimonials</p>
+            <p className=" text-gray-800 text-4xl font-bold" style={{ fontSize: `${fontSize + 20}px` }}>WHAT THEY SAY</p>
           </motion.div>
           <div className="w-full ">
             <Slider {...settings}>
@@ -76,8 +78,8 @@ function Testimonials() {
                     </div>
                     {/* Testimonial Box */}
                     <div className="flex flex-col gap-4 rounded-lg pr-4 mx-16 bg-white pl-20 py-8  relative">
-                      <div className="text-xl">{testimonial.description}</div>
-                      <div className="text-xl font-semibold">
+                      <div className="text-xl" style={{ fontSize: `${fontSize + 4}px` }}>{testimonial.description}</div>
+                      <div className="text-xl font-semibold" style={{ fontSize: `${fontSize + 4}px` }}>
                         {testimonial?.title}
                       </div>
                       <Quote
