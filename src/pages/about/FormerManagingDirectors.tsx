@@ -65,6 +65,9 @@ function FormerManagingDirectors() {
       });
   }, []);
   const card = data[0]?.formerManagingDirectors || [];
+  const card1 = data?.formerManagingDirectors || [];
+// console.log(card, '1data');
+  console.log(card1, 'card1data');
   return (
     <>
       {loading ? (

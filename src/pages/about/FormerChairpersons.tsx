@@ -48,7 +48,7 @@ function FormerChairpersons() {
           getAllFormerChairpersons()
           .then(({ data }) => {
             if (data) {
-                // console.log(data, "data");
+                console.log(data, "getAllFormerChairpersons");
                 setData(data);
             }
           })
@@ -63,7 +63,8 @@ function FormerChairpersons() {
       console.log(card, "1data");
   return (
    <>{loading ? <Loader /> :  <div className=' bg-white'>
-    <TableComponent columns={columns} data={card?.length==0 ? dataTable : card}  Heading='Former Chairpersons' />
+    <TableComponent columns={columns} data={card}  Heading='Former Chairpersons' />
+    {/* card?.length==0 ? dataTable :  */}
   </div>}</>
   )
 }

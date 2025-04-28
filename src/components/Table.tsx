@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { STRAPI_API_BASE_URL } from '../config/httpClient';
 import { ChevronRight } from 'lucide-react';
 import { ChevronLeft } from 'lucide-react';
+import { useFontSize } from './home/FontSizeContext';
 
 const TableComponent = ({
   Heading,
@@ -22,6 +23,8 @@ const TableComponent = ({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
   const navigate = useNavigate();
+  const { fontSize } = useFontSize();
+
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredData(data);
@@ -73,41 +76,41 @@ const TableComponent = ({
           {currentData.length > 0 ? (
             currentData.map((official: any, index: number) => (
               <tr key={official.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap   text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap   text-gray-900" >
                   {index + 1}
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center">
-                  {official.bookingType ? null : official.isVacant ? (
-  <div className="h-12 w-12 rounded-full bg-gray-100 border border-gray-200 overflow-hidden">
-    <div className="h-full w-full flex items-center justify-center">
-      <User size={24} className="text-gray-400" />
-    </div>
-  </div>
-) : (
-  <div className="relative group inline-block">
-    <img
-      src={
-        official?.imgUrl?.url
-          ? STRAPI_API_BASE_URL + official?.imgUrl?.url
-          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-      }
-      alt={official.name}
-      className="h-12 w-12 rounded-full object-cover cursor-pointer"
-    />
-    <div className="absolute z-1000 hidden group-hover:block left-14 top-0">
-      <img
-        src={
-          official?.imgUrl?.url
-            ? STRAPI_API_BASE_URL + official?.imgUrl?.url
-            : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-        }
-        alt={official.name}
-        className="w-44 h-auto rounded shadow-lg border border-gray-300 bg-white"
-      />
-    </div>
-  </div>
-)}
+                    {official.bookingType ? null : official.isVacant ? (
+                      <div className="h-12 w-12 rounded-full bg-gray-100 border border-gray-200 overflow-hidden">
+                        <div className="h-full w-full flex items-center justify-center">
+                          <User size={24} className="text-gray-400" />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="relative group inline-block">
+                        <img
+                          src={
+                            official?.imgUrl?.url
+                              ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                          }
+                          alt={official.name}
+                          className="h-12 w-12 rounded-full object-cover cursor-pointer"
+                        />
+                        <div className="absolute z-1000 hidden group-hover:block left-14 top-0">
+                          <img
+                            src={
+                              official?.imgUrl?.url
+                                ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+                                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                            }
+                            alt={official.name}
+                            className="w-44 h-auto rounded shadow-lg border border-gray-300 bg-white"
+                          />
+                        </div>
+                      </div>
+                    )}
 
                     <div className="ml-4">
                       <div className="  font-medium text-gray-900">
@@ -197,20 +200,26 @@ const TableComponent = ({
                   </td>
                 )}
                 {(official.department || official.from) && (
-                  <td className="px-6 py-4">
+                  <td
+                    className="px-6 py-4"
+                    style={{ fontSize: `${fontSize - 4}px` }}
+                  >
                     <span className="px-2 py-1  font-semibold rounded-full bg-red-100 text-red-800">
                       {official.department || official.from}
                     </span>
                   </td>
                 )}
                 {official.to && (
-                  <td className="px-6 py-4">
+                  <td
+                    className="px-6 py-4"
+                    style={{ fontSize: `${fontSize - 4}px` }}
+                  >
                     <span className="px-2 py-1   font-semibold rounded-full bg-red-100 text-red-800">
                       {official.to}
                     </span>
                   </td>
                 )}
-                
+
                 {official.contact && (
                   <td className="px-6 py-4   text-gray-900">
                     <div className="flex items-center">
@@ -293,7 +302,7 @@ const TableComponent = ({
             </button>
 
             <span className="font-medium">
-             {currentPage} of {totalPages}
+              {currentPage} of {totalPages}
             </span>
 
             <button

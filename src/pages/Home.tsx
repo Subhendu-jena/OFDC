@@ -36,7 +36,7 @@ function Home() {
         <MessageFromCm />
       </section>
       <section className="relative flex justify-center w-full  h-full items-start ">
-        <img src="/sea-bg.png" alt="" className='absolute top-0 left-0  h-[132%] w-full ' />
+        <img src="/sea-bg.webp" alt="" className='absolute top-0 left-0  h-[132%] w-full ' />
         <div className="max-w-6xl h-full  ">
           <LocationDirectory />
         </div>
