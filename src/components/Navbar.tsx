@@ -80,6 +80,7 @@ const TopHeader = () => {
             onClick={() => {
               sessionStorage.removeItem('token');
               sessionStorage.removeItem('userID');
+              sessionStorage.removeItem('role');
               window.location.reload();
             }}
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"

@@ -52,6 +52,35 @@ export const bookingForm = async ({
     token,
   });
 };
+export const createOrder = async ({
+  token,
+  data,
+  id
+}: {
+  data: any;
+  token: string | null;
+  id:string
+}): Promise<ApiResponse<signupData>> => {
+  return apiCaller({
+    uri: `/payment/create-order/${id}`,
+    method: 'POST',
+    data,
+    token,
+  });
+};
+export const verifyOrder = async ({
+  token,
+  data
+}:{data:any;
+  token: string | null;
+}): Promise<ApiResponse<signupData>> => {
+  return apiCaller({
+    uri: `/payment/verify-payment`,
+    method: 'POST',
+    token,
+   data,
+  });
+};
 export const getAllSlotByDate = async ({
   token,
   date,

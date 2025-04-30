@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { messageCM } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
-import curve from '../../../public/curve.png';
+// import curve from '../../../public/curve.png';
 import { useFontSize } from './FontSizeContext';
 function MessageFromCm() {
   const { ref, inView } = useInView({
@@ -41,10 +41,10 @@ function MessageFromCm() {
               initial={{ y: '10vh', opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ type: 'tween', duration: 1 }}
-            ><h4  style={{ fontSize: `${fontSize+14}px` }}>
-
+            >
+              <h1  style={{ fontSize: `${fontSize+14}px` }}>
               Message From Hon'ble Chief Minister of Odisha
-            </h4>
+            </h1>
             </motion.h2>
 
             <section className="relative  rounded-lg px-16 py-8 z-10">

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { bookingForm, getAllSlotByDate } from '../../config/controller';
+import { bookingForm, createOrder, getAllSlotByDate } from '../../config/controller';
 import { useNavigate } from 'react-router-dom';
+import { loadRazorpay } from '../loadRazorpay';
 
 function FilmOrAudioVisualScreening() {
   const [formData, setFormData] = useState({
@@ -51,23 +52,46 @@ const navigate=useNavigate()
   };
   const handleSubmit =async (e: any) => {
     e.preventDefault();
+    // const formattedData = {
+    //   bookedBy: userId, // From your session storage
+    //   bookingType: "Film Or Audio-Visual Screening Booking",
+    //   applicantDetails: {
+    //     nameOfApplicant: formData.nameOfApplicant,
+    //     whatsappNo: formData.whatsappNo,
+    //     altContactNo: formData.altContactNo,
+    //     email: formData.email,
+    //     postalAddress: formData.postalAddress
+    //   },
+    //   billingDetails: {
+    //     billingName: formData.billingName,
+    //     contactNo: formData.billingContactNo,
+    //     GSTIN: formData.GSTIN,
+    //     email: formData.billingEmail,
+    //     category: formData.category,
+    //     postalAddress: formData.billingPostalAddress
+    //   },
+    //   bookingDetails: {
+    //     bookingDate: selectedDate,
+    //     timeSlot: selectedSlot // From your state
+    //   }
+    // };
     const formattedData = {
       bookedBy: userId, // From your session storage
       bookingType: "Film Or Audio-Visual Screening Booking",
       applicantDetails: {
-        nameOfApplicant: formData.nameOfApplicant,
-        whatsappNo: formData.whatsappNo,
-        altContactNo: formData.altContactNo,
-        email: formData.email,
-        postalAddress: formData.postalAddress
+        nameOfApplicant: "ewtgruigui",
+        whatsappNo: "57856757",
+        altContactNo:"7665656",
+        email: "kjsdgkjg@gmjhg",
+        postalAddress: "dghdghdhjgdf"
       },
       billingDetails: {
-        billingName: formData.billingName,
-        contactNo: formData.billingContactNo,
-        GSTIN: formData.GSTIN,
-        email: formData.billingEmail,
-        category: formData.category,
-        postalAddress: formData.billingPostalAddress
+        billingName: "gsdfjsdfsf",
+        contactNo: "687263871",
+        GSTIN: "fhgwqfjhfdh",
+        email:"ghdj@gjhgjh",
+        category: "INDIVIDUAL",
+        postalAddress:"jkgjhgjhgjhgn"
       },
       bookingDetails: {
         bookingDate: selectedDate,
@@ -81,7 +105,18 @@ const navigate=useNavigate()
           });
     
           if (response.success) {
-            navigate('/confirmation', { state: { bookingDetails: response } });
+            const createorderresponse = await createOrder({id:response?.data?._id, token: token , data: {orderedBy: userId}});
+            if (createorderresponse.success)
+              {
+               loadRazorpay(createorderresponse);
+               console.log(createorderresponse,"rammm");
+
+             }
+             else {
+              console.error('redirection failed:', createorderresponse.message);
+              alert('redirection failed. Please try again.');
+            }
+            // navigate('/confirmation', { state: { bookingDetails: response } });
           } else {
             console.error('Submission failed:', response.message);
             alert('Submission failed. Please try again.');
@@ -90,7 +125,7 @@ const navigate=useNavigate()
           console.error('Error submitting form:', error);
           // alert('An error occurred. Please try again.');
         }
-    console.log('Form Submitted:', formData);
+    // console.log('Form Submitted:', formData);
   };
 
   const AppliCationDetails = [
@@ -183,7 +218,6 @@ const navigate=useNavigate()
                     placeholder={label}
                     onChange={handleChange}
                     className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
                   />
                 </div>
               ))}
@@ -197,7 +231,6 @@ const navigate=useNavigate()
                 onChange={handleChange}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
-                required
               ></textarea>
             </div>
           </div>
@@ -222,7 +255,6 @@ const navigate=useNavigate()
                     placeholder={label}
                     onChange={handleChange}
                     className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
                   />
                 </div>
               ))}
@@ -235,7 +267,6 @@ const navigate=useNavigate()
                 name="category"
                 className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 onChange={handleChange}
-                required
               >
                 <option value="">Select Category</option>
                 <option value="INDIVIDUAL">INDIVIDUAL</option>
@@ -253,7 +284,6 @@ const navigate=useNavigate()
                 onChange={handleChange}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
-                required
               ></textarea>
             </div>
           </div>
@@ -290,7 +320,6 @@ const navigate=useNavigate()
                     placeholder={label}
                     onChange={handleCheckDateChange}
                     className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
                   />
                 </div>
               ))}

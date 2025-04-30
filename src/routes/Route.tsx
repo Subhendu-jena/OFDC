@@ -56,6 +56,7 @@ import LocationDetails from '../components/locationCard/LocationDetails';
 import ScrollToTop from '../components/home/ScrollToTop';
 import PetroleumSalesChart from '../pages/test';
 import ProtectedRoute from './ProtectedRoute';
+import RoleBasedRedirect from './RoleBasedRedirect';
 // import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 
 const RoutePage: React.FC = () => {
@@ -75,7 +76,7 @@ const RoutePage: React.FC = () => {
   //   localStorage.removeItem("isLoggedIn");
   //   setIsLoggedIn(false);
   // };
-  const token = sessionStorage.getItem('token');
+  const role = sessionStorage.getItem('role');
   // console.log(token, 'token');
   return (
     <BrowserRouter>
@@ -128,9 +129,11 @@ const RoutePage: React.FC = () => {
             />} />
       ) : (
         )} */}
+        {/* <Route path="/dashboard" element={<RoleBasedRedirect />} /> */}
         <Route element={<ProtectedRoute />}>
           {/* AdminLayout */}
-          <Route element={<AdminLayout />}>
+          {/* {role === 'USER' &&( */}
+            <Route element={<AdminLayout />}>
             <Route path={paths.adminDashboard} element={<AdminDashboard />} />
             <Route path={paths.allBookings} element={<AdminBookingHistory />} />
             <Route
@@ -139,9 +142,11 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.calender} element={<AdminCalender />} />
           </Route>
-
+          {/* )} */}
+         
           {/* LoggedUserLayout */}
-          <Route element={<LoggedUserLayout />}>
+          {/* {role === 'USER' && ( */}
+            <Route element={<LoggedUserLayout />}>
             <Route path={paths.userDashboard} element={<UserDashboard />} />
             <Route
               path={paths.bookingHistory}
@@ -156,6 +161,7 @@ const RoutePage: React.FC = () => {
             <Route path={paths.preview} element={<Preview />} />
             <Route path={paths.confirmation} element={<Confirmation />} />
           </Route>
+        {/* )} */}
         </Route>
         <Route element={<Layout />}>
           <Route path={paths.home} element={<Home />} />

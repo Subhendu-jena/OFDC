@@ -36,6 +36,7 @@ const Login: React.FC = ({onLogin}:any) => {
         if (response?.token) {
           sessionStorage.setItem('token', response?.token);
           sessionStorage.setItem('userID', response?.user?._id);
+          sessionStorage.setItem('role', response?.user?.role);
           console.log('Token saved:', response?.token);
         }
       });

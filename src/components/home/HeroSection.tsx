@@ -69,7 +69,7 @@ const HeroSection = () => {
                 // className={`font-bold mb-6 text-center text-[${fontSize + 32}px]`}
                 className="font-bold mb-6 text-center"
                 style={{ fontSize: `${fontSize + 32}px` }}>
-                  {data[0]?.heading}
+                  {data[0]?.heading || 'Welcome to Odisha Film City'}
                 </h3>
                 <p className="mb-8 text-center"
                  style={{ fontSize: `${fontSize + 4}px` }}>
