@@ -26,6 +26,7 @@ declare global {
   
 export  const loadRazorpay = (orderData: any) => {
   const token = sessionStorage.getItem('token');
+  // const navigate=useNavigate();
   console.log(orderData,"orderData");
     const options: RazorpayOptions = {
       key:import.meta.env.VITE_RAZORPAY_KEY, // from Razorpay Dashboardzz
@@ -40,6 +41,9 @@ export  const loadRazorpay = (orderData: any) => {
           razorpaySignature: response.razorpay_signature,
         };
         verifyOrder({data :data,token:token})
+        // }if(response.razorpay_signature) {
+        //  navigate('/preview', { state: { bookingDetails: response } });
+        
         // send payment response to backend for verification
       },
       prefill: {

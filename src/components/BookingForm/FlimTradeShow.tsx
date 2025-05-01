@@ -1,50 +1,28 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { bookingForm, getAllSlotByDate } from '../../config/controller';
+import { createBooking, getAllSlotByDate } from '../../config/controller';
+import { useForm } from 'react-hook-form';
 
 export default function FlimTradeShow() {
   const [formData, setFormData] = useState<any>({
-    nameOfApplicant: '',
-    whatsappNo: '',
-    altContactNo: '',
-    email: '',
-    postalAddress: '',
     podiumWithMic: false,
     cordlessMic: false,
     screeningFacilities: false,
-    nameOfFilm: '',
-    languageOfFilm: '',
-    durationOfFilm: '',
-    aspectRatio: '',
-    directorName: '',
-    soundFormat: '',
-    formatOfFilm: '',
-    producerName: '',
-    productionHouseName: '',
-    productionWhatsappNo: '',
-    productionEmail: '',
-    productionAltContactNo: '',
-    productionAddress: '',
-    productionGST: '',
-    billingName: '',
-    billingContactNo: '',
-    billingGSTIN: '',
-    billingEmail: '',
-    category: 'COMPANY',
-    billingPostalAddress: '',
-    bookingDate: '',
     synopsisFile: null,
     castCreditsFile: null,
     songLinesFile: null,
-    posterFile: null
+    posterFile: null,
   });
-const [bookedSlots, setBookedSlots] = useState<string[]>([]);
-const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-const token = sessionStorage.getItem('token');
-const userId = sessionStorage.getItem('userID');
-const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
-const [selectedDate, setSelectedDate] = useState<string | null>(null);
-const navigate=useNavigate()
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const token = sessionStorage.getItem('token');
+  const userId = sessionStorage.getItem('userID');
+  const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const handleChange = (e: any) => {
     const { name, value, type, checked, files } = e.target;
     if (type === 'checkbox') {
@@ -72,81 +50,79 @@ const navigate=useNavigate()
         );
         setBookedSlots(booked);
       }
-      
     } catch (error) {
       console.error('Error fetching slots:', error);
     }
   };
-  const handleSubmit = async(e: any) => {
-    e.preventDefault();
+  const onSubmit = async (data: any) => {
     const formattedJsonData = {
-      bookedBy: userId, // From your session storage
-      bookingType: "Film Trade Show",
+      bookedBy: userId, 
+      bookingType: 'Film Trade Show',
       applicantDetails: {
-        nameOfApplicant: formData.nameOfApplicant,
-        whatsappNo: formData.whatsappNo,
-        altContactNo: formData.altContactNo,
-        email: formData.email,
-        postalAddress: formData.postalAddress
+        nameOfApplicant: data.nameOfApplicant,
+        whatsappNo: data.whatsappNo,
+        altContactNo: data.altContactNo,
+        email: data.email,
+        postalAddress: data.postalAddress,
       },
       requirements: {
         podiumWithMic: formData.podiumWithMic,
         cordlessMic: formData.cordlessMic,
-        screeningFacilities: formData.screeningFacilities
+        screeningFacilities: formData.screeningFacilities,
       },
       screeningDetails: {
-        nameOfFilm: formData.nameOfFilm,
-        languageOfFilm: formData.languageOfFilm,
-        durationOfFilm: formData.durationOfFilm,
-        aspectRatio: formData.aspectRatio,
-        directorName: formData.directorName,
-        soundFormat: formData.soundFormat,
-        formatOfFilm: formData.formatOfFilm
+        nameOfFilm: data.nameOfFilm,
+        languageOfFilm: data.languageOfFilm,
+        durationOfFilm: data.durationOfFilm,
+        aspectRatio: data.aspectRatio,
+        directorName: data.directorName,
+        soundFormat: data.soundFormat,
+        formatOfFilm: data.formatOfFilm,
       },
       productionDetails: {
-        producerName: formData.producerName,
-        productionHouseName: formData.productionHouseName,
-        whatsappNo: formData.productionWhatsappNo,
-        email: formData.productionEmail,
-        altContactNo: formData.productionAltContactNo,
-        address: formData.productionAddress,
-        GST: formData.productionGST
+        producerName: data.producerName,
+        productionHouseName: data.productionHouseName,
+        whatsappNo: data.productionWhatsappNo,
+        email: data.productionEmail,
+        altContactNo: data.productionAltContactNo,
+        address: data.productionAddress,
+        GST: data.productionGST,
       },
       billingDetails: {
-        billingName: formData.billingName,
-        contactNo: formData.billingContactNo,
-        GSTIN: formData.billingGSTIN,
-        email: formData.billingEmail,
-        category: formData.category,
-        postalAddress: formData.billingPostalAddress
+        billingName: data.billingName,
+        contactNo: data.billingContactNo,
+        GSTIN: data.billingGSTIN,
+        email: data.billingEmail,
+        category: data.category,
+        postalAddress: data.billingPostalAddress,
       },
       documentUploads: {
-        synopsis: "11111",
-        castAndCredits: "11111",
-        songLines:  "11111",
-        poster:  "111111"
+        synopsis: '11111',
+        castAndCredits: '11111',
+        songLines: '11111',
+        poster: '111111',
       },
       bookingDetails: {
         bookingDate: selectedDate,
-        timeSlot: selectedSlot
-      }
+        timeSlot: selectedSlot,
+      },
     };
     try {
-              const response = await bookingForm({
-                token: token,
-                data: formattedJsonData,
-              });
-        
-              if (response.success) {
-                navigate('/confirmation', { state: { bookingDetails: response } });
-              } else {
-                console.error('Submission failed:', response.message);
-                alert('Submission failed. Please try again.');
-              }
-            } catch (error) {
-              console.error('Error submitting form:', error);
-              // alert('An error occurred. Please try again.');
-            }
+      const response = await createBooking({
+        token: token,
+        data: formattedJsonData,
+      });
+
+      if (response.success) {
+        // navigate('/confirmation', { state: { bookingDetails: response } });
+      } else {
+        console.error('Submission failed:', response.message);
+        alert('Submission failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // alert('An error occurred. Please try again.');
+    }
     console.log('Form Submitted:', formData);
   };
 
@@ -155,21 +131,41 @@ const navigate=useNavigate()
       name: 'nameOfApplicant',
       label: 'Name of the Applicant',
       type: 'text',
+      required: true,
+      pattern: {
+        value: /^[A-Za-z\s]+$/,
+        message: 'Only alphabets are allowed',
+      },
     },
     {
       name: 'whatsappNo',
       label: 'Whatsapp No.',
       type: 'number',
+      required: true,
+      pattern: {
+        value: /^[6-9]\d{9}$/,
+        message: 'Enter a valid 10-digit WhatsApp number',
+      },
     },
     {
       name: 'altContactNo',
       label: 'Alternative Contact No.',
       type: 'number',
+      required: false,
+      pattern: {
+        value: /^[6-9]\d{9}$/,
+        message: 'Enter a valid 10-digit contact number',
+      },
     },
     {
       name: 'email',
       label: 'Email Id',
       type: 'email',
+      required: true,
+      pattern: {
+        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Enter a valid email address',
+      },
     },
   ];
   const ScreeningDetails = [
@@ -177,26 +173,51 @@ const navigate=useNavigate()
       name: 'nameOfFilm',
       label: 'Name of the Film',
       type: 'text',
+      required: true,
+      pattern: {
+        value: /^[A-Za-z0-9\s&.-]+$/,
+        message: 'Enter a valid name (letters, numbers, &, ., - allowed)',
+      },
     },
     {
       name: 'languageOfFilm',
       label: 'Language of the Film',
       type: 'text',
+      required: true,
+      pattern: {
+        value: /^[A-Za-z\s]+$/,
+        message: 'Only alphabets are allowed',
+      },
     },
     {
       name: 'durationOfFilm',
       label: 'Duration of the Film ',
       type: 'text',
+      required: true,
+      pattern: {
+        value: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]:[0-2][0-9]$/,
+        message: 'Duration must be in HH:MM:SS:FF format',
+      },
     },
     {
       name: 'aspectRatio',
       label: 'Aspect Ratio',
       type: 'text',
+      required: false,
+      pattern: {
+        value: /^\d+(\.\d+)?:\d+(\.\d+)?$/,
+        message: 'Enter a valid aspect ratio like 16:9 or 2.39:1',
+      },
     },
     {
       name: 'directorName',
       label: 'Name of the Director',
       type: 'text',
+      required: true,
+      pattern: {
+        value: /^[A-Za-z\s]+$/,
+        message: 'Only alphabets are allowed',
+      },
     },
   ];
   const ProductionDetails = [
@@ -204,31 +225,61 @@ const navigate=useNavigate()
       name: 'producerName',
       label: 'Name of the Producer',
       type: 'text',
+      required: true,
+      pattern: {
+        value: /^[A-Za-z\s]+$/,
+        message: 'Name should contain only letters and spaces',
+      },
     },
     {
       name: 'productionHouseName',
       label: 'Name of the Production House ',
       type: 'text',
+      required: true,
+      pattern: {
+        value: /^[A-Za-z0-9\s&.-]+$/,
+        message: 'Enter a valid name (letters, numbers, &, ., - allowed)',
+      },
     },
     {
       name: 'productionWhatsappNo',
       label: 'Whatsapp No.',
       type: 'number',
+      required: true,
+      pattern: {
+        value: /^[6-9]\d{9}$/,
+        message: 'Enter a valid 10-digit WhatsApp number',
+      },
     },
     {
       name: 'Alternative Contact No.',
       label: 'Alternative Contact No.',
       type: 'number',
+      required: false,
+      pattern: {
+        value: /^[6-9]\d{9}$/,
+        message: 'Enter a valid 10-digit contact number',
+      },
     },
     {
       name: 'productionEmail',
       label: 'Email Id',
       type: 'email',
+      required: true,
+      pattern: {
+        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Enter a valid email address',
+      },
     },
     {
       name: 'productionGST',
       label: 'GSTIN (If any) ',
       type: 'text',
+      required: false,
+      pattern: {
+        value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
+        message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
+      },
     },
   ];
   const Requirements = [
@@ -240,22 +291,42 @@ const navigate=useNavigate()
     {
       name: 'billingName',
       label: 'Billing Name',
-      type:'text'
+      type: 'text',
+      required: true,
+      pattern: {
+        value: /^[A-Za-z\s]+$/,
+        message: 'Only alphabets are allowed',
+      },
     },
     {
       name: 'billingContactNo',
       label: 'Contact No.',
       type: 'number',
+      required: true,
+      pattern: {
+        value: /^[6-9]\d{9}$/,
+        message: 'Enter a valid 10-digit contact number',
+      },
     },
     {
       name: 'billingGSTIN',
       label: 'GSTIN (If Any)',
       type: 'text',
+      required: false,
+      pattern: {
+        value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
+        message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
+      },
     },
     {
       name: 'billingEmail',
       label: 'Email Id',
       type: 'email',
+      required: true,
+      pattern: {
+        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Enter a valid email address',
+      },
     },
   ];
 
@@ -264,6 +335,9 @@ const navigate=useNavigate()
       name: 'bookingDate',
       label: 'Booking Date',
       type: 'Date',
+      required: true,
+      pattern: /^\d{4}-\d{2}-\d{2}$/,
+      errorMessage: 'Please enter a valid date in YYYY-MM-DD format',
     },
   ];
 
@@ -272,10 +346,7 @@ const navigate=useNavigate()
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
         Film Trade Show
       </h2>
-      <form
-        className="space-y-6 "
-        onSubmit={handleSubmit}
-      >
+      <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-6 grid gap-2 grid-cols-1 xl:grid-cols-2">
           {/* Applicant Details */}
           <div className="p-5 bg-white rounded-lg shadow">
@@ -283,36 +354,52 @@ const navigate=useNavigate()
               Applicant Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AppliCationDetails.map(({ name, label,type }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={type}
-                    name={name}
-                    placeholder={name}
-                    onChange={handleChange}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
-                  />
-                </div>
-              ))}
+              {AppliCationDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label className="text-gray-700 font-medium col-span-1">
+                      {label} :
+                      <span className="text-red-600">{required && '*'}</span>
+                    </label>
+                    <input
+                      type={type}
+                      placeholder={label}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                    />
+                    {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {errors.pattern && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors.pattern?.message)}
+                      </p>
+                    )}
+                  </div>
+                )
+              )}
             </div>
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
                 Complete Postal Address :
               </label>
               <textarea
-                name="postalAddress"
-                onChange={handleChange}
+                {...register('postalAddress', {
+                  required: 'Postal Address is required',
+                })}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
-                required
               ></textarea>
+              {typeof errors.postalAddress?.message === 'string' && (
+                <p className="text-red-500 text-sm">
+                  {errors.postalAddress.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -342,33 +429,43 @@ const navigate=useNavigate()
               Screening Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ScreeningDetails.map(({ name, label,type }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={type}
-                    name={name}
-                    placeholder={name}
-                    onChange={handleChange}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
-                  />
-                </div>
-              ))}
-              <div className="grid grid-cols-3 mt-4 items-center gap-4">
+              {ScreeningDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label className="text-gray-700 font-medium col-span-1">
+                      {label} :
+                    </label>
+                    <input
+                      type={type}
+                      placeholder={label}
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                    />
+                    {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {errors.pattern && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors.pattern?.message)}
+                      </p>
+                    )}
+                  </div>
+                )
+              )}
+              <div  style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700 font-medium col-span-1">
                   Sound Format :
                 </label>
                 <select
-                  name="soundFormat"
+                  {...register('soundFormat', {
+                    required: 'Format of the Film is required',
+                  })}
                   className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                  onChange={handleChange}
-                  required
                 >
                   <option value="">Select Sound Format </option>
                   <option value="mono">Mono</option>
@@ -376,16 +473,21 @@ const navigate=useNavigate()
                   <option value="Dolby 5.1"> Dolby 5.1 </option>
                   <option value="Dolby 7.1"> Dolby 7.1</option>
                 </select>
+                {typeof errors.soundFormat?.message === 'string' && (
+                  <p className="text-red-500 text-sm">
+                    {errors.soundFormat.message}
+                  </p>
+                )}
               </div>
-              <div className="grid grid-cols-3 mt-4 items-center gap-4">
+              <div  style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700 font-medium col-span-1">
                   Format of the Film :
                 </label>
                 <select
-                  name="formatOfFilm"
+                  {...register('formatOfFilm', {
+                    required: 'Format of the Film is required',
+                  })}
                   className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                  onChange={handleChange}
-                  required
                 >
                   <option value="">Format of the Film</option>
                   <option value=" DVD"> DVD</option>
@@ -393,6 +495,11 @@ const navigate=useNavigate()
                   <option value="Pendrive">Pendrive</option>
                   <option value="Blueray DVD">Blueray DVD</option>
                 </select>
+                {typeof errors.formatOfTheFilm?.message === 'string' && (
+                  <p className="text-red-500 text-sm">
+                    {errors.formatOfTheFilm.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -403,37 +510,52 @@ const navigate=useNavigate()
               Production Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ProductionDetails.map(({ name, label,type }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={type}
-                    name={name}
-                    placeholder={name}
-                    onChange={handleChange}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
-                  />
-                </div>
-              ))}
+              {ProductionDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label className="text-gray-700 font-medium col-span-1">
+                      {label} :
+                    </label>
+                    <input
+                      type={type}
+                      placeholder={label}
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                    />
+                      {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {errors.pattern && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors.pattern?.message)}
+                      </p>
+                    )}
+                  </div>
+                )
+              )}
             </div>
 
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
                 Complete Postal Address :1
               </label>
               <textarea
-                name="productionAddress"
-                onChange={handleChange}
+                {...register('productionAddress', {
+                  required: 'Production Address is required',
+                })}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
-                required
               ></textarea>
+               {typeof errors.productionAddress?.message === 'string' && (
+                <p className="text-red-500 text-sm">
+                  {errors.productionAddress.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -443,52 +565,73 @@ const navigate=useNavigate()
               Billing Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {BillingDetails.map(({ name, label,type }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={type}
-                    name={name}
-                    placeholder={name}
-                    onChange={handleChange}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
-                  />
-                </div>
-              ))}
+              {BillingDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label className="text-gray-700 font-medium col-span-1">
+                      {label} :
+                    </label>
+                    <br />
+                    <input
+                      type={type}
+                      placeholder={label}
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                    />
+                    {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {errors.pattern && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors.pattern?.message)}
+                      </p>
+                    )}
+                  </div>
+                )
+              )}
             </div>
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            <div  style={{ marginBottom: '1rem' }}>
               <label className="text-gray-700 font-medium col-span-1">
                 Select Category :
               </label>
               <select
-                name="category"
+                {...register('category', {
+                  required: 'Category is required',
+                })}
                 className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                onChange={handleChange}
-                required
               >
                 <option value="">Select Category</option>
                 <option value="INDIVIDUAL">INDIVIDUAL</option>
                 <option value="COMPANY">COMPANY</option>
               </select>
+              {typeof errors.category?.message === 'string' && (
+                  <p className="text-red-500 text-sm">
+                    {errors.category.message}
+                  </p>
+                )}
             </div>
 
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
                 Complete Postal Address :
               </label>
               <textarea
-                name="billingPostalAddress"
-                onChange={handleChange}
+                {...register('billingPostalAddress', {
+                  required: 'Billing Postal Address is required',
+                })}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
-                required
               ></textarea>
+               {typeof errors.billingPostalAddress?.message === 'string' && (
+                <p className="text-red-500 text-sm">
+                  {errors.billingPostalAddress.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -527,58 +670,36 @@ const navigate=useNavigate()
             <h3 className="text-lg font-semibold border-b pb-2 mb-4 text-red-600">
               Booking Details
             </h3>
-            {/* <div className="grid grid-cols-3 mt-4 items-center gap-4">
-              <label className="text-gray-700 font-medium col-span-1">
-                Purpose of Booking (in Detail):
-              </label>
-              <textarea
-                name="applicantAddress"
-                onChange={handleChange}
-                className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                rows={3}
-                required
-              ></textarea>
-            </div> */}
-               <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {BookingDetails.map(({ name, label, type }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={type}
-                    name={name}
-                    placeholder={name}
-                    onChange={handleCheckDateChange}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
-                  />
-                </div>
-              ))}
-              {/* <div className="grid grid-cols-3 mt-4 items-center ">
-                <label
-                  htmlFor=""
-                  className="text-gray-700 font-medium col-span-1"
-                >
-                  Available Slots :
-                </label>
-                <div className="col-span-2">
-                  {' '}
-                  <div className="flex justify-around">
-                    {['10AM-1PM', '2PM-5PM', '6PM-9PM'].map((slot) => (
-                      <button   onClick={() => setSelectedSlot(slot)}
-                      className={`border rounded-2xl px-5 py-1 cursor-pointer transition-all duration-200
-                        ${selectedSlot === slot ? 'bg-red-400 text-white border-red-400' : 'bg-white text-black border-gray-300'}`}>
-                        {slot}
-                      </button>
-                    ))}
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
+              {BookingDetails.map(
+                ({ name, label, type }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label className="text-gray-700 font-medium col-span-1">
+                      {label} :
+                    </label>
+                    <input
+                      type={type}
+                      placeholder={name}
+                      {...register(name, {
+                        required: `${label} is required`,
+                        pattern: {
+                          value: /^\d{4}-\d{2}-\d{2}$/,
+                          message:
+                            'Please enter a valid date in YYYY-MM-DD format',
+                        },
+                        onChange: handleCheckDateChange,
+                      })}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                    />
+                     {errors[name] && (
+                    <p className="text-red-500 text-sm">
+                      {String(errors[name]?.message)}
+                    </p>
+                  )}
                   </div>
-                </div>
-              </div> */}
-               <div className="grid grid-cols-3 mt-4 items-center ">
+                )
+              )}
+             {selectedDate && <div className="grid grid-cols-3 mt-4 items-center ">
                 <label
                   htmlFor=""
                   className="text-gray-700 font-medium col-span-1"
@@ -594,15 +715,20 @@ const navigate=useNavigate()
                       return (
                         <button
                           key={slot}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault();
                             if (!isBooked) {
                               setSelectedSlot(slot);
                             }
                           }}
-                          className={`border rounded-2xl px-5 py-1 transition-all duration-200${ isBooked ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
-                : isSelected
-                  ? 'bg-red-400 text-white border-red-400'
-                  : 'bg-white text-black border-gray-300 hover:border-red-400'}`}disabled={isBooked}
+                          className={`border rounded-2xl px-5 py-1 transition-all duration-200${
+                            isBooked
+                              ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+                              : isSelected
+                                ? 'bg-red-400 text-white border-red-400'
+                                : 'bg-white text-black border-gray-300 hover:border-red-400'
+                          }`}
+                          disabled={isBooked}
                         >
                           {slot}
                         </button>
@@ -610,7 +736,7 @@ const navigate=useNavigate()
                     })}
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
         </div>

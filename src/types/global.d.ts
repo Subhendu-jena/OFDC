@@ -102,6 +102,7 @@ export interface signupData {
   email: string;
   password: string;
   phoneNo: string;
+  _id?: string;
 }
 export interface IUser {
   name: string;

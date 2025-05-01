@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { bookingForm, createOrder, getAllSlotByDate } from '../../config/controller';
+import { createBooking, createOrder, getAllSlotByDate } from '../../config/controller';
 import { useForm } from 'react-hook-form';
-import { loadRazorpay } from '../loadRazorpay';
 function CbfcScreening() {
   const userId = sessionStorage.getItem('userID');
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
@@ -43,7 +41,6 @@ function CbfcScreening() {
       console.error('Error fetching slots:', error);
     }
   };
-  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
     const formattedData = {
@@ -80,9 +77,9 @@ function CbfcScreening() {
     };
 
     try {
-      const response = await bookingForm({ token, data: formattedData });
+      const response = await createBooking({ token, data: formattedData });
       if (response.success) {
-        createOrder({id:response?.data?._id, token: token , data: {orderedBy: userId}});
+        createOrder({id:response?.data?._id ?? '', token: token , data: {orderedBy: userId}});
         console.log(response?.data?._id,"hgfhgfhgf");
         // navigate('/confirmation', { state: { bookingDetails: response } });
       } else {
@@ -101,8 +98,8 @@ function CbfcScreening() {
       type: 'text',
       required: true,
       pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
+        value: /^[A-Za-z0-9\s&.-]+$/,
+        message: 'Enter a valid name (letters, numbers, &, ., - allowed)',
       },
     },
     {
@@ -129,6 +126,7 @@ function CbfcScreening() {
       name: 'aspectRatio',
       label: 'Aspect Ratio',
       type: 'text',
+      required: false,
       pattern: {
         value: /^\d+(\.\d+)?:\d+(\.\d+)?$/,
         message: 'Enter a valid aspect ratio like 16:9 or 2.39:1',
@@ -181,7 +179,7 @@ function CbfcScreening() {
       name: 'altContactNo',
       label: 'Alternative Contact No.',
       type: 'number',
-      required: true,
+      required: false,
       pattern: {
         value: /^[6-9]\d{9}$/,
         message: 'Enter a valid 10-digit contact number',
@@ -201,6 +199,7 @@ function CbfcScreening() {
       name: 'GST',
       label: 'GSTIN (If any)',
       type: 'text',
+      required: false,
       pattern: {
         value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
         message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
@@ -375,7 +374,7 @@ function CbfcScreening() {
               {BookingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-3 items-center gap-4"
+                  className="grid grid-cols-1 items-center gap-4"
                 >
                   <label className="text-gray-700 font-medium col-span-1">
                     {label} :
@@ -418,7 +417,8 @@ function CbfcScreening() {
                         return (
                           <button
                             key={slot}
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.preventDefault();
                               if (!isBooked) {
                                 setSelectedSlot(slot);
                               }
@@ -427,7 +427,7 @@ function CbfcScreening() {
                               isBooked
                                 ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
                                 : isSelected
-                                  ? 'bg-red-400 text-red-600 border-red-400'
+                                  ? 'bg-red-600 text-red-600 border-red-600'
                                   : 'bg-white text-black border-gray-300 hover:border-red-400'
                             }`}
                             disabled={isBooked}

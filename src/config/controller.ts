@@ -38,7 +38,7 @@ export const contactUs = async ({
     data,
   });
 };
-export const bookingForm = async ({
+export const createBooking = async ({
   token,
   data,
 }: {
@@ -59,7 +59,7 @@ export const createOrder = async ({
 }: {
   data: any;
   token: string | null;
-  id:string
+  id:string 
 }): Promise<ApiResponse<signupData>> => {
   return apiCaller({
     uri: `/payment/create-order/${id}`,
