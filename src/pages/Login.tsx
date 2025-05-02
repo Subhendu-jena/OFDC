@@ -39,9 +39,9 @@ const Login: React.FC = ({onLogin}:any) => {
           sessionStorage.setItem('role', response?.user?.role);
           console.log('Token saved:', response?.token);
         }
+        navigate(paths.RoleBasedRedirect);
       });
         // console.log('Form submitted:', formData);
-    navigate(paths.userDashboard)
   };
 
   return (

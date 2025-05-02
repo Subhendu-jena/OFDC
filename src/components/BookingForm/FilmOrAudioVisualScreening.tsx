@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import {
   createBooking,
   createOrder,
@@ -7,21 +7,9 @@ import {
 import { loadRazorpay } from '../loadRazorpay';
 import { useForm } from 'react-hook-form';
 import Preview from './Preview';
+import Confirmation from './Confirmation';
 
 function FilmOrAudioVisualScreening() {
-  // const [formData, setFormData] = useState({
-  //   nameOfApplicant: '',
-  //   whatsappNo: '',
-  //   altContactNo: '',
-  //   email: '',
-  //   postalAddress: '',
-  //   billingName: '',
-  //   billingContactNo: '',
-  //   GSTIN: '',
-  //   billingEmail: '',
-  //   category: '',
-  //   billingPostalAddress: '',
-  // });
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const token = sessionStorage.getItem('token');
@@ -30,17 +18,14 @@ function FilmOrAudioVisualScreening() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [bookingData, setBookingData] = useState<any>(null);
-  const [createBookingResponse, setCreateBookingResponse] = useState<any>(null);
+  const [sendData, setSendData] = useState<any>(null);
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [receiptData, setReceiptData] = useState<any>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm();
-  // const handleChange = (e: any) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
   const handleCheckDateChange = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -51,7 +36,6 @@ function FilmOrAudioVisualScreening() {
         token: token,
         date: selectedDate,
       });
-
       if (response?.success && Array.isArray(response?.data)) {
         const booked = response?.data?.map(
           (booking: any) => booking?.bookingDetails?.timeSlot
@@ -62,21 +46,7 @@ function FilmOrAudioVisualScreening() {
       console.error('Error fetching slots:', error);
     }
   };
-  const onSubmit = async ( ) => {
-
-    
-    setBookingData({
-      formData: getValues(),
-      selectedDate,
-      selectedSlot,
-    });
-    setShowPreview(true);
-    
-  };
-  const handleEdit = () => {
-    setShowPreview(false);
-  };
-  const handleConfirm = async (data: any) =>  {
+  const onSubmit = async (data: any) => {
     const formattedData = {
       bookedBy: userId,
       bookingType: 'Film Or Audio-Visual Screening Booking',
@@ -100,41 +70,49 @@ function FilmOrAudioVisualScreening() {
         timeSlot: selectedSlot,
       },
     };
-    console.log(formattedData, 'data');
-
+    setSendData(formattedData);
+    setBookingData({
+      formData: data,
+      selectedDate,
+      selectedSlot,
+    });
+    setShowPreview(true);
+  };
+  const handleEdit = () => {
+    setShowPreview(false);
+  };
+  const handleConfirm = async () => {
+    // console.log('formatted data', sendData);
     try {
       const response = await createBooking({
         token: token,
-        data: formattedData,
+        data: sendData,
       });
 
       if (response.success) {
-        console.log(data, 'response');
-        setCreateBookingResponse(response);
-        // navigate('/preview', { state: { bookingDetails: response } });
-        // const createorderresponse = await createOrder({id:response?.data?._id ?? '', token: token , data: {orderedBy: userId}});
-        // if (createorderresponse.success)
-        //   {
-        //    loadRazorpay(createorderresponse);
-        //    console.log(createorderresponse,"rammm");
-
-        //  }
-        //  else {
-        //   console.error('redirection failed:', createorderresponse.message);
-        //   alert('redirection failed. Please try again.');
-        // }
-        console.log('Booking confirmed', bookingData);
-        const createorderresponse = await createOrder({id:createBookingResponse?.data?._id ?? '', token: token , data: {orderedBy: userId}});
-           if (createorderresponse.success)
-             {
-               console.log(createorderresponse,"rammm");
-              loadRazorpay(createorderresponse);
-   
-            }
-            else {
-             console.error('redirection failed:', createorderresponse.message);
-             alert('redirection failed. Please try again.');
-           }
+        if (response?.data) {
+          const createorderresponse = await createOrder({
+            id: response?.data?._id ?? '',
+            token: token,
+            data: { orderedBy: userId },
+          });
+          if (createorderresponse.success) {
+            const onSuccess = (verifiedData: any) => {
+              console.log('Final verified payment response:', verifiedData);
+              // navigate(paths.confirmation, {
+              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
+              // });
+              setShowPreview(false);
+              setShowReceipt(true);
+              setReceiptData({verifiedData, selectedDate, selectedSlot});
+            };
+            loadRazorpay(createorderresponse, onSuccess);
+            console.log(onSuccess, 'onSuccess');
+          } else {
+            console.error('redirection failed:', createorderresponse.message);
+            alert('redirection failed. Please try again.');
+          }
+        }
       } else {
         console.error('Submission failed:', response.message);
         alert('Submission failed. Please try again.');
@@ -142,19 +120,26 @@ function FilmOrAudioVisualScreening() {
     } catch (error) {
       console.error('Error submitting form:', error);
     }
-    // Handle confirmation logic (e.g., payment processing)
-   
-    // You might want to reset the form here if needed
   };
+
   if (showPreview && bookingData) {
     return (
-      <Preview 
+      <Preview
         formData={bookingData.formData}
         selectedDate={bookingData.selectedDate}
         selectedSlot={bookingData.selectedSlot}
         onEdit={handleEdit}
         onConfirm={handleConfirm}
         isEditMode={true}
+      />
+    );
+  }
+  if (showReceipt && receiptData) {
+    return (
+      <Confirmation
+      bookingDetails={receiptData.verifiedData}
+        selectedDate={receiptData.selectedDate}
+        selectedSlot={receiptData.selectedSlot}
       />
     );
   }
@@ -259,7 +244,7 @@ function FilmOrAudioVisualScreening() {
         Film Or Audio-Visual Screening Booking
       </h2>
 
-      <form className="space-y-6" onSubmit={handleSubmit(handleConfirm)}>
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-6 grid gap-2 grid-cols-1 xl:grid-cols-2">
           {/* Applicant Details */}
           <div className="p-5 bg-white rounded-lg shadow">
@@ -268,8 +253,8 @@ function FilmOrAudioVisualScreening() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {AppliCationDetails.map(
-                ({ name, label, type, required, pattern }) => (
-                  <div style={{ marginBottom: '1rem' }}>
+                ({ name, label, type, required, pattern }, index) => (
+                  <div style={{ marginBottom: '1rem' }} key={index}>
                     <label className="text-gray-700 font-medium col-span-1">
                       {label} :
                     </label>
@@ -323,8 +308,8 @@ function FilmOrAudioVisualScreening() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {BillingDetails.map(
-                ({ name, label, type, required, pattern }) => (
-                  <div style={{ marginBottom: '1rem' }}>
+                ({ name, label, type, required, pattern }, index) => (
+                  <div style={{ marginBottom: '1rem' }} key={index}>
                     <label className="text-gray-700 font-medium col-span-1">
                       {label} :
                     </label>
@@ -398,8 +383,8 @@ function FilmOrAudioVisualScreening() {
               Booking Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {BookingDetails.map(({ name, label, type }) => (
-                <div style={{ marginBottom: '1rem' }}>
+              {BookingDetails.map(({ name, label, type }, index) => (
+                <div style={{ marginBottom: '1rem' }} key={index}>
                   <label className="text-gray-700 font-medium col-span-1">
                     {label} :
                   </label>
@@ -470,7 +455,7 @@ function FilmOrAudioVisualScreening() {
 
         {/* Submit Button */}
         <button
-         onClick={()=>onSubmit()}
+          type="submit"
           className="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg text-lg font-semibold shadow-lg transition-all"
         >
           Submit Booking

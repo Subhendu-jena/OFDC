@@ -46,6 +46,7 @@ interface paths {
   locationDetails: string;
   filmEcoSystem: string;
   test: string;
+  RoleBasedRedirect: string;
 }
 
 export const paths: paths = {
@@ -96,4 +97,5 @@ export const paths: paths = {
   locationDetails: '/location-details',
   filmEcoSystem: '/film-eco-system',
   test: '/test',
+  RoleBasedRedirect: '/role-based-redirect',
 };

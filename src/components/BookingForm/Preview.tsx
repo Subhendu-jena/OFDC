@@ -373,7 +373,7 @@
 import { useState } from 'react';
 
 interface PreviewProps {
-  formData: {
+  formData?: {
     nameOfApplicant: string;
     whatsappNo: string;
     altContactNo?: string;
@@ -387,10 +387,10 @@ interface PreviewProps {
     billingPostalAddress: string;
   };
   // bookingResponse: any;
-  selectedDate: string | null;
-  selectedSlot: string | null;
+  selectedDate?: string | null;
+  selectedSlot?: string | null;
   onEdit: () => void;
-  onConfirm: (data: any) => Promise<void>;
+  onConfirm: () => Promise<void>;
   isEditMode?: boolean;
 }
 
@@ -409,9 +409,9 @@ const Preview = ({
   const handleCancelSubmit = () => {
     // Handle cancel submission with remark
     console.log('Cancellation remark:', remark);
-    onConfirm(remark); // Or handle differently for cancel case
+    onConfirm(); // Or handle differently for cancel case
   };
- 
+ console.log(formData,"formData at preview")
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -435,31 +435,31 @@ const Preview = ({
                 <div>
                   <p className="text-sm text-gray-500">Name of Applicant</p>
                   <p className="text-base font-medium">
-                    {formData.nameOfApplicant}
+                    {formData?.nameOfApplicant}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">WhatsApp Number</p>
                   <p className="text-base font-medium">
-                    {formData.whatsappNo}
+                    {formData?.whatsappNo}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Alternative Contact</p>
                   <p className="text-base font-medium">
-                    {formData.altContactNo || 'Not provided'}
+                    {formData?.altContactNo || 'Not provided'}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
                   <p className="text-base font-medium">
-                    {formData.email}
+                    {formData?.email}
                   </p>
                 </div>
                 <div className="col-span-2">
                   <p className="text-sm text-gray-500">Postal Address</p>
                   <p className="text-base font-medium whitespace-pre-line">
-                    {formData.postalAddress}
+                    {formData?.postalAddress}
                   </p>
                 </div>
               </div>
@@ -474,37 +474,37 @@ const Preview = ({
                 <div>
                   <p className="text-sm text-gray-500">Billing Name</p>
                   <p className="text-base font-medium">
-                    {formData.billingName}
+                    {formData?.billingName}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Contact Number</p>
                   <p className="text-base font-medium">
-                    {formData.billingContactNo}
+                    {formData?.billingContactNo}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">GSTIN</p>
                   <p className="text-base font-medium">
-                    {formData.GSTIN || 'Not provided'}
+                    {formData?.GSTIN || 'Not provided'}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
                   <p className="text-base font-medium">
-                    {formData.billingEmail}
+                    {formData?.billingEmail}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Category</p>
                   <p className="text-base font-medium">
-                    {formData.category}
+                    {formData?.category}
                   </p>
                 </div>
                 <div className="col-span-2">
                   <p className="text-sm text-gray-500">Billing Address</p>
                   <p className="text-base font-medium whitespace-pre-line">
-                    {formData.billingPostalAddress}
+                    {formData?.billingPostalAddress}
                   </p>
                 </div>
               </div>
@@ -559,7 +559,8 @@ const Preview = ({
                 {isEditMode ? 'Edit Details' : 'Cancel Booking'}
               </button>
               <button
-                onClick={()=>onConfirm(formData)}
+                onClick={()=>onConfirm()}
+             
                 className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
               >
                 {isEditMode ? 'Confirm & Pay' : 'Confirm Booking'}
@@ -588,6 +589,7 @@ const Preview = ({
                 </button>
                 <button
                   onClick={handleCancelSubmit}
+                  
                   className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
                 >
                   Submit Cancellation

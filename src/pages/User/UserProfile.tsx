@@ -205,7 +205,7 @@ const userProfile: React.FC = () => {
               sessionStorage.removeItem('token');
               sessionStorage.removeItem('userID');
               sessionStorage.removeItem('role');
-              window.location.reload();
+              // window.location.reload();
               navigate(paths.login, { replace: true });
             }}>
              Logout

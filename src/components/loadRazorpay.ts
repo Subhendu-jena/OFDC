@@ -24,7 +24,7 @@ declare global {
     };
   };
   
-export  const loadRazorpay = (orderData: any) => {
+export  const loadRazorpay = (orderData: any, onSuccess: (data: any) => void) => {
   const token = sessionStorage.getItem('token');
   // const navigate=useNavigate();
   console.log(orderData,"orderData");
@@ -34,13 +34,19 @@ export  const loadRazorpay = (orderData: any) => {
       currency: 'INR',
       order_id: orderData?.orderId, // order_id created in backend
       handler: (response) => {
-        console.log('Payment Success:', response);
         const data = {
           razorpayOrderId: response.razorpay_order_id,
           razorpayPaymentId: response.razorpay_payment_id,
           razorpaySignature: response.razorpay_signature,
         };
         verifyOrder({data :data,token:token})
+        .then((res:any) => {
+          console.log(res, "verifyOrder response");
+          onSuccess(res.payment); // ✅ Pass data to parent
+        })
+        .catch((err) => {
+          console.error(err, "verifyOrder error");
+        });
         // }if(response.razorpay_signature) {
         //  navigate('/preview', { state: { bookingDetails: response } });
         

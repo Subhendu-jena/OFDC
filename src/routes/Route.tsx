@@ -45,8 +45,6 @@ import AdminLayout from '../layout/admin/AdminLayout';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminBookingHistory from '../pages/admin/AdminBookingHistory';
 import AdminPaymentHistory from '../pages/admin/AdminPaymentHistory';
-import Confirmation from '../components/BookingForm/Confirmation';
-import Preview from '../components/BookingForm/Preview';
 import AdminCalender from '../pages/admin/AdminCalender';
 import TalentLayout from '../layout/talentLayout/TalentLayout';
 import TalentList from '../pages/talentList/TalentList';
@@ -57,27 +55,9 @@ import ScrollToTop from '../components/home/ScrollToTop';
 import PetroleumSalesChart from '../pages/test';
 import ProtectedRoute from './ProtectedRoute';
 import RoleBasedRedirect from './RoleBasedRedirect';
-// import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 
 const RoutePage: React.FC = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // useEffect(() => {
-  //   const storedLogin = localStorage.getItem("isLoggedIn");
-  //   if (storedLogin === "true") setIsLoggedIn(true);
-  // }, []);
-
-  // const handleLogin = () => {
-  //   localStorage.setItem("isLoggedIn", "true");
-  //   setIsLoggedIn(true);
-  //   console.log(localStorage.getItem("isLoggedIn"),"dfdd");
-  // };
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem("isLoggedIn");
-  //   setIsLoggedIn(false);
-  // };
   const role = sessionStorage.getItem('role');
-  // console.log(token, 'token');
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -85,54 +65,11 @@ const RoutePage: React.FC = () => {
         <Route path={paths.test} element={<PetroleumSalesChart />} />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
-        {/* {token ? (
-          <>
-            <Route element={<AdminLayout />}>
-              <Route path={paths.adminDashboard} element={<AdminDashboard />} />
-              <Route
-                path={paths.allBookings}
-                element={<AdminBookingHistory />}
-              />
-              <Route
-                path={paths.paymentDetails}
-                element={<AdminPaymentHistory />}
-              />
-              <Route path={paths.calender} element={<AdminCalender />} />
-            </Route>
+        <Route  element={<ProtectedRoute />}>
+        <Route path={paths.RoleBasedRedirect} element={<RoleBasedRedirect />} />
 
-            <Route element={<LoggedUserLayout />}>
-              <Route path={paths.userDashboard} element={<UserDashboard />} />
-              <Route
-                path={paths.bookingHistory}
-                element={<UserBookingHistory />}
-              />
-              <Route
-                path={paths.paymentHistory}
-                element={<UserPaymentHistory />}
-              />
-              <Route path={paths.newBooking} element={<BookingForm />} />
-              <Route path={paths.profile} element={<UserProfile />} />
-              <Route path={paths.preview} element={<Preview />} />
-              <Route path={paths.confirmation} element={<Confirmation />} />
-            </Route>
-          </>
-        ) : (
-          <>
-            <Route path={paths.register} element={<RegisterPage />} />
-            <Route path={paths.login} element={<Login />} />
-          </>
-        )} */}
-
-        {/* {isLoggedIn ? (
-          <Route path={paths.userDashboard} element={<UserDashboard 
-            // onLogout={handleLogout}
-            />} />
-      ) : (
-        )} */}
-        {/* <Route path="/dashboard" element={<RoleBasedRedirect />} /> */}
-        <Route element={<ProtectedRoute />}>
           {/* AdminLayout */}
-          {/* {role === 'USER' &&( */}
+          {role === 'ADMIN' ? (
             <Route element={<AdminLayout />}>
             <Route path={paths.adminDashboard} element={<AdminDashboard />} />
             <Route path={paths.allBookings} element={<AdminBookingHistory />} />
@@ -142,10 +79,7 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.calender} element={<AdminCalender />} />
           </Route>
-          {/* )} */}
-         
-          {/* LoggedUserLayout */}
-          {/* {role === 'USER' && ( */}
+          ):(
             <Route element={<LoggedUserLayout />}>
             <Route path={paths.userDashboard} element={<UserDashboard />} />
             <Route
@@ -158,10 +92,13 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.newBooking} element={<BookingForm />} />
             <Route path={paths.profile} element={<UserProfile />} />
-            <Route path={paths.preview} element={<Preview />} />
-            <Route path={paths.confirmation} element={<Confirmation />} />
+    
           </Route>
-        {/* )} */}
+          )}
+            
+         
+          {/* LoggedUserLayout */}
+           
         </Route>
         <Route element={<Layout />}>
           <Route path={paths.home} element={<Home />} />
