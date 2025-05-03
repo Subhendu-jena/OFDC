@@ -68,7 +68,7 @@ export const login = createAsyncThunk<
         id: loginResponse.user._id,
         phoneNo: loginResponse.user.phoneNo,
       },
-      token: loginResponse.token,
+      token: loginResponse.token ?? '',
     };
   } catch (error) {
     return rejectWithValue(

@@ -57,7 +57,6 @@ import ProtectedRoute from './ProtectedRoute';
 import RoleBasedRedirect from './RoleBasedRedirect';
 
 const RoutePage: React.FC = () => {
-  const role = sessionStorage.getItem('role');
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -69,7 +68,7 @@ const RoutePage: React.FC = () => {
         <Route path={paths.RoleBasedRedirect} element={<RoleBasedRedirect />} />
 
           {/* AdminLayout */}
-          {role === 'ADMIN' ? (
+          {/* {role === 'ADMIN' ? ( */}
             <Route element={<AdminLayout />}>
             <Route path={paths.adminDashboard} element={<AdminDashboard />} />
             <Route path={paths.allBookings} element={<AdminBookingHistory />} />
@@ -79,7 +78,7 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.calender} element={<AdminCalender />} />
           </Route>
-          ):(
+          {/* ):( */}
             <Route element={<LoggedUserLayout />}>
             <Route path={paths.userDashboard} element={<UserDashboard />} />
             <Route
@@ -94,7 +93,7 @@ const RoutePage: React.FC = () => {
             <Route path={paths.profile} element={<UserProfile />} />
     
           </Route>
-          )}
+          {/* )} */}
             
          
           {/* LoggedUserLayout */}

@@ -78,11 +78,27 @@ export interface ErrorResponse<T> {
   success: false;
   message: string;
   data?: T;
+  token?: string;
+  user: {
+    _id: string;
+    role: string;
+    phoneNo: string;
+    name: string;
+    email: string;
+  };
 }
 export interface SuccessResponse<T> {
   success: true;
   message: string;
   data: T;
+  token?: string;
+  user: {
+    _id: string;
+    role: string;
+    phoneNo: string;
+    name: string;
+    email: string;
+  };
 }
 export interface DeleteApiCallerProps {
   uri: string;
@@ -94,6 +110,9 @@ export interface signUpResponse {
     email: string;
     phoneNo: string;
     _id: string;
+    phoneNo: string;
+    name: string;
+    email: string;
   };
   token: string;
 }
@@ -113,11 +132,17 @@ export interface IUser {
 }
 
 export interface loginResponse {
+  name: string;
+  email: string;
+  phoneNo: string;
+  token?: string;
+  user: {
+    _id: string;
+    role: string;
+    phoneNo: string;
     name: string;
     email: string;
-    phoneNo: string;
-    _id: string;
-    token?: string;
+  };
 }
 export interface loginData {
   identifier: string;
@@ -136,4 +161,5 @@ export interface director {
 export interface contactUsData {
   name: string;
   email: string;
-  message: string;}
+  message: string;
+}
