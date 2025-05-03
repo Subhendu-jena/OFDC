@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { createBooking, getAllSlotByDate } from '../../config/controller';
+import { createBooking, createOrder, getAllSlotByDate } from '../../config/controller';
 import { useForm } from 'react-hook-form';
+import { filmTradeShow } from './fields';
+import { loadRazorpay } from '../loadRazorpay';
+import Confirmation from './Confirmation';
+import Preview from './Preview';
 
 export default function FlimTradeShow() {
   const [formData, setFormData] = useState<any>({
@@ -18,6 +22,11 @@ export default function FlimTradeShow() {
   const userId = sessionStorage.getItem('userID');
   const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [bookingData, setBookingData] = useState<any>(null);
+  const [sendData, setSendData] = useState<any>(null);
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [receiptData, setReceiptData] = useState<any>(null);
   const {
     register,
     handleSubmit,
@@ -107,239 +116,99 @@ export default function FlimTradeShow() {
         timeSlot: selectedSlot,
       },
     };
+    setSendData(formattedJsonData);
+    console.log(formattedJsonData, 'formattedData');
+    console.log(data, 'data');
+    setBookingData({
+      formData: formattedJsonData,
+      selectedDate,
+      selectedSlot,
+    });
+    setShowPreview(true);
+    // try {
+    //   const response = await createBooking({
+    //     token: token,
+    //     data: formattedJsonData,
+    //   });
+
+    //   if (response.success) {
+    //     // navigate('/confirmation', { state: { bookingDetails: response } });
+    //   } else {
+    //     console.error('Submission failed:', response.message);
+    //     alert('Submission failed. Please try again.');
+    //   }
+    // } catch (error) {
+    //   console.error('Error submitting form:', error);
+    //   // alert('An error occurred. Please try again.');
+    // }
+    // console.log('Form Submitted:', formData);
+  };
+
+  const handleEdit = () => {
+    setShowPreview(false);
+  };
+  const handleConfirm = async () => {
+    // console.log('formatted data', sendData);
     try {
       const response = await createBooking({
         token: token,
-        data: formattedJsonData,
+        data: sendData,
       });
 
       if (response.success) {
-        // navigate('/confirmation', { state: { bookingDetails: response } });
+        if (response?.data) {
+          const createorderresponse = await createOrder({
+            id: response?.data?._id ?? '',
+            token: token,
+            data: { orderedBy: userId },
+          });
+          if (createorderresponse.success) {
+            const onSuccess = (verifiedData: any) => {
+              console.log('Final verified payment response:', verifiedData);
+              // navigate(paths.confirmation, {
+              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
+              // });
+              setShowPreview(false);
+              setShowReceipt(true);
+              setReceiptData({verifiedData, selectedDate, selectedSlot});
+            };
+            loadRazorpay(createorderresponse, onSuccess);
+            console.log(onSuccess, 'onSuccess');
+          } else {
+            console.error('redirection failed:', createorderresponse.message);
+            alert('redirection failed. Please try again.');
+          }
+        }
       } else {
         console.error('Submission failed:', response.message);
         alert('Submission failed. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      // alert('An error occurred. Please try again.');
     }
-    console.log('Form Submitted:', formData);
   };
 
-  const AppliCationDetails = [
-    {
-      name: 'nameOfApplicant',
-      label: 'Name of the Applicant',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
-      },
-    },
-    {
-      name: 'whatsappNo',
-      label: 'Whatsapp No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit WhatsApp number',
-      },
-    },
-    {
-      name: 'altContactNo',
-      label: 'Alternative Contact No.',
-      type: 'number',
-      required: false,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit contact number',
-      },
-    },
-    {
-      name: 'email',
-      label: 'Email Id',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-  ];
-  const ScreeningDetails = [
-    {
-      name: 'nameOfFilm',
-      label: 'Name of the Film',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z0-9\s&.-]+$/,
-        message: 'Enter a valid name (letters, numbers, &, ., - allowed)',
-      },
-    },
-    {
-      name: 'languageOfFilm',
-      label: 'Language of the Film',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
-      },
-    },
-    {
-      name: 'durationOfFilm',
-      label: 'Duration of the Film ',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]:[0-2][0-9]$/,
-        message: 'Duration must be in HH:MM:SS:FF format',
-      },
-    },
-    {
-      name: 'aspectRatio',
-      label: 'Aspect Ratio',
-      type: 'text',
-      required: false,
-      pattern: {
-        value: /^\d+(\.\d+)?:\d+(\.\d+)?$/,
-        message: 'Enter a valid aspect ratio like 16:9 or 2.39:1',
-      },
-    },
-    {
-      name: 'directorName',
-      label: 'Name of the Director',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
-      },
-    },
-  ];
-  const ProductionDetails = [
-    {
-      name: 'producerName',
-      label: 'Name of the Producer',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Name should contain only letters and spaces',
-      },
-    },
-    {
-      name: 'productionHouseName',
-      label: 'Name of the Production House ',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z0-9\s&.-]+$/,
-        message: 'Enter a valid name (letters, numbers, &, ., - allowed)',
-      },
-    },
-    {
-      name: 'productionWhatsappNo',
-      label: 'Whatsapp No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit WhatsApp number',
-      },
-    },
-    {
-      name: 'Alternative Contact No.',
-      label: 'Alternative Contact No.',
-      type: 'number',
-      required: false,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit contact number',
-      },
-    },
-    {
-      name: 'productionEmail',
-      label: 'Email Id',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-    {
-      name: 'productionGST',
-      label: 'GSTIN (If any) ',
-      type: 'text',
-      required: false,
-      pattern: {
-        value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
-        message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
-      },
-    },
-  ];
-  const Requirements = [
-    { name: 'podiumWithMic', label: 'Podium with Mic' },
-    { name: 'cordlessMic', label: '2 Cordless Mic' },
-    { name: 'screeningFacilities', label: 'Screening Facilities' },
-  ];
-  const BillingDetails = [
-    {
-      name: 'billingName',
-      label: 'Billing Name',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
-      },
-    },
-    {
-      name: 'billingContactNo',
-      label: 'Contact No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit contact number',
-      },
-    },
-    {
-      name: 'billingGSTIN',
-      label: 'GSTIN (If Any)',
-      type: 'text',
-      required: false,
-      pattern: {
-        value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
-        message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
-      },
-    },
-    {
-      name: 'billingEmail',
-      label: 'Email Id',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-  ];
-
-  const BookingDetails = [
-    {
-      name: 'bookingDate',
-      label: 'Booking Date',
-      type: 'Date',
-      required: true,
-      pattern: /^\d{4}-\d{2}-\d{2}$/,
-      errorMessage: 'Please enter a valid date in YYYY-MM-DD format',
-    },
-  ];
+  if (showPreview && bookingData) {
+    return (
+      <Preview
+        formData={bookingData.formData}
+        selectedDate={bookingData.selectedDate}
+        selectedSlot={bookingData.selectedSlot}
+        onEdit={handleEdit}
+        onConfirm={handleConfirm}
+        isEditMode={true}
+      />
+    );
+  }
+  if (showReceipt && receiptData) {
+    return (
+      <Confirmation
+      bookingDetails={receiptData.verifiedData}
+        selectedDate={receiptData.selectedDate}
+        selectedSlot={receiptData.selectedSlot}
+      />
+    );
+  }
 
   return (
     <div className=" bg-gray-50  rounded-lg  text-sm">
@@ -354,7 +223,7 @@ export default function FlimTradeShow() {
               Applicant Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AppliCationDetails.map(
+              {filmTradeShow.AppliCationDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
@@ -409,7 +278,7 @@ export default function FlimTradeShow() {
               Requirements
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {Requirements.map(({ name, label }, index) => (
+              {filmTradeShow.Requirements.map(({ name, label }, index) => (
                 <div key={index} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
@@ -429,7 +298,7 @@ export default function FlimTradeShow() {
               Screening Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ScreeningDetails.map(
+              {filmTradeShow.ScreeningDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
@@ -510,7 +379,7 @@ export default function FlimTradeShow() {
               Production Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ProductionDetails.map(
+              {filmTradeShow.ProductionDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
@@ -565,7 +434,7 @@ export default function FlimTradeShow() {
               Billing Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {BillingDetails.map(
+              {filmTradeShow.BillingDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
@@ -671,7 +540,7 @@ export default function FlimTradeShow() {
               Booking Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {BookingDetails.map(
+              {filmTradeShow.BookingDetails.map(
                 ({ name, label, type }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">

@@ -8,6 +8,7 @@ import { loadRazorpay } from '../loadRazorpay';
 import { useForm } from 'react-hook-form';
 import Preview from './Preview';
 import Confirmation from './Confirmation';
+import { film } from './fields';
 
 function FilmOrAudioVisualScreening() {
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
@@ -71,8 +72,10 @@ function FilmOrAudioVisualScreening() {
       },
     };
     setSendData(formattedData);
+    console.log(formattedData, 'formattedData');
+    console.log(data, 'data');
     setBookingData({
-      formData: data,
+      formData: formattedData,
       selectedDate,
       selectedSlot,
     });
@@ -143,100 +146,7 @@ function FilmOrAudioVisualScreening() {
       />
     );
   }
-  const AppliCationDetails = [
-    {
-      name: 'nameOfApplicant',
-      label: 'Name of the Applicant',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Name should contain only letters and spaces',
-      },
-    },
-    {
-      name: 'whatsappNo',
-      label: 'Whatsapp No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit WhatsApp number',
-      },
-    },
-    {
-      name: 'altContactNo',
-      label: 'Alternative Contact No.',
-      type: 'number',
-      required: false,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit contact number',
-      },
-    },
-    {
-      name: 'email',
-      label: 'Email Id',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-  ];
-  const BillingDetails = [
-    {
-      name: 'billingName',
-      label: 'Billing Name',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Name should contain only letters and spaces',
-      },
-    },
-    {
-      name: 'billingContactNo',
-      label: 'Contact No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit Contact number',
-      },
-    },
-    {
-      name: 'GSTIN',
-      label: 'GSTIN (If Any)',
-      type: 'text',
-      required: false,
-      pattern: {
-        value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
-        message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
-      },
-    },
-    {
-      name: 'billingEmail',
-      label: 'Email Id',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-  ];
-  const BookingDetails = [
-    {
-      name: 'bookingDate',
-      label: 'Booking Date',
-      type: 'Date',
-      required: true,
-      pattern: /^\d{4}-\d{2}-\d{2}$/,
-      errorMessage: 'Please enter a valid date in YYYY-MM-DD format',
-    },
-  ];
+ 
 
   return (
     <div className=" bg-gray-50  rounded-lg  text-sm">
@@ -252,7 +162,7 @@ function FilmOrAudioVisualScreening() {
               Applicant Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AppliCationDetails.map(
+              {film.AppliCationDetails.map(
                 ({ name, label, type, required, pattern }, index) => (
                   <div style={{ marginBottom: '1rem' }} key={index}>
                     <label className="text-gray-700 font-medium col-span-1">
@@ -307,7 +217,7 @@ function FilmOrAudioVisualScreening() {
               Billing Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {BillingDetails.map(
+              {film.BillingDetails.map(
                 ({ name, label, type, required, pattern }, index) => (
                   <div style={{ marginBottom: '1rem' }} key={index}>
                     <label className="text-gray-700 font-medium col-span-1">
@@ -383,7 +293,7 @@ function FilmOrAudioVisualScreening() {
               Booking Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {BookingDetails.map(({ name, label, type }, index) => (
+              {film.BookingDetails.map(({ name, label, type }, index) => (
                 <div style={{ marginBottom: '1rem' }} key={index}>
                   <label className="text-gray-700 font-medium col-span-1">
                     {label} :

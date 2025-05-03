@@ -87,9 +87,33 @@ export const getAllSlotByDate = async ({
 }: {
   token: string | null;
   date: string;
-}): Promise<ApiResponse<signupData>> => {
+}): Promise<ApiResponse<any>> => {
   return apiCaller({
     uri: `/booking/get-all-slot-by-date/${date}`,
+    method: 'GET',
+    token,
+  });
+};
+export const getAllSlotOfUser = async ({
+  token,
+  userId,
+}: {
+  token: string | null;
+  userId: string;
+}): Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/booking/get-all-bookings-user/${userId}`,
+    method: 'GET',
+    token,
+  });
+};
+export const getAllSlotForAdmin = async ({
+  token,
+}: {
+  token: string | null;
+}): Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/booking/get-all-booked-data`,
     method: 'GET',
     token,
   });

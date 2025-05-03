@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { createBooking, createOrder, getAllSlotByDate } from '../../config/controller';
 import { useForm } from 'react-hook-form';
+import { cbfc } from './fields';
+import { loadRazorpay } from '../loadRazorpay';
+import Preview from './Preview';
+import Confirmation from './Confirmation';
 function CbfcScreening() {
   const userId = sessionStorage.getItem('userID');
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
@@ -8,6 +12,11 @@ function CbfcScreening() {
   const token = sessionStorage.getItem('token');
   const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [bookingData, setBookingData] = useState<any>(null);
+  const [sendData, setSendData] = useState<any>(null);
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [receiptData, setReceiptData] = useState<any>(null);
   const {
     register,
     handleSubmit,
@@ -75,148 +84,93 @@ function CbfcScreening() {
         poster: '11111',
       },
     };
-
+    setSendData(formattedData);
+    setBookingData({
+      formData: formattedData,
+      selectedDate,
+      selectedSlot,
+    });
+    setShowPreview(true);
+    // try {
+    //   const response = await createBooking({ token, data: formattedData });
+    //   if (response.success) {
+    //     createOrder({id:response?.data?._id ?? '', token: token , data: {orderedBy: userId}});
+    //     console.log(response?.data?._id,"hgfhgfhgf");
+    //     // navigate('/confirmation', { state: { bookingDetails: response } });
+    //   } else {
+    //     alert('Submission failed. Please try again.');
+    //   }
+    // } catch (error) {
+    //   console.error('Error:', error);
+    //   alert('An error occurred. Please try again.');
+    // }
+  };
+  const handleEdit = () => {
+    setShowPreview(false);
+  };
+  const handleConfirm = async () => {
+    // console.log('formatted data', sendData);
     try {
-      const response = await createBooking({ token, data: formattedData });
+      const response = await createBooking({
+        token: token,
+        data: sendData,
+      });
+
       if (response.success) {
-        createOrder({id:response?.data?._id ?? '', token: token , data: {orderedBy: userId}});
-        console.log(response?.data?._id,"hgfhgfhgf");
-        // navigate('/confirmation', { state: { bookingDetails: response } });
+        if (response?.data) {
+          const createorderresponse = await createOrder({
+            id: response?.data?._id ?? '',
+            token: token,
+            data: { orderedBy: userId },
+          });
+          if (createorderresponse.success) {
+            const onSuccess = (verifiedData: any) => {
+              console.log('Final verified payment response:', verifiedData);
+              // navigate(paths.confirmation, {
+              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
+              // });
+              setShowPreview(false);
+              setShowReceipt(true);
+              setReceiptData({verifiedData, selectedDate, selectedSlot});
+            };
+            loadRazorpay(createorderresponse, onSuccess);
+            console.log(onSuccess, 'onSuccess');
+          } else {
+            console.error('redirection failed:', createorderresponse.message);
+            alert('redirection failed. Please try again.');
+          }
+        }
       } else {
+        console.error('Submission failed:', response.message);
         alert('Submission failed. Please try again.');
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      console.error('Error submitting form:', error);
     }
   };
 
-  const ScreeningDetails = [
-    {
-      name: 'name',
-      label: 'Name of the Film',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z0-9\s&.-]+$/,
-        message: 'Enter a valid name (letters, numbers, &, ., - allowed)',
-      },
-    },
-    {
-      name: 'language',
-      label: 'Language of the Film',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
-      },
-    },
-    {
-      name: 'duration',
-      label: 'Duration of the Film',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]:[0-2][0-9]$/,
-        message: 'Duration must be in HH:MM:SS:FF format',
-      },
-    },
-    {
-      name: 'aspectRatio',
-      label: 'Aspect Ratio',
-      type: 'text',
-      required: false,
-      pattern: {
-        value: /^\d+(\.\d+)?:\d+(\.\d+)?$/,
-        message: 'Enter a valid aspect ratio like 16:9 or 2.39:1',
-      },
-    },
-    {
-      name: 'nameOfTheDirector',
-      label: 'Name of the Director',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
-      },
-    },
-  ];
-
-  const ProductionDetails = [
-    {
-      name: 'producerName',
-      label: 'Name of the Producer',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Name should contain only letters and spaces',
-      },
-    },
-    {
-      name: 'productionHouseName',
-      label: 'Name of the Production House',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z0-9\s&.-]+$/,
-        message: 'Enter a valid name (letters, numbers, &, ., - allowed)',
-      },
-    },
-    {
-      name: 'whatsappNo',
-      label: 'Whatsapp No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit WhatsApp number',
-      },
-    },
-    {
-      name: 'altContactNo',
-      label: 'Alternative Contact No.',
-      type: 'number',
-      required: false,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit contact number',
-      },
-    },
-    {
-      name: 'email',
-      label: 'Email Id *',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-    {
-      name: 'GST',
-      label: 'GSTIN (If any)',
-      type: 'text',
-      required: false,
-      pattern: {
-        value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
-        message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
-      },
-    },
-  ];
-
-  const BookingDetails = [
-    {
-      name: 'bookingDate',
-      label: 'Booking Date *',
-      type: 'Date',
-      required: true,
-      pattern: /^\d{4}-\d{2}-\d{2}$/, 
-      errorMessage: 'Please enter a valid date in YYYY-MM-DD format',
-    },
-  ];
+  if (showPreview && bookingData) {
+    return (
+      <Preview
+        formData={bookingData.formData}
+        selectedDate={bookingData.selectedDate}
+        selectedSlot={bookingData.selectedSlot}
+        onEdit={handleEdit}
+        onConfirm={handleConfirm}
+        isEditMode={true}
+      />
+    );
+  }
+  if (showReceipt && receiptData) {
+    return (
+      <Confirmation
+      bookingDetails={receiptData.verifiedData}
+        selectedDate={receiptData.selectedDate}
+        selectedSlot={receiptData.selectedSlot}
+      />
+    );
+  }
+  
 
   return (
     <div className=" bg-gray-50   text-sm rounded-lg">
@@ -231,7 +185,7 @@ function CbfcScreening() {
               Film Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ScreeningDetails.map(
+              {cbfc.ScreeningDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label>
@@ -317,7 +271,7 @@ function CbfcScreening() {
               Production Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ProductionDetails.map(
+              {cbfc.ProductionDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label>{label}</label>
@@ -371,7 +325,7 @@ function CbfcScreening() {
               Booking Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {BookingDetails.map(({ name, label, type }, index) => (
+              {cbfc.BookingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-1 items-center gap-4"

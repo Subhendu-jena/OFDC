@@ -5,7 +5,7 @@ import {  useNavigate } from 'react-router-dom';
 import { LoginData } from '../types/global';
 import { loginController } from '../config/controller';
 
-const Login: React.FC = ({onLogin}:any) => {
+const Login: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<LoginData>({
     email: '',
@@ -142,7 +142,7 @@ const Login: React.FC = ({onLogin}:any) => {
               </button>
               
               {/* Register Link */}
-              <div className="text-center mt-4" onClick={() => onLogin()}>
+              <div className="text-center mt-4 cursor-pointer text-red-500" onClick={() => navigate(paths.register)}>
                 <span className="text-sm text-gray-600">Don't have an account? </span>
                 {/* <Link to={paths.register} className="text-sm font-medium text-red-500 hover:text-red-400"> */}
                   Sign up now

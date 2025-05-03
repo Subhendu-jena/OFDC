@@ -1,6 +1,14 @@
 import { useState } from 'react';
-import { createBooking, getAllSlotByDate } from '../../config/controller';
+import {
+  createBooking,
+  createOrder,
+  getAllSlotByDate,
+} from '../../config/controller';
 import { useForm } from 'react-hook-form';
+import { workShop } from './fields';
+import { loadRazorpay } from '../loadRazorpay';
+import Preview from './Preview';
+import Confirmation from './Confirmation';
 
 function WorkShopOrSeminar() {
   const [formData, setFormData] = useState<any>({
@@ -26,11 +34,16 @@ function WorkShopOrSeminar() {
   const userId = sessionStorage.getItem('userID');
   const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [bookingData, setBookingData] = useState<any>(null);
+  const [sendData, setSendData] = useState<any>(null);
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [receiptData, setReceiptData] = useState<any>(null);
   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm();
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const handleChange = (e: any) => {
     const { name, value, type, checked, files } = e.target;
     if (type === 'checkbox') {
@@ -92,126 +105,100 @@ function WorkShopOrSeminar() {
         timeSlot: selectedSlot,
       },
     };
+    setSendData(formattedData);
+    console.log(formattedData, 'formattedData');
+    console.log(data, 'data');
+    setBookingData({
+      formData: formattedData,
+      selectedDate,
+      selectedSlot,
+    });
+    setShowPreview(true);
+    // try {
+    //   const response = await createBooking({
+    //     token: token,
+    //     data: formattedData,
+    //   });
+
+    //   if (response.success) {
+    //     // navigate('/confirmation', { state: { bookingDetails: response } });
+    //   } else {
+    //     console.error('Submission failed:', response.message);
+    //     alert('Submission failed. Please try again.');
+    //   }
+    // } catch (error) {
+    //   console.error('Error submitting form:', error);
+    //   // alert('An error occurred. Please try again.');
+    // }
+    // console.log('Form Submitted:', formData);
+    // Handle form submission (e.g., send data to backend)
+  };
+
+  const handleEdit = () => {
+    setShowPreview(false);
+  };
+  const handleConfirm = async () => {
+    // console.log('formatted data', sendData);
     try {
       const response = await createBooking({
         token: token,
-        data: formattedData,
+        data: sendData,
       });
 
       if (response.success) {
-        // navigate('/confirmation', { state: { bookingDetails: response } });
+        if (response?.data) {
+          const createorderresponse = await createOrder({
+            id: response?.data?._id ?? '',
+            token: token,
+            data: { orderedBy: userId },
+          });
+          if (createorderresponse.success) {
+            const onSuccess = (verifiedData: any) => {
+              console.log('Final verified payment response:', verifiedData);
+              // navigate(paths.confirmation, {
+              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
+              // });
+              setShowPreview(false);
+              setShowReceipt(true);
+              setReceiptData({ verifiedData, selectedDate, selectedSlot });
+            };
+            loadRazorpay(createorderresponse, onSuccess);
+            console.log(onSuccess, 'onSuccess');
+          } else {
+            console.error('redirection failed:', createorderresponse.message);
+            alert('redirection failed. Please try again.');
+          }
+        }
       } else {
         console.error('Submission failed:', response.message);
         alert('Submission failed. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      // alert('An error occurred. Please try again.');
     }
-    console.log('Form Submitted:', formData);
-    // Handle form submission (e.g., send data to backend)
   };
 
-  const AppliCationDetails = [
-    {
-      name: 'nameOfApplicant',
-      label: 'Name of the Applicant',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Name should contain only letters and spaces',
-      },
-    },
-    {
-      name: 'whatsappNo',
-      label: 'Whatsapp No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit WhatsApp number',
-      },
-    },
-    {
-      name: 'altContactNo',
-      label: 'Alternative Contact No.',
-      type: 'number',
-      required: false,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit contact number',
-      },
-    },
-    {
-      name: 'email',
-      label: 'Email Id',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-  ];
-
-  const BillingDetails = [
-    {
-      name: 'billingName',
-      label: 'Billing Name',
-      type: 'text',
-      required: true,
-      pattern: {
-        value: /^[A-Za-z\s]+$/,
-        message: 'Only alphabets are allowed',
-      },
-    },
-    {
-      name: 'billingContactNo',
-      label: 'Contact No.',
-      type: 'number',
-      required: true,
-      pattern: {
-        value: /^[6-9]\d{9}$/,
-        message: 'Enter a valid 10-digit Contact number',
-      },
-    },
-    {
-      name: 'GSTIN',
-      label: 'GSTIN (If Any)',
-      type: 'text',
-      required: false,
-      pattern: {
-        value: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/,
-        message: 'Enter a valid GSTIN (e.g. 22AAAAA0000A1Z5)',
-      },
-    },
-    {
-      name: 'billingEmail',
-      label: 'Email Id',
-      type: 'email',
-      required: true,
-      pattern: {
-        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: 'Enter a valid email address',
-      },
-    },
-  ];
-
-  const BookingDetails = [
-    {
-      name: 'bookingDate',
-      label: 'Booking Date',
-      type: 'Date',
-    },
-  ];
-
-  const Requirements = [
-    { name: 'podiumWithMic', label: 'Podium with Mic' },
-    { name: 'cordlessMic', label: '2 Cordless Mic' },
-    { name: 'screeningFacilities', label: 'Screening Facilities' },
-  ];
-
+  if (showPreview && bookingData) {
+    return (
+      <Preview
+        formData={bookingData.formData}
+        selectedDate={bookingData.selectedDate}
+        selectedSlot={bookingData.selectedSlot}
+        onEdit={handleEdit}
+        onConfirm={handleConfirm}
+        isEditMode={true}
+      />
+    );
+  }
+  if (showReceipt && receiptData) {
+    return (
+      <Confirmation
+        bookingDetails={receiptData.verifiedData}
+        selectedDate={receiptData.selectedDate}
+        selectedSlot={receiptData.selectedSlot}
+      />
+    );
+  }
   return (
     <div className=" bg-gray-50  rounded-lg  text-sm">
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
@@ -225,23 +212,23 @@ function WorkShopOrSeminar() {
               Applicant Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AppliCationDetails.map(({ name, label, type,required,pattern }) => (
-                                  <div key={name} style={{ marginBottom: '1rem' }}>
-
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <br />
-                  <input
-                    type={type}
-                    placeholder={label}
-                    {...register(name, {
-                      required: required && `${label} is required`,
-                      pattern: pattern,
-                    })}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                  />
-                  {errors[name] && (
+              {workShop.AppliCationDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label className="text-gray-700 font-medium col-span-1">
+                      {label} :
+                    </label>
+                    <br />
+                    <input
+                      type={type}
+                      placeholder={label}
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                    />
+                    {errors[name] && (
                       <p style={{ color: 'red' }}>
                         {String(errors[name]?.message)}
                       </p>
@@ -251,8 +238,9 @@ function WorkShopOrSeminar() {
                         {String(errors.pattern?.message)}
                       </p>
                     )}
-                </div>
-              ))}
+                  </div>
+                )
+              )}
             </div>
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
@@ -265,7 +253,7 @@ function WorkShopOrSeminar() {
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
               ></textarea>
-               {typeof errors.postalAddress?.message === 'string' && (
+              {typeof errors.postalAddress?.message === 'string' && (
                 <p className="text-red-500 text-sm">
                   {errors.postalAddress.message}
                 </p>
@@ -278,7 +266,7 @@ function WorkShopOrSeminar() {
               Requirements
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {Requirements.map(({ name, label }, index) => (
+              {workShop.Requirements.map(({ name, label }, index) => (
                 <div key={index} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
@@ -297,22 +285,22 @@ function WorkShopOrSeminar() {
               Billing Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {BillingDetails.map(({ name, label, type,required,pattern }) => (
-                                 <div key={name} style={{ marginBottom: '1rem' }}>
-
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={type}
-                    placeholder={label}
-                    {...register(name, {
-                      required: required && `${label} is required`,
-                      pattern: pattern,
-                    })}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                  />
-                   {errors[name] && (
+              {workShop.BillingDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label className="text-gray-700 font-medium col-span-1">
+                      {label} :
+                    </label>
+                    <input
+                      type={type}
+                      placeholder={label}
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                    />
+                    {errors[name] && (
                       <p style={{ color: 'red' }}>
                         {String(errors[name]?.message)}
                       </p>
@@ -322,8 +310,9 @@ function WorkShopOrSeminar() {
                         {String(errors.pattern?.message)}
                       </p>
                     )}
-                </div>
-              ))}
+                  </div>
+                )
+              )}
             </div>
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
@@ -341,10 +330,10 @@ function WorkShopOrSeminar() {
                 <option value="GOVT">GOVT</option>
               </select>
               {typeof errors.category?.message === 'string' && (
-                  <p className="text-red-500 text-sm">
-                    {errors.category.message}
-                  </p>
-                )}
+                <p className="text-red-500 text-sm">
+                  {errors.category.message}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
@@ -358,7 +347,7 @@ function WorkShopOrSeminar() {
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
               ></textarea>
-               {typeof errors.billingPostalAddress?.message === 'string' && (
+              {typeof errors.billingPostalAddress?.message === 'string' && (
                 <p className="text-red-500 text-sm">
                   {errors.billingPostalAddress.message}
                 </p>
@@ -371,7 +360,7 @@ function WorkShopOrSeminar() {
               Booking Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {BookingDetails.map(({ name, label, type }, index) => (
+              {workShop.BookingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-1 items-center gap-4"
@@ -393,51 +382,53 @@ function WorkShopOrSeminar() {
                     })}
                     className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                   />
-                   {errors[name] && (
+                  {errors[name] && (
                     <p className="text-red-500 text-sm">
                       {String(errors[name]?.message)}
                     </p>
                   )}
                 </div>
               ))}
-             {selectedDate && <div className="grid grid-cols-3 mt-4 items-center ">
-                <label
-                  htmlFor=""
-                  className="text-gray-700 font-medium col-span-1"
-                >
-                  Available Slots :
-                </label>
-                <div className="col-span-2">
-                  <div className="flex justify-around">
-                    {allSlots.map((slot) => {
-                      const isBooked = bookedSlots.includes(slot);
-                      const isSelected = selectedSlot === slot;
+              {selectedDate && (
+                <div className="grid grid-cols-3 mt-4 items-center ">
+                  <label
+                    htmlFor=""
+                    className="text-gray-700 font-medium col-span-1"
+                  >
+                    Available Slots :
+                  </label>
+                  <div className="col-span-2">
+                    <div className="flex justify-around">
+                      {allSlots.map((slot) => {
+                        const isBooked = bookedSlots.includes(slot);
+                        const isSelected = selectedSlot === slot;
 
-                      return (
-                        <button
-                          key={slot}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (!isBooked) {
-                              setSelectedSlot(slot);
-                            }
-                          }}
-                          className={`border rounded-2xl px-5 py-1 transition-all duration-200${
-                            isBooked
-                              ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
-                              : isSelected
-                                ? 'bg-red-600 text-red-600 border-red-600'
-                                : 'bg-white text-black border-gray-300 hover:border-red-400'
-                          }`}
-                          disabled={isBooked}
-                        >
-                          {slot}
-                        </button>
-                      );
-                    })}
+                        return (
+                          <button
+                            key={slot}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (!isBooked) {
+                                setSelectedSlot(slot);
+                              }
+                            }}
+                            className={`border rounded-2xl px-5 py-1 transition-all duration-200${
+                              isBooked
+                                ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+                                : isSelected
+                                  ? 'bg-red-600 text-red-600 border-red-600'
+                                  : 'bg-white text-black border-gray-300 hover:border-red-400'
+                            }`}
+                            disabled={isBooked}
+                          >
+                            {slot}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-              </div>}
+              )}
             </div>
           </div>
         </div>

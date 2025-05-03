@@ -8,7 +8,7 @@ import {
   ChevronDown,
   Menu,
   X,
-  Users,
+  // Users,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { paths } from '../routes/Path';
@@ -17,9 +17,9 @@ import { MenuItem } from '../types/global';
 import { useFontSize } from './home/FontSizeContext';
 
 const TopHeader = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-  console.log(setIsAdmin, setisLoggedIn);
+  // const [isAdmin, setIsAdmin] = useState(false);
+  // const [isLoggedIn, setisLoggedIn] = useState(false);
+  // console.log(setIsAdmin, setisLoggedIn);
   const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
@@ -76,18 +76,17 @@ const TopHeader = () => {
             <Mail size={16} />
             <span>Contact Us</span>
           </Link>
-          <div
+          {/* <div
             onClick={() => {
               sessionStorage.removeItem('token');
               sessionStorage.removeItem('userID');
               sessionStorage.removeItem('role');
-              window.location.reload();
             }}
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
           >
             <Mail size={16} />
             <span>Logout</span>
-          </div>
+          </div> */}
           <span>/</span>
           <Link
             to="/register"
@@ -96,7 +95,15 @@ const TopHeader = () => {
             <UserPlus size={16} />
             <span>Register</span>
           </Link>
-          {!isAdmin ? (
+          <span>/</span>
+          <Link
+            to="/login"
+            className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+          >
+            <User size={16} />
+            <span>Login</span>
+          </Link>
+          {/* {!isAdmin ? (
             !isLoggedIn ? (
               <>
                 <span>/</span>
@@ -142,7 +149,7 @@ const TopHeader = () => {
                 <span>Dept. Login</span>
               </Link>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>
