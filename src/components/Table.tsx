@@ -24,7 +24,7 @@ const TableComponent = ({
   const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
   const navigate = useNavigate();
   const { fontSize } = useFontSize();
-
+  const [modalImage, setModalImage] = useState<string | null>(null);
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredData(data);
@@ -39,6 +39,7 @@ const TableComponent = ({
     }
     setCurrentPage(1);
   }, [searchTerm, data]);
+  console.log(modalImage, 'modalImage');
   return (
     <div className=" overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
@@ -76,7 +77,7 @@ const TableComponent = ({
           {currentData.length > 0 ? (
             currentData.map((official: any, index: number) => (
               <tr key={official.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap   text-gray-900" >
+                <td className="px-6 py-4 whitespace-nowrap   text-gray-900">
                   {index + 1}
                 </td>
                 <td className="px-6 py-4">
@@ -91,24 +92,29 @@ const TableComponent = ({
                       <div className="relative group inline-block">
                         <img
                           src={
-                            official?.imgUrl?.url
-                              ? STRAPI_API_BASE_URL + official?.imgUrl?.url
+                            official?.image?.url
+                              ? STRAPI_API_BASE_URL + official?.image?.url
                               : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                           }
                           alt={official.name}
                           className="h-12 w-12 rounded-full object-cover cursor-pointer"
+                          onClick={() =>
+                            setModalImage( STRAPI_API_BASE_URL + official?.image?.url)
+                          }
                         />
-                        <div className="absolute z-1000 hidden group-hover:block left-14 top-0">
-                          <img
-                            src={
-                              official?.imgUrl?.url
-                                ? STRAPI_API_BASE_URL + official?.imgUrl?.url
-                                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                            }
-                            alt={official.name}
-                            className="w-44 h-auto rounded shadow-lg border border-gray-300 bg-white"
-                          />
-                        </div>
+                        {modalImage && (
+                          <div
+                            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                            onClick={() => setModalImage(null)} // click outside closes
+                          >
+                            <img
+                              src={modalImage}
+                              alt="Enlarged"
+                              className="max-w-full max-h-[90%] rounded shadow-lg"
+                              onClick={(e) => e.stopPropagation()} // prevent closing when clicking the image
+                            />
+                          </div>
+                        )}
                       </div>
                     )}
 

@@ -13,11 +13,9 @@ const Preview = ({
 
   const handleCancelSubmit = () => {
     // Handle cancel submission with remark
-    console.log('Cancellation remark:', remark);
     onConfirm(); // Or handle differently for cancel case
   };
   
-  console.log(formData, 'formData at preview');
   return (
     <div className="min-h-screen  py-8 px-2">
       <div className="max-w-7xl mx-auto">

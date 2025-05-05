@@ -102,15 +102,12 @@ function FilmOrAudioVisualScreening() {
           if (createorderresponse.success) {
             const onSuccess = (verifiedData: any) => {
               console.log('Final verified payment response:', verifiedData);
-              // navigate(paths.confirmation, {
-              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
-              // });
               setShowPreview(false);
               setShowReceipt(true);
               setReceiptData({verifiedData, selectedDate, selectedSlot});
             };
+            console.log(createorderresponse, 'loadRazorpay response');
             loadRazorpay(createorderresponse, onSuccess);
-            console.log(onSuccess, 'onSuccess');
           } else {
             console.error('redirection failed:', createorderresponse.message);
             alert('redirection failed. Please try again.');

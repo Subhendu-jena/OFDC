@@ -4,6 +4,7 @@ import { paths } from '../routes/Path';
 import {  useNavigate } from 'react-router-dom';
 import { LoginData } from '../types/global';
 import { loginController } from '../config/controller';
+import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
   // State for form data
@@ -32,14 +33,16 @@ const Login: React.FC = () => {
   
     loginController({ data: payload })
       .then((response) => {
-        console.log(response, 'response');
+        toast.success('Login successful');
         if (response?.token) {
           sessionStorage.setItem('token', response?.token);
           sessionStorage.setItem('userID', response?.user?._id);
           sessionStorage.setItem('role', response?.user?.role);
-          console.log('Token saved:', response?.token);
         }
         navigate(paths.RoleBasedRedirect);
+      })
+      .catch(() => {
+        toast.error('Login failed. Please check your credentials.');
       });
         // console.log('Form submitted:', formData);
   };

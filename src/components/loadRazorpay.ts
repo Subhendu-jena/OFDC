@@ -26,8 +26,7 @@ declare global {
   
 export  const loadRazorpay = (orderData: any, onSuccess: (data: any) => void) => {
   const token = sessionStorage.getItem('token');
-  // const navigate=useNavigate();
-  console.log(orderData,"orderData");
+  console.log(orderData.orderId,"orderData");
     const options: RazorpayOptions = {
       key:import.meta.env.VITE_RAZORPAY_KEY, // from Razorpay Dashboardzz
       amount: orderData?.amount, // amount in paise
