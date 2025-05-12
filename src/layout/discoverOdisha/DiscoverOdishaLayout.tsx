@@ -4,6 +4,7 @@ import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import { useEffect } from 'react';
 import { paths } from '../../routes/Path';
+import bg from '../../../public/Odisha Climate.jpeg';
 const DiscoverOdishaLayout = () => {
   // const [searchParams] = useSearchParams();
   const title = window.location.pathname;
@@ -108,6 +109,7 @@ const DiscoverOdishaLayout = () => {
           tag={currentSection.tag}
           vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
           link="https://odishatourism.gov.in/content/tourism/en.html#exploreOdisha "
+          img={bg}
         />
       ) : (
         <p>No section found for "{title}"</p>
