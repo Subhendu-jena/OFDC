@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Mail, Phone, Star, User, ScanEye } from 'lucide-react';
 import { TableProps } from '../types/global';
-import { paths } from '../routes/Path';
-import { useNavigate } from 'react-router-dom';
 import { STRAPI_API_BASE_URL } from '../config/httpClient';
 import { ChevronRight } from 'lucide-react';
 import { ChevronLeft } from 'lucide-react';
 import { useFontSize } from './home/FontSizeContext';
+import Preview from './BookingForm/Preview';
+import { adminApprove, adminReject, refund, userCancel } from '../config/controller';
 
 const TableComponent = ({
   Heading,
@@ -22,9 +22,11 @@ const TableComponent = ({
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
-  const navigate = useNavigate();
   const { fontSize } = useFontSize();
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewData, setPreviewData] = useState<any>(null);
+  const role = sessionStorage.getItem('role');
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredData(data);
@@ -39,6 +41,57 @@ const TableComponent = ({
     }
     setCurrentPage(1);
   }, [searchTerm, data]);
+  const handleConfirm = () => {
+    setShowPreview(false);
+    adminApprove({
+      token: sessionStorage.getItem('token'),
+      data: previewData,
+      id: previewData?._id,
+    });
+  };
+  const handlereject = async () => {
+    setShowPreview(false);
+    try {
+      const response = await adminReject({
+        token: sessionStorage.getItem('token'),
+        id: previewData?._id,
+      });
+      if (response.success) {
+       const response = await userCancel({
+          token: sessionStorage.getItem('token'),
+          id: previewData?._id,
+        });
+        if (response.success) {
+          refund({
+            token: sessionStorage.getItem('token'),
+            id: previewData?._id,
+          });
+        }
+      }
+    } catch (err) {}
+  };
+
+  if (showPreview && previewData) {
+    return (
+      <Preview
+        formData={previewData}
+        onConfirm={() => {
+          // handle confirm
+          // setShowPreview(false);
+          // setPreviewData(null);
+          handleConfirm();
+        }}
+        onEdit={() => {
+          // handle edit
+          // setShowPreview(false);
+          // setPreviewData(null);
+          handlereject();
+        }}
+        isEditMode={false}
+      />
+    );
+  }
+  console.log(data, 'data on table');
   return (
     <div className=" overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
@@ -98,7 +151,9 @@ const TableComponent = ({
                           alt={official.name}
                           className="h-12 w-12 rounded-full object-cover cursor-pointer"
                           onClick={() =>
-                            setModalImage( STRAPI_API_BASE_URL + official?.image?.url)
+                            setModalImage(
+                              STRAPI_API_BASE_URL + official?.image?.url
+                            )
                           }
                         />
                         {modalImage && (
@@ -167,14 +222,33 @@ const TableComponent = ({
                   <td className="px-6 py-4   text-gray-900">
                     <div
                       className={`px-2 py-1   rounded-full w-max inline-block ${
-                        official.status === 'Completed'
+                        official.status === 'CONFIRMED'
                           ? 'bg-green-100 text-green-800'
-                          : official.status === 'Pending'
+                          : official.status === 'PENDING'
                             ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-gray-100 text-gray-800'
+                            : official.status === 'CANCELLED'
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-gray-100 text-gray-800'
                       }`}
                     >
                       {official.status}
+                    </div>
+                  </td>
+                )}
+                {official?.approval && (
+                  <td className="px-6 py-4   text-gray-900">
+                    <div
+                      className={`px-2 py-1   rounded-full w-max inline-block ${
+                        official.approval === 'APPROVED'
+                          ? 'bg-green-100 text-green-800'
+                          : official.approval === 'PENDING'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : official.approval === 'REJECTED'
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-gray-100 text-gray-800'
+                      }`}
+                    >
+                      {official.approval}
                     </div>
                   </td>
                 )}
@@ -194,16 +268,20 @@ const TableComponent = ({
                   </td>
                 )}
 
-                {official.view && (
-                  <td className="px-6 py-4   text-gray-900">
-                    <button
-                      className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
-                      onClick={() => navigate(paths.preview)}
-                    >
-                      <ScanEye />
-                    </button>
-                  </td>
-                )}
+                {/* {official.view && ( */}
+             {role=== 'ADMIN' &&   <td className="px-6 py-4   text-gray-900">
+                  <button
+                    className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
+                    onClick={() => {
+                      setShowPreview(true);
+                      setPreviewData(official);
+                    }}
+                  >
+                    <ScanEye />
+                  </button>
+                </td>}
+
+                {/* )} */}
                 {(official.department || official.from) && (
                   <td
                     className="px-6 py-4"

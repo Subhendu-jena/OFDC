@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableComponent from '../../components/Table'
-import { getAllSlotOfUser } from '../../config/controller';
+import { getAllBookingsOfUser } from '../../config/controller';
 
 const UserBookingHistory:React.FC = () => {
   const token = sessionStorage.getItem('token')
@@ -22,7 +22,7 @@ const UserBookingHistory:React.FC = () => {
   //   { slNo: 4, bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , screeningDate: '2023-10-01', status: 'Pending', view: 'View Details' },
   // ]
   useEffect(() => {
-    getAllSlotOfUser({ token: token,userId: userId || '' })
+    getAllBookingsOfUser({ token: token,userId: userId || '' })
     .then((res) => {
       setData(res?.data)
       console.log(res?.data, 'res?.data?.data')
@@ -31,7 +31,7 @@ const UserBookingHistory:React.FC = () => {
   
   return (
     <div className='w-full min-h-screen bg-white px-auto py-auto'>
-            <TableComponent columns={columns} data={data} Heading='User Booking History' search={true} />
+            <TableComponent columns={columns} data={data} Heading='User Booking History' search={true}  />
     </div>
   )
 }

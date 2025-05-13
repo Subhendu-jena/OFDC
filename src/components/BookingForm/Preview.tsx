@@ -1,7 +1,7 @@
+import { CircleChevronLeft } from 'lucide-react';
 import { useState } from 'react';
 const Preview = ({
   formData,
-  // bookingResponse,
   selectedDate,
   selectedSlot,
   onEdit,
@@ -12,14 +12,14 @@ const Preview = ({
   const [remark, setRemark] = useState('');
 
   const handleCancelSubmit = () => {
-    // Handle cancel submission with remark
-    onConfirm(); // Or handle differently for cancel case
+    onEdit(); 
   };
   
   return (
     <div className="min-h-screen  py-8 px-2">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div  onClick={() => (onEdit())}><CircleChevronLeft  /></div>
           <div className="bg-red-600 px-6 py-4">
             <h2 className="text-xl font-semibold text-white">
               Booking Confirmation Preview
