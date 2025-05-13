@@ -39,7 +39,6 @@ const TableComponent = ({
     }
     setCurrentPage(1);
   }, [searchTerm, data]);
-  console.log(modalImage, 'modalImage');
   return (
     <div className=" overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">

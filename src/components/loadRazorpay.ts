@@ -25,8 +25,15 @@ declare global {
   };
   
 export  const loadRazorpay = (orderData: any, onSuccess: (data: any) => void) => {
-  const token = sessionStorage.getItem('token');
-  console.log(orderData.orderId,"orderData");
+  const sessionData = {
+    token: sessionStorage.getItem('token'),
+    userID: sessionStorage.getItem('userID'),
+    role: sessionStorage.getItem('role'),
+    name: sessionStorage.getItem('name'),
+    email: sessionStorage.getItem('email'),
+    phoneNo: sessionStorage.getItem('phoneNo'),
+  };
+  console.log(orderData,"orderData");
     const options: RazorpayOptions = {
       key:import.meta.env.VITE_RAZORPAY_KEY, // from Razorpay Dashboardzz
       amount: orderData?.amount, // amount in paise
@@ -38,7 +45,7 @@ export  const loadRazorpay = (orderData: any, onSuccess: (data: any) => void) =>
           razorpayPaymentId: response.razorpay_payment_id,
           razorpaySignature: response.razorpay_signature,
         };
-        verifyOrder({data :data,token:token})
+        verifyOrder({data :data,token:sessionData.token})
         .then((res:any) => {
           console.log(res, "verifyOrder response");
           onSuccess(res.payment); // ✅ Pass data to parent
@@ -52,9 +59,9 @@ export  const loadRazorpay = (orderData: any, onSuccess: (data: any) => void) =>
         // send payment response to backend for verification
       },
       prefill: {
-        name: 'John Doe',
-        email: 'john@example.com',
-        contact: '9999999999',
+        name: sessionData?.name ?? '',
+        email: sessionData?.email ?? '',
+        contact: sessionData?.phoneNo ?? '',
       },
       theme: {
         color: '#3399cc',
