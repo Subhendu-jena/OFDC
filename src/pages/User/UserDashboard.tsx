@@ -96,13 +96,13 @@ const UserDashboard:React.FC=()=> {
                 Current Booking
               </h3>
               <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">
-                {currentBooking.approval}
+                {currentBooking?.approval}
               </span>
             </div>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-gray-500" />
-                <span className="text-gray-700">{currentBooking.bookingType}</span>
+                <span className="text-gray-700">{currentBooking?.bookingType}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-gray-500" />

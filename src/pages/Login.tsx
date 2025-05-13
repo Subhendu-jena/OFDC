@@ -38,6 +38,9 @@ const Login: React.FC = () => {
           sessionStorage.setItem('token', response?.token);
           sessionStorage.setItem('userID', response?.user?._id);
           sessionStorage.setItem('role', response?.user?.role);
+          sessionStorage.setItem('name', response?.user?.name);
+          sessionStorage.setItem('email', response?.user?.email);
+          sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
         }
         navigate(paths.RoleBasedRedirect);
       })
