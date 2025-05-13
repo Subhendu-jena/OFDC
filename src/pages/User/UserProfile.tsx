@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
 
 const profile = {
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  phone: '+1 (555) 123-4567',
-  role: 'viewer',
+  name: sessionStorage.getItem('name') ?? '',
+email: sessionStorage.getItem('email') ?? '',
+  phone: sessionStorage.getItem('phoneNo') ?? '',
+  role: sessionStorage.getItem('role'),
   avatar:
     'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=150',
 };
@@ -205,6 +205,9 @@ const userProfile: React.FC = () => {
               sessionStorage.removeItem('token');
               sessionStorage.removeItem('userID');
               sessionStorage.removeItem('role');
+              sessionStorage.removeItem('name');
+              sessionStorage.removeItem('email');
+              sessionStorage.removeItem('phoneNo');
               // window.location.reload();
               navigate(paths.login, { replace: true });
             }}>

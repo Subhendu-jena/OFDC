@@ -64,6 +64,11 @@ export default function FlimTradeShow() {
     }
   };
   const onSubmit = async (data: any) => {
+    const duration = `${String(data.durationHours).padStart(2, '0')}:${String(
+      data.durationMinutes
+    ).padStart(2, '0')}:${String(data.durationSeconds).padStart(2, '0')}:${String(
+      data.durationFrames
+    ).padStart(2, '0')}`;
     const formattedJsonData = {
       bookedBy: userId, 
       bookingType: 'Film Trade Show',
@@ -82,7 +87,7 @@ export default function FlimTradeShow() {
       screeningDetails: {
         nameOfFilm: data.nameOfFilm,
         languageOfFilm: data.languageOfFilm,
-        durationOfFilm: data.durationOfFilm,
+        durationOfFilm: duration,
         aspectRatio: data.aspectRatio,
         directorName: data.directorName,
         soundFormat: data.soundFormat,
@@ -326,6 +331,65 @@ export default function FlimTradeShow() {
                   </div>
                 )
               )}
+         <div className="md:col-span-2 mb-2">
+  <label className="block mb-1 font-medium text-gray-700">
+    Duration of the Film (HH:MM:SS:FF): <span className="text-red-600">*</span>
+  </label>
+  <div className="grid grid-cols-4 gap-2">
+    <input
+      type="number"
+      placeholder="HH"
+      {...register('durationHours', {
+        required: 'Hours are required',
+        min: { value: 0, message: 'Min 0' },
+        max: { value: 23, message: 'Max 23' },
+      })}
+      className="w-full p-2 border border-gray-400 rounded"
+    />
+    <input
+      type="number"
+      placeholder="MM"
+      {...register('durationMinutes', {
+        required: 'Minutes are required',
+        min: { value: 0, message: 'Min 0' },
+        max: { value: 59, message: 'Max 59' },
+      })}
+      className="w-full p-2 border border-gray-400 rounded"
+    />
+    <input
+      type="number"
+      placeholder="SS"
+      {...register('durationSeconds', {
+        required: 'Seconds are required',
+        min: { value: 0, message: 'Min 0' },
+        max: { value: 59, message: 'Max 59' },
+      })}
+      className="w-full p-2 border border-gray-400 rounded"
+    />
+    <input
+      type="number"
+      placeholder="FF"
+      {...register('durationFrames', {
+        required: 'Frames are required',
+        min: { value: 0, message: 'Min 0' },
+        max: { value: 29, message: 'Max 29' },
+      })}
+      className="w-full p-2 border border-gray-400 rounded"
+    />
+  </div>
+  {errors.durationHours && (
+    <p className="text-red-500 text-sm">Duration Hours should be between 0 to 23</p>
+  )}
+  {errors.durationMinutes && (
+    <p className="text-red-500 text-sm">Duration Minutes should be between 0 to 59</p>
+  )}
+  {errors.durationSeconds && (
+    <p className="text-red-500 text-sm">Duration Seconds should be between 0 to 59</p>
+  )}
+  {errors.durationFrames && (
+    <p className="text-red-500 text-sm">Duration Frames should be between 0 to 29</p>
+  )}
+</div>     
               <div  style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700 font-medium col-span-1">
                   Sound Format :

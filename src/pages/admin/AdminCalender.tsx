@@ -17,7 +17,7 @@ import {
   Plus,
   Calendar as CalendarIcon,
 } from 'lucide-react';
-
+import { getAllSlotByDate } from '../../config/controller';
 interface Slot {
   id: string;
   time: string;
@@ -48,25 +48,73 @@ const AdminCalender: React.FC = () => {
   const handlePreviousMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
 
-  const handleDateClick = (date: Date) => {
-    if (isSameMonth(date, currentDate)) {
-      setSelectedDate(date);
+  // const handleDateClick = (date: Date) => {
+  //   if (isSameMonth(date, currentDate)) {
+  //     setSelectedDate(date);
 
-      // Initialize slots for the selected date if they don't exist
-      const dateKey = format(date, 'yyyy-MM-dd');
-      if (!slots[dateKey]) {
-        setSlots((prev) => ({
-          ...prev,
-          [dateKey]: timeSlots.map((time) => ({
-            id: `${dateKey}-${time}`,
-            time,
-            note: '',
-            isBooked: false,
-          })),
-        }));
-      }
+  //     // Initialize slots for the selected date if they don't exist
+  //     const dateKey = format(date, 'yyyy-MM-dd');
+  //     if (!slots[dateKey]) {
+  //       setSlots((prev) => ({
+  //         ...prev,
+  //         [dateKey]: timeSlots.map((time) => ({
+  //           id: `${dateKey}-${time}`,
+  //           time,
+  //           note: '',
+  //           isBooked: false,
+  //         })),
+  //       }));
+  //     }
+  //   }
+  // };
+
+  const handleDateClick = async (date: Date) => {
+    if (!isSameMonth(date, currentDate)) return;
+  
+    setSelectedDate(date);
+    const dateKey = format(date, 'yyyy-MM-dd');
+  
+    try {
+      const response = await getAllSlotByDate({
+        token: sessionStorage.getItem('token'),
+        date: dateKey,
+      });
+  
+      const apiSlots = response.data || []; // adjust if needed
+  console.log(apiSlots,"IEWUUIYUI")
+      const mappedSlots = apiSlots.map((slot: any) => ({
+        id: slot.id || `${dateKey}-${slot.time}`, // fallback id
+        time: slot.bookingDetails.timeSlot,
+        note: slot.bookingType || '',
+        isBooked: slot.isBooked ?? false,
+      }));
+  
+      setSlots((prev) => ({
+        ...prev,
+        [dateKey]: mappedSlots.length
+          ? mappedSlots
+          : timeSlots.map((time) => ({
+              id: `${dateKey}-${time}`,
+              time,
+              note: '',
+              isBooked: false,
+            })),
+      }));
+    } catch (error) {
+      console.error('Failed to fetch slots:', error);
+      // fallback if API fails
+      setSlots((prev) => ({
+        ...prev,
+        [dateKey]: timeSlots.map((time) => ({
+          id: `${dateKey}-${time}`,
+          time,
+          note: '',
+          isBooked: false,
+        })),
+      }));
     }
   };
+  
 
   const handleSlotClick = (slot: Slot) => {
     setSelectedSlot(slot);
@@ -205,7 +253,12 @@ const AdminCalender: React.FC = () => {
                         {slot.note}
                       </p>
                     )}
-                    {!slot.isBooked && (
+                    {slot.time && (
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {slot.time}
+                      </p>
+                    )}
+                    {!slot.note && (
                       <div className="mt-2 flex items-center gap-1 text-sm text-red-600">
                         <Plus className="w-4 h-4" />
                         Add booking

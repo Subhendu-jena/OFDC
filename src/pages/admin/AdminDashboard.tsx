@@ -102,6 +102,9 @@ const navigate = useNavigate();
                     sessionStorage.removeItem('token');
                     sessionStorage.removeItem('userID');
                     sessionStorage.removeItem('role');
+                    sessionStorage.removeItem('name');
+                    sessionStorage.removeItem('email');
+                    sessionStorage.removeItem('phoneNo');
                     // window.location.reload();
                     navigate(paths.login, { replace: true });
                   }}>Logout</div>

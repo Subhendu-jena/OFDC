@@ -81,6 +81,62 @@ export const verifyOrder = async ({
    data,
   });
 };
+export const userCancel = async ({
+  token,
+ id
+}:{
+  token: string | null;
+  id:string
+}): Promise<ApiResponse<signupData>> => {
+  return apiCaller({
+    uri: `/booking/cancel/${id}`,
+    method: 'PATCH',
+    token,
+  });
+};
+export const adminApprove = async ({
+  token,
+  id
+}:{data:any;
+  token: string | null;
+  id:string
+}): Promise<ApiResponse<signupData>> => {
+  return apiCaller({
+    uri: `/booking/approve/${id}`,
+    method: 'PATCH',
+    token,
+  //  data,
+  });
+};
+export const adminReject = async ({
+  token,
+  id
+}:{
+  token: string | null;
+  id:string
+}): Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/booking/reject/${id}`,
+    method: 'PATCH',
+    token,
+  //  data,
+  });
+};
+export const refund = async ({
+  token,
+  id
+}:{
+  token: string | null;
+  id:string
+}): Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/payment/refund/${id}`,
+    method: 'POST',
+    token,
+  //  data,
+  });
+};
+
 export const getAllSlotByDate = async ({
   token,
   date,
@@ -94,7 +150,7 @@ export const getAllSlotByDate = async ({
     token,
   });
 };
-export const getAllSlotOfUser = async ({
+export const getAllBookingsOfUser = async ({
   token,
   userId,
 }: {
@@ -107,7 +163,7 @@ export const getAllSlotOfUser = async ({
     token,
   });
 };
-export const getAllSlotForAdmin = async ({
+export const getAllBookingsForAdmin = async ({
   token,
 }: {
   token: string | null;

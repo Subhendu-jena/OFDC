@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableComponent from '../../components/Table'
-import { getAllSlotForAdmin } from '../../config/controller';
+import { getAllBookingsForAdmin } from '../../config/controller';
 
 const AdminBookingHistory:React.FC = () => {
    const token = sessionStorage.getItem('token')
@@ -11,7 +11,8 @@ const AdminBookingHistory:React.FC = () => {
     // { label: 'Applicant Name', field: 'applicantName' },
     // { label: 'Booking Date', field: 'bookingDate' },
     // { label: 'Screening Date', field: 'screeningDate' },
-    { label: 'Status', field: 'status' },
+    { label: 'Payment Status', field: 'status' },
+    { label: 'Booking Status', field: 'status' },
     { label: 'View', field: 'view' },
   ];
   // const dataTable = [
@@ -21,7 +22,7 @@ const AdminBookingHistory:React.FC = () => {
   //   { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , screeningDate: '2023-10-01', status: 'Pending', view: 'View Details' },
   // ]
    useEffect(() => {
-    getAllSlotForAdmin({ token: token})
+    getAllBookingsForAdmin({ token: token})
       .then((res) => {
         setData(res?.data)
         console.log(res?.data, 'res?.data?.data')
