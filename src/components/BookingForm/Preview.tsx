@@ -1,65 +1,28 @@
-import React, { useState } from 'react';
-import { Calendar, FileText, Film, Users, Upload } from 'lucide-react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { paths } from '../../routes/Path';
+import { useState } from 'react';
+const Preview = ({
+  formData,
+  // bookingResponse,
+  selectedDate,
+  selectedSlot,
+  onEdit,
+  onConfirm,
+  isEditMode = false,
+}: any) => {
+  const [cancel, setCancel] = useState(false);
+  const [remark, setRemark] = useState('');
 
-interface FormData {
-  // Film Details
-  filmTitle?: string;
-  language?: string;
-  duration?: string;
-  soundFormat?: string;
-  filmFormat?: string;
-
-  // Production Details
-  producerName?: string;
-  productionHouse?: string;
-  contactNumber?: string;
-  email?: string;
-  applicantAddress?: string;
-
-  // Booking Details
-  screeningDate?: string;
-  screeningTime?: string;
-  numberOfPeople?: string;
-
-  // File uploads
-  synopsis?: File;
-  castCredits?: File;
-  songlines?: File;
-  poster?: File;
-}
-
-const Preview: React.FC = () => {
-  const [searchParams] = useSearchParams();
-  const edit = searchParams.get('edit') === 'true';
-  const [formData] = useState<FormData>({});
-  const navigate = useNavigate();
-const [cancel,setcancel]=useState(false);
-  const handleEdit = () => {
-    if (edit) {
-      console.log('Edit clicked');
-    } else {
-      // navigate(-1);
-      setcancel(true);
-    }
+  const handleCancelSubmit = () => {
+    // Handle cancel submission with remark
+    onConfirm(); // Or handle differently for cancel case
   };
-  const handleConfirmSubmission = () => {
-    if (edit) {
-      navigate(paths.confirmation);
-      console.log('Submission confirmed');
-    } else {
-      navigate(paths.adminDashboard);
-    }
-  };
-
+  
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  py-8 px-2">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="bg-red-600 px-6 py-4">
             <h2 className="text-xl font-semibold text-white">
-              Preview Your Submission
+              Booking Confirmation Preview
             </h2>
             <p className="text-red-100 mt-1">
               Please review all details before final submission
@@ -67,185 +30,388 @@ const [cancel,setcancel]=useState(false);
           </div>
 
           <div className="p-6 space-y-8">
-            {/* Film Details Preview */}
-            <div className="border-b pb-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Film className="w-5 h-5 text-red-600" />
+            {/* Applicant Details */}
+
+            {formData?.applicantDetails && (
+              <div className="border-b pb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Applicant Details
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Name of Applicant</p>
+                    <p className="text-base font-medium">
+                      {formData?.applicantDetails?.nameOfApplicant}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">WhatsApp Number</p>
+                    <p className="text-base font-medium">
+                      {formData?.applicantDetails?.whatsappNo}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Alternative Contact</p>
+                    <p className="text-base font-medium">
+                      {formData?.applicantDetails?.altContactNo ||
+                        'Not provided'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Email</p>
+                    <p className="text-base font-medium">
+                      {formData?.applicantDetails?.email}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-sm text-gray-500">Postal Address</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.applicantDetails?.postalAddress}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {formData?.screeningDetails && (
+              <div className="border-b pb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Screening Details
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Name of Film</p>
+                    <p className="text-base font-medium">
+                      {formData?.screeningDetails?.nameOfFilm}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Language of the Film
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.screeningDetails?.languageOfFilm}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Duration of the Film
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.screeningDetails?.durationOfFilm}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Aspect Ratio</p>
+                    <p className="text-base font-medium">
+                      {formData?.screeningDetails?.aspectRatio ||
+                        'Not provided'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Name of the Director
+                    </p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.screeningDetails?.directorName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Sound Format</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.screeningDetails?.soundFormat}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Format of the Film</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.screeningDetails?.formatOfFilm}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {formData?.filmDetails && (
+              <div className="border-b pb-6">
                 <h3 className="text-lg font-semibold text-gray-900">
                   Film Details
                 </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Name of Film</p>
+                    <p className="text-base font-medium">
+                      {formData?.filmDetails?.name}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Language of the Film
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.filmDetails?.language}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Duration of the Film
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.filmDetails?.duration}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Aspect Ratio</p>
+                    <p className="text-base font-medium">
+                      {formData?.filmDetails?.aspectRatio || 'Not provided'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Name of the Director
+                    </p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.filmDetails?.nameOfTheDirector}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Sound Format</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.filmDetails?.soundFormat}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Format of the Film</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.filmDetails?.formatOfTheFilm}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Film Title</p>
-                  <p className="text-base font-medium">
-                    {formData.filmTitle || 'Not provided'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Language</p>
-                  <p className="text-base font-medium">
-                    {formData.language || 'Not provided'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Duration</p>
-                  <p className="text-base font-medium">
-                    {formData.duration || 'Not provided'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Sound Format</p>
-                  <p className="text-base font-medium">
-                    {formData.soundFormat || 'Not provided'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Film Format</p>
-                  <p className="text-base font-medium">
-                    {formData.filmFormat || 'Not provided'}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Production Details Preview */}
-            <div className="border-b pb-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Users className="w-5 h-5 text-red-600" />
+            )}
+            {formData?.productionDetails && (
+              <div className="border-b pb-6">
                 <h3 className="text-lg font-semibold text-gray-900">
                   Production Details
                 </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Name of the Producer
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.productionDetails?.producerName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Name of the Production House
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.productionDetails?.productionHouseName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Whatsapp No</p>
+                    <p className="text-base font-medium">
+                      {formData?.productionDetails?.whatsappNo}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Alternative Contact No
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.productionDetails?.altContactNo ||
+                        'Not provided'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Email Id</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.productionDetails?.email}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">GSTIN</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.productionDetails?.GST || 'Not provided'}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-sm text-gray-500">Complete Address</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.productionDetails?.address}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Producer Name</p>
-                  <p className="text-base font-medium">
-                    {formData.producerName || 'Not provided'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Production House</p>
-                  <p className="text-base font-medium">
-                    {formData.productionHouse || 'Not provided'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Contact Number</p>
-                  <p className="text-base font-medium">
-                    {formData.contactNumber || 'Not provided'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Email</p>
-                  <p className="text-base font-medium">
-                    {formData.email || 'Not provided'}
-                  </p>
-                </div>
-                <div className="col-span-2">
-                  <p className="text-sm text-gray-500">
-                    Complete Postal Address
-                  </p>
-                  <p className="text-base font-medium">
-                    {formData.applicantAddress || 'Not provided'}
-                  </p>
-                </div>
-              </div>
-            </div>
+            )}
 
-            {/* Booking Details Preview */}
+            {/* Billing Details */}
+            {formData?.billingDetails && (
+              <div className="border-b pb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Billing Details
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Billing Name</p>
+                    <p className="text-base font-medium">
+                      {formData?.billingDetails?.billingName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Contact Number</p>
+                    <p className="text-base font-medium">
+                      {formData?.billingDetails?.contactNo}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">GSTIN</p>
+                    <p className="text-base font-medium">
+                      {formData?.billingDetails?.GSTIN || 'Not provided'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Email</p>
+                    <p className="text-base font-medium">
+                      {formData?.billingDetails?.email}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Category</p>
+                    <p className="text-base font-medium">
+                      {formData?.billingDetails?.category}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-sm text-gray-500">Billing Address</p>
+                    <p className="text-base font-medium whitespace-pre-line">
+                      {formData?.billingDetails?.postalAddress}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {formData?.requirements && (
+              <div className="border-b pb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Requirements
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Podium with Mic</p>
+                    <p className="text-base font-medium">
+                      {formData?.requirements?.podiumWithMic == true
+                        ? 'Yes'
+                        : 'No'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">2 Cordless Mic</p>
+                    <p className="text-base font-medium">
+                      {formData?.requirements?.cordlessMic == true
+                        ? 'Yes'
+                        : 'No'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      Screening Facilities
+                    </p>
+                    <p className="text-base font-medium">
+                      {formData?.requirements?.screeningFacilities == true
+                        ? 'Yes'
+                        : 'No'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* Booking Details */}
             <div className="border-b pb-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Calendar className="w-5 h-5 text-red-600" />
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Booking Details
-                </h3>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Booking Details
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <div>
-                  <p className="text-sm text-gray-500">Screening Date</p>
+                  <p className="text-sm text-gray-500">Booking Date</p>
                   <p className="text-base font-medium">
-                    {formData.screeningDate || 'Not provided'}
+                    {selectedDate || 'Not selected'}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Screening Time</p>
+                  <p className="text-sm text-gray-500">Time Slot</p>
                   <p className="text-base font-medium">
-                    {formData.screeningTime || 'Not provided'}
+                    {selectedSlot || 'Not selected'}
                   </p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Number of People</p>
-                  <p className="text-base font-medium">
-                    {formData.numberOfPeople || 'Not provided'}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Uploaded Documents Preview */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Upload className="w-5 h-5 text-red-600" />
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Uploaded Documents
-                </h3>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {['synopsis', 'castCredits', 'songlines', 'poster'].map(
-                  (doc) => (
-                    <div key={doc} className="flex items-center gap-2">
-                      <FileText className="w-5 h-5 text-gray-400" />
-                      <div>
-                        <p className="text-sm text-gray-500">
-                          {doc.charAt(0).toUpperCase() + doc.slice(1)}
-                        </p>
-                        <p className="text-base font-medium">
-                          {/* {formData[doc as keyof FormData]?.name || 'Not uploaded'} */}
-                        </p>
-                      </div>
-                    </div>
-                  )
-                )}
+                {/* {bookingResponse?.data?._id && (
+                  <div>
+                    <p className="text-sm text-gray-500">Booking Reference</p>
+                    <p className="text-base font-medium">
+                      {bookingResponse.data._id}
+                    </p>
+                  </div>
+                )} */}
               </div>
             </div>
           </div>
 
           <div
-            className={`bg-gray-50 px-6 py-4 flex gap-4 ${edit == true ? 'justify-end' : 'justify-between'}`}
+            className={`bg-gray-50 px-6 py-4 flex gap-4 ${isEditMode ? 'justify-end' : 'justify-between'}`}
           >
-            {!edit && (
-              <div>
-                <input
-                  type="checkbox"
-                  className="mr-3 flex-col  items-center "
-                />
-                Send email to CFBC
+            {!isEditMode && (
+              <div className="flex items-center">
+                <input type="checkbox" className="mr-3" id="sendEmail" />
+                <label htmlFor="sendEmail">Send confirmation email</label>
               </div>
             )}
             <div className="flex gap-4">
-              {' '}
               <button
-                onClick={handleEdit}
+                onClick={() => (isEditMode ? onEdit() : setCancel(true))}
                 className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
               >
-                {edit ? ' Edit Details' : 'Reject'}
+                {isEditMode ? 'Edit Details' : 'Cancel Booking'}
               </button>
               <button
-                onClick={handleConfirmSubmission}
+                onClick={() => onConfirm()}
                 className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
               >
-                {edit ? 'Confirm & Submit' : 'Approve'}
+                {isEditMode ? 'Confirm & Pay' : 'Confirm Booking'}
               </button>
             </div>
           </div>
-         {cancel && <div className='px-6 py-4  flex flex-col gap-4'>
-            <div><h3 className="text-lg font-semibold text-gray-900">
-             Remark
-            </h3>
-            <textarea name="reason" id="" className='p-2 border-1 rounded-2xl w-[50%]' rows={4}></textarea></div>
-            <button className='px-4 py-2 text-white w-1/2 bg-red-600 rounded-md hover:bg-red-700' onClick={()=>navigate(paths.adminDashboard)}>Submit</button>
-          </div>}
+
+          {cancel && (
+            <div className="px-6 py-4 flex flex-col gap-4 bg-gray-50 border-t">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Reason for Cancellation
+                </h3>
+                <textarea
+                  value={remark}
+                  onChange={(e) => setRemark(e.target.value)}
+                  className="p-2 border border-gray-300 rounded-md w-full"
+                  rows={4}
+                  placeholder="Please specify reason for cancellation..."
+                ></textarea>
+              </div>
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => setCancel(false)}
+                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={handleCancelSubmit}
+                  className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
+                >
+                  Submit Cancellation
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

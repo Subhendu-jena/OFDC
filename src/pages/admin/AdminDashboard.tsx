@@ -11,6 +11,8 @@ import {
 } from 'recharts';
 import { useState } from 'react';
 import TableComponent from '../../components/Table';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '../../routes/Path';
 
 const AdminDashboard = () => {
   const data = [
@@ -93,9 +95,16 @@ const AdminDashboard = () => {
       totalValue: '1000',
     },
   ];
-
+const navigate = useNavigate();
   return (
     <div className="bg-white p-4 space-y-6 mx-auto">
+      <div className='text-right border border-amber-500 text-amber-600 p-2 rounded-md w-fit cursor-pointer ' onClick={() => {
+                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('userID');
+                    sessionStorage.removeItem('role');
+                    // window.location.reload();
+                    navigate(paths.login, { replace: true });
+                  }}>Logout</div>
       <div className="mt-2 flex justify-end">
         <select
           className="border outline-none border-amber-500 text-amber-600 p-2 rounded-md "

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, User, Lock, Upload } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '../../routes/Path';
 
 const profile = {
   name: 'John Doe',
@@ -21,6 +23,7 @@ const userProfile: React.FC = () => {
       setImage(imageUrl);
     }
   };
+  const navigate=useNavigate();
   return (
     <main className="max-w-screen bg-white mx-auto px-4 sm:px-6 py-8 ">
       <div className="bg-white rounded-2xl shadow-lg p-6 space-y-8">
@@ -195,6 +198,17 @@ const userProfile: React.FC = () => {
           <div className="pt-4">
             <button className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors">
               Save Changes
+            </button>
+          </div>
+          <div className="pt-4">
+            <button className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"  onClick={() => {
+              sessionStorage.removeItem('token');
+              sessionStorage.removeItem('userID');
+              sessionStorage.removeItem('role');
+              // window.location.reload();
+              navigate(paths.login, { replace: true });
+            }}>
+             Logout
             </button>
           </div>
         </div>

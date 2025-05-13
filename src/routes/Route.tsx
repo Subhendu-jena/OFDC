@@ -7,12 +7,12 @@ import Home from '../pages/Home';
 import BookingForm from '../pages/BookingForm';
 import Dashboard from '../pages/Dashboard';
 import ContactUs from '../pages/ContactUs';
-import OdishaAtGlance from '../pages/about/OdishaAtGlance';
+import OdishaAtGlance from '../pages/about/ACursoryLook';
 import AboutLayout from '../layout/about/AboutLayout';
 import OurVisionMision from '../pages/about/OurVisionMision';
 import Leadership from '../pages/about/Leadership';
-import CulturalHeritage from '../pages/about/CulturalHeritage';
-import ReligionCulture from '../pages/about/ReligionCulture';
+import CulturalHeritage from '../pages/about/FormerChairpersons';
+import ReligionCulture from '../pages/about/FormerManagingDirectors';
 import FlimEcoSystem from '../pages/FlimEcoSystem';
 import WhosWho from '../pages/about/WhosWho';
 import Achievments from '../pages/about/Achievments';
@@ -21,7 +21,7 @@ import ObjectivesPage from '../pages/kalingaStudio/Objectives';
 import StudiosPastGlory from '../pages/kalingaStudio/StudiosPastGlory';
 import BoardOfDirectors from '../pages/kalingaStudio/BoardOfDirectors';
 import WhoIsWho from '../pages/kalingaStudio/WhoIsWho';
-import KalingaStudioLayout from '../layout/KalingaStudioLayout.tsx/KalingaStudioLayout';
+import KalingaStudioLayout from '../layout/KalingaStudioLayout/KalingaStudioLayout';
 import OdishaIndiasBestKeptSecret from '../pages/discoverOdisha/OdishaIndiasBestKeptSecret';
 import EchoesOfHistory from '../pages/discoverOdisha/EchoesOfHistory';
 import DiscoverOdishaLayout from '../layout/discoverOdisha/DiscoverOdishaLayout';
@@ -45,48 +45,31 @@ import AdminLayout from '../layout/admin/AdminLayout';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminBookingHistory from '../pages/admin/AdminBookingHistory';
 import AdminPaymentHistory from '../pages/admin/AdminPaymentHistory';
-import Confirmation from '../components/BookingForm/Confirmation';
-import Preview from '../components/BookingForm/Preview';
 import AdminCalender from '../pages/admin/AdminCalender';
+import TalentLayout from '../layout/talentLayout/TalentLayout';
+import TalentList from '../pages/talentList/TalentList';
+import LocationLayout from '../layout/locationLayout/LocationLayout';
+import LocationCategory from '../pages/locationDirectory/LocationCategory';
+import LocationDetails from '../components/locationCard/LocationDetails';
+import ScrollToTop from '../components/home/ScrollToTop';
+import PetroleumSalesChart from '../pages/test';
+import ProtectedRoute from './ProtectedRoute';
+import RoleBasedRedirect from './RoleBasedRedirect';
 
 const RoutePage: React.FC = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // useEffect(() => {
-  //   const storedLogin = localStorage.getItem("isLoggedIn");
-  //   if (storedLogin === "true") setIsLoggedIn(true);
-  // }, []);
-
-  // const handleLogin = () => {
-  //   localStorage.setItem("isLoggedIn", "true");
-  //   setIsLoggedIn(true);
-  //   console.log(localStorage.getItem("isLoggedIn"),"dfdd");
-  // };
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem("isLoggedIn");
-  //   setIsLoggedIn(false);
-  // };
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
+        <Route path={paths.test} element={<PetroleumSalesChart />} />
         <Route path={paths.register} element={<RegisterPage />} />
-
-        {/* {isLoggedIn ? (
-          <Route path={paths.userDashboard} element={<UserDashboard 
-            // onLogout={handleLogout}
-            />} />
-      ) : (
-        )} */}
-
         <Route path={paths.login} element={<Login />} />
-        <Route element={<Layout />}>
-          <Route path={paths.home} element={<Home />} />
-          <Route path={paths.bookingForm} element={<BookingForm />} />
-          <Route path={paths.dashboard} element={<Dashboard />} />
-          <Route path={paths.contactUs} element={<ContactUs />} />
-          <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
+        <Route  element={<ProtectedRoute />}>
+        <Route path={paths.RoleBasedRedirect} element={<RoleBasedRedirect />} />
+
           {/* AdminLayout */}
-          <Route  element={<AdminLayout />}>
+          {/* {role === 'ADMIN' ? ( */}
+            <Route element={<AdminLayout />}>
             <Route path={paths.adminDashboard} element={<AdminDashboard />} />
             <Route path={paths.allBookings} element={<AdminBookingHistory />} />
             <Route
@@ -95,8 +78,8 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.calender} element={<AdminCalender />} />
           </Route>
-          {/* LoggedUserLayout */}
-          <Route element={<LoggedUserLayout />}>
+          {/* ):( */}
+            <Route element={<LoggedUserLayout />}>
             <Route path={paths.userDashboard} element={<UserDashboard />} />
             <Route
               path={paths.bookingHistory}
@@ -108,11 +91,20 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.newBooking} element={<BookingForm />} />
             <Route path={paths.profile} element={<UserProfile />} />
-
-            <Route path={paths.preview} element={<Preview />} />
-            <Route path={paths.confirmation} element={<Confirmation />} />
-
+    
           </Route>
+          {/* )} */}
+            
+         
+          {/* LoggedUserLayout */}
+           
+        </Route>
+        <Route element={<Layout />}>
+          <Route path={paths.home} element={<Home />} />
+          <Route path={paths.bookingForm} element={<BookingForm />} />
+          <Route path={paths.dashboard} element={<Dashboard />} />
+          <Route path={paths.contactUs} element={<ContactUs />} />
+          <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
             <Route path={paths.archivalGallery} element={<ArchivalGallery />} />
@@ -127,7 +119,6 @@ const RoutePage: React.FC = () => {
               element={<VaultofPreservedFilms />}
             />
           </Route>
-
           {/* DiscoverOdishaLayout */}
           <Route element={<DiscoverOdishaLayout />}>
             <Route
@@ -180,6 +171,22 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.whoIsWho} element={<WhosWho />} />
           </Route>
+          {/* Talentlayout */}
+          <Route element={<TalentLayout />}>
+            <Route path={paths.talentlist} element={<TalentList />} />
+          </Route>
+          {/* LocationLayout */}
+          <Route element={<LocationLayout />}>
+            <Route
+              path={paths.locationDirectory}
+              element={<LocationCategory />}
+            />
+            <Route path={paths.locationDetails} element={<LocationDetails />} />
+          </Route>
+          {/* FilmEcoSystemLayout */}
+          {/* <Route element={<FilmEcoSystemLayout />}>
+            <Route path={paths.filmEcoSystem} element={<FilmEcoSystem />} />
+          </Route> */}
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,125 +1,183 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { createBooking, createOrder, getAllSlotByDate } from '../../config/controller';
+import { useForm } from 'react-hook-form';
+import { cbfc } from './fields';
+import { loadRazorpay } from '../loadRazorpay';
+import Preview from './Preview';
+import Confirmation from './Confirmation';
 function CbfcScreening() {
-  const [formData, setFormData] = useState({
-    filmName: '',
-    language: '',
-    synopsisEnglish: '',
-    synopsisFilmLang: '',
-    duration: '',
-    aspectRatio: '',
-    soundFormat: '',
-    filmFormat: '',
-    director: '',
-    castCredit: '',
-    songlines: '',
-    lyricist: '',
-    musicDirector: '',
-    singers: '',
-    filmPoster: null,
-  });
-const [selectedSlot,setSelectedSlot]=useState('');
-  const handleChange = (e: any) => {
-    const { name, value, type, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'file' ? files[0] : value,
+  const userId = sessionStorage.getItem('userID');
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const token = sessionStorage.getItem('token');
+  const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [bookingData, setBookingData] = useState<any>(null);
+  const [sendData, setSendData] = useState<any>(null);
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [receiptData, setReceiptData] = useState<any>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  // const handleChange = (e: any) => {
+  //   const { name, value, type, files } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: type === 'file' ? files[0] : value,
+  //   });
+  // };
+  const handleCheckDateChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const selectedDate = e.target.value;
+    setSelectedDate(selectedDate);
+    try {
+      const response = await getAllSlotByDate({
+        token: token,
+        date: selectedDate,
+      });
+
+      if (response?.success && Array.isArray(response?.data)) {
+        const booked = response?.data?.map(
+          (booking: any) => booking?.bookingDetails?.timeSlot
+        );
+        setBookedSlots(booked);
+      }
+    } catch (error) {
+      console.error('Error fetching slots:', error);
+    }
+  };
+
+  const onSubmit = async (data: any) => {
+    const formattedData = {
+      bookedBy: userId,
+      bookingType: 'CBFC SCREENING',
+      filmDetails: {
+        name: data.name,
+        language: data.language,
+        duration: data.duration,
+        aspectRatio: data.aspectRatio,
+        nameOfTheDirector: data.nameOfTheDirector,
+        soundFormat: data.soundFormat,
+        formatOfTheFilm: data.formatOfTheFilm,
+      },
+      productionDetails: {
+        producerName: data.producerName,
+        productionHouseName: data.productionHouseName,
+        whatsappNo: data.whatsappNo,
+        altContactNo: data.altContactNo,
+        email: data.email,
+        address: data.applicantAddress,
+        GST: data.GST,
+      },
+      bookingDetails: {
+        bookingDate: selectedDate,
+        timeSlot: selectedSlot,
+      },
+      documentUploads: {
+        synopsis: '111',
+        castAndCredits: '1111',
+        songLines: '1111',
+        poster: '11111',
+      },
+    };
+    setSendData(formattedData);
+    setBookingData({
+      formData: formattedData,
+      selectedDate,
+      selectedSlot,
     });
+    setShowPreview(true);
+    // try {
+    //   const response = await createBooking({ token, data: formattedData });
+    //   if (response.success) {
+    //     createOrder({id:response?.data?._id ?? '', token: token , data: {orderedBy: userId}});
+    //     console.log(response?.data?._id,"hgfhgfhgf");
+    //     // navigate('/confirmation', { state: { bookingDetails: response } });
+    //   } else {
+    //     alert('Submission failed. Please try again.');
+    //   }
+    // } catch (error) {
+    //   console.error('Error:', error);
+    //   alert('An error occurred. Please try again.');
+    // }
   };
-  const navigate = useNavigate();
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    navigate('/preview?edit=true');
-    console.log('Form Data Submitted:', formData);
-    alert('Form submitted successfully!');
+  const handleEdit = () => {
+    setShowPreview(false);
+  };
+  const handleConfirm = async () => {
+    // console.log('formatted data', sendData);
+    try {
+      const response = await createBooking({
+        token: token,
+        data: sendData,
+      });
+
+      if (response.success) {
+        if (response?.data) {
+          const createorderresponse = await createOrder({
+            id: response?.data?._id ?? '',
+            token: token,
+            data: { orderedBy: userId },
+          });
+          if (createorderresponse.success) {
+            const onSuccess = (verifiedData: any) => {
+              console.log('Final verified payment response:', verifiedData);
+              // navigate(paths.confirmation, {
+              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
+              // });
+              setShowPreview(false);
+              setShowReceipt(true);
+              setReceiptData({verifiedData, selectedDate, selectedSlot});
+            };
+            loadRazorpay(createorderresponse, onSuccess);
+            console.log(onSuccess, 'onSuccess');
+          } else {
+            console.error('redirection failed:', createorderresponse.message);
+            alert('redirection failed. Please try again.');
+          }
+        }
+      } else {
+        console.error('Submission failed:', response.message);
+        alert('Submission failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
-  const ScreeningDetails = [
-    {
-      name: 'Name of the Film',
-      label: 'Name of the Film',
-      type: 'text',
-    },
-    {
-      name: 'Language of the Film',
-      label: 'Language of the Film',
-      type: 'text',
-    },
-    {
-      name: 'Duration of the Film ',
-      label: 'Duration of the Film ',
-      type: 'time',
-    },
-    {
-      name: 'Aspect Ratio',
-      label: 'Aspect Ratio',
-      type: 'text',
-    },
-    {
-      name: 'Name of the Director',
-      label: 'Name of the Director',
-      type: 'text',
-    },
-  ];
-
-  const ProductionDetails = [
-    {
-      name: 'Name of the Producer',
-      label: 'Name of the Producer',
-      type: 'text',
-    },
-    {
-      name: 'Name of the Production House ',
-      label: 'Name of the Production House ',
-      type: 'text',
-    },
-    {
-      name: 'Whatsapp No.',
-      label: 'Whatsapp No.',
-      type: 'number',
-    },
-    {
-      name: 'Alternative Contact No.',
-      label: 'Alternative Contact No.',
-      type: 'number',
-    },
-    {
-      name: 'Email Id',
-      label: 'Email Id',
-      type: 'email',
-    },
-    {
-      name: 'GSTIN (If any) ',
-      label: 'GSTIN (If any) ',
-      type: 'text',
-    },
-  ];
-
-  const BookingDetails = [
-    {
-      name: 'bookingDate',
-      label: 'Booking Date',
-      type: 'Date',
-    },
-    // {
-    //   name: 'from',
-    //   label: 'From',
-    //   type: 'time',
-    // },
-    // {
-    //   name: 'to',
-    //   label: 'To',
-    //   type: 'time',
-    // },
-  ];
+  if (showPreview && bookingData) {
+    return (
+      <Preview
+        formData={bookingData.formData}
+        selectedDate={bookingData.selectedDate}
+        selectedSlot={bookingData.selectedSlot}
+        onEdit={handleEdit}
+        onConfirm={handleConfirm}
+        isEditMode={true}
+      />
+    );
+  }
+  if (showReceipt && receiptData) {
+    return (
+      <Confirmation
+      bookingDetails={receiptData.verifiedData}
+        selectedDate={receiptData.selectedDate}
+        selectedSlot={receiptData.selectedSlot}
+      />
+    );
+  }
+  
 
   return (
     <div className=" bg-gray-50   text-sm rounded-lg">
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
         For CBFC SCREENING
       </h2>
-      <form className="space-y-6 " onSubmit={handleSubmit}>
+      <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-6 grid gap-2 grid-cols-1 xl:grid-cols-2">
           {/* Film Details */}
           <div className="p-5 bg-white rounded-lg shadow">
@@ -127,58 +185,82 @@ const [selectedSlot,setSelectedSlot]=useState('');
               Film Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ScreeningDetails.map(({ name, label }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 text-sm col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={ScreeningDetails[index].type || 'text'}
-                    name={name}
-                    placeholder={name}
-                    lang="en-GB"
-                    onChange={handleChange}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
-                  />
-                </div>
-              ))}
-              <div className="grid grid-cols-3 mt-4 items-center gap-4">
+              {cbfc.ScreeningDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label>
+                      {label} :{' '}
+                      <span className="text-red-600">{required && '*'}</span>
+                    </label>
+                    <br />
+                    <input
+                      type={type}
+                      placeholder={label}
+                      lang="en-GB"
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                    />
+                    {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {errors.pattern && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors.pattern?.message)}
+                      </p>
+                    )}
+                  </div>
+                )
+              )}
+              <div style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700  text-sm font-medium col-span-1">
-                  Sound Format :
+                  Sound Format : *
                 </label>
+                <br />
                 <select
-                  name="category"
+                  {...register('soundFormat', {
+                    required: 'Sound Format is required',
+                  })}
                   className="w-full  text-sm py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                  onChange={handleChange}
-                  required
                 >
                   <option value="">Select Sound Format </option>
-                  <option value="Mono">Mono</option>
-                  <option value="Stereo">Stereo</option>
-                  <option value=" Dolby 5.1 "> Dolby 5.1 </option>
-                  <option value=" Dolby 7.1"> Dolby 7.1</option>
+                  <option value="mono">Mono</option>
+                  <option value="stereo">Stereo</option>
+                  <option value="Dolby 5.1"> Dolby 5.1 </option>
+                  <option value="Dolby 7.1"> Dolby 7.1</option>
                 </select>
+                {typeof errors.soundFormat?.message === 'string' && (
+                  <p className="text-red-500 text-sm">
+                    {errors.soundFormat.message}
+                  </p>
+                )}
               </div>
-              <div className="grid grid-cols-3 mt-4 items-center gap-4">
+              <div style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700  text-sm col-span-1">
-                  Format of the Film :
+                  Format of the Film : *
                 </label>
+                <br />
                 <select
-                  name="category"
+                  {...register('formatOfTheFilm', {
+                    required: 'Format of the Film is required',
+                  })}
                   className="w-full py-2 px-2  text-sm text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                  onChange={handleChange}
-                  required
                 >
                   <option value="">Format of the Film</option>
-                  <option value=" DVD"> DVD</option>
-                  <option value="Hard disk">Hard disk</option>
+                  <option value="DVD"> DVD</option>
+                  <option value="Hard Disk">Hard disk</option>
                   <option value="Pendrive">Pendrive</option>
                   <option value="Blueray DVD">Blueray DVD</option>
                 </select>
+                {typeof errors.formatOfTheFilm?.message === 'string' && (
+                  <p className="text-red-500 text-sm">
+                    {errors.formatOfTheFilm.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -189,37 +271,51 @@ const [selectedSlot,setSelectedSlot]=useState('');
               Production Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ProductionDetails.map(({ name, label, type }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
-                  </label>
-                  <input
-                    type={type}
-                    name={name}
-                    placeholder={name}
-                    onChange={handleChange}
-                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
-                  />
-                </div>
-              ))}
+              {cbfc.ProductionDetails.map(
+                ({ name, label, type, required, pattern }) => (
+                  <div key={name} style={{ marginBottom: '1rem' }}>
+                    <label>{label}</label>
+                    <br />{' '}
+                    <input
+                      type={type}
+                      placeholder={label}
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                        pattern: pattern,
+                      })}
+                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                    />
+                    {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {errors.pattern && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors.pattern?.message)}
+                      </p>
+                    )}
+                  </div>
+                )
+              )}
             </div>
 
-            <div className="grid grid-cols-3 mt-4 items-center gap-4">
+            <div style={{ marginBottom: '1rem' }}>
               <label className="text-gray-700 font-medium col-span-1">
                 Complete Postal Address :
               </label>
               <textarea
-                name="applicantAddress"
-                onChange={handleChange}
+                {...register('applicantAddress', {
+                  required: 'Applicant Address is required',
+                })}
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
-                required
               ></textarea>
+              {typeof errors.applicantAddress?.message === 'string' && (
+                <p className="text-red-500 text-sm">
+                  {errors.applicantAddress.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -228,57 +324,76 @@ const [selectedSlot,setSelectedSlot]=useState('');
             <h3 className="text-lg font-semibold border-b pb-2 mb-4 text-red-600">
               Booking Details
             </h3>
-            {/* <div className="grid grid-cols-3 mt-4 items-center gap-4">
-              <label className="text-gray-700 font-medium col-span-1">
-                Purpose of Booking (in Detail):
-              </label>
-              <textarea
-                name="applicantAddress"
-                onChange={handleChange}
-                className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                rows={3}
-                required
-              ></textarea>
-            </div> */}
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {BookingDetails.map(({ name, label, type }, index) => (
+              {cbfc.BookingDetails.map(({ name, label, type }, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-3 items-center gap-4"
+                  className="grid grid-cols-1 items-center gap-4"
                 >
                   <label className="text-gray-700 font-medium col-span-1">
                     {label} :
                   </label>
                   <input
                     type={type}
-                    name={name}
-                    placeholder={name}
-                    onChange={handleChange}
+                    placeholder={label}
+                    {...register(name, {
+                      required: `${label} is required`,
+                      pattern: {
+                        value: /^\d{4}-\d{2}-\d{2}$/,
+                        message:
+                          'Please enter a valid date in YYYY-MM-DD format',
+                      },
+                      onChange: handleCheckDateChange,
+                    })}
                     className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    required
                   />
+                  {errors[name] && (
+                    <p className="text-red-500 text-sm">
+                      {String(errors[name]?.message)}
+                    </p>
+                  )}
                 </div>
               ))}
-              <div className="grid grid-cols-3 mt-4 items-center ">
-                <label
-                  htmlFor=""
-                  className="text-gray-700 font-medium col-span-1"
-                >
-                  Available Slots :
-                </label>
-                <div className="col-span-2">
-                  {' '}
-                  <div className="flex justify-around">
-                    {['10AM-2PM', '2PM-6PM', '6PM-10PM'].map((slot) => (
-                      <button   onClick={() => setSelectedSlot(slot)}
-                      className={`border rounded-2xl px-5 py-1 cursor-pointer transition-all duration-200
-                        ${selectedSlot === slot ? 'bg-red-400 text-white border-red-400' : 'bg-white text-black border-gray-300'}`}>
-                        {slot}
-                      </button>
-                    ))}
+              {selectedDate && (
+                <div className="grid grid-cols-3 mt-4 items-center ">
+                  <label
+                    htmlFor=""
+                    className="text-gray-700 font-medium col-span-1"
+                  >
+                    Available Slots :
+                  </label>
+                  <div className="col-span-2">
+                    <div className="flex justify-around">
+                      {allSlots.map((slot) => {
+                        const isBooked = bookedSlots.includes(slot);
+                        const isSelected = selectedSlot === slot;
+
+                        return (
+                          <button
+                            key={slot}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (!isBooked) {
+                                setSelectedSlot(slot);
+                              }
+                            }}
+                            className={`border rounded-2xl px-5 py-1 transition-all duration-200${
+                              isBooked
+                                ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+                                : isSelected
+                                  ? 'bg-red-600 text-red-600 border-red-600'
+                                  : 'bg-white text-black border-gray-300 hover:border-red-400'
+                            }`}
+                            disabled={isBooked}
+                          >
+                            {slot}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -306,7 +421,6 @@ const [selectedSlot,setSelectedSlot]=useState('');
                     name={name}
                     accept="application/pdf,image/svg+xml,image/png"
                     className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    onChange={handleChange}
                   />
                 </div>
               ))}

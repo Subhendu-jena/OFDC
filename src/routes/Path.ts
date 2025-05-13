@@ -41,6 +41,12 @@ interface paths {
   calender: string;
   confirmation: string; 
   preview: string;
+  talentlist: string;
+  locationDirectory: string;
+  locationDetails: string;
+  filmEcoSystem: string;
+  test: string;
+  RoleBasedRedirect: string;
 }
 
 export const paths: paths = {
@@ -86,4 +92,10 @@ export const paths: paths = {
   calender: '/calender',
   confirmation: '/confirmation',
   preview: '/preview',
+  talentlist: '/talent-list',
+  locationDirectory: '/location-directory',
+  locationDetails: '/location-details',
+  filmEcoSystem: '/film-eco-system',
+  test: '/test',
+  RoleBasedRedirect: '/role-based-redirect',
 };

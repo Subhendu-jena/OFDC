@@ -17,7 +17,7 @@ export interface Official {
   name?: string;
   designation?: string;
   department?: string;
-  contactNo?: string;
+  contact?: string;
   email?: string;
   imageUrl?: string;
   status?: string;
@@ -32,10 +32,11 @@ export interface Official {
   transcationStatus?: string;
   applicantName?: string;
   action?: boolean;
+  url?: string;
 }
 interface TableProps {
   columns: Column[];
-  data: Official[];
+  data: any;
   search?: Boolean;
   maxline?: number;
 }
@@ -77,11 +78,27 @@ export interface ErrorResponse<T> {
   success: false;
   message: string;
   data?: T;
+  token?: string;
+  user: {
+    _id: string;
+    role: string;
+    phoneNo: string;
+    name: string;
+    email: string;
+  };
 }
 export interface SuccessResponse<T> {
   success: true;
   message: string;
   data: T;
+  token?: string;
+  user: {
+    _id: string;
+    role: string;
+    phoneNo: string;
+    name: string;
+    email: string;
+  };
 }
 export interface DeleteApiCallerProps {
   uri: string;
@@ -93,6 +110,9 @@ export interface signUpResponse {
     email: string;
     phoneNo: string;
     _id: string;
+    phoneNo: string;
+    name: string;
+    email: string;
   };
   token: string;
 }
@@ -101,6 +121,7 @@ export interface signupData {
   email: string;
   password: string;
   phoneNo: string;
+  _id?: string;
 }
 export interface IUser {
   name: string;
@@ -111,16 +132,34 @@ export interface IUser {
 }
 
 export interface loginResponse {
+  name: string;
+  email: string;
+  phoneNo: string;
+  token?: string;
   user: {
+    _id: string;
+    role: string;
+    phoneNo: string;
     name: string;
     email: string;
-    phoneNo: string;
-    _id: string;
   };
-  token: string;
 }
 export interface loginData {
   identifier: string;
   password: string;
   rememberMe: boolean;
+}
+export interface director {
+  url?: string;
+  id: number;
+  position: string;
+  name: string;
+  imageUrl: string;
+  isVacant?: boolean;
+}
+
+export interface contactUsData {
+  name: string;
+  email: string;
+  message: string;
 }

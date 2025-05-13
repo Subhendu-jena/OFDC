@@ -8,20 +8,19 @@ import {
   ChevronDown,
   Menu,
   X,
-  Users,
+  // Users,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { paths } from '../routes/Path';
 import { Link } from 'react-router-dom';
 import { MenuItem } from '../types/global';
-
-
+import { useFontSize } from './home/FontSizeContext';
 
 const TopHeader = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-  console.log(setIsAdmin, setisLoggedIn);
-
+  // const [isAdmin, setIsAdmin] = useState(false);
+  // const [isLoggedIn, setisLoggedIn] = useState(false);
+  // console.log(setIsAdmin, setisLoggedIn);
+  const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className=" flex justify-between px-16 items-center">
@@ -30,9 +29,24 @@ const TopHeader = () => {
             Skip to main Content /
           </span>
           <div className="flex space-x-4">
-            <span className="hover:text-orange-500 cursor-pointer">A-</span>
-            <span className="hover:text-orange-500 cursor-pointer">A</span>
-            <span className="hover:text-orange-500 cursor-pointer">A+</span>
+            <button
+              onClick={decreaseFontSize}
+              className="hover:text-orange-500 cursor-pointer"
+            >
+              A-
+            </button>
+            <button
+              onClick={resetFontSize}
+              className="hover:text-orange-500 cursor-pointer"
+            >
+              A
+            </button>
+            <button
+              onClick={increaseFontSize}
+              className="hover:text-orange-500 cursor-pointer"
+            >
+              A+
+            </button>
           </div>
         </div>
 
@@ -42,7 +56,7 @@ const TopHeader = () => {
             className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
           >
             <Home size={16} />
-            <span>Home</span>
+            <h5>Home</h5>
           </Link>
           <span>/</span>
           <div className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer">
@@ -62,6 +76,17 @@ const TopHeader = () => {
             <Mail size={16} />
             <span>Contact Us</span>
           </Link>
+          {/* <div
+            onClick={() => {
+              sessionStorage.removeItem('token');
+              sessionStorage.removeItem('userID');
+              sessionStorage.removeItem('role');
+            }}
+            className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+          >
+            <Mail size={16} />
+            <span>Logout</span>
+          </div> */}
           <span>/</span>
           <Link
             to="/register"
@@ -70,7 +95,15 @@ const TopHeader = () => {
             <UserPlus size={16} />
             <span>Register</span>
           </Link>
-          {!isAdmin ? (
+          <span>/</span>
+          <Link
+            to="/login"
+            className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+          >
+            <User size={16} />
+            <span>Login</span>
+          </Link>
+          {/* {!isAdmin ? (
             !isLoggedIn ? (
               <>
                 <span>/</span>
@@ -116,7 +149,7 @@ const TopHeader = () => {
                 <span>Dept. Login</span>
               </Link>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>
@@ -161,7 +194,10 @@ const MainHeader = () => {
         { label: 'Achievments', url: paths.achievments },
         { label: 'Leadership', url: paths.leadership },
         { label: 'Former Chairpersons', url: paths.formerChairpersons },
-        { label: 'Former Managing Directors', url: paths.formerManagingDirectors },
+        {
+          label: 'Former Managing Directors',
+          url: paths.formerManagingDirectors,
+        },
         { label: "Who's Who", url: paths.whoIsWho },
       ],
     },
@@ -176,18 +212,18 @@ const MainHeader = () => {
     },
     {
       label: 'Location Directory',
-      url: '#',
+      url: paths.locationDirectory,
       children: [
-        { label: 'Location Category', url: '#' },
+        { label: 'Location Category', url: paths.locationDirectory },
         { label: 'Book a Location', url: '#' },
         { label: 'Location Booking Guideline', url: '#' },
       ],
     },
     {
       label: 'Talent Directory',
-      url: '#',
+      url: paths.talentlist,
       children: [
-        { label: 'Talent List', url: '#' },
+        { label: 'Talent List', url: paths.talentlist },
         { label: 'Individual', url: '#' },
         { label: 'Group', url: '#' },
         { label: 'Agency', url: '#' },
@@ -209,9 +245,12 @@ const MainHeader = () => {
       label: 'Discover Odisha',
       url: paths.odishaIndiasBestKeptSecret,
       children: [
-        { label: "ODISHA : India's Best Kept Secret", url: paths.odishaIndiasBestKeptSecret },
+        {
+          label: "ODISHA : India's Best Kept Secret",
+          url: paths.odishaIndiasBestKeptSecret,
+        },
         { label: 'Echoes of History', url: paths.echoesofhistory },
-        { label: 'Climate', url:paths.climate },
+        { label: 'Climate', url: paths.climate },
         { label: 'Geographical Feature', url: paths.geographicalFeature },
         { label: 'Cultural Legacy', url: paths.culturalLegacy },
         { label: 'Major Festivals', url: paths.majorFestivals },
@@ -275,7 +314,7 @@ const MainHeader = () => {
               <div key={index} className="relative group">
                 <Link
                   to={item.url}
-                  className="flex text-md items-center md:text-sm hover:text-orange-400 transition duration-500"
+                  className="flex text-sm items-center md:text-sm hover:text-orange-400 transition duration-500"
                 >
                   {item.label}
                   {item.children && (

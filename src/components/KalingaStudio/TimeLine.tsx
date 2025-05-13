@@ -198,7 +198,7 @@ const TimeLine = () => {
   return (
     <div>
     {/* This is the component for larger screens (not shown on mobile) */}
-    <div className="w-full justify-center  items-center mx-auto mb-20 hidden md:block">
+    <div className="w-full  justify-center  items-center mx-auto mb-20 hidden md:block">
       <div className="relative max-w-7xl h-[700px]">
         <img src={blueR} alt="BG image" />
         {/* div 1 */}

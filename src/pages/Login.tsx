@@ -4,8 +4,9 @@ import { paths } from '../routes/Path';
 import {  useNavigate } from 'react-router-dom';
 import { LoginData } from '../types/global';
 import { loginController } from '../config/controller';
+import { toast } from 'react-toastify';
 
-const Login: React.FC = ({onLogin}:any) => {
+const Login: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<LoginData>({
     email: '',
@@ -25,18 +26,25 @@ const Login: React.FC = ({onLogin}:any) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const payload = {
-      identifier: formData.email,  // 🔁 renamed here
+      identifier: formData.email,  
       password: formData.password,
       rememberMe: formData.rememberMe,
     };
   
     loginController({ data: payload })
       .then((response) => {
-        console.log(response, 'response');
+        toast.success('Login successful');
+        if (response?.token) {
+          sessionStorage.setItem('token', response?.token);
+          sessionStorage.setItem('userID', response?.user?._id);
+          sessionStorage.setItem('role', response?.user?.role);
+        }
+        navigate(paths.RoleBasedRedirect);
+      })
+      .catch(() => {
+        toast.error('Login failed. Please check your credentials.');
       });
-  
-    console.log('Form submitted:', formData);
-    navigate(paths.userDashboard)
+        // console.log('Form submitted:', formData);
   };
 
   return (
@@ -137,7 +145,7 @@ const Login: React.FC = ({onLogin}:any) => {
               </button>
               
               {/* Register Link */}
-              <div className="text-center mt-4" onClick={() => onLogin()}>
+              <div className="text-center mt-4 cursor-pointer text-red-500" onClick={() => navigate(paths.register)}>
                 <span className="text-sm text-gray-600">Don't have an account? </span>
                 {/* <Link to={paths.register} className="text-sm font-medium text-red-500 hover:text-red-400"> */}
                   Sign up now

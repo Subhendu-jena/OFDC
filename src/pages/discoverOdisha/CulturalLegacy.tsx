@@ -6,7 +6,7 @@ const CulturalLegacy:React.FC = () => {
     <div>
       <div className="m-5">
         <div className="m-5 p-5 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-          <h2 className="text-xl font-bold mb-2">
+          {/* <h2 className="text-xl font-bold mb-2">
             Odisha’s Cultural Heritage : A Timeless Legacy
           </h2>
           <img
@@ -41,19 +41,19 @@ const CulturalLegacy:React.FC = () => {
               is a land where history, art, and spirituality come alive, waiting
               to be immortalized on screen.
             </p>
-          </div>
+          </div> */}
 
-          <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="w-full bg-white rounded-lg shadow-lg overflow-hidden">
             <img
-              className="w-full h-64 object-cover"
-              src="https://example.com/odisha-cultural-heritage.jpg" // Replace with your image URL
+              className="w-full h-80 object-fill object-center"
+              src="https://images.pexels.com/photos/31742103/pexels-photo-31742103/free-photo-of-ancient-temple-entrance-in-siem-reap-cambodia.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" // Replace with your image URL
               alt="Odisha Cultural Heritage"
             />
             <div className="p-6">
-              <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
+              <h2 className="text-3xl font-bold   text-gray-800 mb-4">
                 Odisha’s Cultural Heritage
               </h2>
-              <p className="text-gray-600 text-center mb-6">
+              <p className="text-gray-600   mb-6">
                 Odisha’s rich cultural heritage blends ancient traditions,
                 spiritual depth, and artistic brilliance, making it a
                 captivating destination for filmmakers.
@@ -80,7 +80,7 @@ const CulturalLegacy:React.FC = () => {
                   <span className="font-medium">Architectural Marvels</span>
                 </div>
               </div>
-              <p className="text-gray-600 text-center">
+              <p className="text-gray-600  ">
                 With timeless traditions, grand festivals, and an unspoiled
                 artistic essence, Odisha provides an unparalleled opportunity to
                 bring India’s heritage to life on screen. 🚀

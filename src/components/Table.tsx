@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Star, User,ScanEye  } from 'lucide-react';
-import { Official, TableProps } from '../types/global';
+import { Mail, Phone, Star, User, ScanEye } from 'lucide-react';
+import { TableProps } from '../types/global';
 import { paths } from '../routes/Path';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { STRAPI_API_BASE_URL } from '../config/httpClient';
+import { ChevronRight } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import { useFontSize } from './home/FontSizeContext';
 
 const TableComponent = ({
   Heading,
@@ -13,27 +17,29 @@ const TableComponent = ({
 }: TableProps & { Heading: string }) => {
   const itemsPerPage = maxline ?? 10;
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState<Official[]>([]);
+  const [filteredData, setFilteredData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
   const navigate = useNavigate();
+  const { fontSize } = useFontSize();
+  const [modalImage, setModalImage] = useState<string | null>(null);
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredData(data);
     } else {
       const lowercasedFilter = searchTerm.toLowerCase();
-      const filtered = data.filter((item) =>
+      const filtered = data.filter((item: any) =>
         Object.values(item).some((value) =>
           value?.toString().toLowerCase().includes(lowercasedFilter)
         )
       );
       setFilteredData(filtered);
     }
-    setCurrentPage(1); // Reset to first page on search
+    setCurrentPage(1);
   }, [searchTerm, data]);
-
+  console.log(modalImage, 'modalImage');
   return (
     <div className=" overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
@@ -53,11 +59,11 @@ const TableComponent = ({
       )}
       <table className="w-full border-collapse ">
         <thead>
-          <tr >
+          <tr>
             {columns.map((column, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-wider"
+                className="px-6 py-3 text-left   font-medium text-gray-500 tracking-wider"
               >
                 {column.label}
               </th>
@@ -69,9 +75,9 @@ const TableComponent = ({
           style={{ transition: 'all 0.5s ease' }}
         >
           {currentData.length > 0 ? (
-            currentData.map((official: Official, index) => (
+            currentData.map((official: any, index: number) => (
               <tr key={official.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap   text-gray-900">
                   {index + 1}
                 </td>
                 <td className="px-6 py-4">
@@ -83,60 +89,85 @@ const TableComponent = ({
                         </div>
                       </div>
                     ) : (
-                      <img
-                        src={
-                          official.imageUrl ||
-                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                        }
-                        alt={official.name}
-                        className="h-12 w-12 rounded-full object-cover"
-                      />
+                      <div className="relative group inline-block">
+                        <img
+                          src={
+                            official?.image?.url
+                              ? STRAPI_API_BASE_URL + official?.image?.url
+                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                          }
+                          alt={official.name}
+                          className="h-12 w-12 rounded-full object-cover cursor-pointer"
+                          onClick={() =>
+                            setModalImage( STRAPI_API_BASE_URL + official?.image?.url)
+                          }
+                        />
+                        {modalImage && (
+                          <div
+                            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                            onClick={() => setModalImage(null)} // click outside closes
+                          >
+                            <img
+                              src={modalImage}
+                              alt="Enlarged"
+                              className="max-w-full max-h-[90%] rounded shadow-lg"
+                              onClick={(e) => e.stopPropagation()} // prevent closing when clicking the image
+                            />
+                          </div>
+                        )}
+                      </div>
                     )}
+
                     <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="  font-medium text-gray-900">
                         {official.name}
                       </div>
-                      <div className="text-sm text-red-500 font-medium">
+                      <div className="  text-red-500 font-medium">
                         {official.designation}
                       </div>
                     </div>
                   </div>
 
                   {official.bookingType && (
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="  font-medium text-gray-900">
                       {official.bookingType}
                     </div>
                   )}
                 </td>
                 {official.applicantName && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.applicantName}
                   </td>
                 )}
+                {official.talentType && (
+                  <td className="px-6 py-4   text-gray-900">
+                    {official.talentType}
+                  </td>
+                )}
                 {official.bookingDate && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.bookingDate}
                   </td>
                 )}
                 {official.screeningDate && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.screeningDate}
                   </td>
                 )}
                 {official.paymentMode && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.paymentMode}
                   </td>
                 )}
                 {official.paidOn && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     {official.paidOn}
                   </td>
                 )}
                 {official?.status && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4   text-gray-900">
                     <div
-                      className={`px-2 py-1 text-xs rounded-full w-max inline-block ${
+                      className={`px-2 py-1   rounded-full w-max inline-block ${
                         official.status === 'Completed'
                           ? 'bg-green-100 text-green-800'
                           : official.status === 'Pending'
@@ -149,9 +180,9 @@ const TableComponent = ({
                   </td>
                 )}
                 {official?.transcationStatus && (
-                  <td className="px-9 py-4 text-sm text-gray-900 ">
+                  <td className="px-9 py-4   text-gray-900 ">
                     <div
-                      className={`px-2 py-1 text-xs rounded-full w-max inline-block ${
+                      className={`px-2 py-1   rounded-full w-max inline-block ${
                         official.transcationStatus === 'Success'
                           ? 'bg-green-100 text-green-800'
                           : official.transcationStatus === 'Failed'
@@ -165,34 +196,44 @@ const TableComponent = ({
                 )}
 
                 {official.view && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    <button  className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl text-sm cursor-pointer" onClick={()=> navigate(paths.preview)}>
-                    <ScanEye />
+                  <td className="px-6 py-4   text-gray-900">
+                    <button
+                      className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
+                      onClick={() => navigate(paths.preview)}
+                    >
+                      <ScanEye />
                     </button>
                   </td>
                 )}
                 {(official.department || official.from) && (
-                  <td className="px-6 py-4">
-                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                  <td
+                    className="px-6 py-4"
+                    style={{ fontSize: `${fontSize - 4}px` }}
+                  >
+                    <span className="px-2 py-1  font-semibold rounded-full bg-red-100 text-red-800">
                       {official.department || official.from}
                     </span>
                   </td>
                 )}
                 {official.to && (
-                  <td className="px-6 py-4">
-                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                  <td
+                    className="px-6 py-4"
+                    style={{ fontSize: `${fontSize - 4}px` }}
+                  >
+                    <span className="px-2 py-1   font-semibold rounded-full bg-red-100 text-red-800">
                       {official.to}
                     </span>
                   </td>
                 )}
-                {official.contactNo && (
-                  <td className="px-6 py-4 text-sm text-gray-900">
+
+                {official.contact && (
+                  <td className="px-6 py-4   text-gray-900">
                     <div className="flex items-center">
                       <Phone size={14} className="mr-1 text-gray-500" />
-                      {official.contactNo}
+                      {official.contact}
                     </div>
-                    {official.email && (
-                      <div className="text-sm text-gray-500 flex items-center">
+                    {/* {official.email && (
+                      <div className="  text-gray-500 flex items-center">
                         <Mail size={14} className="mr-1 text-gray-500" />
                         <a
                           href={`mailto:${official.email}`}
@@ -201,7 +242,20 @@ const TableComponent = ({
                           {official.email}
                         </a>
                       </div>
-                    )}
+                    )} */}
+                  </td>
+                )}
+                {official.email && (
+                  <td className="px-6 py-4">
+                    <div className=" text-gray-500 flex items-center">
+                      <Mail size={14} className="mr-1 text-gray-500" />
+                      <a
+                        href={`mailto:${official.email}`}
+                        className="hover:text-red-500"
+                      >
+                        {official.email === null ? null : official.email}
+                      </a>
+                    </div>
                   </td>
                 )}
                 {official.action && (
@@ -226,8 +280,8 @@ const TableComponent = ({
                         ></div>
                       </div>
                     </label> */}
-                  {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl text-sm cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
-                  <button className='border p-2 rounded-2xl text-sm cursor-pointer' >Decline</button> */}
+                    {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl   cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
+                  <button className='border p-2 rounded-2xl   cursor-pointer' >Decline</button> */}
                   </td>
                 )}
               </tr>
@@ -246,25 +300,25 @@ const TableComponent = ({
           {' '}
           <div className="flex justify-center items-center gap-4 mt-4">
             <button
-              className="px-3 py-1 bg-red-300 text-red-800 rounded disabled:opacity-50"
+              className="px-1 py-1 rounded-4xl bg-red-300 text-red-800  disabled:opacity-50"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
             >
-              Previous
+              <ChevronLeft />
             </button>
 
-            <span className="font-semibold">
-              Page {currentPage} of {totalPages}
+            <span className="font-medium">
+              {currentPage} of {totalPages}
             </span>
 
             <button
-              className="px-3 py-1 bg-red-300 text-red-800 rounded disabled:opacity-50"
+              className="px-1 py-1  rounded-4xl bg-red-300 text-red-800  disabled:opacity-50"
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
             >
-              Next
+              <ChevronRight />
             </button>
           </div>
         </div>

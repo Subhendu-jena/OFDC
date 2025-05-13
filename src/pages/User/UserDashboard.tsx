@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Clock,
   FileCheck,
@@ -10,57 +10,73 @@ import {
 import TableComponent from '../../components/Table';
 import {  useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
-const currentBooking = {
-  location: 'Mountain View Manor',
-  date: '2024-03-25',
-  status: 'Confirmed',
-  shootingTime: '9:00 AM - 6:00 PM',
-  crew: 15,
-};
+import { getAllSlotOfUser } from '../../config/controller';
+import { formatDateToMMDDYYYY } from '../../variables/utils';
+
 const columns = [
   { label: 'Sl No.', field: 'sNo' },
   { label: 'Booking Type', field: 'bookingType' },
-  { label: 'Booking Date', field: 'bookingDate' },
-  { label: 'Screening Date', field: 'screeningDate' },
+  // { label: 'Booking Date', field: 'bookingDate' },
+  // { label: 'Screening Date', field: 'screeningDate' },
   { label: 'Status', field: 'status' },
   { label: 'View', field: 'view' },
 ];
-const dataTable = [
-  {
-    slNo: 1,
-    bookingType: 'CBFC Screening',
-    bookingDate: '2023-10-01',
-    screeningDate: '2023-10-01',
-    status: 'Confirmed',
-    view: 'View Details',
-  },
-  {
-    slNo: 2,
-    bookingType: 'Workshop Seminar',
-    bookingDate: '2023-10-01',
-    screeningDate: '2023-10-01',
-    status: 'Completed',
-    view: 'View Details',
-  },
-  {
-    slNo: 3,
-    bookingType: 'Film Trade Show',
-    bookingDate: '2023-10-01',
-    screeningDate: '2023-10-01',
-    status: 'Completed',
-    view: 'View Details',
-  },
-  {
-    slNo: 4,
-    bookingType: 'Film Audio/Video Visual Screening',
-    bookingDate: '2023-10-01',
-    screeningDate: '2023-10-01',
-    status: 'Pending',
-    view: 'View Details',
-  },
-];
+// const dataTable = [
+//   {
+//     slNo: 1,
+//     bookingType: 'CBFC Screening',
+//     bookingDate: '2023-10-01',
+//     screeningDate: '2023-10-01',
+//     status: 'Confirmed',
+//     view: 'View Details',
+//   },
+//   {
+//     slNo: 2,
+//     bookingType: 'Workshop Seminar',
+//     bookingDate: '2023-10-01',
+//     screeningDate: '2023-10-01',
+//     status: 'Completed',
+//     view: 'View Details',
+//   },
+//   {
+//     slNo: 3,
+//     bookingType: 'Film Trade Show',
+//     bookingDate: '2023-10-01',
+//     screeningDate: '2023-10-01',
+//     status: 'Completed',
+//     view: 'View Details',
+//   },
+//   {
+//     slNo: 4,
+//     bookingType: 'Film Audio/Video Visual Screening',
+//     bookingDate: '2023-10-01',
+//     screeningDate: '2023-10-01',
+//     status: 'Pending',
+//     view: 'View Details',
+//   },
+// ];
+// const currentBooking = {
+//   location: 'Mountain View Manor',
+//   date: '2024-03-25',
+//   status: 'Confirmed',
+//   shootingTime: '9:00 AM - 6:00 PM',
+//   crew: 15,
+// };
 const UserDashboard:React.FC=()=> {
+  const token = sessionStorage.getItem('token')
+    const userId = sessionStorage.getItem('userID')
+    console.log(userId, 'userId')
+    const [data, setData] = useState<any>([])
+    const [currentBooking, setCurrentBooking] = useState<any>([])
   const navigate=useNavigate();
+  useEffect(() => {
+     getAllSlotOfUser({ token: token,userId: userId || '' })
+     .then((res) => {
+       setData(res?.data)
+       setCurrentBooking(res?.data[0])
+       console.log(res?.data[0], 'res?.data[0]')
+     });
+   }, [])
   return (
     <div className="pt-10  bg-white">
       {/* Header */}
@@ -79,23 +95,23 @@ const UserDashboard:React.FC=()=> {
                 <Clock className="w-5 h-5 text-red-600" />
                 Current Booking
               </h3>
-              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                {currentBooking.status}
+              <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">
+                {currentBooking.approval}
               </span>
             </div>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-gray-500" />
-                <span className="text-gray-700">{currentBooking.location}</span>
+                <span className="text-gray-700">{currentBooking.bookingType}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-gray-500" />
-                <span className="text-gray-700">{currentBooking.date}</span>
+                <span className="text-gray-700">{formatDateToMMDDYYYY(currentBooking?.bookingDetails?.bookingDate)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock3 className="w-5 h-5 text-gray-500" />
                 <span className="text-gray-700">
-                  {currentBooking.shootingTime}
+                {currentBooking?.bookingDetails?.timeSlot}
                 </span>
               </div>
             </div>
@@ -119,7 +135,7 @@ const UserDashboard:React.FC=()=> {
         <div className="col-span-1 lg:col-span-3 bg-white rounded-lg shadow-md ">
           <TableComponent
             columns={columns}
-            data={dataTable}
+            data={data}
             Heading="User Booking History"
             search={true}
           />

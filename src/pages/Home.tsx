@@ -1,5 +1,7 @@
+import GoToTop from '../components/goToTop/GoToTop';
 import EqipmentDirectory from '../components/home/EqipmentDirectory';
 import HeroSection from '../components/home/HeroSection';
+import LatestNews from '../components/home/LatestNews';
 import LatestVideo from '../components/home/LatestVideo';
 import LocationDirectory from '../components/home/LocationDirectory';
 import MessageFromCm from '../components/home/MessageFromCm';
@@ -13,19 +15,8 @@ function Home() {
       <section>
         <HeroSection />
       </section>
-      {/* Latest News */}
       <section className=" flex flex-col md:flex-row justify-between -mt-2">
-        <button className=" w-full md:w-[15%] px-4  text-white font-bold bg-[#0B0035] text-lg">
-          Latest News
-        </button>
-        <div className="w-full md:w-[85%] justify-between h-10 flex flex-col ">
-          <div className="bg-[#F47216] h-[80%] items-center flex overflow-hidden">
-            {' '}
-            <div className=" whitespace-nowrap text-white font-semibold animate-marquee"> Welcome to the Soul of Incredible India - Odisha! Explore the beauty of culture and nature with Tourist Villages in Odisha  under Mission Youth. To know more, visit  
-            <a href="www.odishatouristvillages.in" style={{color: "white", textDecoration: "underline", fontWeight: "bold"}}> www.odishatouristvillages.in</a></div>
-          </div>
-          <div className="h-[20%] bg-[#FC3C3C]"></div>
-        </div>
+       <LatestNews/>
       </section>
 
       <section
@@ -44,9 +35,8 @@ function Home() {
       >
         <MessageFromCm />
       </section>
-      {/* bg-[url('/sea-bg.png')] object-cover */}
       <section className="relative flex justify-center w-full  h-full items-start ">
-        <img src="/sea-bg.png" alt="" className='absolute top-0 left-0  h-[132%] w-full ' />
+        <img src="/sea-bg.webp" alt="" className='absolute top-0 left-0  h-[132%] w-full ' />
         <div className="max-w-6xl h-full  ">
           <LocationDirectory />
         </div>
@@ -57,9 +47,6 @@ function Home() {
         </div>
       </section>
       <section className="relative flex justify-center   w-full items-start">
-      {/* bg-[url('/light.jpg')] */}
-      {/* <img src="/light.jpg" alt="" className='absolute top-0 left-0  h-full w-full ' /> */}
-
         <div className="max-w-6xl  h-[132%] bg-cover bg-center">
           <TalentDirectory />
         </div>
@@ -74,6 +61,7 @@ function Home() {
           <Testimonials />
         </div>
       </section>
+      <GoToTop/>
     </div>
   );
 }

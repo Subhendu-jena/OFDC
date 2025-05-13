@@ -1,170 +1,130 @@
-import React from "react";
-import subhendra from "../../assets/ProfileImages/Sri Subhendra Kumar Nayak, OAS.png"
-import saroj from "../../assets/ProfileImages/Sri Saroj Kumar Samal, IAS.png"
-import samarth from "../../assets/ProfileImages/Sri Samarth Verma, IAS.png"
-import dillip from "../../assets/ProfileImages/Sri Dillip Kumar Mishra.jpeg"
-import bijendra from "../../assets/ProfileImages/Bijendra Mohanty].png"
-// import mansi from "../../assets/ProfileImages/Mansi Nimbhal, IAS.png"
-const Leadership:React.FC = () => {
-  const Chairman = {
-    id: 1,
-    name: 'Vacant',
-    position: 'Chairman, OFDC',
-    translation: 'ଅଧ୍ୟକ୍ଷ, ଓଡିଶା ଚଳଚ୍ଚିତ୍ର ଉନ୍ନୟନ ନିଗମ ଲିମିଟେଡ',
-    image:""
-  };
-  const managingDirector = {
-    id: 2,
-    name: 'Sri Samarth Verma, IAS',
-    position: 'Managing Director, OFDC Ltd.',
-    translation: 'ଶ୍ରୀ ସମର୍ଥ ବର୍ମା, ଭା.ପ୍ର.ସେ. | ପରିଚାଳନା ନିର୍ଦ୍ଦେଶକ',
-    image:`${samarth}`
-  };
-  const nominee = [
-    {
-      id: 3,
-      name: 'Sri Subhendra Kumar Nayak, OAS',
-      position: 'Special Secretary to Govt., Industries Department',
-      translation: 'ଶ୍ରୀ ଶୁଭେନ୍ଦ୍ର କୁମାର ନାୟକ, ଓ.ପ୍ର.ସେ. | ସ୍ଵତନ୍ତ୍ର ଶାସନ ସଚିବ',
-      image:`${subhendra}`
-    },
-    {
-      id: 4,
-      name: 'Sri Susanta Kumar Singh, OAS (SAG)',
-      position: 'Additional Secretary to Govt., Public Enterprise Dept.',
-      translation: 'ଶ୍ରୀ ସୁଶାନ୍ତ କୁମାର ସିଂ, ଓ.ପ୍ର.ସେ. (ଏସ୍.ଏ.ଜି.)',
-      image:""
-    },
-    {
-      id: 5,
-      name: 'Dr. Bijay Ketan Upadhyaya, IAS',
-      position: 'Director, Odia Language, Literature & Culture Dept.',
-      translation: 'ଡ଼. ବିଜୟ କେତନ ଉପଧ୍ୟାୟ, ଭା.ପ୍ର.ସେ.',
-      image:""
-    },
-    {
-      id: 6,
-      name: 'Director',
-      position: 'Tourism Department, Govt. of Odisha',
-      translation: 'ନିର୍ଦ୍ଦେଶକ, ପର୍ଯ୍ୟଟନ ବିଭାଗ',
-      image:""
-    },
-    {
-      id: 7,
-      name: 'Sri Saroj Kumar Samal, IAS',
-      position: 'Director, Information & Public Relation Department',
-      translation: 'ଶ୍ରୀ ସରୋଜ କୁମାର ସାମଲ, ଭା.ପ୍ର.ସେ.',
-      image:`${saroj}`
-    },
-    {
-      id: 8,
-      name: 'Director',
-      position: 'Biju Pattanaik Film and Television Institute of Odisha',
-      translation: 'ନିର୍ଦ୍ଦେଶକ, ବିଜୁ ପଟ୍ଟନାୟକ ଫିଲ୍ମ ଆଣ୍ଡ ଟେଲିଭିଜନ୍ ଇନଷ୍ଟିଚ୍ୟୁଟ୍',
-      image:""
-    },
-  ];
-  const independentDirectors = [
-    {
-      id: 9,
-      name: 'Sri Dillip Kumar Mishra',
-      position: 'Chairman, Utkal Cine Chamber of Commerce',
-      translation: 'ଶ୍ରୀ ଦିଲ୍ଲୀପ କୁମାର ମିଶ୍ର',
-      image:`${dillip}`
-    },
-    {
-      id: 10,
-      name: 'Sri Bijendra Kumar Mohanty',
-      position: 'Proprietor, Sriya-Swati-Stutee Cineplex',
-      translation: 'ଶ୍ରୀ ବିଜେନ୍ଦ୍ର କୁମାର ମହାନ୍ତି',
-      image:`${bijendra}`
-    },
-  ];
+import React, { useEffect, useState } from 'react';
+import { leaderships } from '../../config/strapiController';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+import { Loader } from 'lucide-react';
+import { useFontSize } from '../../components/home/FontSizeContext';
+const Leadership: React.FC = () => {
+ const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>([]);
+  const { fontSize } = useFontSize();
+  
+  useEffect(() => {
+    setLoading(true);
+    leaderships()
+      .then(({ data }) => {
+        if (data) {
+          console.log(data, 'data');
+          setData(data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+  // console.log(data[0]?.managingDirector[0]?.imageUrl?.url, '1data');
   return (
-    <div className="bg-white min-h-screen py-2">
+   <>
+   {loading ? (<Loader/>):( <div className="bg-white min-h-screen py-2">
       {/* Header Section */}
       <div className="px-12 mb-4">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 mt-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 mt-4" style={{ fontSize: `${fontSize + 32}px` }}>
           Leadership
         </h1>
-        <p className="text-lg text-gray-600 w-full leading-relaxed text-justify">
-          At OFDC, strong leadership is the foundation of our success. Our Board
-          of Directors and Management Team bring a wealth of experience,
-          strategic vision, and commitment to excellence, ensuring that we
-          fulfil our mission and drive sustainable growth. The management
-          provides governance, oversight, and strategic direction, ensuring that
-          OFDC operates with integrity, transparency, and accountability. Their
-          collective expertise guides the organization toward long-term success
-          and value creation. Our Leadership team is responsible for the
-          execution of strategic initiatives, and delivering on organizational
-          goals. With deep industry knowledge and a results-driven approach,
-          they foster innovation, operational efficiency, and stakeholder
-          engagement. Together, our leadership team is dedicated to maintaining
-          the highest standards of professionalism and ethical conduct, steering
-          OFDC toward continued growth and excellence. This section highlights
-          the individuals whose vision and leadership shape the organization’s
-          future.
+        <p className="text-lg text-gray-600 w-full leading-relaxed text-justify" style={{ fontSize: `${fontSize + 2}px` }}>
+          {data[0]?.mainDescription?.description}
         </p>
       </div>
       {/* chairman Grid */}
       <div className=" py-4">
-        <div className=" text-2xl font-semibold pl-12 py-3">Chairman</div>
+        <div className=" text-2xl font-semibold pl-12 py-3" style={{ fontSize: `${fontSize + 8}px` }}>Chairman</div>
         <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-6">
-          <Card name={Chairman.name} position={Chairman.position} image={Chairman.image} />
+         {data[0] && data[0].chairman.map((Chairman: any) =>( <Card
+            name={Chairman.name}
+            position={Chairman.designation}
+            image={Chairman.image}
+          />))}
         </div>
       </div>
       {/* managing Director Grid */}
       <div className=" py-4">
-        <div className=" text-2xl font-semibold pl-12 py-3">
+        <div className=" text-2xl font-semibold pl-12 py-3" style={{ fontSize: `${fontSize + 8}px` }}>
           Managing Director
         </div>
         <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-6">
-          <Card
-            name={managingDirector.name}
-            position={managingDirector.position}
-            image={managingDirector.image}
-          />
+          {data[0] &&
+            data[0].managingDirector.map((managingDirector: any) => (
+              <Card
+                name={managingDirector.name}
+                position={managingDirector.designation}
+                image={managingDirector?.imageUrl && ( STRAPI_API_BASE_URL +managingDirector?.imageUrl?.url)}
+              />
+            ))}
         </div>
       </div>
       {/* nominee Grid */}
       <div className=" py-4">
-        <div className=" text-2xl font-semibold pl-12 py-3">
+        <div className=" text-2xl font-semibold pl-12 py-3" style={{ fontSize: `${fontSize + 8}px` }}>
           Govt. Nominee Directors
         </div>
         <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-6">
-          {nominee.map((nom, i) => (
-            <Card key={i} name={nom.name} position={nom.position} image={nom.image} />
-          ))}
+          {data[0] &&
+            data[0].nomineeDirectors.map(( nom: any) => (
+              <Card
+                // key={i}
+                name={nom.name}
+                position={nom.designation}
+                image={nom?.imageUrl && ( STRAPI_API_BASE_URL +nom?.imageUrl?.url)}
+              />
+            ))}
         </div>
       </div>
       {/* independentDirectors Grid */}
       <div className=" py-4">
-        <div className=" text-2xl font-semibold pl-12 py-3">
+        <div className=" text-2xl font-semibold pl-12 py-3" style={{ fontSize: `${fontSize + 8}px` }}>
           Independent Directors
         </div>
         <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-6">
-          {independentDirectors.map((nom, i) => (
-            <Card key={i} name={nom.name} position={nom.position} image={nom.image} />
+          {data[0] && data[0].independentDirector.map((nom: any) => (
+            <Card
+              name={nom.name}
+              position={nom.designation}
+              image={nom?.imageUrl && ( STRAPI_API_BASE_URL +nom?.imageUrl?.url)}
+            />
           ))}
         </div>
       </div>
-    </div>
+    </div>)}</>
   );
 };
 
 export default Leadership;
 
-const Card = ({ name, position,image }: { name: string; position: string,image:string }) => {
+const Card = ({
+  name,
+  position,
+  image,
+}: {
+  name: string;
+  position: string;
+  image: string;
+}) => {
+  const { fontSize } = useFontSize();
   return (
     <div className="bg-white rounded-sm shadow-md text-center transition transform hover:scale-105  w-[255px]">
       <img
-        src={image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" }
+        src={
+          image ||
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+        }
         alt="DP"
-        className=" w-full h-50"
+        className=" w-full h-50 rounded-t-4xl"
       />
 
-      <p className="text-lg pt-2 font-semibold px-2 text-gray-800">{name}</p>
-      <p className="text-sm text-gray-500 pb-8 pt-2 px-4">{position}</p>
+      <p className="text-lg pt-2 font-semibold px-2 text-gray-800" style={{ fontSize: `${fontSize + 2}px` }}>{name}</p>
+      <p className="text-sm text-gray-500 pb-8 pt-2 px-4" style={{ fontSize: `${fontSize -2}px` }}>{position}</p>
     </div>
   );
 };

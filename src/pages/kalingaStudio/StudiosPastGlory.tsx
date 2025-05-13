@@ -2,9 +2,10 @@ import React from 'react';
 import { Film, Award, Camera, MapPin, Star } from 'lucide-react';
 // import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import { motion } from 'framer-motion';
+import { useFontSize } from '../../components/home/FontSizeContext';
 
 const StudiosPastGlory: React.FC = () => {
-
+  const { fontSize } = useFontSize();
   const filmmakers = [
     {
       name: 'Mrinal Sen',
@@ -56,7 +57,7 @@ const StudiosPastGlory: React.FC = () => {
         tag="History"
       /> */}
 
-      <section id="history" className="pt-20 pb-24 relative">
+      <section id="history" className=" relative">
         {/* Background elements */}
         <div className="absolute inset-0 bg-gray-50">
           <div className="absolute left-0 top-0 w-full h-full opacity-10">
@@ -79,7 +80,7 @@ const StudiosPastGlory: React.FC = () => {
         <div className="container mx-auto px-6 py-8 relative z-10">
           <div className="text-center mb-20">
             <h2 className="inline-block text-3xl md:text-5xl font-bold relative">
-              <span className="relative z-10">OUR LEGACY</span>
+              <span className="relative z-10" style={{ fontSize: `${fontSize + 32 }px` }}>OUR LEGACY</span>
               <div className="absolute -bottom-3 left-0 w-full h-3 bg-red-300 opacity-50 z-0"></div>
             </h2>
           </div>
@@ -126,7 +127,7 @@ const StudiosPastGlory: React.FC = () => {
                 {/* Year marker */}
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 p-8 rounded-full bg-red-400 flex items-center justify-center z-20">
                   <div className="w-8 h-8 p-6 rounded-full bg-white flex items-center justify-center border-2 border-red-400">
-                    <span className="text-xs font-bold">{item.year}</span>
+                    <span className="text-xs font-bold" >{item.year}</span>
                   </div>
                 </div>
                 <div className="absolute top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 z-10"></div>
@@ -143,10 +144,10 @@ const StudiosPastGlory: React.FC = () => {
                     marginTop: item.position === 'top' ? '-0px' : '250px',
                   }}
                 >
-                  <h3 className="text-lg font-bold text-red-500 mb-2">
+                  <h3 className="text-lg font-bold text-red-500 mb-2" style={{ fontSize: `${fontSize + 2}px` }}>
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <p className="text-sm text-gray-600" style={{ fontSize: `${fontSize -2}px` }}>{item.description}</p>
                 </motion.div>
               </motion.div>
             ))}
@@ -157,7 +158,7 @@ const StudiosPastGlory: React.FC = () => {
       {/* Achievement Section with 3D Card effect */}
       <section
         id="achievements"
-        className="py-24 relative bg-gradient-to-b from-white to-gray-100"
+        className=" relative bg-gradient-to-b from-white to-gray-100"
       >
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
@@ -327,11 +328,6 @@ const StudiosPastGlory: React.FC = () => {
                       {facility.description}
                     </p>
 
-                    <div className="mt-auto">
-                      <button className="py-2 px-4 bg-transparent border border-red-500 text-red-500 rounded-full text-sm hover:bg-red-50 hover:text-red-600 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                        Explore Facility
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -365,7 +361,7 @@ const StudiosPastGlory: React.FC = () => {
                   className={`group relative overflow-hidden h-10 w-60 bg-white rounded-xl hover:bg-red-50 transition-colors duration-300 shadow-md ${
                     director.image ? '' : 'p-4'
                   }`}
-                  style={{ height: index % 2 === 0 ? '200px' : '240px' }}
+                  style={{ height:'240px' }}
                 >
                   {director.image && (
                     <img
