@@ -15,7 +15,7 @@ const BookingForm = () => {
   ];
 
   return (
-    <div className=" pt-30 bg-gradient-to-br min-h-screen text-white bg-white">
+    <div className=" pt-3 bg-gradient-to-br min-h-screen text-white bg-white">
       <div className="container mx-auto ">
         <div className="bg-white text-gray-800 p-4 rounded-xl shadow-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-red-600 border-b-2 border-red-200 pb-3">

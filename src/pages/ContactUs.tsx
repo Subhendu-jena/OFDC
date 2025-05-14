@@ -115,7 +115,6 @@ const ContactUs: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-              required
             />
             <input
               type="email"
@@ -124,7 +123,6 @@ const ContactUs: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-              required
             />
             <textarea
               name="message"

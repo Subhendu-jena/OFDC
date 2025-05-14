@@ -23,6 +23,14 @@ const RegisterPage: React.FC = () => {
     phoneNo: '',
     termsAccepted: false,
   });
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phoneNo: '',
+    termsAccepted: false,
+  });
   const navigate = useNavigate();
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -35,11 +43,75 @@ const RegisterPage: React.FC = () => {
       [name]: type === 'checkbox' ? checked : value,
     });
   };
+  const validateForm = () => {
+    const errors = {
+      name: '',
+      email: '',
+      password: '',
+      phoneNo: '',
+      confirmPassword: '',
+      termsAccepted: false,
+    };
+    let isValid = true;
+
+    const name = formData.name?.trim() || '';
+    const email = formData.email?.trim() || '';
+    const password = formData.password?.trim() || '';
+    const phone = formData.phoneNo?.trim() || '';
+
+    // Name validation
+    if (!name) {
+      errors.name = 'Name is required';
+      isValid = false;
+    }
+
+    // Email validation
+    if (!email) {
+      errors.email = 'Email is required';
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = 'Email is invalid';
+      isValid = false;
+    }
+
+    // Password validation
+    if (!password) {
+      errors.password = 'Required';
+      isValid = false;
+    } else if (password.length < 6) {
+      errors.password = 'must be 6 letters';
+      isValid = false;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = 'mismatch';
+      isValid = false;
+    }
+    // Phone validation
+    if (!phone) {
+      errors.phoneNo = 'Phone number is required';
+      isValid = false;
+    } else if (!/^\d{10}$/.test(phone)) {
+      errors.phoneNo = 'Phone number must be exactly 10 digits';
+      isValid = false;
+    }
+    if (!formData.termsAccepted) {
+      errors.termsAccepted = true;
+      isValid = false;
+    }
+
+    setFormErrors(errors);
+    return isValid;
+  };
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
+    if (!formData.termsAccepted) {
+      toast.error('You must accept the terms and conditions');
+      return;
+    }
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match");
       return;
@@ -55,32 +127,32 @@ const RegisterPage: React.FC = () => {
           navigate(paths.login);
         }
       })
-      .catch((err) => {
-        if (err) {
-          toast.error('Signup Failed');
+      .catch((error) => {
+        if (error) {
+          toast.error(error?.response?.data?.error ?? 'Something went wrong');
         }
       });
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
+    <div className="flex flex-col md:flex-row min-h-screen h-full w-full bg-gray-50">
       {/* Left side - Registration Form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-10">
+      <div className="w-full md:w-1/2 flex  justify-center p-2 ">
         <div className="w-full max-w-md">
           {/* Logo and Title */}
-          <div className="flex items-center space-x-2 mb-4">
+          <div className="flex items-center justify-center w-full space-x-2">
             <img
-              src="/Logo\OFDC Logo Black.png"
+              src="/Logo\Logo_OFDC_Booking_Page-removebg-preview.png"
               alt="OFDC Logo"
-              className="h-12 md:h-20 w-auto"
+              className=" w-auto md:h-52"
             />
-            <h1 className="text-2xl font-bold text-gray-800">OFDC</h1>
+            {/* <h1 className="text-2xl font-bold text-gray-800">OFDC</h1> */}
           </div>
 
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 className="text-[28px] font-bold text-gray-900">
             Create an account
           </h2>
-          <p className="text-gray-600 mb-4">Join our movie community today</p>
+          {/* <p className="text-gray-600 mb-2">Join our movie community today</p> */}
 
           {/* Registration Form */}
           <form onSubmit={handleSubmit}>
@@ -89,9 +161,17 @@ const RegisterPage: React.FC = () => {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className=" text-sm font-medium text-gray-700 mb-1 flex items-center justify-between"
                 >
-                  Full name
+                  <div>
+                    {' '}
+                    Full name <span className="text-red-500">*</span>
+                  </div>
+                  {formErrors.name && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {formErrors.name}
+                    </p>
+                  )}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -103,8 +183,7 @@ const RegisterPage: React.FC = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    required
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    className="pl-10 w-full py-2 border placeholder:text-sm border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     placeholder="Enter your fullname"
                   />
                 </div>
@@ -114,9 +193,17 @@ const RegisterPage: React.FC = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className=" text-sm font-medium text-gray-700 mb-1 flex items-center justify-between"
                 >
-                  Email
+                  <div>
+                    {' '}
+                    Email <span className="text-red-500">*</span>
+                  </div>{' '}
+                  {formErrors.email && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {formErrors.email}
+                    </p>
+                  )}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -128,8 +215,7 @@ const RegisterPage: React.FC = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    className="pl-10 w-full py-2 placeholder:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -138,9 +224,16 @@ const RegisterPage: React.FC = () => {
               <div>
                 <label
                   htmlFor="phoneNo"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className=" text-sm font-medium text-gray-700 mb-1 flex items-center justify-between"
                 >
-                  Phone Number
+                  <div>
+                    Phone Number <span className="text-red-500">*</span>
+                  </div>
+                  {formErrors.phoneNo && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {formErrors.phoneNo}
+                    </p>
+                  )}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -150,91 +243,80 @@ const RegisterPage: React.FC = () => {
                     type="number"
                     id="phoneNo"
                     name="phoneNo"
+                    onWheel={(e) => e.currentTarget.blur()}
                     value={formData.phoneNo}
                     onChange={handleChange}
-                    required
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    className="pl-10 w-full py-2 placeholder:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     placeholder="Enter your phone number"
                   />
                 </div>
               </div>
 
-              {/* Password Field */}
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                    placeholder="Create a password"
-                  />
-                </div>
-              </div>
-
-              {/* Confirm Password Field */}
-              <div>
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                    placeholder="Confirm your password"
-                  />
-                </div>
-              </div>
-
-              {/* Role Selection */}
-              {/* <div>
-                <label
-                  htmlFor="role"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Role
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <ListFilter className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <select
-                    id="role"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    required
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white"
+              <div className="flex gap-3">
+                {' '}
+                {/* Password Field */}
+                <div>
+                  <label
+                    htmlFor="password"
+                    className=" text-sm font-medium text-gray-700 mb-1 flex items-center justify-between"
                   >
-                    <option value="viewer">Movie Viewer</option>
-                    <option value="critic">Movie Critic</option>
-                    <option value="creator">Content Creator</option>
-                  </select>
+                    <div>
+                      {' '}
+                      Password <span className="text-red-500">*</span>
+                    </div>
+                    {formErrors.password && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {formErrors.password}
+                      </p>
+                    )}
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Lock className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="pl-10 w-full placeholder:text-sm py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                      placeholder="Create a password"
+                    />
+                  </div>
                 </div>
-              </div> */}
+                {/* Confirm Password Field */}
+                <div>
+                  <label
+                    htmlFor="confirmPassword"
+                    className=" text-sm font-medium text-gray-700 mb-1 flex items-center justify-between"
+                  >
+                    <div>
+                      {' '}
+                      Confirm Password <span className="text-red-500">*</span>
+                    </div>
+                    {formErrors.confirmPassword && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {formErrors.confirmPassword}
+                      </p>
+                    )}
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Lock className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      className="pl-10 w-full placeholder:text-sm py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                      placeholder="Re-enter password"
+                    />
+                  </div>
+                </div>
+              </div>
 
               {/* Terms and Conditions */}
               <div className="flex items-center">
@@ -244,24 +326,33 @@ const RegisterPage: React.FC = () => {
                   name="termsAccepted"
                   checked={formData.termsAccepted}
                   onChange={handleChange}
-                  required
                   className="h-4 w-4 text-red-500 focus:ring-red-500 border-gray-300 rounded"
                 />
                 <label
                   htmlFor="termsAccepted"
-                  className="ml-2 block text-sm text-gray-700"
+                  className="ml-2 w-full text-sm text-gray-700 flex items-center justify-between"
                 >
-                  I accept the{' '}
-                  <a href="#" className="text-red-500 hover:text-red-400">
-                    Terms and Conditions
-                  </a>
+                  <div>
+                    I accept the{' '}
+                    <a href="#" className="text-red-500 hover:text-red-400">
+                      Terms and Conditions{' '}
+                      <span className="text-red-500">*</span>
+                    </a>
+                  </div>
+                  <div>
+                    {' '}
+                    {formErrors.termsAccepted && (
+                      <p className="text-sm text-red-500 mt-1">Please Accept</p>
+                    )}
+                  </div>
                 </label>
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150"
+                className="w-full flex justify-center items-center py-2 px-2 border border-transparent rounded-lg outline-none border-none shadow-sm text-white bg-red-500 hover:bg-red-600  transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                // disabled={!formData.email || !formData.password}
                 style={{ backgroundColor: '#FC3C3C' }}
               >
                 Create account
@@ -269,7 +360,7 @@ const RegisterPage: React.FC = () => {
               </button>
 
               {/* Login Link */}
-              <div className="text-center mt-4">
+              <div className="text-center">
                 <span className="text-sm text-gray-600">
                   Already have an account?{' '}
                 </span>
@@ -287,10 +378,10 @@ const RegisterPage: React.FC = () => {
 
       {/* Right side - Animation with standard Tailwind classes */}
       <div
-        className="hidden md:flex w-1/2 items-center justify-center overflow-hidden"
+        className="hidden md:flex w-1/2 min-h-screen h-full items-center justify-center overflow-hidden"
         style={{ backgroundColor: '#FC3C3C' }}
       >
-        <div className="relative w-full h-full flex items-center justify-center">
+        <div className="relative w-full min-h-screen h-full flex items-center justify-center">
           {/* Animated elements */}
           <div className="absolute w-full h-full opacity-10">
             {/* Movie reel pattern */}
@@ -349,11 +440,11 @@ const RegisterPage: React.FC = () => {
           {/* Content */}
           <div className="z-10 text-center p-10">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Join Our Movie Community
+              Step into the SpotLight
             </h2>
-            <p className="text-xl text-white opacity-80 max-w-md mb-8">
-              Create your account to rate films, join discussions, and get
-              personalized recommendations.
+            <p className="text-[18px] text-white opacity-80 max-w-md mb-8">
+              Create your account and join OFDC to access seamless booking &
+              exclusive theatre slots for your cinematic projects.
             </p>
 
             {/* Feature icons */}

@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { createBooking, createOrder, getAllSlotByDate } from '../../config/controller';
+import {
+  createBooking,
+  createOrder,
+  getAllSlotByDate,
+} from '../../config/controller';
 import { useForm } from 'react-hook-form';
 import { filmTradeShow } from './fields';
 import { loadRazorpay } from '../loadRazorpay';
@@ -66,11 +70,14 @@ export default function FlimTradeShow() {
   const onSubmit = async (data: any) => {
     const duration = `${String(data.durationHours).padStart(2, '0')}:${String(
       data.durationMinutes
-    ).padStart(2, '0')}:${String(data.durationSeconds).padStart(2, '0')}:${String(
+    ).padStart(
+      2,
+      '0'
+    )}:${String(data.durationSeconds).padStart(2, '0')}:${String(
       data.durationFrames
     ).padStart(2, '0')}`;
     const formattedJsonData = {
-      bookedBy: userId, 
+      bookedBy: userId,
       bookingType: 'Film Trade Show',
       applicantDetails: {
         nameOfApplicant: data.nameOfApplicant,
@@ -175,7 +182,7 @@ export default function FlimTradeShow() {
               // });
               setShowPreview(false);
               setShowReceipt(true);
-              setReceiptData({verifiedData, selectedDate, selectedSlot});
+              setReceiptData({ verifiedData, selectedDate, selectedSlot });
             };
             loadRazorpay(createorderresponse, onSuccess);
             console.log(onSuccess, 'onSuccess');
@@ -208,7 +215,7 @@ export default function FlimTradeShow() {
   if (showReceipt && receiptData) {
     return (
       <Confirmation
-      bookingDetails={receiptData.verifiedData}
+        bookingDetails={receiptData.verifiedData}
         selectedDate={receiptData.selectedDate}
         selectedSlot={receiptData.selectedSlot}
       />
@@ -260,7 +267,7 @@ export default function FlimTradeShow() {
             </div>
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :
+              Applicant Complete Postal Address :  <span className='text-red-500'>*</span>
               </label>
               <textarea
                 {...register('postalAddress', {
@@ -307,7 +314,7 @@ export default function FlimTradeShow() {
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
+                      {label} :  <span className="text-red-600">{required && '*'}</span>
                     </label>
                     <input
                       type={type}
@@ -331,72 +338,84 @@ export default function FlimTradeShow() {
                   </div>
                 )
               )}
-         <div className="md:col-span-2 mb-2">
-  <label className="block mb-1 font-medium text-gray-700">
-    Duration of the Film (HH:MM:SS:FF): <span className="text-red-600">*</span>
-  </label>
-  <div className="grid grid-cols-4 gap-2">
-    <input
-      type="number"
-      placeholder="HH"
-      {...register('durationHours', {
-        required: 'Hours are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 23, message: 'Max 23' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-    <input
-      type="number"
-      placeholder="MM"
-      {...register('durationMinutes', {
-        required: 'Minutes are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 59, message: 'Max 59' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-    <input
-      type="number"
-      placeholder="SS"
-      {...register('durationSeconds', {
-        required: 'Seconds are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 59, message: 'Max 59' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-    <input
-      type="number"
-      placeholder="FF"
-      {...register('durationFrames', {
-        required: 'Frames are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 29, message: 'Max 29' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-  </div>
-  {errors.durationHours && (
-    <p className="text-red-500 text-sm">Duration Hours should be between 0 to 23</p>
-  )}
-  {errors.durationMinutes && (
-    <p className="text-red-500 text-sm">Duration Minutes should be between 0 to 59</p>
-  )}
-  {errors.durationSeconds && (
-    <p className="text-red-500 text-sm">Duration Seconds should be between 0 to 59</p>
-  )}
-  {errors.durationFrames && (
-    <p className="text-red-500 text-sm">Duration Frames should be between 0 to 29</p>
-  )}
-</div>     
-              <div  style={{ marginBottom: '1rem' }}>
+              <div className="md:col-span-2 mb-2">
+                <label
+                  className="block  font-medium text-gray-700"
+                  style={{ marginBottom: '1rem' }}
+                >
+                  Duration of the Film (HH:MM:SS:FF):{' '}
+                  <span className="text-red-600">*</span>
+                </label>
+                <div className="grid grid-cols-4 gap-2">
+                  <input
+                    type="number"
+                    placeholder="HH"
+                    {...register('durationHours', {
+                      required: 'Hours are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 23, message: 'Max 23' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                  <input
+                    type="number"
+                    placeholder="MM"
+                    {...register('durationMinutes', {
+                      required: 'Minutes are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 59, message: 'Max 59' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                  <input
+                    type="number"
+                    placeholder="SS"
+                    {...register('durationSeconds', {
+                      required: 'Seconds are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 59, message: 'Max 59' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                  <input
+                    type="number"
+                    placeholder="FF"
+                    {...register('durationFrames', {
+                      required: 'Frames are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 29, message: 'Max 29' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                </div>
+                {errors.durationHours && (
+                  <p className="text-red-500 text-sm">
+                    Duration Hours should be between 0 to 23
+                  </p>
+                )}
+                {errors.durationMinutes && (
+                  <p className="text-red-500 text-sm">
+                    Duration Minutes should be between 0 to 59
+                  </p>
+                )}
+                {errors.durationSeconds && (
+                  <p className="text-red-500 text-sm">
+                    Duration Seconds should be between 0 to 59
+                  </p>
+                )}
+                {errors.durationFrames && (
+                  <p className="text-red-500 text-sm">
+                    Duration Frames should be between 0 to 29
+                  </p>
+                )}
+              </div>
+              <div style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700 font-medium col-span-1">
-                  Sound Format :
+                  Sound Format :  <span className='text-red-500'>*</span>
                 </label>
                 <select
                   {...register('soundFormat', {
-                    required: 'Format of the Film is required',
+                    required: 'Sound Format is required',
                   })}
                   className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 >
@@ -412,9 +431,9 @@ export default function FlimTradeShow() {
                   </p>
                 )}
               </div>
-              <div  style={{ marginBottom: '1rem' }}>
+              <div style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700 font-medium col-span-1">
-                  Format of the Film :
+                  Format of the Film :  <span className='text-red-500'>*</span>
                 </label>
                 <select
                   {...register('formatOfFilm', {
@@ -428,9 +447,9 @@ export default function FlimTradeShow() {
                   <option value="Pendrive">Pendrive</option>
                   <option value="Blueray DVD">Blueray DVD</option>
                 </select>
-                {typeof errors.formatOfTheFilm?.message === 'string' && (
+                {typeof errors.formatOfFilm?.message === 'string' && (
                   <p className="text-red-500 text-sm">
-                    {errors.formatOfTheFilm.message}
+                    {errors.formatOfFilm.message}
                   </p>
                 )}
               </div>
@@ -447,7 +466,7 @@ export default function FlimTradeShow() {
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
+                      {label} :  <span className="text-red-600">{required && '*'}</span>
                     </label>
                     <input
                       type={type}
@@ -458,7 +477,7 @@ export default function FlimTradeShow() {
                       })}
                       className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                     />
-                      {errors[name] && (
+                    {errors[name] && (
                       <p style={{ color: 'red' }}>
                         {String(errors[name]?.message)}
                       </p>
@@ -475,7 +494,7 @@ export default function FlimTradeShow() {
 
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :1
+              Production Complete Postal Address :  <span className='text-red-500'>*</span>
               </label>
               <textarea
                 {...register('productionAddress', {
@@ -484,7 +503,7 @@ export default function FlimTradeShow() {
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
               ></textarea>
-               {typeof errors.productionAddress?.message === 'string' && (
+              {typeof errors.productionAddress?.message === 'string' && (
                 <p className="text-red-500 text-sm">
                   {errors.productionAddress.message}
                 </p>
@@ -502,7 +521,7 @@ export default function FlimTradeShow() {
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
+                      {label} :  <span className="text-red-600">{required && '*'}</span>
                     </label>
                     <br />
                     <input
@@ -528,9 +547,9 @@ export default function FlimTradeShow() {
                 )
               )}
             </div>
-            <div  style={{ marginBottom: '1rem' }}>
+            <div style={{ marginBottom: '1rem' }}>
               <label className="text-gray-700 font-medium col-span-1">
-                Select Category :
+                Select Category :  <span className='text-red-500'>*</span>
               </label>
               <select
                 {...register('category', {
@@ -543,15 +562,15 @@ export default function FlimTradeShow() {
                 <option value="COMPANY">COMPANY</option>
               </select>
               {typeof errors.category?.message === 'string' && (
-                  <p className="text-red-500 text-sm">
-                    {errors.category.message}
-                  </p>
-                )}
+                <p className="text-red-500 text-sm">
+                  {errors.category.message}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :
+              Billing Complete Postal Address :  <span className='text-red-500'>*</span>
               </label>
               <textarea
                 {...register('billingPostalAddress', {
@@ -560,7 +579,7 @@ export default function FlimTradeShow() {
                 className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
                 rows={3}
               ></textarea>
-               {typeof errors.billingPostalAddress?.message === 'string' && (
+              {typeof errors.billingPostalAddress?.message === 'string' && (
                 <p className="text-red-500 text-sm">
                   {errors.billingPostalAddress.message}
                 </p>
@@ -604,72 +623,72 @@ export default function FlimTradeShow() {
               Booking Details
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-4">
-              {filmTradeShow.BookingDetails.map(
-                ({ name, label, type }) => (
-                  <div key={name} style={{ marginBottom: '1rem' }}>
-                    <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
-                    </label>
-                    <input
-                      type={type}
-                      placeholder={name}
-                      {...register(name, {
-                        required: `${label} is required`,
-                        pattern: {
-                          value: /^\d{4}-\d{2}-\d{2}$/,
-                          message:
-                            'Please enter a valid date in YYYY-MM-DD format',
-                        },
-                        onChange: handleCheckDateChange,
-                      })}
-                      className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    />
-                     {errors[name] && (
+              {filmTradeShow.BookingDetails.map(({ name, label, type }) => (
+                <div key={name} style={{ marginBottom: '1rem' }}>
+                  <label className="text-gray-700 font-medium col-span-1">
+                    {label} :  <span className='text-red-500'>*</span>
+                  </label>
+                  <input
+                    type={type}
+                    placeholder={name}
+                    {...register(name, {
+                      required: `${label} is required`,
+                      pattern: {
+                        value: /^\d{4}-\d{2}-\d{2}$/,
+                        message:
+                          'Please enter a valid date in YYYY-MM-DD format',
+                      },
+                      onChange: handleCheckDateChange,
+                    })}
+                    className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                  />
+                  {errors[name] && (
                     <p className="text-red-500 text-sm">
                       {String(errors[name]?.message)}
                     </p>
                   )}
-                  </div>
-                )
-              )}
-             {selectedDate && <div className="grid grid-cols-3 mt-4 items-center ">
-                <label
-                  htmlFor=""
-                  className="text-gray-700 font-medium col-span-1"
-                >
-                  Available Slots :
-                </label>
-                <div className="col-span-2">
-                  <div className="flex justify-around">
-                    {allSlots.map((slot) => {
-                      const isBooked = bookedSlots.includes(slot);
-                      const isSelected = selectedSlot === slot;
+                </div>
+              ))}
+              {selectedDate && (
+                <div className="grid grid-cols-3 mt-4 items-center ">
+                  <label
+                    htmlFor=""
+                    className="text-gray-700 font-medium col-span-1"
+                  >
+                    Available Slots :
+                  </label>
+                  <div className="col-span-2">
+                    <div className="flex justify-around">
+                      {allSlots.map((slot) => {
+                        const isBooked = bookedSlots.includes(slot);
+                        const isSelected = selectedSlot === slot;
 
-                      return (
-                        <button
-                          key={slot}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (!isBooked) {
-                              setSelectedSlot(slot);
-                            }
-                          }}
-                          className={`border rounded-2xl px-5 py-1 transition-all duration-200${
-                            isBooked
-                              ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
-                              : isSelected
-                                ? 'bg-red-400 text-white border-red-400'
-                                : 'bg-white text-black border-gray-300 hover:border-red-400'
-                          }`}
-                          disabled={isBooked}
-                        >
-                          {slot}
-                        </button>
-                      );
-                    })}
+                        return (
+                          <button
+                            key={slot}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (!isBooked) {
+                                setSelectedSlot(slot);
+                              }
+                            }}
+                            className={`border rounded-2xl px-5 py-1 transition-all duration-200${
+                              isBooked
+                                ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+                                : isSelected
+                                  ? 'bg-red-400 text-white border-red-400'
+                                  : 'bg-white text-black border-gray-300 hover:border-red-400'
+                            }`}
+                            disabled={isBooked}
+                          >
+                            {slot}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-              </div>}
+              )}
             </div>
           </div>
         </div>
