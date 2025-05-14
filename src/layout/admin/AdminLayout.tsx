@@ -1,8 +1,15 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import {  useEffect } from 'react';
 import { paths } from '../../routes/Path';
+import { Home } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
+import { Mail } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
+import { User } from 'lucide-react';
+import { useFontSize } from '../../components/home/FontSizeContext';
 const AdminLayout = () => {
   const title =  window.location.pathname;
   const navigate = useNavigate();
@@ -51,7 +58,147 @@ const AdminLayout = () => {
     // console.log(currentSection);
   },[navigate]
   )
+  const TopHeader = () => {
+    // const [isAdmin, setIsAdmin] = useState(false);
+    // const [isLoggedIn, setisLoggedIn] = useState(false);
+    // console.log(setIsAdmin, setisLoggedIn);
+    const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
+    return (
+      <div className="w-full text-white bg-[#11161F] py-2 text-sm  hidden md:block z-50">
+        <div className=" flex justify-between px-16 items-center">
+          <div className="flex items-center ">
+            <span className="hover:text-orange-500 cursor-pointer mr-4">
+              Skip to main Content /
+            </span>
+            <div className="flex space-x-4">
+              <button
+                onClick={decreaseFontSize}
+                className="hover:text-orange-500 cursor-pointer"
+              >
+                A-
+              </button>
+              <button
+                onClick={resetFontSize}
+                className="hover:text-orange-500 cursor-pointer"
+              >
+                A
+              </button>
+              <button
+                onClick={increaseFontSize}
+                className="hover:text-orange-500 cursor-pointer"
+              >
+                A+
+              </button>
+            </div>
+          </div>
+  
+          <div className="flex items-center space-x-4">
+            <Link
+              to={paths.home}
+              className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
+            >
+              <Home size={16} />
+              <h5>Home</h5>
+            </Link>
+            <span>/</span>
+            <div className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer">
+              <MessageCircle size={16} />
+              <span>Grievance</span>
+            </div>
+            <span>/</span>
+            <div className="flex items-center hover:text-orange-500 cursor-pointer space-x-1">
+              <MessageSquare size={16} />
+              <span>Feedback</span>
+            </div>
+            <span>/</span>
+            <Link
+              to={paths.contactUs}
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+              <Mail size={16} />
+              <span>Contact Us</span>
+            </Link>
+            {/* <div
+              onClick={() => {
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('userID');
+                sessionStorage.removeItem('role');
+              }}
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+              <Mail size={16} />
+              <span>Logout</span>
+            </div> */}
+            <span>/</span>
+            <Link
+              to="/register"
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+              <UserPlus size={16} />
+              <span>Register</span>
+            </Link>
+            <span>/</span>
+            <Link
+              to="/login"
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+              <User size={16} />
+              <span>Login</span>
+            </Link>
+            {/* {!isAdmin ? (
+              !isLoggedIn ? (
+                <>
+                  <span>/</span>
+                  <Link
+                    to={paths.userDashboard}
+                    className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
+                  >
+                    <User size={16} />
+                    <span>User Dashboard</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <span>/</span>
+                  <Link
+                    to="/"
+                    className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
+                  >
+                    <User size={16} />
+                    <span>User Login</span>
+                  </Link>
+                </>
+              )
+            ) : !isLoggedIn ? (
+              <>
+                <span>/</span>
+                <Link
+                  to={paths.dashboard}
+                  className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
+                >
+                  <Users size={16} />
+                  <span>Dashboard</span>
+                </Link>
+              </>
+            ) : (
+              <>
+                <span>/</span>
+                <Link
+                  to="/"
+                  className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
+                >
+                  <Users size={16} />
+                  <span>Dept. Login</span>
+                </Link>
+              </>
+            )} */}
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
+<><TopHeader />
     <div className="w-full">
         {currentSection ? (
         <KHeroSection
@@ -62,7 +209,7 @@ const AdminLayout = () => {
           link=''
           user={true}
         />
-     ):(<div className='mt-20'></div>) } 
+     ):(<div className=''></div>) } 
   
 
       {/* Main Content - Ensure it starts after the fixed section */}
@@ -73,7 +220,7 @@ const AdminLayout = () => {
           <Outlet />
         </main>
       </div>
-    </div>
+    </div></>
   );
 };
 

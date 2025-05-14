@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { MenuItem } from '../types/global';
 import { useFontSize } from './home/FontSizeContext';
 
-const TopHeader = () => {
+export const TopHeader = () => {
   // const [isAdmin, setIsAdmin] = useState(false);
   // const [isLoggedIn, setisLoggedIn] = useState(false);
   // console.log(setIsAdmin, setisLoggedIn);
