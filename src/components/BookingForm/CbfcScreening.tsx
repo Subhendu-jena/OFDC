@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { createBooking, createOrder, getAllSlotByDate } from '../../config/controller';
+import {
+  createBooking,
+  createOrder,
+  getAllSlotByDate,
+} from '../../config/controller';
 import { useForm } from 'react-hook-form';
 import { cbfc } from './fields';
 import { loadRazorpay } from '../loadRazorpay';
@@ -50,11 +54,14 @@ function CbfcScreening() {
       console.error('Error fetching slots:', error);
     }
   };
-  
+
   const onSubmit = async (data: any) => {
     const duration = `${String(data.durationHours).padStart(2, '0')}:${String(
       data.durationMinutes
-    ).padStart(2, '0')}:${String(data.durationSeconds).padStart(2, '0')}:${String(
+    ).padStart(
+      2,
+      '0'
+    )}:${String(data.durationSeconds).padStart(2, '0')}:${String(
       data.durationFrames
     ).padStart(2, '0')}`;
     const formattedData = {
@@ -136,7 +143,7 @@ function CbfcScreening() {
               // });
               setShowPreview(false);
               setShowReceipt(true);
-              setReceiptData({verifiedData, selectedDate, selectedSlot});
+              setReceiptData({ verifiedData, selectedDate, selectedSlot });
             };
             loadRazorpay(createorderresponse, onSuccess);
             console.log(onSuccess, 'onSuccess');
@@ -169,13 +176,12 @@ function CbfcScreening() {
   if (showReceipt && receiptData) {
     return (
       <Confirmation
-      bookingDetails={receiptData.verifiedData}
+        bookingDetails={receiptData.verifiedData}
         selectedDate={receiptData.selectedDate}
         selectedSlot={receiptData.selectedSlot}
       />
     );
   }
-  
 
   return (
     <div className=" bg-gray-50   text-sm rounded-lg">
@@ -186,10 +192,10 @@ function CbfcScreening() {
         <div className="space-y-6 grid gap-2 grid-cols-1 xl:grid-cols-2">
           {/* Film Details */}
           <div className="p-5 bg-white rounded-lg shadow">
-            <h3 className="text-lg font-semibold border-b pb-2  text-red-600">
+            <h3 className="text-lg font-semibold border-b  pb-2 mb-4  text-red-600">
               Film Details
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4" >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {cbfc.ScreeningDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
@@ -221,69 +227,78 @@ function CbfcScreening() {
                   </div>
                 )
               )}
-<div className="md:col-span-2 mb-2">
-  <label className="block mb-1 font-medium text-gray-700">
-    Duration of the Film (HH:MM:SS:FF): <span className="text-red-600">*</span>
-  </label>
-  <div className="grid grid-cols-4 gap-2">
-    <input
-      type="number"
-      placeholder="HH"
-      {...register('durationHours', {
-        required: 'Hours are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 23, message: 'Max 23' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-    <input
-      type="number"
-      placeholder="MM"
-      {...register('durationMinutes', {
-        required: 'Minutes are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 59, message: 'Max 59' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-    <input
-      type="number"
-      placeholder="SS"
-      {...register('durationSeconds', {
-        required: 'Seconds are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 59, message: 'Max 59' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-    <input
-      type="number"
-      placeholder="FF"
-      {...register('durationFrames', {
-        required: 'Frames are required',
-        min: { value: 0, message: 'Min 0' },
-        max: { value: 29, message: 'Max 29' },
-      })}
-      className="w-full p-2 border border-gray-400 rounded"
-    />
-  </div>
-  {errors.durationHours && (
-    <p className="text-red-500 text-sm">Duration Hours should be between 0 to 23</p>
-  )}
-  {errors.durationMinutes && (
-    <p className="text-red-500 text-sm">Duration Minutes should be between 0 to 59</p>
-  )}
-  {errors.durationSeconds && (
-    <p className="text-red-500 text-sm">Duration Seconds should be between 0 to 59</p>
-  )}
-  {errors.durationFrames && (
-    <p className="text-red-500 text-sm">Duration Frames should be between 0 to 29</p>
-  )}
-</div>
+              <div className="md:col-span-2 mb-2" >
+                <label className="block font-medium text-gray-700" style={{ marginBottom: '1rem' }}>
+                  Duration of the Film (HH:MM:SS:FF):{' '}
+                  <span className="text-red-600">*</span>
+                </label>
+                <div className="grid grid-cols-4 gap-2">
+                  <input
+                    type="number"
+                    placeholder="HH"
+                    {...register('durationHours', {
+                      required: 'Hours are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 23, message: 'Max 23' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                  <input
+                    type="number"
+                    placeholder="MM"
+                    {...register('durationMinutes', {
+                      required: 'Minutes are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 59, message: 'Max 59' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                  <input
+                    type="number"
+                    placeholder="SS"
+                    {...register('durationSeconds', {
+                      required: 'Seconds are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 59, message: 'Max 59' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                  <input
+                    type="number"
+                    placeholder="FF"
+                    {...register('durationFrames', {
+                      required: 'Frames are required',
+                      min: { value: 0, message: 'Min 0' },
+                      max: { value: 29, message: 'Max 29' },
+                    })}
+                    className="w-full p-2 border border-gray-400 rounded"
+                  />
+                </div>
+                {errors.durationHours && (
+                  <p className="text-red-500 text-sm">
+                    Duration Hours should be between 0 to 23
+                  </p>
+                )}
+                {errors.durationMinutes && (
+                  <p className="text-red-500 text-sm">
+                    Duration Minutes should be between 0 to 59
+                  </p>
+                )}
+                {errors.durationSeconds && (
+                  <p className="text-red-500 text-sm">
+                    Duration Seconds should be between 0 to 59
+                  </p>
+                )}
+                {errors.durationFrames && (
+                  <p className="text-red-500 text-sm">
+                    Duration Frames should be between 0 to 29
+                  </p>
+                )}
+              </div>
 
-              <div style={{ marginBottom: '1rem' }}>
+              <div>
                 <label className="text-gray-700  text-sm font-medium col-span-1">
-                  Sound Format : *
+                  Sound Format : <span className="text-red-500">*</span>
                 </label>
                 <br />
                 <select
@@ -306,7 +321,7 @@ function CbfcScreening() {
               </div>
               <div style={{ marginBottom: '1rem' }}>
                 <label className="text-gray-700  text-sm col-span-1">
-                  Format of the Film : *
+                  Format of the Film : <span className="text-red-500">*</span>
                 </label>
                 <br />
                 <select
@@ -339,7 +354,10 @@ function CbfcScreening() {
               {cbfc.ProductionDetails.map(
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
-                    <label>{label}</label>
+                    <label>
+                      {label}{' '}
+                      <span className="text-red-600">{required && '*'}</span>
+                    </label>
                     <br />{' '}
                     <input
                       type={type}
@@ -367,7 +385,8 @@ function CbfcScreening() {
 
             <div style={{ marginBottom: '1rem' }}>
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :
+                Complete Postal Address :{' '}
+                <span className="text-red-500">*</span>
               </label>
               <textarea
                 {...register('applicantAddress', {
@@ -396,7 +415,7 @@ function CbfcScreening() {
                   className="grid grid-cols-1 items-center gap-4"
                 >
                   <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
+                    {label} : <span className="text-red-500">*</span>
                   </label>
                   <input
                     type={type}

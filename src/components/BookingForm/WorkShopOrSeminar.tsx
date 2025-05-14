@@ -216,7 +216,7 @@ function WorkShopOrSeminar() {
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
+                      {label} :  <span className="text-red-600">{required && '*'}</span>
                     </label>
                     <br />
                     <input
@@ -244,7 +244,7 @@ function WorkShopOrSeminar() {
             </div>
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :
+              Applicant Complete Postal Address :  <span className='text-red-500'>*</span>
               </label>
               <textarea
                 {...register('postalAddress', {
@@ -289,7 +289,7 @@ function WorkShopOrSeminar() {
                 ({ name, label, type, required, pattern }) => (
                   <div key={name} style={{ marginBottom: '1rem' }}>
                     <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
+                      {label} :  <span className="text-red-600">{required && '*'}</span>
                     </label>
                     <input
                       type={type}
@@ -316,7 +316,7 @@ function WorkShopOrSeminar() {
             </div>
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Select Category :
+                Select Category :  <span className='text-red-500'>*</span>
               </label>
               <select
                 {...register('category', {
@@ -338,7 +338,7 @@ function WorkShopOrSeminar() {
 
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :
+              Billing Complete Postal Address :  <span className='text-red-500'>*</span>
               </label>
               <textarea
                 {...register('billingPostalAddress', {
@@ -366,7 +366,7 @@ function WorkShopOrSeminar() {
                   className="grid grid-cols-1 items-center gap-4"
                 >
                   <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
+                    {label} :  <span className='text-red-500'>*</span>
                   </label>
                   <input
                     type={type}

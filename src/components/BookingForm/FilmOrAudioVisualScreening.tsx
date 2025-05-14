@@ -163,7 +163,7 @@ function FilmOrAudioVisualScreening() {
                 ({ name, label, type, required, pattern }, index) => (
                   <div style={{ marginBottom: '1rem' }} key={index}>
                     <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
+                      {label} :  <span className="text-red-600">{required && '*'}</span>
                     </label>
                     <br />
                     <input
@@ -191,7 +191,7 @@ function FilmOrAudioVisualScreening() {
             </div>
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :
+              Applicant Complete Postal Address :  <span className='text-red-500'>*</span>
               </label>
               <textarea
                 {...register('postalAddress', {
@@ -218,7 +218,7 @@ function FilmOrAudioVisualScreening() {
                 ({ name, label, type, required, pattern }, index) => (
                   <div style={{ marginBottom: '1rem' }} key={index}>
                     <label className="text-gray-700 font-medium col-span-1">
-                      {label} :
+                      {label} :  <span className="text-red-600">{required && '*'}</span>
                     </label>
                     <input
                       type={type}
@@ -245,7 +245,7 @@ function FilmOrAudioVisualScreening() {
             </div>
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Select Category :
+                Select Category :  <span className='text-red-500'>*</span>
               </label>
               <select
                 className="w-full py-2 px-2 text-gray-900 border-b border-gray-600 rounded-md focus:outline-none focus:border-red-500 col-span-2"
@@ -267,7 +267,7 @@ function FilmOrAudioVisualScreening() {
 
             <div className="grid grid-cols-1 mt-4 items-center gap-4">
               <label className="text-gray-700 font-medium col-span-1">
-                Complete Postal Address :
+              Billing Complete Postal Address :  <span className='text-red-500'>*</span>
               </label>
               <textarea
                 {...register('billingPostalAddress', {
@@ -293,7 +293,7 @@ function FilmOrAudioVisualScreening() {
               {film.BookingDetails.map(({ name, label, type }, index) => (
                 <div style={{ marginBottom: '1rem' }} key={index}>
                   <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
+                    {label} :  <span className='text-red-500'>*</span>
                   </label>
                   <input
                     type={type}
