@@ -81,22 +81,22 @@ const Login: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
       {/* Left side - Login Form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
+      <div className="w-full md:w-1/2 flex  justify-center p-6 md:p-10">
         <div className="w-full max-w-md">
           {/* Logo and Title */}
-          <div className="flex items-center space-x-2 mb-8">
+          <div className="flex justify-center items-center space-x-2 ">
             <img
-              src="/Logo\OFDC Logo Black.png"
+              src="/Logo\Logo_OFDC_Booking_Page-removebg-preview.png"
               alt="OFDC Logo"
-              className="h-12 md:h-20 w-auto"
+              className=" w-auto"
             />
-            <h1 className="text-2xl font-bold text-gray-800">OFDC</h1>
+            {/* <h1 className="text-2xl font-bold text-gray-800">OFDC</h1> */}
           </div>
 
           <h2 className="text-3xl font-bold mb-2 text-gray-900">
             Welcome back
           </h2>
-          <p className="text-gray-600 mb-8">
+          <p className="text-gray-600 mb-4">
             Please enter your details to sign in
           </p>
 
