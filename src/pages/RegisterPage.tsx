@@ -8,21 +8,22 @@ import {
   PhoneCall,
 } from 'lucide-react';
 import { paths } from '../routes/Path';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormData, signupData } from '../types/global';
 import { signUpController } from '../config/controller';
+import { toast } from 'react-toastify';
 
 const RegisterPage: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<FormData>({
-    name : '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
     phoneNo: '',
     termsAccepted: false,
   });
-
+  const navigate = useNavigate();
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -38,25 +39,30 @@ const RegisterPage: React.FC = () => {
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match");
       return;
-      
     }
-     signUpController({
-      data:{
-       ...formData,
-      } ,
-     } as  { data: signupData }).then((res) => {
-      console.log(res, 'res');
-     })
-     console.log('Registration form submitted:', formData);
-Navigate
+    signUpController({
+      data: {
+        ...formData,
+      },
+    } as { data: signupData })
+      .then((res) => {
+        if (res) {
+          toast.success('Signup Successful');
+          navigate(paths.login);
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          toast.error('Signup Failed');
+        }
+      });
   };
 
   return (
-    
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
       {/* Left side - Registration Form */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-10">

@@ -52,24 +52,26 @@ import LocationLayout from '../layout/locationLayout/LocationLayout';
 import LocationCategory from '../pages/locationDirectory/LocationCategory';
 import LocationDetails from '../components/locationCard/LocationDetails';
 import ScrollToTop from '../components/home/ScrollToTop';
-import PetroleumSalesChart from '../pages/test';
+// import PetroleumSalesChart from '../pages/test';
 import ProtectedRoute from './ProtectedRoute';
 import RoleBasedRedirect from './RoleBasedRedirect';
+import BookingReceipt from '../components/BookingForm/BookingReceipt';
 
 const RoutePage: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        <Route path={paths.test} element={<PetroleumSalesChart />} />
+        <Route path={paths.test} element={<BookingReceipt />} />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
-        <Route  element={<ProtectedRoute />}>
-        <Route path={paths.RoleBasedRedirect} element={<RoleBasedRedirect />} />
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path={paths.RoleBasedRedirect}
+            element={<RoleBasedRedirect />}
+          />
 
-          {/* AdminLayout */}
-          {/* {role === 'ADMIN' ? ( */}
-            <Route element={<AdminLayout />}>
+          <Route element={<AdminLayout />}>
             <Route path={paths.adminDashboard} element={<AdminDashboard />} />
             <Route path={paths.allBookings} element={<AdminBookingHistory />} />
             <Route
@@ -78,8 +80,7 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.calender} element={<AdminCalender />} />
           </Route>
-          {/* ):( */}
-            <Route element={<LoggedUserLayout />}>
+          <Route element={<LoggedUserLayout />}>
             <Route path={paths.userDashboard} element={<UserDashboard />} />
             <Route
               path={paths.bookingHistory}
@@ -91,13 +92,7 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.newBooking} element={<BookingForm />} />
             <Route path={paths.profile} element={<UserProfile />} />
-    
           </Route>
-          {/* )} */}
-            
-         
-          {/* LoggedUserLayout */}
-           
         </Route>
         <Route element={<Layout />}>
           <Route path={paths.home} element={<Home />} />

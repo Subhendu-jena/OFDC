@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Film, Clapperboard, User, Lock, ArrowRight } from 'lucide-react';
 import { paths } from '../routes/Path';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LoginData } from '../types/global';
 import { loginController } from '../config/controller';
 import { toast } from 'react-toastify';
@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     password: '',
     rememberMe: false,
   });
-  
+
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -22,15 +22,15 @@ const Login: React.FC = () => {
       [name]: type === 'checkbox' ? checked : value,
     });
   };
- const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const payload = {
-      identifier: formData.email,  
+      identifier: formData.email,
       password: formData.password,
       rememberMe: formData.rememberMe,
     };
-  
+
     loginController({ data: payload })
       .then((response) => {
         toast.success('Login successful');
@@ -44,10 +44,11 @@ const Login: React.FC = () => {
         }
         navigate(paths.RoleBasedRedirect);
       })
-      .catch(() => {
-        toast.error('Login failed. Please check your credentials.');
+      .catch((err) => {
+        if (err) {
+          toast.error('Login failed. Please check your credentials.');
+        }
       });
-        // console.log('Form submitted:', formData);
   };
 
   return (
@@ -57,23 +58,30 @@ const Login: React.FC = () => {
         <div className="w-full max-w-md">
           {/* Logo and Title */}
           <div className="flex items-center space-x-2 mb-8">
-          <img
-                src="/Logo\OFDC Logo Black.png"
-                alt="OFDC Logo"
-                className="h-12 md:h-20 w-auto"
-              />
+            <img
+              src="/Logo\OFDC Logo Black.png"
+              alt="OFDC Logo"
+              className="h-12 md:h-20 w-auto"
+            />
             <h1 className="text-2xl font-bold text-gray-800">OFDC</h1>
           </div>
-          
-          <h2 className="text-3xl font-bold mb-2 text-gray-900">Welcome back</h2>
-          <p className="text-gray-600 mb-8">Please enter your details to sign in</p>
-          
+
+          <h2 className="text-3xl font-bold mb-2 text-gray-900">
+            Welcome back
+          </h2>
+          <p className="text-gray-600 mb-8">
+            Please enter your details to sign in
+          </p>
+
           {/* Login Form */}
           <form onSubmit={handleSubmit}>
             <div className="space-y-5">
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Email
                 </label>
                 <div className="relative">
@@ -92,10 +100,13 @@ const Login: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -114,7 +125,7 @@ const Login: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               {/* Remember Me and Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -126,17 +137,23 @@ const Login: React.FC = () => {
                     onChange={handleChange}
                     className="h-4 w-4 text-red-500 focus:ring-red-500 border-gray-300 rounded"
                   />
-                  <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
+                  <label
+                    htmlFor="rememberMe"
+                    className="ml-2 block text-sm text-gray-700"
+                  >
                     Remember me
                   </label>
                 </div>
                 <div className="text-sm">
-                  <a href={"#"} className="font-medium text-red-500 hover:text-red-400">
+                  <a
+                    href={'#'}
+                    className="font-medium text-red-500 hover:text-red-400"
+                  >
                     Forgot password?
                   </a>
                 </div>
               </div>
-              
+
               {/* Submit Button */}
               <button
                 type="submit"
@@ -146,21 +163,26 @@ const Login: React.FC = () => {
                 Sign in
                 <ArrowRight className="ml-2 h-4 w-4" />
               </button>
-              
+
               {/* Register Link */}
-              <div className="text-center mt-4 cursor-pointer text-red-500" onClick={() => navigate(paths.register)}>
-                <span className="text-sm text-gray-600">Don't have an account? </span>
+              <div
+                className="text-center mt-4 cursor-pointer text-red-500"
+                onClick={() => navigate(paths.register)}
+              >
+                <span className="text-sm text-gray-600">
+                  Don't have an account?{' '}
+                </span>
                 {/* <Link to={paths.register} className="text-sm font-medium text-red-500 hover:text-red-400"> */}
-                  Sign up now
+                Sign up now
                 {/* </Link> */}
               </div>
             </div>
           </form>
         </div>
       </div>
-      
+
       {/* Right side - Animation with standard Tailwind classes */}
-      <div 
+      <div
         className="md:flex md:w-1/2 w-full min-h-[400px] items-center justify-center "
         style={{ backgroundColor: '#FC3C3C' }}
       >
@@ -169,7 +191,7 @@ const Login: React.FC = () => {
           <div className="absolute animate-pulse opacity-20">
             <Clapperboard className="h-64 w-64 text-white" />
           </div>
-          
+
           {/* Floating film reels using standard Tailwind animations */}
           <div className="absolute top-1/4 left-1/4 animate-bounce transition-transform duration-1000">
             <Film className="h-16 w-16 text-white" />
@@ -180,23 +202,43 @@ const Login: React.FC = () => {
           <div className="absolute top-1/2 right-1/4 animate-ping opacity-75">
             <Film className="h-20 w-20 text-white" />
           </div>
-          
+
           {/* Movie strip animation using spin */}
           <div className="absolute top-20 right-20 animate-spin duration-3000 opacity-30">
-            <svg className="w-32 h-32 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2"/>
-              <path d="M12 2V22" stroke="currentColor" strokeWidth="2"/>
-              <path d="M19.0711 4.92893L4.92893 19.0711" stroke="currentColor" strokeWidth="2"/>
-              <path d="M22 12H2" stroke="currentColor" strokeWidth="2"/>
-              <path d="M19.0711 19.0711L4.92893 4.92893" stroke="currentColor" strokeWidth="2"/>
+            <svg
+              className="w-32 h-32 text-white"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <path d="M12 2V22" stroke="currentColor" strokeWidth="2" />
+              <path
+                d="M19.0711 4.92893L4.92893 19.0711"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <path d="M22 12H2" stroke="currentColor" strokeWidth="2" />
+              <path
+                d="M19.0711 19.0711L4.92893 4.92893"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
             </svg>
           </div>
-          
+
           {/* Content */}
           <div className="z-10 text-center p-10">
-            <h2 className="text-4xl font-bold text-white mb-4 animate-pulse">Discover the Magic of Cinema</h2>
+            <h2 className="text-4xl font-bold text-white mb-4 animate-pulse">
+              Discover the Magic of Cinema
+            </h2>
             <p className="text-xl text-white opacity-80 max-w-md">
-              Sign in to access thousands of movies, personalized recommendations, and exclusive content.
+              Sign in to access thousands of movies, personalized
+              recommendations, and exclusive content.
             </p>
           </div>
         </div>
