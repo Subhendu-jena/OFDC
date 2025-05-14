@@ -13,7 +13,33 @@ const Login: React.FC = () => {
     password: '',
     rememberMe: false,
   });
+  const [formErrors, setFormErrors] = useState({
+    email: '',
+    password: '',
+  });
+  const validateForm = () => {
+    const errors = { email: '', password: '' };
+    let isValid = true;
 
+    if (!formData.email) {
+      errors.email = 'Email is required';
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Email is invalid';
+      isValid = false;
+    }
+
+    if (!formData.password) {
+      errors.password = 'Password is required';
+      isValid = false;
+    } else if (formData.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters';
+      isValid = false;
+    }
+
+    setFormErrors(errors);
+    return isValid;
+  };
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -25,6 +51,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
     const payload = {
       identifier: formData.email,
       password: formData.password,
@@ -82,7 +109,7 @@ const Login: React.FC = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Email
+                  Email  <span className='text-red-500'>*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -94,11 +121,15 @@ const Login: React.FC = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
                     className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     placeholder="Enter your email"
                   />
                 </div>
+                {formErrors.email && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {formErrors.email}
+                  </p>
+                )}
               </div>
 
               {/* Password Field */}
@@ -107,7 +138,7 @@ const Login: React.FC = () => {
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Password
+                  Password  <span className='text-red-500'>*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -119,11 +150,15 @@ const Login: React.FC = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    required
                     className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     placeholder="Enter your password"
                   />
                 </div>
+                {formErrors.password && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {formErrors.password}
+                  </p>
+                )}
               </div>
 
               {/* Remember Me and Forgot Password */}
@@ -157,7 +192,8 @@ const Login: React.FC = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!formData.email || !formData.password}
                 style={{ backgroundColor: '#FC3C3C' }}
               >
                 Sign in
@@ -234,11 +270,10 @@ const Login: React.FC = () => {
           {/* Content */}
           <div className="z-10 text-center p-10">
             <h2 className="text-4xl font-bold text-white mb-4 animate-pulse">
-              Discover the Magic of Cinema
+            Your Theatre Awaits
             </h2>
-            <p className="text-xl text-white opacity-80 max-w-md">
-              Sign in to access thousands of movies, personalized
-              recommendations, and exclusive content.
+            <p className="text-[18px] text-white opacity-80 max-w-md">
+            Login to cue your next screen-where your vision lights up the big screen.
             </p>
           </div>
         </div>

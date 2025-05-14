@@ -67,7 +67,6 @@ const UserDashboard:React.FC=()=> {
   const token = sessionStorage.getItem('token')
     const userId = sessionStorage.getItem('userID')
     const name = sessionStorage.getItem('name')
-    console.log(userId, 'userId')
     const [data, setData] = useState<any>([])
     const [currentBooking, setCurrentBooking] = useState<any>([])
   const navigate=useNavigate();

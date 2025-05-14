@@ -5,7 +5,6 @@ import { getAllBookingsOfUser } from '../../config/controller';
 const UserBookingHistory:React.FC = () => {
   const token = sessionStorage.getItem('token')
   const userId = sessionStorage.getItem('userID')
-  console.log(userId, 'userId')
   const [data, setData] = useState<any>([])
   const columns = [
     { label: 'Sl No.', field: 'slNo' },

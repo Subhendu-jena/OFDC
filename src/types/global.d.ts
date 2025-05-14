@@ -59,6 +59,10 @@ export interface NightSkyProps {
 export interface LoginData {
   email: string;
   password: string;
+  confirmPassword?: string;
+  phoneNo?: string;
+  name?: string;
+  rememberme?: boolean;
   rememberMe: boolean;
 }
 export interface Section {

@@ -5,7 +5,6 @@ import { getAllBookingsOfUser } from '../../config/controller';
 const UserPaymentHistory:React.FC = () => {
    const token = sessionStorage.getItem('token')
     const userId = sessionStorage.getItem('userID')
-    console.log(userId, 'userId')
     const [ setData] = useState<any>([])
   const columns = [
     { label: 'Sl No.', field: 'slNo' },
