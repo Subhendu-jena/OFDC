@@ -3,18 +3,18 @@ import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import { useEffect } from 'react';
 import { paths } from '../../routes/Path';
-import bg from "../../assets/pexels-markusspiske-6879095.jpg"
+import bg from "../../assets/162597.jpg"
 const  FilmEcoSystemLayout = () => {
   const title = window.location.pathname;
   const navigate = useNavigate();
   const menuItems = [
-    { label: 'Location Category', url: paths.locationDirectory },
-    { label: 'Book a Location', url: '#' },
-    { label: 'Location Booking Guideline', url: '#' }
+    { label: 'Film Policy', url: paths.filmEcoSystem },
+    { label: 'Policy Guidelines', url: '#' },
+    { label: 'Odisha and Silver Screen', url: '#' }
   ];
   const section = [
     {
-      page: '/location-directory',
+      page: '/film-eco-system',
       subHead1: 'Established 1980',
       subHead2:
         'An ultra-modern, state-of-the-art film studio complex in the heart of Bhubaneswar, Odisha.',
@@ -61,10 +61,10 @@ const  FilmEcoSystemLayout = () => {
     <div className="w-full">
       {currentSection ? (
         <KHeroSection
-          subHead1={currentSection.subHead1}
-          subHead2={currentSection.subHead2}
-          heading="Talent Directory"
-          tag={currentSection.tag}
+          subHead1='Eco System'
+          subHead2=''
+          heading="Film Eco System"
+          tag="Eco System"
           // vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
           link=""
           img={bg}

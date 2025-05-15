@@ -1,8 +1,8 @@
 import {
   User,
   Home,
-  MessageCircle,
-  MessageSquare,
+  // MessageCircle,
+  // MessageSquare,
   Mail,
   UserPlus,
   ChevronDown,
@@ -59,16 +59,16 @@ export const TopHeader = () => {
             <h5>Home</h5>
           </Link>
           <span>/</span>
-          <div className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer">
+          {/* <div className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer">
             <MessageCircle size={16} />
             <span>Grievance</span>
-          </div>
-          <span>/</span>
+          </div> */}
+          {/* <span>/</span>
           <div className="flex items-center hover:text-orange-500 cursor-pointer space-x-1">
             <MessageSquare size={16} />
             <span>Feedback</span>
-          </div>
-          <span>/</span>
+          </div> */}
+          {/* <span>/</span> */}
           <Link
             to={paths.contactUs}
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"

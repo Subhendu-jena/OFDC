@@ -27,7 +27,7 @@ const AdminBookingHistory:React.FC = () => {
         setData(res?.data)
         console.log(res?.data, 'res?.data?.data')
       });
-    }, [])
+    }, [data])
   return (
     <div className='w-full min-h-screen bg-white px-auto py-auto'>
             <TableComponent columns={columns} data={data} Heading='Admin Booking History' search={true} />

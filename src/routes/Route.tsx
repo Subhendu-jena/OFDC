@@ -52,10 +52,10 @@ import LocationLayout from '../layout/locationLayout/LocationLayout';
 import LocationCategory from '../pages/locationDirectory/LocationCategory';
 import LocationDetails from '../components/locationCard/LocationDetails';
 import ScrollToTop from '../components/home/ScrollToTop';
-// import PetroleumSalesChart from '../pages/test';
 import ProtectedRoute from './ProtectedRoute';
 import RoleBasedRedirect from './RoleBasedRedirect';
 import BookingReceipt from '../components/BookingForm/BookingReceipt';
+import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 
 const RoutePage: React.FC = () => {
   return (
@@ -99,7 +99,10 @@ const RoutePage: React.FC = () => {
           <Route path={paths.bookingForm} element={<BookingForm />} />
           <Route path={paths.dashboard} element={<Dashboard />} />
           <Route path={paths.contactUs} element={<ContactUs />} />
+          <Route element={<FilmEcoSystemLayout />}>
+
           <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
+          </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
             <Route path={paths.archivalGallery} element={<ArchivalGallery />} />
