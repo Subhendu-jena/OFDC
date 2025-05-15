@@ -3,7 +3,7 @@ import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import { useEffect } from 'react';
 import { paths } from '../../routes/Path';
-import bg from "../../assets/pexels-markusspiske-6879095.jpg"
+import bg from "../../assets/pexels-pixabay-315998 (1).jpg"
 const LocationLayout = () => {
   const title = window.location.pathname;
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const LocationLayout = () => {
         <KHeroSection
           subHead1={currentSection.subHead1}
           subHead2={currentSection.subHead2}
-          heading="Talent Directory"
+          heading="Location Directory"
           tag={currentSection.tag}
           // vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
           link=""

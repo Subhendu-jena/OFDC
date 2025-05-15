@@ -59,7 +59,7 @@ export const paths: paths = {
   formerChairpersons: '/former-chair-persons',
   formerManagingDirectors: '/former-managingdirectors',
   whoIsWho: '/who-is-who',
-  flimEcoSystem: '/flim-eco-system',
+  flimEcoSystem: '/film-eco-system',
   bookingForm: '/booking-form',
   login: '/login',
   register: '/register',

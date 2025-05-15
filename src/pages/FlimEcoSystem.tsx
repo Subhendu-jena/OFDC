@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function OdishaFilmPolicy() {
   return (
-    <div className="bg-gray-100 w-full min-h-screen pt-24">
+    <div className="bg-gray-100 w-full min-h-screen">
       <div className="w-full mx-auto p-6">
         <div className="bg-white shadow-md rounded-lg ">
           {/* Sidebar & Main Content */}
