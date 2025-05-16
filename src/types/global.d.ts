@@ -96,6 +96,8 @@ export interface SuccessResponse<T> {
   message: string;
   data: T;
   token?: string;
+  payments?: any;
+
   user: {
     _id: string;
     role: string;

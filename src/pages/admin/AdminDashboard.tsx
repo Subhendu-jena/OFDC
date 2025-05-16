@@ -9,10 +9,11 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TableComponent from '../../components/Table';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
+import { getAllBookingsForAdmin } from '../../config/controller';
 
 const AdminDashboard = () => {
   const data = [
@@ -40,21 +41,21 @@ const AdminDashboard = () => {
     { label: 'Action', field: 'view' },
 
   ];
-  const dataTable = [
-    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
-    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
-    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
-    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-  ]
-
+  // const dataTable = [
+  //   { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
+  //   { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
+  //   { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  //   { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
+  //   { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
+  // ]
+const token = sessionStorage.getItem('token');
   const [filter, setFilter] = useState('monthly');
   const cardData: any = [
     {
@@ -95,6 +96,14 @@ const AdminDashboard = () => {
       totalValue: '1000',
     },
   ];
+  const [dataTable, setDataTable] = useState([]);
+  useEffect(() => {
+      getAllBookingsForAdmin({ token: token })
+      .then((res) => {
+        setDataTable(res?.data);
+        console.log(res?.data, 'res?.data?.data');
+      });
+    }, [data]);
 const navigate = useNavigate();
   return (
     <div className="bg-white p-4 space-y-6 mx-auto">

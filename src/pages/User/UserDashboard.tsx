@@ -76,8 +76,9 @@ const UserDashboard:React.FC=()=> {
     getAllBookingsOfUser({ token: token,userId: userId || '' })
      .then((res) => {
        setData(res?.data)
-       setCurrentBooking(res?.data[0])
-       console.log(res?.data[0], 'res?.data[0]')
+      //  setCurrentBooking(res?.at(-1)?.data[0])
+      setCurrentBooking(res?.data?.slice(-1)?.[0])
+       console.log(res?.data?.slice(-1)?.[0], 'res?.data[0]')
      });
    }, [])
    const viewCurrentBooking = () => {

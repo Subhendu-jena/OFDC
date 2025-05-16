@@ -78,6 +78,7 @@ function FormerManagingDirectors() {
             columns={columns}
             data={card}
             Heading="Former Managing Directors"
+            search={true}
           />
         </div>
       )}

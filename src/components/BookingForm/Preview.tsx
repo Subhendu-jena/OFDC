@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import { formatDateToMMDDYYYY } from '../../variables/utils';
 const Preview = ({
   formData,
   selectedDate,
@@ -15,7 +16,7 @@ const Preview = ({
   const handleCancelSubmit = () => {
     onEdit();
   };
-
+console.log(formData, 'formdata at preview');
   return (
     <div className="min-h-screen  py-8 px-2 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -344,13 +345,13 @@ const Preview = ({
                 <div>
                   <p className="text-sm text-gray-500">Booking Date</p>
                   <p className="text-base font-medium">
-                    {selectedDate || 'Not selected'}
+                    {selectedDate || formatDateToMMDDYYYY(formData?.bookingDetails?.bookingDate) || 'Not selected'}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Time Slot</p>
                   <p className="text-base font-medium">
-                    {selectedSlot || 'Not selected'}
+                    {selectedSlot || formData?.bookingDetails?.timeSlot || 'Not selected'}
                   </p>
                 </div>
                 {/* {bookingResponse?.data?._id && (
@@ -368,7 +369,7 @@ const Preview = ({
           <div
             className={`bg-gray-50 px-6 py-4 flex gap-4 ${isEditMode ? 'justify-end' : 'justify-between'}`}
           >
-            {!isEditMode && (
+            {!isEditMode && role === 'ADMIN' && (
               <div className="flex items-center">
                 <input type="checkbox" className="mr-3" id="sendEmail" />
                 <label htmlFor="sendEmail">Send confirmation email</label>
