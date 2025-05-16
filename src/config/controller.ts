@@ -175,6 +175,18 @@ export const forgotPassword = async ({
     data
   });
 };
+export const resetPassword = async ({
+  token,data
+}:{
+  token: any;
+  data: any;
+}): Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/user/reset-password/${token}`,
+    method: 'POST',
+    data
+  });
+};
 
 export const getAllSlotByDate = async ({
   token,
