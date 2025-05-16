@@ -47,6 +47,8 @@ interface paths {
   filmEcoSystem: string;
   test: string;
   RoleBasedRedirect: string;
+  resetPassword: string;
+  forgetPassword: string;
 }
 
 export const paths: paths = {
@@ -98,4 +100,6 @@ export const paths: paths = {
   filmEcoSystem: '/film-eco-system',
   test: '/test',
   RoleBasedRedirect: '/role-based-redirect',
+  forgetPassword: '/forget-password',
+  resetPassword: '/reset-password',
 };

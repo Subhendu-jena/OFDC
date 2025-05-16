@@ -12,6 +12,7 @@ import {  useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
 import { getAllBookingsOfUser } from '../../config/controller';
 import { formatDateToMMDDYYYY } from '../../variables/utils';
+import Preview from '../../components/BookingForm/Preview';
 
 const columns = [
   { label: 'Sl No.', field: 'sNo' },
@@ -20,7 +21,7 @@ const columns = [
   // { label: 'Screening Date', field: 'screeningDate' },
   { label: 'Payment Status', field: 'status' },
   { label: 'Booking Status', field: 'status' },
-  // { label: 'View', field: 'view' },
+  { label: 'View', field: 'view' },
 ];
 // const dataTable = [
 //   {
@@ -69,6 +70,7 @@ const UserDashboard:React.FC=()=> {
     const name = sessionStorage.getItem('name')
     const [data, setData] = useState<any>([])
     const [currentBooking, setCurrentBooking] = useState<any>([])
+    const [viewApplicationForm, setViewApplicationForm] = useState<boolean>(false)
   const navigate=useNavigate();
   useEffect(() => {
     getAllBookingsOfUser({ token: token,userId: userId || '' })
@@ -78,6 +80,20 @@ const UserDashboard:React.FC=()=> {
        console.log(res?.data[0], 'res?.data[0]')
      });
    }, [])
+   const viewCurrentBooking = () => {
+    setViewApplicationForm(true)
+   };
+   const onEdit = () => {
+    setViewApplicationForm(false)
+    }
+  if(viewApplicationForm){
+    return (
+      <Preview
+        formData={currentBooking}
+        onEdit={onEdit}
+        />
+    )
+  }
   return (
     <div className="pt-10  bg-white">
       {/* Header */}
@@ -138,13 +154,16 @@ const UserDashboard:React.FC=()=> {
                 <PlusCircle className="w-5 h-5" />
                 New Booking
               </button>
-              <button className="w-full flex items-center justify-center gap-2 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <button className="w-full flex items-center justify-center gap-2 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors" onClick={viewCurrentBooking}>
                 <FileCheck className="w-5 h-5" />
                 View Application Form
               </button>
             </div>
           </div>
         </div>
+        {/* {viewApplicationForm && ( <Preview
+        data={currentBooking}
+      />)} */}
         <div className="col-span-1 lg:col-span-3 bg-white rounded-lg shadow-md ">
           <TableComponent
             columns={columns}

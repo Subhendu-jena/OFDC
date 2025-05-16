@@ -1,4 +1,4 @@
-import { CircleChevronLeft } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useState } from 'react';
 const Preview = ({
   formData,
@@ -10,25 +10,33 @@ const Preview = ({
 }: any) => {
   const [cancel, setCancel] = useState(false);
   const [remark, setRemark] = useState('');
+  const role = sessionStorage.getItem('role');
 
   const handleCancelSubmit = () => {
-    onEdit(); 
+    onEdit();
   };
-  
+
   return (
-    <div className="min-h-screen  py-8 px-2">
+    <div className="min-h-screen  py-8 px-2 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div  onClick={() => (onEdit())}><CircleChevronLeft  /></div>
-          <div className="bg-red-600 px-6 py-4">
-            <h2 className="text-xl font-semibold text-white">
-              Booking Confirmation Preview
-            </h2>
-            <p className="text-red-100 mt-1">
-              Please review all details before final submission
-            </p>
+          <div className="bg-red-600 px-6 py-4 flex items-center justify-between">
+            <div>
+              {' '}
+              <h2 className="text-xl font-semibold text-white">
+                Booking Confirmation Preview
+              </h2>
+              <p className="text-red-100 mt-1">
+                Please review all details before final submission
+              </p>
+            </div>
+            <button
+              onClick={() => onEdit()}
+              className="flex items-center gap-2 p-2 rounded-xl cursor-pointer border-2 text-white bg-red-600"
+            >
+              <X />
+            </button>
           </div>
-
           <div className="p-6 space-y-8">
             {/* Applicant Details */}
 
@@ -368,17 +376,40 @@ const Preview = ({
             )}
             <div className="flex gap-4">
               <button
-                onClick={() => (isEditMode ? onEdit() : setCancel(true))}
+                onClick={() =>
+                  isEditMode
+                    ? onEdit()
+                    : role === 'ADMIN'
+                      ? setCancel(true)
+                      : onEdit()
+                }
                 className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
               >
-                {isEditMode ? 'Edit Details' : 'Cancel Booking'}
+                {isEditMode
+                  ? 'Edit Details'
+                  : role === 'ADMIN'
+                    ? 'Cancel Booking'
+                    : 'Go Back'}
               </button>
-              <button
+              {/* <button
                 onClick={() => onConfirm()}
                 className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
               >
-                {isEditMode ? 'Confirm & Pay' : 'Confirm Booking'}
-              </button>
+                {isEditMode ? 'Confirm & Pay' : role === 'ADMIN' ?  'Confirm Booking' : ''}
+              </button> */}
+              {(isEditMode || (role === 'ADMIN' && formData)) && (
+                <button
+                  onClick={() => {onConfirm() ??  onEdit()}}
+                  className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
+                >
+                   {isEditMode
+                  ? 'Confirm & Pay'
+                  : role === 'ADMIN'
+                    ? 'Confirm Booking'
+                    : 'GoTo dashboard'}
+                  {/* {isEditMode ? 'Confirm & Pay' : 'Confirm Booking'} */}
+                </button>
+              )}
             </div>
           </div>
 

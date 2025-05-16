@@ -181,7 +181,7 @@ const Login: React.FC = () => {
                 </div>
                 <div className="text-sm">
                   <a
-                    href={'#'}
+                    href={paths.forgetPassword}
                     className="font-medium text-red-500 hover:text-red-400"
                   >
                     Forgot password?
