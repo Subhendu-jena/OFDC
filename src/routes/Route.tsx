@@ -57,6 +57,7 @@ import RoleBasedRedirect from './RoleBasedRedirect';
 import BookingReceipt from '../components/BookingForm/BookingReceipt';
 import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 import ForgetPassword from '../pages/ForgetPassword';
+import ResetPassword from '../pages/ResetPassword';
 
 const RoutePage: React.FC = () => {
   return (
@@ -66,6 +67,7 @@ const RoutePage: React.FC = () => {
         <Route path={paths.test} element={<BookingReceipt />} />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
+    <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path={paths.forgetPassword} element={<ForgetPassword />} />
 
         <Route element={<ProtectedRoute />}>

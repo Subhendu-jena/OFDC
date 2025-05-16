@@ -2,9 +2,11 @@ import { Lock } from 'lucide-react';
 import { Clapperboard } from 'lucide-react';
 import { Film } from 'lucide-react';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { resetPassword } from '../config/controller';
 
 const ResetPassword: React.FC = () => {
+  const token = useParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,8 +17,8 @@ const ResetPassword: React.FC = () => {
     e.preventDefault();
     setError('');
 
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters long');
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long');
       return;
     }
 
@@ -24,9 +26,9 @@ const ResetPassword: React.FC = () => {
       setError('Passwords do not match');
       return;
     }
+    resetPassword({ token: token.token, data: { newPassword: password } });
+    console.log(token);
 
-    // Here you would typically make an API call to reset the password
-    // For now, we'll simulate success
     setSuccess(true);
     setTimeout(() => {
       navigate('/');
@@ -37,7 +39,6 @@ const ResetPassword: React.FC = () => {
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
       <div className=" w-full md:w-1/2 flex items-center justify-center bg-white">
         <div>
-
           <div className=" p-8">
             <div className="flex justify-center mb-8">
               <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center">

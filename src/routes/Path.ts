@@ -101,5 +101,5 @@ export const paths: paths = {
   test: '/test',
   RoleBasedRedirect: '/role-based-redirect',
   forgetPassword: '/forget-password',
-  resetPassword: '/reset-password',
+  resetPassword: '/reset-password/:token',
 };
