@@ -136,6 +136,45 @@ export const refund = async ({
   //  data,
   });
 };
+export const checkCorrectPassword = async ({
+  token,
+  data
+}:{
+  data: any;
+  token: string | null;
+}): Promise<ApiResponse<loginResponse>> => {
+  return apiCaller({
+    uri: `/user/check-password`,
+    method: 'POST',
+    token,
+   data,
+  });
+};
+export const updateUser = async ({
+  token,
+  data
+}:{
+  data: any;
+  token: string | null;
+}): Promise<ApiResponse<loginResponse>> => {
+  return apiCaller({
+    uri: `/user/updateUser`,
+    method: 'PUT',
+    token,
+   data,
+  });
+};
+export const forgotPassword = async ({
+  data
+}:{
+  data: any;
+}): Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/user/forgot-password`,
+    method: 'POST',
+    data
+  });
+};
 
 export const getAllSlotByDate = async ({
   token,

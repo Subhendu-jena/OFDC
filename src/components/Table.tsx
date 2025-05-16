@@ -268,7 +268,8 @@ const TableComponent = ({
                 )}
 
                 {/* {official.view && ( */}
-             {role=== 'ADMIN' &&   <td className="px-6 py-4   text-gray-900">
+             {(role=== 'ADMIN' ||  role === 'USER') &&
+               <td className="px-6 py-4   text-gray-900">
                   <button
                     className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
                     onClick={() => {

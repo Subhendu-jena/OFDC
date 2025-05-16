@@ -2,28 +2,87 @@ import React, { useState } from 'react';
 import { Mail, Phone, User, Lock, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
-
-const profile = {
-  name: sessionStorage.getItem('name') ?? '',
-email: sessionStorage.getItem('email') ?? '',
-  phone: sessionStorage.getItem('phoneNo') ?? '',
-  role: sessionStorage.getItem('role'),
-  avatar:
-    'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=150',
-};
+import { checkCorrectPassword, updateUser } from '../../config/controller';
+import { toast } from 'react-toastify';
 
 const userProfile: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: sessionStorage.getItem('name') ?? '',
+    email: sessionStorage.getItem('email') ?? '',
+    phoneNo: sessionStorage.getItem('phoneNo') ?? '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
+  const profile = {
+    name: sessionStorage.getItem('name') ?? '',
+    email: sessionStorage.getItem('email') ?? '',
+    phoneNo: sessionStorage.getItem('phoneNo') ?? '',
+    role: sessionStorage.getItem('role'),
+    avatar:
+      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=150',
+  };
+  const token = sessionStorage.getItem('token');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [image, setImage] = useState<string>();
 
-  const handleImageChange = ({event}:any) => {
+  const handleImageChange = ({ event }: any) => {
     const file = event.target.files[0]; // Get the selected file
     if (file) {
       const imageUrl = URL.createObjectURL(file); // Convert file to URL
       setImage(imageUrl);
     }
   };
-  const navigate=useNavigate();
+  const handleChangePassword = async () => {
+    try {
+      const response = await checkCorrectPassword({
+        token: token,
+        data: {
+          currentPassword: formData.currentPassword,
+        },
+      });
+      if (response.success) {
+        if (formData.newPassword !== formData.confirmPassword) {
+          toast.error('New password and confirm password do not match.');
+          return;
+        }
+        await updateUser({
+          data: {
+            password: formData.newPassword,
+          },
+          token: token,
+        });
+        if (response.success) {
+          toast.success('Password changed successfully.');
+        }
+      }
+    } catch (error) {}
+  };
+  const handleSave = async () => {
+    try {
+      const response = await updateUser({
+        data: {
+          name: formData.name,
+          email: formData.email,
+          phoneNo: formData.phoneNo,
+        },
+        token: token,
+      });
+      if (response.success) {
+        toast.success('Profile updated successfully.');
+        sessionStorage.setItem('userID', response?.user?._id);
+        sessionStorage.setItem('role', response?.user?.role);
+        sessionStorage.setItem('name', response?.user?.name);
+        sessionStorage.setItem('email', response?.user?.email);
+        sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
+      }
+      console.log(token, 'userPfofile');
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
+  };
+
+  const navigate = useNavigate();
   return (
     <main className="max-w-screen bg-white mx-auto px-4 sm:px-6 py-8 ">
       <div className="bg-white rounded-2xl shadow-lg p-6 space-y-8">
@@ -85,6 +144,9 @@ const userProfile: React.FC = () => {
                   type="text"
                   id="username"
                   defaultValue={profile.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   className="bg-transparent flex-1 outline-none text-gray-900"
                 />
               </div>
@@ -103,6 +165,9 @@ const userProfile: React.FC = () => {
                   type="email"
                   id="email"
                   defaultValue={profile.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   className="bg-transparent flex-1 outline-none text-gray-900"
                 />
               </div>
@@ -120,7 +185,10 @@ const userProfile: React.FC = () => {
                 <input
                   type="tel"
                   id="phone"
-                  defaultValue={profile.phone}
+                  defaultValue={profile.phoneNo}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phoneNo: e.target.value })
+                  }
                   className="bg-transparent flex-1 outline-none text-gray-900"
                 />
               </div>
@@ -159,8 +227,14 @@ const userProfile: React.FC = () => {
                     Current Password
                   </label>
                   <input
-                    type="password"
+                    type="currentPassword"
                     id="current-password"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        currentPassword: e.target.value,
+                      })
+                    }
                     className="w-full p-3 bg-gray-50 rounded-lg outline-none"
                   />
                 </div>
@@ -174,6 +248,12 @@ const userProfile: React.FC = () => {
                   <input
                     type="password"
                     id="new-password"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        newPassword: e.target.value,
+                      })
+                    }
                     className="w-full p-3 bg-gray-50 rounded-lg outline-none"
                   />
                 </div>
@@ -187,31 +267,55 @@ const userProfile: React.FC = () => {
                   <input
                     type="password"
                     id="confirm-password"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        confirmPassword: e.target.value,
+                      })
+                    }
                     className="w-full p-3 bg-gray-50 rounded-lg outline-none"
                   />
                 </div>
+                <button
+                  className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleChangePassword();
+                  }}
+                >
+                  Change Password
+                </button>
               </div>
             )}
           </div>
 
           {/* Save Button */}
           <div className="pt-4">
-            <button className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors">
+            <button
+              className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                handleSave();
+              }}
+            >
               Save Changes
             </button>
           </div>
           <div className="pt-4">
-            <button className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"  onClick={() => {
-              sessionStorage.removeItem('token');
-              sessionStorage.removeItem('userID');
-              sessionStorage.removeItem('role');
-              sessionStorage.removeItem('name');
-              sessionStorage.removeItem('email');
-              sessionStorage.removeItem('phoneNo');
-              // window.location.reload();
-              navigate(paths.login, { replace: true });
-            }}>
-             Logout
+            <button
+              className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
+              onClick={() => {
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('userID');
+                sessionStorage.removeItem('role');
+                sessionStorage.removeItem('name');
+                sessionStorage.removeItem('email');
+                sessionStorage.removeItem('phoneNo');
+                // window.location.reload();
+                navigate(paths.login, { replace: true });
+              }}
+            >
+              Logout
             </button>
           </div>
         </div>

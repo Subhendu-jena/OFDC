@@ -150,7 +150,7 @@ const OurVisionMision = () => {
                     className="mt-8 pb-2 pt-4 border-t border-gray-200"
                     style={{ borderColor: 'rgba(244, 114, 22, 0.3)' }}
                   >
-                    <p className="text-sm px-2 text-gray-700 italic">
+                    <p className="text-sm px-2 text-white italic">
                       Through its initiatives, OFDC remains committed to
                       nurturing a vibrant and sustainable film industry in
                       Odisha.
