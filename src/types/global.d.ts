@@ -9,6 +9,7 @@ export interface FormData {
 export interface MenuItem {
   label: string;
   url: string;
+  target?: string;
 }
 export interface Official {
   slNo?: number;
@@ -96,6 +97,8 @@ export interface SuccessResponse<T> {
   message: string;
   data: T;
   token?: string;
+  payments?: any;
+
   user: {
     _id: string;
     role: string;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Sun, CloudRain, Snowflake } from 'lucide-react';
-
+import chilika from '../../assets/Chilika.jpeg'
 const Climate:React.FC = () => {
   return (
     <div className="m-5">
@@ -9,7 +9,7 @@ const Climate:React.FC = () => {
               </h2><div className='grid grid-cols-5 '>
       <div className=' col-span-2 '><img
         className="w-full h-full rounded-lg object-fit object-center"
-        src="https://media.gettyimages.com/id/1308116013/photo/chilika-lake.jpg?s=2048x2048&w=gi&k=20&c=FR3xEXMMJMZZ2nQmYkNmULLQO9o4rLucxQStrprvGzM=" // Replace with your image URL
+        src={chilika} // Replace with your image URL
         alt="Odisha Landscape"
       /></div>
       <div className="p-4 col-span-3">

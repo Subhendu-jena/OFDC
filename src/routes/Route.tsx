@@ -5,7 +5,7 @@ import Login from '../pages/Login';
 import RegisterPage from '../pages/RegisterPage';
 import Home from '../pages/Home';
 import BookingForm from '../pages/BookingForm';
-import Dashboard from '../pages/Dashboard';
+// import Dashboard from '../pages/Dashboard';
 import ContactUs from '../pages/ContactUs';
 import OdishaAtGlance from '../pages/about/ACursoryLook';
 import AboutLayout from '../layout/about/AboutLayout';
@@ -13,7 +13,7 @@ import OurVisionMision from '../pages/about/OurVisionMision';
 import Leadership from '../pages/about/Leadership';
 import CulturalHeritage from '../pages/about/FormerChairpersons';
 import ReligionCulture from '../pages/about/FormerManagingDirectors';
-import FlimEcoSystem from '../pages/FlimEcoSystem';
+import FlimEcoSystem from '../pages/filmEcoSystem/FlimEcoSystem';
 import WhosWho from '../pages/about/WhosWho';
 import Achievments from '../pages/about/Achievments';
 import KalingaStudiosOverview from '../pages/kalingaStudio/Overview';
@@ -58,6 +58,7 @@ import BookingReceipt from '../components/BookingForm/BookingReceipt';
 import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 import ForgetPassword from '../pages/ForgetPassword';
 import ResetPassword from '../pages/ResetPassword';
+import PolicyGuidelines from '../pages/filmEcoSystem/PolicyGuidelines';
 
 const RoutePage: React.FC = () => {
   return (
@@ -67,7 +68,7 @@ const RoutePage: React.FC = () => {
         <Route path={paths.test} element={<BookingReceipt />} />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
-    <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path={paths.forgetPassword} element={<ForgetPassword />} />
 
         <Route element={<ProtectedRoute />}>
@@ -102,11 +103,11 @@ const RoutePage: React.FC = () => {
         <Route element={<Layout />}>
           <Route path={paths.home} element={<Home />} />
           <Route path={paths.bookingForm} element={<BookingForm />} />
-          <Route path={paths.dashboard} element={<Dashboard />} />
+          {/* <Route path={paths.dashboard} element={<Dashboard />} /> */}
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route element={<FilmEcoSystemLayout />}>
-
-          <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
+            <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
+            <Route path={paths.policyGuidelines} element={<PolicyGuidelines />} />
           </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>

@@ -9,8 +9,8 @@ const LocationLayout = () => {
   const navigate = useNavigate();
   const menuItems = [
     { label: 'Location Category', url: paths.locationDirectory },
-    { label: 'Book a Location', url: '#' },
-    { label: 'Location Booking Guideline', url: '#' }
+    // { label: 'Book a Location', url: '#' },
+    { label: 'Location Booking Guideline', url: 'https://investodisha.gov.in/goswift/ServiceDetails.aspx?enc=bJ1nLSOgxhIyHc4RPqgFjV0+I1NqvCn1RkVLG8RuJGLPkDO/ZKgIlgUXr1Wvp8GGiMXct0/yz+1HrhWGwFvG/EHWAIByvuhiuflkzkRUa0cPjIJq5NVE65iyeTM/mWEl' , target:"_blank"  }
   ];
   const section = [
     {

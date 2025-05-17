@@ -5,7 +5,7 @@ import {
   TreeDeciduous,
 } from 'lucide-react';
 import React from 'react';
-
+import deomali from '../../assets/Deomali.jpeg';
 const GeographicalFeature: React.FC = () => {
   return (
     <div className="m-5">
@@ -50,8 +50,8 @@ const GeographicalFeature: React.FC = () => {
           <div className="col-span-2">
             {' '}
             <img
-              className="w-full h-full object-fill object-center"
-              src="https://media.gettyimages.com/id/1996377443/photo/diverse-friends-enjoying-sunny-mountain-hike.jpg?s=2048x2048&w=gi&k=20&c=gYls_w_zzmYtKMl60vw1Fj7SHspk8G1qMG_BGJ5mvng=" // Replace with your image URL
+              className="w-full h-full object-fill rounded-2xl object-center"
+              src={deomali} // Replace with your image URL
               alt="Odisha Landscape"
             />
           </div>

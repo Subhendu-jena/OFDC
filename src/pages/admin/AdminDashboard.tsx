@@ -9,10 +9,15 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { useState } from 'react';
-import TableComponent from '../../components/Table';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
+import { adminApprove, adminReject, getAllBookingsForAdmin, refund, userCancel } from '../../config/controller';
+import { Star } from 'lucide-react';
+import Preview from '../../components/BookingForm/Preview';
+import Table1 from '../../components/Table1';
+import { formatDateToMMDDYYYY } from '../../variables/utils';
+import { ScanEye } from 'lucide-react';
 
 const AdminDashboard = () => {
   const data = [
@@ -29,33 +34,13 @@ const AdminDashboard = () => {
     { name: 'Jan 11', blog: 410, social: 20 },
     { name: 'Jan 12', blog: 250, social: 12 },
   ];
-
-  const columns = [
-    { label: 'Sl No.', field: 'slNo' },
-    { label: 'Booking Type', field: 'bookingType' },
-    { label: 'Applicant Name', field: 'applicantName' },
-    { label: 'Booking Date', field: 'bookingDate' },
-    { label: 'Payment Mode', field: 'paymentMode' },
-    { label: 'Paid On', field: 'paidOn' },
-    { label: 'Action', field: 'view' },
-
-  ];
-  const dataTable = [
-    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
-    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
-    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 1,applicantName: 'John Doe', bookingType: 'CBFC Screening', bookingDate: '2023-10-01' , paymentMode: 'UPI', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 2,applicantName: 'John Doe', bookingType: 'Workshop Seminar', bookingDate: '2023-10-01' , paymentMode: 'Debit Card', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-    { slNo: 3,applicantName: 'John Doe', bookingType: 'Film Trade Show', bookingDate: '2023-10-01' , paymentMode: 'Credit Card', paidOn: '2023-10-01',action: true ,view: 'View Details'},
-    { slNo: 4,applicantName: 'John Doe', bookingType: 'Film Audio/Video Visual Screening', bookingDate: '2023-10-01' , paymentMode: 'Net Banking', paidOn: '2023-10-01',action: true ,view: 'View Details' },
-  ]
-
+const token = sessionStorage.getItem('token');
   const [filter, setFilter] = useState('monthly');
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewData, setPreviewData] = useState<any>(null);
+   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [data1, setData1] = useState<any>([]);
   const cardData: any = [
     {
       title: 'Total Bookings',
@@ -95,7 +80,175 @@ const AdminDashboard = () => {
       totalValue: '1000',
     },
   ];
+   const columns: {
+      header: string;
+      accessor: string;
+      render?: (row: any) => any;
+      size?: number;
+    }[] = [
+      { header: 'Sl No.', accessor: 'slno' },
+      {
+        header: 'Booking Name',
+        accessor: 'bookingType',
+        size: 250,
+      },
+      {
+        header: 'Applicant Name',
+        accessor: 'applicantDetails',
+        render: (row: any) => {
+          return <div>{row?.applicantDetails?.nameOfApplicant}</div>;
+        },
+        size: 200,
+  
+      },
+      {
+        header: 'Contact Number',
+        accessor: 'billingDetails',
+        render: (row: any) => {
+          return <div>{row?.billingDetails?.contactNo}</div>;
+        },
+      },
+       {
+        header: 'Payment Status',
+        accessor: 'status',
+        render: (row: any) => {
+          return (
+            <div
+              className={`px-2 py-1   rounded-full w-max inline-block ${
+                row.status === 'CONFIRMED'
+                  ? 'bg-green-100 text-green-800'
+                  : row.status === 'PENDING'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : row.status === 'CANCELLED'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-gray-100 text-gray-800'
+              }`}
+            >
+              {row.status}
+            </div>
+          );
+        },
+      },
+      {
+        header: 'Booking Status',
+        accessor: 'approval',
+        render: (row: any) => {
+          return (
+            <div
+              className={`px-2 py-1   rounded-full w-max inline-block ${
+                row.approval === 'APPROVED'
+                  ? 'bg-green-100 text-green-800'
+                  : row.approval === 'PENDING'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : row.approval === 'REJECTED'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-gray-100 text-gray-800'
+              }`}
+            >
+              {row.approval}
+            </div>
+          );
+        },
+        
+      },
+     
+      {
+        header: 'Booking Date',
+        accessor: 'bookingDetails',
+        render: (row: any) => {
+          return (
+            <div>
+              <p>{formatDateToMMDDYYYY(row?.bookingDetails?.bookingDate)}</p>
+            </div>
+          );
+        },
+        size: 200,
+  
+      },
+      {
+        header: 'Time Slot',
+        accessor: 'timeSlot',
+        render: (row: any) => {
+          return (
+            <div>
+              <p>{row?.bookingDetails?.timeSlot}</p>
+            </div>
+          );
+        },
+        size: 150,
+  
+      },
+      {
+        header: 'View',
+        accessor: 'view',
+        render: (row: any) => {
+          return (
+            <div>
+              <button
+                className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
+                onClick={() => {
+                  setShowPreview(true);
+                  setPreviewData(row);
+                }}
+              >
+                <ScanEye />
+              </button>
+            </div>
+          );
+        },
+      },
+    ];
+  useEffect(() => {
+    setLoading(true);
+      getAllBookingsForAdmin({ token: token })
+      .then((res) => {
+        setData1(res?.data);
+        console.log(res?.data, 'res?.data?.data');
+      }).catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    }, []);
+       const handleConfirm = () => {
+          setShowPreview(false);
+          adminApprove({
+            token: sessionStorage.getItem('token'),
+            data: previewData,
+            id: previewData?._id,
+          });
+        };
+        const handlereject = async () => {
+          setShowPreview(false);
+          try {
+            const response = await adminReject({
+              token: sessionStorage.getItem('token'),
+              id: previewData?._id,
+            });
+            if (response.success) {
+              const response = await userCancel({
+                token: sessionStorage.getItem('token'),
+                id: previewData?._id,
+              });
+              if (response.success) {
+                refund({
+                  token: sessionStorage.getItem('token'),
+                  id: previewData?._id,
+                });
+                 getAllBookingsForAdmin({ token: token })
+              }
+            }
+          } catch (err) {}
+        };
 const navigate = useNavigate();
+  const filteredData = data1.filter((row: any) => {
+    const search = searchTerm.toLowerCase();
+    return (
+      row.bookingType?.toLowerCase().includes(search) ||
+      row.status?.toLowerCase().includes(search)
+    );
+  });
   return (
     <div className="bg-white p-4 space-y-6 mx-auto">
       <div className='text-right border border-amber-500 text-amber-600 p-2 rounded-md w-fit cursor-pointer ' onClick={() => {
@@ -209,9 +362,33 @@ const navigate = useNavigate();
       </div>
 
       {/* Data Table */}
-      <div className="bg-white p-4 rounded-lg shadow-md">
-        <TableComponent columns={columns} data={dataTable} Heading='Pending For Approvals' maxline={5}/>
-      </div>
+      {showPreview && previewData ? (
+        <Preview
+          formData={previewData}
+          onEdit={handlereject}
+          onConfirm={handleConfirm}
+          isEditMode={false}
+        />
+      ) : (
+        <div className=" bg-white pt-2">
+          <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl ">
+            <h2 className="text-xl font-bold text-white flex items-center">
+              <Star size={20} className="mr-2" />
+              Admin Booking History
+            </h2>
+            <div className="flex justify-end">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-90 bg-white placeholder:text-black text-black border-none outline-none px-4 py-2 border rounded-lg"
+              />
+            </div>
+          </div>
+          <Table1 columns={columns} isLoading={loading} data={filteredData} />
+        </div>
+      )}
     </div>
   );
 };

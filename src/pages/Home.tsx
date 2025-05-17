@@ -1,12 +1,12 @@
 import GoToTop from '../components/goToTop/GoToTop';
-import EqipmentDirectory from '../components/home/EqipmentDirectory';
+// import EqipmentDirectory from '../components/home/EqipmentDirectory';
 import HeroSection from '../components/home/HeroSection';
 import LatestNews from '../components/home/LatestNews';
 import LatestVideo from '../components/home/LatestVideo';
 import LocationDirectory from '../components/home/LocationDirectory';
 import MessageFromCm from '../components/home/MessageFromCm';
 import OdishStories from '../components/home/OdishStories';
-import TalentDirectory from '../components/home/TalentDirectory';
+// import TalentDirectory from '../components/home/TalentDirectory';
 import Testimonials from '../components/home/Testimonials';
 
 function Home() {
@@ -47,14 +47,14 @@ function Home() {
         </div>
       </section>
       <section className="relative flex justify-center   w-full items-start">
-        <div className="max-w-6xl  h-[132%] bg-cover bg-center">
+        {/* <div className="max-w-6xl  h-[132%] bg-cover bg-center">
           <TalentDirectory />
-        </div>
+        </div> */}
       </section>
       <section className=" flex justify-center w-full items-start">
-        <div className="max-w-6xl">
+        {/* <div className="max-w-6xl">
           <EqipmentDirectory />
-        </div>
+        </div> */}
       </section>
       <section className=" flex justify-center pb-4 w-full bg-gray-200 items-start">
         <div className="max-w-6xl">

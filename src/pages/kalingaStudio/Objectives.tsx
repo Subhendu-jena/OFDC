@@ -10,7 +10,12 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { useFontSize } from '../../components/home/FontSizeContext';
-
+import a from '../../assets/PROMOTING ODIA FILMS.jpg';
+import b from '../../assets/Enhancing Film Production Infrastructure.png';
+import c from '../../assets/Encouraging Film makers.png';
+import d from '../../assets/Boosting Employment.jpeg';
+import e from '../../assets/Expanding Digital & Technological Capabilities.jpeg';
+import f from '../../assets/Preserving Cinematic Heritage.jpeg';
 const ObjectivesPage: React.FC = () => {
   const [activeObjective, setActiveObjective] = useState(0);
   const { fontSize } = useFontSize();
@@ -22,7 +27,7 @@ const ObjectivesPage: React.FC = () => {
         'Supporting the growth and development of the Odia film industry by providing state-of-the-art production facilities.',
       icon: <Film className="h-8 w-8" />,
       color: 'bg-red-500',
-      image: 'https://assets.telegraphindia.com/telegraph/29oriFILM.jpg',
+      image: a,
     },
     {
       id: 1,
@@ -31,8 +36,7 @@ const ObjectivesPage: React.FC = () => {
         'Offering well-equipped studios, shooting floors, and post-production services to filmmakers.',
       icon: <Target className="h-8 w-8" />,
       color: 'bg-purple-500',
-      image:
-        'https://loyalistcollege.com/app/uploads/2024/08/TV-Film_Hero-Image_Alt-scaled.jpg',
+      image: b,
     },
     {
       id: 2,
@@ -41,8 +45,7 @@ const ObjectivesPage: React.FC = () => {
         'Providing affordable facilities to attract filmmakers from Odisha and other parts of India.',
       icon: <Users className="h-8 w-8" />,
       color: 'bg-blue-500',
-      image:
-        'https://images.unsplash.com/photo-1662435859606-86662d1c686b?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      image: c,
     },
     {
       id: 3,
@@ -51,8 +54,7 @@ const ObjectivesPage: React.FC = () => {
         'Creating job opportunities for artists, technicians, and industry professionals.',
       icon: <Briefcase className="h-8 w-8" />,
       color: 'bg-green-500',
-      image:
-        'https://akm-img-a-in.tosshub.com/indiatoday/images/story/202312/how-global-film-industry-is-all-set-to-boost-employment-210440647-16x9_0.jpg?VersionId=AHl3.ggjpLlW07h1BDGchtcb2YFwku8A&size=690:388',
+      image: d,
     },
     {
       id: 4,
@@ -61,8 +63,7 @@ const ObjectivesPage: React.FC = () => {
         'Modernizing studio facilities with advanced equipment for digital filmmaking, editing, and VFX.',
       icon: <Cpu className="h-8 w-8" />,
       color: 'bg-yellow-500',
-      image:
-        'https://images.ottplay.com/articles/2021q2/Olly_Plus_to_Reel_Dr_OTTplay_news_cover_image_1_568.jpeg?impolicy=ottplay-202501_high&width=600',
+      image: e,
     },
     {
       id: 5,
@@ -71,8 +72,7 @@ const ObjectivesPage: React.FC = () => {
         "Aims in preserving and displaying the vintage Cine Equipments used during the early 80's and 90's.",
       icon: <Archive className="h-8 w-8" />,
       color: 'bg-indigo-500',
-      image:
-        'https://odishabytes.com/wp-content/uploads/2023/01/WhatsApp-Image-2023-01-18-at-17.54.12.jpeg',
+      image: f,
     },
   ];
 
@@ -146,9 +146,9 @@ const ObjectivesPage: React.FC = () => {
               </div>
               <div className="bg-gray-200">
                 <img
-                  src={objectives[activeObjective].image}
+                  src={objectives[activeObjective].image ?? " https://via.placeholder.com/300"}
                   alt={objectives[activeObjective].title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-90 object-cover"
                 />
               </div>
             </div>
@@ -176,7 +176,7 @@ const ObjectivesPage: React.FC = () => {
                       <img
                         src={objective.image}
                         alt={objective.title}
-                        className="relative rounded-lg shadow-lg w-full"
+                        className="relative rounded-lg shadow-lg h-90 w-full"
                       />
                       <div
                         className={`absolute -bottom-5 -right-5 w-16 h-16 ${objective.color} rounded-full flex items-center justify-center shadow-lg`}

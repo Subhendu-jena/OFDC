@@ -57,7 +57,7 @@ const Confirmation: React.FC<ConfirmationProps> = ({bookingDetails,selectedDate,
               <div>
                 <p className="text-sm text-gray-500">Amount Paid</p>
                 <p className="text-lg font-medium text-green-600">
-                  ₹ {bookingDetails.amount || 11800}
+                  ₹ {(bookingDetails.amount / 100 ) || 11800}
                 </p>
               </div>
               <div className="flex items-start gap-3">

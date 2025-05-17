@@ -49,6 +49,7 @@ interface paths {
   RoleBasedRedirect: string;
   resetPassword: string;
   forgetPassword: string;
+  policyGuidelines: string;
 }
 
 export const paths: paths = {
@@ -62,6 +63,7 @@ export const paths: paths = {
   formerManagingDirectors: '/former-managingdirectors',
   whoIsWho: '/who-is-who',
   flimEcoSystem: '/film-eco-system',
+  policyGuidelines: '/policy-guidelines',
   bookingForm: '/booking-form',
   login: '/login',
   register: '/register',

@@ -214,6 +214,17 @@ export const getAllBookingsOfUser = async ({
     token,
   });
 };
+export const getAllPaymentsOfUser = async ({
+  token,
+}: {
+  token: string | null;
+}): Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/payment/all_user_payments`,
+    method: 'GET',
+    token,
+  });
+};
 export const getAllBookingsForAdmin = async ({
   token,
 }: {

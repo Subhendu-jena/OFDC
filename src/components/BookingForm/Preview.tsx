@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import { formatDateToMMDDYYYY } from '../../variables/utils';
 const Preview = ({
   formData,
   selectedDate,
@@ -15,7 +16,7 @@ const Preview = ({
   const handleCancelSubmit = () => {
     onEdit();
   };
-
+console.log(formData, 'formdata at preview');
   return (
     <div className="min-h-screen  py-8 px-2 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -344,13 +345,13 @@ const Preview = ({
                 <div>
                   <p className="text-sm text-gray-500">Booking Date</p>
                   <p className="text-base font-medium">
-                    {selectedDate || 'Not selected'}
+                    {selectedDate || formatDateToMMDDYYYY(formData?.bookingDetails?.bookingDate) || 'Not selected'}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Time Slot</p>
                   <p className="text-base font-medium">
-                    {selectedSlot || 'Not selected'}
+                    {selectedSlot || formData?.bookingDetails?.timeSlot || 'Not selected'}
                   </p>
                 </div>
                 {/* {bookingResponse?.data?._id && (
@@ -363,12 +364,41 @@ const Preview = ({
                 )} */}
               </div>
             </div>
+            {formData?.status && (
+              <div className="border-b pb-6">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Booking Status
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <p className="text-sm text-gray-500">Payment Status</p>
+                  <p className="text-base font-medium">
+                    {formData?.status || 'Not selected'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500"> Admin Approval</p>
+                  <p className="text-base font-medium">
+                    {formData?.approval || 'Not selected'}
+                  </p>
+                </div>
+                {/* {bookingResponse?.data?._id && (
+                  <div>
+                    <p className="text-sm text-gray-500">Booking Reference</p>
+                    <p className="text-base font-medium">
+                      {bookingResponse.data._id}
+                    </p>
+                  </div>
+                )} */}
+              </div>
+            </div>
+            )}
           </div>
 
           <div
             className={`bg-gray-50 px-6 py-4 flex gap-4 ${isEditMode ? 'justify-end' : 'justify-between'}`}
           >
-            {!isEditMode && (
+            {!isEditMode && role === 'ADMIN' && (
               <div className="flex items-center">
                 <input type="checkbox" className="mr-3" id="sendEmail" />
                 <label htmlFor="sendEmail">Send confirmation email</label>
@@ -380,7 +410,7 @@ const Preview = ({
                   isEditMode
                     ? onEdit()
                     : role === 'ADMIN'
-                      ? setCancel(true)
+                      ?  setCancel(true)
                       : onEdit()
                 }
                 className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
@@ -399,7 +429,7 @@ const Preview = ({
               </button> */}
               {(isEditMode || (role === 'ADMIN' && formData)) && (
                 <button
-                  onClick={() => {onConfirm() ??  onEdit()}}
+                  onClick={() => {if(onConfirm)onConfirm() ??  onEdit()}}
                   className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
                 >
                    {isEditMode

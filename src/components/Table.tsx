@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Star, User, ScanEye } from 'lucide-react';
+import { Mail,  Star, User, ScanEye } from 'lucide-react';
 import { TableProps } from '../types/global';
 import { STRAPI_API_BASE_URL } from '../config/httpClient';
 import { ChevronRight } from 'lucide-react';
 import { ChevronLeft } from 'lucide-react';
 import { useFontSize } from './home/FontSizeContext';
 import Preview from './BookingForm/Preview';
-import { adminApprove, adminReject, refund, userCancel } from '../config/controller';
+import {
+  adminApprove,
+  adminReject,
+  refund,
+  userCancel,
+} from '../config/controller';
 
 const TableComponent = ({
   Heading,
@@ -15,7 +20,7 @@ const TableComponent = ({
   search,
   maxline,
 }: TableProps & { Heading: string }) => {
-  const itemsPerPage = maxline ?? 10;
+  const [itemsPerPage, setItemsPerPage] = useState(maxline ?? 10);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +62,7 @@ const TableComponent = ({
         id: previewData?._id,
       });
       if (response.success) {
-       const response = await userCancel({
+        const response = await userCancel({
           token: sessionStorage.getItem('token'),
           id: previewData?._id,
         });
@@ -76,15 +81,9 @@ const TableComponent = ({
       <Preview
         formData={previewData}
         onConfirm={() => {
-          // handle confirm
-          // setShowPreview(false);
-          // setPreviewData(null);
           handleConfirm();
         }}
         onEdit={() => {
-          // handle edit
-          // setShowPreview(false);
-          // setPreviewData(null);
           handlereject();
         }}
         isEditMode={false}
@@ -92,224 +91,234 @@ const TableComponent = ({
     );
   }
   return (
-    <div className=" overflow-hidden min-h-screen p-4">
+    <div className="overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
         <h2 className="text-xl font-bold text-white flex items-center">
           <Star size={20} className="mr-2" />
           {Heading}
         </h2>
       </div>
+
       {search === true && (
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-90 px-4 py-2 m-4  border rounded-lg"
-        />
+        <div className="flex justify-end">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-90 px-4 py-2 m-4 border rounded-lg"
+          />
+        </div>
       )}
-      <table className="w-full border-collapse ">
+
+      {/* Outer table with only header */}
+      <table className="w-full table-fixed border-collapse">
         <thead>
           <tr>
             {columns.map((column, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-left   font-medium text-gray-500 tracking-wider"
+                className="px-6 py-3 text-left font-2xl text-black tracking-wider"
               >
                 {column.label}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody
-          className={` rounded-2xl  overflow-hidden`}
-          style={{ transition: 'all 0.5s ease' }}
-        >
-          {currentData.length > 0 ? (
-            currentData.map((official: any, index: number) => (
-              <tr key={official.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap   text-gray-900">
-                  {index + 1}
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center">
-                    {official.bookingType ? null : official.isVacant ? (
-                      <div className="h-12 w-12 rounded-full bg-gray-100 border border-gray-200 overflow-hidden">
-                        <div className="h-full w-full flex items-center justify-center">
-                          <User size={24} className="text-gray-400" />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="relative group inline-block">
-                        <img
-                          src={
-                            official?.image?.url
-                              ? STRAPI_API_BASE_URL + official?.image?.url
-                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-                          }
-                          alt={official.name}
-                          className="h-12 w-12 rounded-full object-cover cursor-pointer"
-                          onClick={() =>
-                            setModalImage(
-                              STRAPI_API_BASE_URL + official?.image?.url
-                            )
-                          }
-                        />
-                        {modalImage && (
-                          <div
-                            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
-                            onClick={() => setModalImage(null)} // click outside closes
-                          >
+      </table>
+
+      {/* Scrollable body only */}
+      <div className="max-h-[900px]  overflow-y-auto">
+        <table className="w-full table-fixed border-collapse">
+          <tbody>
+            {currentData.length > 0 ? (
+              currentData.map((official: any, index: number) => {
+                console.log(official, 'official');
+                return (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap   text-gray-900">
+                      {startIndex + index + 1}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center">
+                        {official.bookingType ? null : official.isVacant ? (
+                          <div className="h-12 w-12 rounded-full bg-gray-100 border border-gray-200 overflow-hidden">
+                            <div className="h-full w-full flex items-center justify-center">
+                              <User size={24} className="text-gray-400" />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="relative group inline-block">
                             <img
-                              src={modalImage}
-                              alt="Enlarged"
-                              className="max-w-full max-h-[90%] rounded shadow-lg"
-                              onClick={(e) => e.stopPropagation()} // prevent closing when clicking the image
+                              src={
+                                official?.image?.url
+                                  ? STRAPI_API_BASE_URL + official?.image?.url
+                                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                              }
+                              alt={official.name}
+                              className="h-12 w-12 rounded-full object-cover cursor-pointer"
+                              onClick={() =>
+                                setModalImage(
+                                  STRAPI_API_BASE_URL + official?.image?.url
+                                )
+                              }
                             />
+                            {modalImage && (
+                              <div
+                                className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                                onClick={() => setModalImage(null)} // click outside closes
+                              >
+                                <img
+                                  src={modalImage}
+                                  alt="Enlarged"
+                                  className="max-w-full max-h-[90%] rounded shadow-lg"
+                                  onClick={(e) => e.stopPropagation()} // prevent closing when clicking the image
+                                />
+                              </div>
+                            )}
                           </div>
                         )}
+
+                        <div className="ml-4">
+                          <div className="  font-medium text-gray-900">
+                            {official.name}
+                          </div>
+                          <div className="  text-red-500 font-medium">
+                            {official.designation}
+                          </div>
+                        </div>
                       </div>
+
+                      {official.bookingType && (
+                        <div className="  font-medium text-gray-900">
+                          {official.bookingType}
+                        </div>
+                      )}
+                    </td>
+                    {official.applicantName && (
+                      <td className="px-6 py-4   text-gray-900">
+                        {official.applicantName}
+                      </td>
+                    )}
+                    {official.talentType && (
+                      <td className="px-6 py-4   text-gray-900">
+                        {official.talentType}
+                      </td>
+                    )}
+                    {official.bookingDate && (
+                      <td className="px-6 py-4   text-gray-900">
+                        {official.bookingDate}
+                      </td>
+                    )}
+                    {official.screeningDate && (
+                      <td className="px-6 py-4   text-gray-900">
+                        {official.screeningDate}
+                      </td>
+                    )}
+                    {official.paymentMode && (
+                      <td className="px-6 py-4   text-gray-900">
+                        {official.paymentMode}
+                      </td>
+                    )}
+                    {official.paidOn && (
+                      <td className="px-6 py-4   text-gray-900">
+                        {official.paidOn}
+                      </td>
+                    )}
+                    {official?.status && (
+                      <td className="px-6 py-4   text-gray-900">
+                        <div
+                          className={`px-2 py-1   rounded-full w-max inline-block ${
+                            official.status === 'CONFIRMED'
+                              ? 'bg-green-100 text-green-800'
+                              : official.status === 'PENDING'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : official.status === 'CANCELLED'
+                                  ? 'bg-red-100 text-red-800'
+                                  : 'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {official.status}
+                        </div>
+                      </td>
+                    )}
+                    {official?.approval && (
+                      <td className="px-6 py-4   text-gray-900">
+                        <div
+                          className={`px-2 py-1   rounded-full w-max inline-block ${
+                            official.approval === 'APPROVED'
+                              ? 'bg-green-100 text-green-800'
+                              : official.approval === 'PENDING'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : official.approval === 'REJECTED'
+                                  ? 'bg-red-100 text-red-800'
+                                  : 'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {official.approval}
+                        </div>
+                      </td>
+                    )}
+                    {official?.transcationStatus && (
+                      <td className="px-9 py-4   text-gray-900 ">
+                        <div
+                          className={`px-2 py-1   rounded-full w-max inline-block ${
+                            official.transcationStatus === 'Success'
+                              ? 'bg-green-100 text-green-800'
+                              : official.transcationStatus === 'Failed'
+                                ? 'bg-red-100 text-red-800'
+                                : 'bg-yellow-100 text-yellow-800'
+                          }`}
+                        >
+                          {official.transcationStatus}
+                        </div>
+                      </td>
                     )}
 
-                    <div className="ml-4">
-                      <div className="  font-medium text-gray-900">
-                        {official.name}
-                      </div>
-                      <div className="  text-red-500 font-medium">
-                        {official.designation}
-                      </div>
-                    </div>
-                  </div>
+                    {/* {official.view && ( */}
+                    {(role === 'ADMIN' || role === 'USER') && (
+                      <td className="px-6 py-4   text-gray-900">
+                        <button
+                          className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
+                          onClick={() => {
+                            setShowPreview(true);
+                            setPreviewData(official);
+                          }}
+                        >
+                          <ScanEye />
+                        </button>
+                      </td>
+                    )}
 
-                  {official.bookingType && (
-                    <div className="  font-medium text-gray-900">
-                      {official.bookingType}
-                    </div>
-                  )}
-                </td>
-                {official.applicantName && (
-                  <td className="px-6 py-4   text-gray-900">
-                    {official.applicantName}
-                  </td>
-                )}
-                {official.talentType && (
-                  <td className="px-6 py-4   text-gray-900">
-                    {official.talentType}
-                  </td>
-                )}
-                {official.bookingDate && (
-                  <td className="px-6 py-4   text-gray-900">
-                    {official.bookingDate}
-                  </td>
-                )}
-                {official.screeningDate && (
-                  <td className="px-6 py-4   text-gray-900">
-                    {official.screeningDate}
-                  </td>
-                )}
-                {official.paymentMode && (
-                  <td className="px-6 py-4   text-gray-900">
-                    {official.paymentMode}
-                  </td>
-                )}
-                {official.paidOn && (
-                  <td className="px-6 py-4   text-gray-900">
-                    {official.paidOn}
-                  </td>
-                )}
-                {official?.status && (
-                  <td className="px-6 py-4   text-gray-900">
-                    <div
-                      className={`px-2 py-1   rounded-full w-max inline-block ${
-                        official.status === 'CONFIRMED'
-                          ? 'bg-green-100 text-green-800'
-                          : official.status === 'PENDING'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : official.status === 'CANCELLED'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {official.status}
-                    </div>
-                  </td>
-                )}
-                {official?.approval && (
-                  <td className="px-6 py-4   text-gray-900">
-                    <div
-                      className={`px-2 py-1   rounded-full w-max inline-block ${
-                        official.approval === 'APPROVED'
-                          ? 'bg-green-100 text-green-800'
-                          : official.approval === 'PENDING'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : official.approval === 'REJECTED'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {official.approval}
-                    </div>
-                  </td>
-                )}
-                {official?.transcationStatus && (
-                  <td className="px-9 py-4   text-gray-900 ">
-                    <div
-                      className={`px-2 py-1   rounded-full w-max inline-block ${
-                        official.transcationStatus === 'Success'
-                          ? 'bg-green-100 text-green-800'
-                          : official.transcationStatus === 'Failed'
-                            ? 'bg-red-100 text-red-800'
-                            : 'bg-yellow-100 text-yellow-800'
-                      }`}
-                    >
-                      {official.transcationStatus}
-                    </div>
-                  </td>
-                )}
+                    {/* )} */}
+                    {(official.department || official.from) && (
+                      <td
+                        className="px-6 py-4"
+                        style={{ fontSize: `${fontSize - 4}px` }}
+                      >
+                        <span className="px-2 py-1  font-semibold rounded-full bg-red-100 text-red-800">
+                          {official.department || official.from}
+                        </span>
+                      </td>
+                    )}
+                    {official.to && (
+                      <td
+                        className="px-6 py-4"
+                        style={{ fontSize: `${fontSize - 4}px` }}
+                      >
+                        <span className="px-2 py-1   font-semibold rounded-full bg-red-100 text-red-800">
+                          {official.to}
+                        </span>
+                      </td>
+                    )}
 
-                {/* {official.view && ( */}
-             {(role=== 'ADMIN' ||  role === 'USER') &&
-               <td className="px-6 py-4   text-gray-900">
-                  <button
-                    className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
-                    onClick={() => {
-                      setShowPreview(true);
-                      setPreviewData(official);
-                    }}
-                  >
-                    <ScanEye />
-                  </button>
-                </td>}
-
-                {/* )} */}
-                {(official.department || official.from) && (
-                  <td
-                    className="px-6 py-4"
-                    style={{ fontSize: `${fontSize - 4}px` }}
-                  >
-                    <span className="px-2 py-1  font-semibold rounded-full bg-red-100 text-red-800">
-                      {official.department || official.from}
-                    </span>
-                  </td>
-                )}
-                {official.to && (
-                  <td
-                    className="px-6 py-4"
-                    style={{ fontSize: `${fontSize - 4}px` }}
-                  >
-                    <span className="px-2 py-1   font-semibold rounded-full bg-red-100 text-red-800">
-                      {official.to}
-                    </span>
-                  </td>
-                )}
-
-                {official.contact && (
-                  <td className="px-6 py-4   text-gray-900">
-                    <div className="flex items-center">
-                      <Phone size={14} className="mr-1 text-gray-500" />
-                      {official.contact}
-                    </div>
-                    {/* {official.email && (
+                    {official.contact && (
+                      <td className="px-6 py-4   text-gray-900">
+                        {/* <div className="flex items-center">
+                          <Phone size={14} className="mr-1 text-gray-500" />
+                          {official.contact == null ? "N/A" : official.contact}
+                        </div> */}
+                        {/* {official.email && (
                       <div className="  text-gray-500 flex items-center">
                         <Mail size={14} className="mr-1 text-gray-500" />
                         <a
@@ -320,24 +329,24 @@ const TableComponent = ({
                         </a>
                       </div>
                     )} */}
-                  </td>
-                )}
-                {official.email && (
-                  <td className="px-6 py-4">
-                    <div className=" text-gray-500 flex items-center">
-                      <Mail size={14} className="mr-1 text-gray-500" />
-                      <a
-                        href={`mailto:${official.email}`}
-                        className="hover:text-red-500"
-                      >
-                        {official.email === null ? null : official.email}
-                      </a>
-                    </div>
-                  </td>
-                )}
-                {official.action && (
-                  <td className="px-6 py-4 flex items-center gap-4 ">
-                    {/* <label className=" cursor-pointer">
+                      </td>
+                    )}
+                    {official.email && (
+                      <td className="px-6 py-4">
+                        <div className=" text-gray-500 flex items-center">
+                          <Mail size={14} className="mr-1 text-gray-500" />
+                          <a
+                            href={`mailto:${official.email}`}
+                            className="hover:text-red-500"
+                          >
+                            {official.email === null ? null : official.email}
+                          </a>
+                        </div>
+                      </td>
+                    )}
+                    {official.action && (
+                      <td className="px-6 py-4 flex items-center gap-4 ">
+                        {/* <label className=" cursor-pointer">
                       <div className="relative">
                         <input
                           type="checkbox"
@@ -357,22 +366,27 @@ const TableComponent = ({
                         ></div>
                       </div>
                     </label> */}
-                    {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl   cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
+                        {/* <button className='border border-red-500 p-2 bg-red-500 text-white rounded-2xl   cursor-pointer' onClick={()=> navigate(paths.preview)}>Approve</button>
                   <button className='border p-2 rounded-2xl   cursor-pointer' >Decline</button> */}
-                  </td>
-                )}
+                      </td>
+                    )}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="px-6 py-10 text-center text-gray-500"
+                >
+                  No results found for "{searchTerm}"
+                </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={5} className="px-6 py-10 text-center text-gray-500">
-                No results found for "{searchTerm}"
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      {totalPages > 1 && (
+            )}
+          </tbody>
+        </table>
+      </div>
+      {/* {totalPages > 1 && (
         <div>
           {' '}
           <div className="flex justify-center items-center gap-4 mt-4">
@@ -399,7 +413,65 @@ const TableComponent = ({
             </button>
           </div>
         </div>
-      )}
+      )} */}
+      <div className="">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
+          {/* Rows per page selector */}
+          <div className="flex items-center gap-2">
+            <label htmlFor="rowsPerPage" className="text-gray-600">
+              Rows per page:
+            </label>
+            <select
+              id="rowsPerPage"
+              value={itemsPerPage}
+              onChange={(e) => {
+                setItemsPerPage(Number(e.target.value));
+                setCurrentPage(1); // reset to first page when changing page size
+              }}
+              className="border rounded px-2 py-1"
+            >
+              {[5, 10, 20, 50, 100].map((num) => (
+                <option key={num} value={num}>
+                  {num}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-4">
+              <button
+                className="px-1 py-1 rounded-4xl bg-red-300 text-red-800 disabled:opacity-50"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft />
+              </button>
+
+              <span className="font-medium">
+                {currentPage} of {Math.ceil(filteredData.length / itemsPerPage)}
+              </span>
+
+              <button
+                className="px-1 py-1 rounded-4xl bg-red-300 text-red-800 disabled:opacity-50"
+                onClick={() =>
+                  setCurrentPage((prev) =>
+                    Math.min(
+                      prev + 1,
+                      Math.ceil(filteredData.length / itemsPerPage)
+                    )
+                  )
+                }
+                disabled={
+                  currentPage === Math.ceil(filteredData.length / itemsPerPage)
+                }
+              >
+                <ChevronRight />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

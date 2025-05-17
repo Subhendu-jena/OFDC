@@ -4,8 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 const Layout: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen w-full"> 
-     
+    <div className="flex flex-col min-h-screen w-full">
       <Navbar />
 
       <main className=" w-full flex-1 pb-14 ">
@@ -21,4 +20,3 @@ const Layout: React.FC = () => {
 };
 
 export default Layout;
-
