@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Star, User, ScanEye } from 'lucide-react';
+import { Mail,  Star, User, ScanEye } from 'lucide-react';
 import { TableProps } from '../types/global';
 import { STRAPI_API_BASE_URL } from '../config/httpClient';
 import { ChevronRight } from 'lucide-react';
@@ -91,13 +91,14 @@ const TableComponent = ({
     );
   }
   return (
-    <div className=" overflow-hidden min-h-screen p-4">
+    <div className="overflow-hidden min-h-screen p-4">
       <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl">
         <h2 className="text-xl font-bold text-white flex items-center">
           <Star size={20} className="mr-2" />
           {Heading}
         </h2>
       </div>
+
       {search === true && (
         <div className="flex justify-end">
           <input
@@ -105,37 +106,36 @@ const TableComponent = ({
             placeholder="Search..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-90 px-4 py-2 m-4   border rounded-lg"
+            className="w-90 px-4 py-2 m-4 border rounded-lg"
           />
         </div>
       )}
-      <table className="w-full border-collapse ">
-         <div
-          className={`${
-            filteredData.length > 10 ? 'max-h-[900px]' : ''
-          } overflow-y-auto w-full`}
-        >
+
+      {/* Outer table with only header */}
+      <table className="w-full table-fixed border-collapse">
         <thead>
           <tr>
             {columns.map((column, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-left  font-2xl text-black tracking-wider"
+                className="px-6 py-3 text-left font-2xl text-black tracking-wider"
               >
                 {column.label}
               </th>
             ))}
           </tr>
         </thead>
-       
-          <table className="w-full border-collapse">
-            <tbody
-              className={` rounded-2xl `}
-              style={{ transition: 'all 0.5s ease' }}
-            >
-              {currentData.length > 0 ? (
-                currentData.map((official: any, index: number) => (
-                  <tr key={official.id} className="hover:bg-gray-50">
+      </table>
+
+      {/* Scrollable body only */}
+      <div className="max-h-[900px]  overflow-y-auto">
+        <table className="w-full table-fixed border-collapse">
+          <tbody>
+            {currentData.length > 0 ? (
+              currentData.map((official: any, index: number) => {
+                console.log(official, 'official');
+                return (
+                  <tr key={index} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap   text-gray-900">
                       {startIndex + index + 1}
                     </td>
@@ -314,10 +314,10 @@ const TableComponent = ({
 
                     {official.contact && (
                       <td className="px-6 py-4   text-gray-900">
-                        <div className="flex items-center">
+                        {/* <div className="flex items-center">
                           <Phone size={14} className="mr-1 text-gray-500" />
-                          {official.contact}
-                        </div>
+                          {official.contact == null ? "N/A" : official.contact}
+                        </div> */}
                         {/* {official.email && (
                       <div className="  text-gray-500 flex items-center">
                         <Mail size={14} className="mr-1 text-gray-500" />
@@ -371,21 +371,21 @@ const TableComponent = ({
                       </td>
                     )}
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={5}
-                    className="px-6 py-10 text-center text-gray-500"
-                  >
-                    No results found for "{searchTerm}"
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </table>
+                );
+              })
+            ) : (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="px-6 py-10 text-center text-gray-500"
+                >
+                  No results found for "{searchTerm}"
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* {totalPages > 1 && (
         <div>
           {' '}
@@ -414,7 +414,7 @@ const TableComponent = ({
           </div>
         </div>
       )} */}
-      <div className='fixed'>{totalPages > 1 && (
+      <div className="">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
           {/* Rows per page selector */}
           <div className="flex items-center gap-2">
@@ -438,39 +438,40 @@ const TableComponent = ({
             </select>
           </div>
 
-          {/* Page navigation buttons */}
-          <div className="flex justify-center items-center gap-4">
-            <button
-              className="px-1 py-1 rounded-4xl bg-red-300 text-red-800 disabled:opacity-50"
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft />
-            </button>
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-4">
+              <button
+                className="px-1 py-1 rounded-4xl bg-red-300 text-red-800 disabled:opacity-50"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft />
+              </button>
 
-            <span className="font-medium">
-              {currentPage} of {Math.ceil(filteredData.length / itemsPerPage)}
-            </span>
+              <span className="font-medium">
+                {currentPage} of {Math.ceil(filteredData.length / itemsPerPage)}
+              </span>
 
-            <button
-              className="px-1 py-1 rounded-4xl bg-red-300 text-red-800 disabled:opacity-50"
-              onClick={() =>
-                setCurrentPage((prev) =>
-                  Math.min(
-                    prev + 1,
-                    Math.ceil(filteredData.length / itemsPerPage)
+              <button
+                className="px-1 py-1 rounded-4xl bg-red-300 text-red-800 disabled:opacity-50"
+                onClick={() =>
+                  setCurrentPage((prev) =>
+                    Math.min(
+                      prev + 1,
+                      Math.ceil(filteredData.length / itemsPerPage)
+                    )
                   )
-                )
-              }
-              disabled={
-                currentPage === Math.ceil(filteredData.length / itemsPerPage)
-              }
-            >
-              <ChevronRight />
-            </button>
-          </div>
+                }
+                disabled={
+                  currentPage === Math.ceil(filteredData.length / itemsPerPage)
+                }
+              >
+                <ChevronRight />
+              </button>
+            </div>
+          )}
         </div>
-      )}</div>
+      </div>
     </div>
   );
 };

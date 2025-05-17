@@ -48,7 +48,7 @@ const ForgetPassword: React.FC = () => {
       const errorMessage = (err as any).response?.data?.error;
       setError(errorMessage);
     }
-  };
+  };   
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">

@@ -9,6 +9,7 @@ export interface FormData {
 export interface MenuItem {
   label: string;
   url: string;
+  target?: string;
 }
 export interface Official {
   slNo?: number;

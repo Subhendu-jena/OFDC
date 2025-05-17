@@ -20,7 +20,7 @@ const Sidebar = ({menuItems} : { menuItems: MenuItem[] })=> {
       </div>
       {/* Sidebar Menu */}
       <div
-        className={`bg-white h-[99%] pt-8 rounded-tl-md rounded-b-md px-2 shadow-md 
+        className={`bg-white h-[100%] pt-8 px-2
           ${isOpen ? 'block' : 'hidden'} lg:block`}
       >
         <ul className="space-y-3">
@@ -33,7 +33,7 @@ const Sidebar = ({menuItems} : { menuItems: MenuItem[] })=> {
                   : 'text-gray-700 hover:bg-blue-50'
               }`}
             >
-              <Link to={item.url} className="flex-1">
+              <Link to={item.url} target={item.target ?? ''} className="flex-1">
                 {item.label}
               </Link>
               <MoveRightIcon />

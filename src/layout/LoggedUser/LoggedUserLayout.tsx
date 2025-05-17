@@ -4,6 +4,7 @@ import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import {  useEffect } from 'react';
 import { paths } from '../../routes/Path';
+import Navbar from '../../components/Navbar';
 const LoggedUserLayout = () => {
   const title =  window.location.pathname;
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const LoggedUserLayout = () => {
   )
   return (
     <div className="w-full">
+      <Navbar/>
         {currentSection ? (
         <KHeroSection
           subHead1=''

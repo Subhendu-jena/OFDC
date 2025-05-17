@@ -12,20 +12,24 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { paths } from '../routes/Path';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MenuItem } from '../types/global';
 import { useFontSize } from './home/FontSizeContext';
+import { LogOut } from 'lucide-react';
+import { LayoutDashboardIcon } from 'lucide-react';
 
 export const TopHeader = () => {
+  const token = sessionStorage.getItem('token');
   // const [isAdmin, setIsAdmin] = useState(false);
   // const [isLoggedIn, setisLoggedIn] = useState(false);
   // console.log(setIsAdmin, setisLoggedIn);
   const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
+  const navigate = useNavigate();
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className=" flex justify-between px-16 items-center">
         <div className="flex items-center ">
-          <span className="hover:text-orange-500 cursor-pointer mr-4">
+          <span className="hover:text-orange-500 cursor-pointer mr-4" onClick={() => navigate(paths.home)}>
             Skip to main Content /
           </span>
           <div className="flex space-x-4">
@@ -88,21 +92,44 @@ export const TopHeader = () => {
             <span>Logout</span>
           </div> */}
           <span>/</span>
-          <Link
+            {token ? (
+            <Link
+              to={paths.RoleBasedRedirect}
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+              <LayoutDashboardIcon size={16}/>
+              <span>Go to Dashboard</span>
+            </Link>
+          ) : (<Link
             to="/register"
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
           >
             <UserPlus size={16} />
             <span>Register</span>
-          </Link>
+          </Link>)}
           <span>/</span>
-          <Link
-            to="/login"
-            className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
-          >
-            <User size={16} />
-            <span>Login</span>
-          </Link>
+          {token ? (
+            <Link
+              to=" "
+              onClick={() => {
+                sessionStorage.removeItem('token');
+                sessionStorage.removeItem('userID');
+                sessionStorage.removeItem('role');
+              }}
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+             <LogOut size={16}/>
+              <span>Log Out</span>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+              <User size={16} />
+              <span>Login</span>
+            </Link>
+          )}
           {/* {!isAdmin ? (
             !isLoggedIn ? (
               <>
@@ -215,8 +242,12 @@ const MainHeader = () => {
       url: paths.locationDirectory,
       children: [
         { label: 'Location Category', url: paths.locationDirectory },
-        { label: 'Book a Location', url: '#' },
-        { label: 'Location Booking Guideline', url: '#' },
+        // { label: 'Book a Location', url: '#' },
+        {
+          label: 'Movie Shooting Permissions',
+          url: 'https://investodisha.gov.in/goswift/ServiceDetails.aspx?enc=bJ1nLSOgxhIyHc4RPqgFjV0+I1NqvCn1RkVLG8RuJGLPkDO/ZKgIlgUXr1Wvp8GGiMXct0/yz+1HrhWGwFvG/EHWAIByvuhiuflkzkRUa0cPjIJq5NVE65iyeTM/mWEl',
+          target: '_blank',
+        },
       ],
     },
     {
@@ -276,7 +307,7 @@ const MainHeader = () => {
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-
+  const token =sessionStorage.getItem('token');
   return (
     <>
       <div
@@ -334,6 +365,7 @@ const MainHeader = () => {
                         <Link
                           key={childIndex}
                           to={child.url}
+                          target={child.target ?? '_self'}
                           className="block px-4 py-2 text-sm text-black hover:text-orange-500 transition-all duration-300"
                         >
                           {child.label}
@@ -385,13 +417,23 @@ const MainHeader = () => {
                 <Home size={16} />
                 <span className="text-sm">Home</span>
               </Link>
-              <Link
-                to="/login"
-                className="flex items-center space-x-1 text-white hover:text-orange-500"
-              >
-                <User size={16} />
-                <span className="text-sm">Login</span>
-              </Link>
+              {token ? (
+                <Link
+                  to="/login"
+                  className="flex items-center space-x-1 text-white hover:text-orange-500"
+                >
+                  <User size={16} />
+                  <span className="text-sm">Login</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="flex items-center space-x-1 text-white hover:text-orange-500"
+                >
+                  <User size={16} />
+                  <span className="text-sm">Login</span>
+                </Link>
+              )}
               <Link
                 to="/register"
                 className="flex items-center space-x-1 text-white hover:text-orange-500"

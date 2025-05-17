@@ -1,38 +1,64 @@
 import { useEffect, useState } from 'react';
-import TableComponent from '../../components/Table';
 import { whoIsWhoAboutUS } from '../../config/strapiController';
-import { Loader } from 'lucide-react';
-// import { Official } from '../../types/global';
-
+import Table1 from '../../components/Table1';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+import blankImage from '../../../public/blankImage.webp';
+import { Star } from 'lucide-react';
 function WhosWho() {
-  const columns = [
-    { field: 'slNo', label: 'Sl No.' },
-    { field: 'name', label: 'Name' },
-    { label: 'Phone No', field: 'phoneNo' },
-    { label: 'Email Id', field: 'emailId' },
-  ];
-
-  // const data:Official[] = [
-  //   { slNo: 1, name: "-Vacant-", designation: "Chairman", contact: "0671-2305169, 2306532", email: "" },
-  //   { slNo: 2, name: "Sri Samarth Verma, IAS", designation: "Managing Director", contact: "0671-2305169, 2306532", email: "mdodfilm@gmail.com" },
-  //   { slNo: 3, name: "Sri B.M.B Pattnaik", designation: "Officer on Special Duty", contact: "9437208372", email: "" },
-  //   { slNo: 4, name: "Sri Prabhas Chandra Mohapatra", designation: "Officer on Special Duty", contact: "9937005537", email: "" },
-  //   { slNo: 5, name: "Smt. Kabita Mallick", designation: "Senior Assistant", contact: "", email: "" },
-  //   { slNo: 6, name: "Sri Niranjan Biswal", designation: "Office Assistant", contact: "", email: "" },
-  //   { slNo: 7, name: "Sri Biswanath Baut", designation: "Jr. Steno-cum-Typist", contact: "", email: "" },
-  //   { slNo: 8, name: "Sri Shakti Saurav Patra", designation: "IT Assistant", contact: "", email: "" },
-  //   { slNo: 9, name: "Sri Ashok Kumar Sahoo", designation: "Accounts Assistant", contact: "", email: "" },
-  //   { slNo: 10, name: "Sri Gobinda Behera", designation: "Data Entry Operator", contact: "", email: "" },
-  //   { slNo: 11, name: "Smt. Bijayalaxmi Parida", designation: "Data Entry Operator", contact: "", email: "" },
-  //   { slNo: 12, name: "Sri Dasarathi Sahu", designation: "Messenger", contact: "", email: "" },
-  //   { slNo: 13, name: "Smt. Srimati Barik", designation: "Messenger", contact: "", email: "" },
-  //   { slNo: 14, name: "Sri Muralidhar Biswal", designation: "Messenger", contact: "", email: "" },
-  //   { slNo: 15, name: "Sri D. Kama Kumar Reddy", designation: "Watchman-cum-Mali", contact: "", email: "" },
-  //   { slNo: 16, name: "Sri N. Santosh", designation: "Sweeper", contact: "", email: "" },
-  // ];
-
-  const [loading, setLoading] = useState(false);
+  const [magnifiedImage, setMagnifiedImage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
+  const columns: {
+    header: string;
+    accessor: string;
+    render?: (row: any) => any;
+    size?: number;
+  }[] = [
+    { header: 'Sl No.', accessor: 'slno'  },
+    {
+      header: 'Name',
+      accessor: 'name',size:300,
+      render: (row: any) => {
+        const imageUrl = row.image?.url
+          ? STRAPI_API_BASE_URL + row.image?.url || row.image?.url
+          : blankImage;
+        return (
+          <div className="flex items-center relative space-x-4 text-left">
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={row.name || 'Profile image'}
+                className="w-12 h-12 rounded-full object-cover border border-gray-300"
+                onClick={() => setMagnifiedImage(imageUrl)}
+              />
+            )}
+            <div className="flex flex-col">
+              <span className="font-normal text-[16px]">{row.name}</span>
+              {row.designation && (
+                <span className="text-sm text-gray-500">{row.designation}</span>
+              )}
+            </div>
+            {magnifiedImage.length !== 0 && (
+              <div
+                className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+                onClick={() => setMagnifiedImage('')}
+              >
+                <img
+                  src={magnifiedImage}
+                  alt={row.name || 'Profile image'}
+                  className="max-w-full max-h-full"
+                />
+              </div>
+            )}
+          </div>
+        );
+      },
+    },
+    { header: 'Phone No', accessor: 'contact' },
+    { header: 'Email Id', accessor: 'email' },
+  ];
+ 
   useEffect(() => {
     setLoading(true);
     whoIsWhoAboutUS()
@@ -50,15 +76,37 @@ function WhosWho() {
       });
   }, []);
   const card = data[0]?.whoIsWho || [];
+  const filteredData = card.filter((row: any) => {
+    const search = searchTerm.toLowerCase();
+    return (
+      row.name?.toLowerCase().includes(search) 
+      ||
+      row.designation?.toLowerCase().includes(search) ||
+      row.contact?.toLowerCase().includes(search) ||
+      row.email?.toLowerCase().includes(search)
+    );
+  });
+
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className=" bg-white">
-          <TableComponent columns={columns} data={card} Heading="Who Is Who" />
+      <div className=" bg-white pt-2">
+        <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl ">
+          <h2 className="text-xl font-bold text-white flex items-center">
+            <Star size={20} className="mr-2" />
+            Who's Who
+          </h2>
+          <div className="flex justify-end">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-90 bg-white placeholder:text-black text-black border-none outline-none px-4 py-2 border rounded-lg"
+            />
+          </div>
         </div>
-      )}
+        <Table1 columns={columns} isLoading={loading} data={filteredData} />
+      </div>
     </>
   );
 }

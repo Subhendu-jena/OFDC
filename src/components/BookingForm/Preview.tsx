@@ -364,6 +364,35 @@ console.log(formData, 'formdata at preview');
                 )} */}
               </div>
             </div>
+            {formData?.status && (
+              <div className="border-b pb-6">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Booking Status
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <p className="text-sm text-gray-500">Payment Status</p>
+                  <p className="text-base font-medium">
+                    {formData?.status || 'Not selected'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500"> Admin Approval</p>
+                  <p className="text-base font-medium">
+                    {formData?.approval || 'Not selected'}
+                  </p>
+                </div>
+                {/* {bookingResponse?.data?._id && (
+                  <div>
+                    <p className="text-sm text-gray-500">Booking Reference</p>
+                    <p className="text-base font-medium">
+                      {bookingResponse.data._id}
+                    </p>
+                  </div>
+                )} */}
+              </div>
+            </div>
+            )}
           </div>
 
           <div
@@ -381,7 +410,7 @@ console.log(formData, 'formdata at preview');
                   isEditMode
                     ? onEdit()
                     : role === 'ADMIN'
-                      ? setCancel(true)
+                      ?  setCancel(true)
                       : onEdit()
                 }
                 className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
@@ -400,7 +429,7 @@ console.log(formData, 'formdata at preview');
               </button> */}
               {(isEditMode || (role === 'ADMIN' && formData)) && (
                 <button
-                  onClick={() => {onConfirm() ??  onEdit()}}
+                  onClick={() => {if(onConfirm)onConfirm() ??  onEdit()}}
                   className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
                 >
                    {isEditMode

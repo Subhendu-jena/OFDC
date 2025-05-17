@@ -1,5 +1,5 @@
 import React from 'react';
-import archive from '../../assets/acrhive.jpg';
+import archive from '../../assets/Odia Film Archives Entrance copy.jpg';
 import { motion } from 'framer-motion';
 import { Archive, Camera, Film } from 'lucide-react';
 const ArchivesInsight: React.FC = () => {

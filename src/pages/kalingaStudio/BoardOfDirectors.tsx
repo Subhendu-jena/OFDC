@@ -110,14 +110,13 @@ const [data, setData] = useState<any>([]);
         </div>
 
         {/* Organizational Structure Visualization */}
-        <div className="mt-20 bg-white rounded-xl shadow-xl p-8">
+        {/* <div className="mt-20 bg-white rounded-xl shadow-xl p-8">
           <h2 className="text-2xl font-bold text-center text-blue-900 mb-8">
             Organizational Structure
           </h2>
 
           <div className="flex justify-center">
             <div className="relative max-w-2xl w-full h-64">
-              {/* This would be expanded with a proper org chart visualization */}
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-16 border-2 border-yellow-500 rounded-lg bg-white flex items-center justify-center shadow-lg z-10">
                 <span className="text-blue-900 font-bold text-sm">
                   Chairman
@@ -142,14 +141,13 @@ const [data, setData] = useState<any>([]);
                 </span>
               </div>
 
-              {/* Connector lines */}
               <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-0.5 h-8 bg-gray-400"></div>
               <div className="absolute top-40 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gray-400"></div>
               <div className="absolute top-40 left-1/4 transform -translate-x-1/2 w-0.5 h-8 bg-gray-400"></div>
               <div className="absolute top-40 left-3/4 transform -translate-x-1/2 w-0.5 h-8 bg-gray-400"></div>
             </div>
           </div>
-        </div>
+        </div> */}
       </main>
     </div>}</>
   );

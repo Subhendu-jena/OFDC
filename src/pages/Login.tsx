@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginData } from '../types/global';
 import { loginController } from '../config/controller';
 import { toast } from 'react-toastify';
+import { ArrowLeft } from 'lucide-react';
 
 const Login: React.FC = () => {
   // State for form data
@@ -80,11 +81,21 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
+      
       {/* Left side - Login Form */}
       <div className="w-full md:w-1/2 flex  justify-center p-6 md:p-10">
+        
         <div className="w-full max-w-md">
+          <button
+          onClick={() => navigate(paths.home)}
+          className="mb-8 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to home
+        </button>
           {/* Logo and Title */}
           <div className="flex justify-center items-center space-x-2 ">
+            
             <img
               src="/Logo\Logo_OFDC_Booking_Page-removebg-preview.png"
               alt="OFDC Logo"
@@ -109,7 +120,7 @@ const Login: React.FC = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Email  <span className='text-red-500'>*</span>
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -138,7 +149,7 @@ const Login: React.FC = () => {
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Password  <span className='text-red-500'>*</span>
+                  Password <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -270,10 +281,11 @@ const Login: React.FC = () => {
           {/* Content */}
           <div className="z-10 text-center p-10">
             <h2 className="text-4xl font-bold text-white mb-4 animate-pulse">
-            Your Theatre Awaits
+              Your Theatre Awaits
             </h2>
             <p className="text-[18px] text-white opacity-80 max-w-md">
-            Login to cue your next screen-where your vision lights up the big screen.
+              Login to cue your next screen-where your vision lights up the big
+              screen.
             </p>
           </div>
         </div>

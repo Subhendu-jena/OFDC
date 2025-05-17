@@ -1,6 +1,7 @@
 import { Camera, Globe, Music, Paintbrush } from 'lucide-react';
 import React from 'react';
-
+import rathyatra from '../../assets/Cultural.webp';
+import chandua from '../../assets/Cultural Legacy.jpeg';
 const CulturalLegacy:React.FC = () => {
   return (
     <div>
@@ -44,11 +45,20 @@ const CulturalLegacy:React.FC = () => {
           </div> */}
 
           <div className="w-full bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className='grid grid-cols-2  gap-2'>
+
             <img
-              className="w-full h-80 object-fill object-center"
-              src="https://images.pexels.com/photos/31742103/pexels-photo-31742103/free-photo-of-ancient-temple-entrance-in-siem-reap-cambodia.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" // Replace with your image URL
+              className="w-full h-90  object-fill object-center"
+              src={chandua}// Replace with your image URL
               alt="Odisha Cultural Heritage"
-            />
+              />
+            <img
+              className="w-full h-90 object-fill object-center"
+              src={rathyatra}// Replace with your image URL
+              alt="Odisha Cultural Heritage"
+              />
+
+              </div>
             <div className="p-6">
               <h2 className="text-3xl font-bold   text-gray-800 mb-4">
                 Odisha’s Cultural Heritage
