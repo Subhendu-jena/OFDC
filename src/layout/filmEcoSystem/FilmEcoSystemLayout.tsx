@@ -9,7 +9,7 @@ const  FilmEcoSystemLayout = () => {
   const navigate = useNavigate();
   const menuItems = [
     { label: 'Film Policy', url: paths.filmEcoSystem },
-    { label: 'Policy Guidelines', url: '#' },
+    { label: 'Policy Guidelines', url: paths.policyGuidelines },
     { label: 'Odisha and Silver Screen', url: '#' }
   ];
   const section = [
@@ -22,7 +22,7 @@ const  FilmEcoSystemLayout = () => {
       tag: 'Odisha',
     },
     {
-      page: '/location-details',
+      page: '/policy-guidelines',
       subHead1: 'Our Mission',
       subHead2:
         ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',

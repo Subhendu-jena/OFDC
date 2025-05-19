@@ -14,7 +14,8 @@ export const loginController = async ({
     uri: '/user/login',
     method: 'POST',
     data,
-  });
+  }
+);
 };
 export const signUpController = async ({
   data,

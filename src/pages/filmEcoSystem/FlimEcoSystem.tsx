@@ -1,9 +1,26 @@
+import { useEffect, useState } from 'react';
+import { filmPolicy } from '../../config/strapiController';
 import { Link } from 'react-router-dom';
-// import NightSky from '../components/DiscoverOdisha/Nightsky';
 
 export default function OdishaFilmPolicy() {
+  const [data, setData] = useState<any>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response  = await filmPolicy();
+        if (response) {
+          setData(response);
+          console.log(response , 'resrrrrrrr')
+        }
+      } catch (error) {
+        console.error('Error fetching film policy:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
-    <div className="bg-gray-100 w-full min-h-screen">
+    <div className=" w-full min-h-screen">
       <div className="w-full mx-auto p-6">
         <div className="bg-white shadow-md rounded-lg ">
           {/* Sidebar & Main Content */}
@@ -14,11 +31,9 @@ export default function OdishaFilmPolicy() {
                 src="https://img-cdn.thepublive.com/fit-in/1200x675/filters:format(webp)/sambad-english/media/post_banners/wp-content/uploads/2023/10/kalinga-studio-750x430-1.jpg"
                 alt="Kalinga Studio"
               />
-              <h2 className="text-lg font-semibold mb-4">
-                ODISHA STATE FILM POLICY 2019
-              </h2>
+              <h2 className="text-lg font-semibold mb-4">{data?.heading }</h2>
               <Link
-                to="#"
+                to="_blank"
                 className="block text-center bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
               >
                 Download Policy
@@ -29,9 +44,7 @@ export default function OdishaFilmPolicy() {
             <section className="relative  md:col-span-3">
               {/* <NightSky /> */}
               <header className="bg-gray-800 text-white py-4 px-6 flex items-center">
-                <h1 className="text-xl font-bold">
-                  Odisha State Film Policy 2019
-                </h1>
+                <h1 className="text-xl font-bold">{data?.heading}</h1>
               </header>
               {/* Objectives */}
               <div className="my-6">
@@ -39,11 +52,16 @@ export default function OdishaFilmPolicy() {
                   Objectives
                 </h2>
                 <ul className="list-disc list-inside mt-2 text-gray-700 ">
-                 {['To promote quality Odia films.',
-                 'To facilitate film tourism in the state.',
-                 'To bring Odisha as a destination for film shooting.',].map((text) => (
+                  {[
+                    'Single Window Approval Process for films shooting in Odisha.',
+                    'Investors can apply through GOSWIFT portal for approvals.',
+                    'Subsidies for filmmakers shooting in Odisha.',
+                    'Financial assistance for film festivals.',
+                  ].map(({text}:any) => {
+                    // console.log(text.objectives, 'text');
+                    return(
                     <li>{text}</li>
-                  ))}
+                  )})}
                 </ul>
               </div>
 
@@ -109,4 +127,3 @@ export default function OdishaFilmPolicy() {
     </div>
   );
 }
-

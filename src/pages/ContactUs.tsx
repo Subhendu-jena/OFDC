@@ -1,8 +1,10 @@
 import { Mail, MapPin, PhoneCall } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { contactUs } from '../config/controller';
+import { contact } from '../config/strapiController';
+import { PhoneOutgoing } from 'lucide-react';
 
 const ContactUs: React.FC = () => {
   // const width = '100%',
@@ -39,6 +41,19 @@ const ContactUs: React.FC = () => {
   //   console.log('Google Map Loaded');
   //   setLoading(false);
   // };
+   const [data, setData] = useState<any>([]);
+    useEffect(() => {
+      contact()
+        .then(({ data }) => {
+          if (data) {
+            // console.log(data, 'wwww11w');
+            setData(data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      }, []);
   
   return (
     <div className="w-full">
@@ -67,7 +82,7 @@ const ContactUs: React.FC = () => {
 
       {/* Contact Information Section */}
       <section className="bg-gray-200 pt-16 pb-8 w-full flex justify-center">
-        <div className="flex md:flex-row max-w-5xl flex-col gap-4">
+        <div className="flex md:flex-row max-w-7xl flex-col gap-4">
           {/* Address Card */}
           <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
             <div className="bg-red-400 rounded-full p-4 mt-[-180px] absolute">
@@ -76,17 +91,17 @@ const ContactUs: React.FC = () => {
                 size={50}
               />
             </div>
-            <div className="text-2xl font-semibold pb-3">Visit Us Anytime</div>
-            <div className="text-xl">Odisha, India</div>
+            <div className="text-2xl font-semibold mt-5 pb-3">Visit Us Anytime</div>
+            <div className="text-lg px-8">{data.address}</div>
           </div>
 
           {/* Email Card */}
-          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative border-red-400 border-b-2 w-[350px] h-[200px]">
+          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative  hover:border-red-400  hover:border-b-2 w-[350px] h-[200px]">
             <div className="bg-red-400 rounded-full p-4 mt-[-180px] absolute">
               <Mail className="text-white animate-pulse" size={50} />
             </div>
             <div className="text-2xl font-semibold pb-3">Send an Email</div>
-            <div className="text-xl">filmodisha@gmail.com</div>
+            <div className="text-xl">{data.officeEmail || 'mdodfilm@gmail.com'}</div>
           </div>
 
           {/* Phone Card */}
@@ -97,8 +112,18 @@ const ContactUs: React.FC = () => {
                 size={50}
               />
             </div>
+            <div className="text-2xl font-semibold pb-3">Toll Free</div>
+            <div className="text-xl">{data.tollFree}</div>
+          </div>
+          <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
+            <div className="bg-red-400 rounded-full p-4 mt-[-180px] absolute">
+              <PhoneOutgoing
+                className="text-white group-hover:animate-pulse"
+                size={50}
+              />
+            </div>
             <div className="text-2xl font-semibold pb-3">Call Center</div>
-            <div className="text-xl">+91 0000000000</div>
+            <div className="text-xl">+91 {data.mobileNumber}</div>
           </div>
         </div>
       </section>

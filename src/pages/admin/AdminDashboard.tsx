@@ -10,8 +10,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { paths } from '../../routes/Path';
+// import { useNavigate } from 'react-router-dom';
+// import { paths } from '../../routes/Path';
 import { adminApprove, adminReject, getAllBookingsForAdmin, refund, userCancel } from '../../config/controller';
 import { Star } from 'lucide-react';
 import Preview from '../../components/BookingForm/Preview';
@@ -241,7 +241,7 @@ const token = sessionStorage.getItem('token');
             }
           } catch (err) {}
         };
-const navigate = useNavigate();
+// const navigate = useNavigate();
   const filteredData = data1.filter((row: any) => {
     const search = searchTerm.toLowerCase();
     return (
@@ -251,7 +251,7 @@ const navigate = useNavigate();
   });
   return (
     <div className="bg-white p-4 space-y-6 mx-auto">
-      <div className='text-right border border-amber-500 text-amber-600 p-2 rounded-md w-fit cursor-pointer ' onClick={() => {
+      {/* <div className='text-right border border-amber-500 text-amber-600 p-2 rounded-md w-fit cursor-pointer ' onClick={() => {
                     sessionStorage.removeItem('token');
                     sessionStorage.removeItem('userID');
                     sessionStorage.removeItem('role');
@@ -260,7 +260,7 @@ const navigate = useNavigate();
                     sessionStorage.removeItem('phoneNo');
                     // window.location.reload();
                     navigate(paths.login, { replace: true });
-                  }}>Logout</div>
+                  }}>Logout</div> */}
       <div className="mt-2 flex justify-end">
         <select
           className="border outline-none border-amber-500 text-amber-600 p-2 rounded-md "

@@ -66,7 +66,7 @@ export const contact = async (): Promise<ApiResponse<[]>> => {
     });
   };
   
-  export const aCursoryLook = async (): Promise<ApiResponse<[]>> => {
+  export const  aCursoryLook = async (): Promise<ApiResponse<[]>> => {
     return strapiCaller({
       uri: `/api/about-us-a-cursory-looks?populate=*`,
     });
@@ -91,6 +91,16 @@ export const contact = async (): Promise<ApiResponse<[]>> => {
   export const achivements = async (): Promise<ApiResponse<[]>> => {
     return strapiCaller({
       uri: `/api/about-us-achivements?populate=*`
+    });
+  };
+  export const filmPolicy = async (): Promise<ApiResponse<[]>> => {
+    return strapiCaller({
+      uri: `/api/film-eco-system-film-policies?populate=*`
+    });
+  };
+  export const operationGuidelines = async (): Promise<ApiResponse<[]>> => {
+    return strapiCaller({
+      uri: `/api/film-eco-system-operational-guidlines?populate=*`
     });
   };
   
