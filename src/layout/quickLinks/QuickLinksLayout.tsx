@@ -3,26 +3,33 @@ import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
 import { useEffect } from 'react';
 import { paths } from '../../routes/Path';
-import bg from "../../assets/162597.jpg"
-const  FilmEcoSystemLayout = () => {
+import bg from '../../assets/KalingaAssets/8.jpeg';
+const QuickLinksLayout = () => {
   const title = window.location.pathname;
   const navigate = useNavigate();
   const menuItems = [
-    { label: 'Film Policy', url: paths.filmEcoSystem },
-    { label: 'Policy Guidelines', url: paths.policyGuidelines },
-    { label: 'Odisha and Silver Screen', url: paths.odishaSilverScreen }
+
+    { label: 'Publications', url: paths.publications },
+    { label: 'Tender', url: '#' },
+    {
+      label: 'RTI',
+      url: 'https://rtiodisha.gov.in/pa/T1RILzE5LzEzNDUvNw==',
+      target: '_blank',
+    },
+    { label: 'Feedback', url: '/contact-us' },
+    { label: 'Contact Us', url: paths.contactUs },
   ];
   const section = [
     {
-      page: '/film-eco-system',
+      page: '/publications',
       subHead1: 'Established 1980',
       subHead2:
         'An ultra-modern, state-of-the-art film studio complex in the heart of Bhubaneswar, Odisha.',
-      heading: "Talent List",
+      heading: 'Archives Insight',
       tag: 'Odisha',
     },
     {
-      page: '/policy-guidelines',
+      page: '/key-priorities',
       subHead1: 'Our Mission',
       subHead2:
         ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',
@@ -30,11 +37,26 @@ const  FilmEcoSystemLayout = () => {
       tag: 'Odisha',
     },
     {
-      page: '/odisha-silver-screen',
+      page: '/vault-of-preserved-films',
       subHead1: 'Studio’s Past Glory',
       heading: 'Vault of Preserved Films',
       subHead2:
         "From 'Sita Bibaha' in 1934 to the digital era, shaping the cinematic landscape of Odisha and beyond.",
+      tag: 'Odisha',
+    },
+    {
+      page: '/odia-film-anthology',
+      subHead1: 'Board of Directors',
+      heading: 'Odia Film Anthology',
+      subHead2:
+        'Meet the visionary leaders guiding the Odisha Film Development Corporation Ltd. toward excellence in film production and promotion.',
+      tag: 'Odisha',
+    },
+    {
+      page: '/archival-gallery',
+      subHead1: 'Odisha Film Development Corporation',
+      heading: 'Archival Gallery',
+      subHead2: 'Find officials and their contact information',
       tag: 'Odisha',
     },
   ];
@@ -46,14 +68,13 @@ const  FilmEcoSystemLayout = () => {
     <div className="w-full">
       {currentSection ? (
         <KHeroSection
-          subHead1='Eco System'
-          subHead2=''
-          heading="Film Eco System"
-          tag="Eco System"
+          subHead1=""
+          subHead2=""
+          heading="Quick Links"
+          tag={currentSection.tag}
           // vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
           link=""
           img={bg}
-          
         />
       ) : (
         <p>No section found for "{title}"</p>
@@ -71,4 +92,4 @@ const  FilmEcoSystemLayout = () => {
   );
 };
 
-export default  FilmEcoSystemLayout;
+export default QuickLinksLayout;

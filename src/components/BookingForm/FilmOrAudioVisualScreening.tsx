@@ -34,7 +34,6 @@ function FilmOrAudioVisualScreening() {
     setSelectedDate(selectedDate);
     try {
       const response = await getAllSlotByDate({
-        token: token,
         date: selectedDate,
       });
       if (response?.success && Array.isArray(response?.data)) {
@@ -95,8 +94,8 @@ function FilmOrAudioVisualScreening() {
       if (response.success) {
         if (response?.data) {
           const createorderresponse = await createOrder({
-            id: response?.data?._id ?? '',
-            token: token,
+            bookingId: response?.data?._id ?? '',
+            // token: token,
             data: { orderedBy: userId },
           });
           if (createorderresponse.success) {

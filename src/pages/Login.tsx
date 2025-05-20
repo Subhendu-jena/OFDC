@@ -90,7 +90,7 @@ const Login: React.FC = () => {
     loginController({ data: payload })
       .then((response) => {
         toast.success('Login successful');
-        if (response) {
+        if (response?.user) {
           sessionStorage.setItem('userID', response?.user?._id);
           sessionStorage.setItem('role', response?.user?.role);
           sessionStorage.setItem('name', response?.user?.name);

@@ -50,6 +50,8 @@ interface paths {
   resetPassword: string;
   forgetPassword: string;
   policyGuidelines: string;
+  odishaSilverScreen: string;
+  publications: string;
 }
 
 export const paths: paths = {
@@ -104,4 +106,6 @@ export const paths: paths = {
   RoleBasedRedirect: '/role-based-redirect',
   forgetPassword: '/forget-password',
   resetPassword: '/reset-password/:token',
+  odishaSilverScreen: '/odisha-silver-screen',
+  publications: '/publications',
 };

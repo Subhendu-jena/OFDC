@@ -62,7 +62,7 @@ const ACursoryLook: React.FC = () => {
                       STRAPI_API_BASE_URL + data[0]?.image?.url
                     }
                     alt="Kalinga Studio"
-                    className="w-full md:w-1/2 rounded-lg shadow-md"
+                    className="w-full h-90 md:w-1/2 rounded-lg shadow-md"
                   />
                   <p className="text-gray-700 h-full leading-relaxed text-justify">
                     {data[0]?.description}

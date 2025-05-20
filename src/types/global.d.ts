@@ -48,6 +48,7 @@ interface Column {
 export interface FooterLink {
   text: string;
   href: string;
+  target?: string;
 }
 export interface MenuItem {
   label: string;

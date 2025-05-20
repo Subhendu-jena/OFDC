@@ -65,14 +65,17 @@ const HeroSection = () => {
                 data-slide={index}
                 className="absolute inset-0 flex flex-col items-center justify-center text-white mt-[140px] z-50 animate-fadeInUp"
               >
-                <h3 
-                // className={`font-bold mb-6 text-center text-[${fontSize + 32}px]`}
-                className="font-bold mb-6 text-center"
-                style={{ fontSize: `${fontSize + 32}px` }}>
+                <h3
+                  // className={`font-bold mb-6 text-center text-[${fontSize + 32}px]`}
+                  className="font-bold mb-6 text-center"
+                  style={{ fontSize: `${fontSize + 32}px` }}
+                >
                   {data[0]?.heading || 'Welcome to Odisha Film City'}
                 </h3>
-                <p className="mb-8 text-center"
-                 style={{ fontSize: `${fontSize + 4}px` }}>
+                <p
+                  className="mb-8 text-center"
+                  style={{ fontSize: `${fontSize + 4}px` }}
+                >
                   {data[0]?.subHeading}
                 </p>
                 <div className="flex gap-4 justify-center flex-wrap">
@@ -82,9 +85,18 @@ const HeroSection = () => {
                   >
                     BOOK FOR PREVIEW SCREEN
                   </button>
-                  <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white transition-all duration-300">
-                    LOCATION BOOKING GUIDELINE
+                    <a
+                      href={STRAPI_API_BASE_URL + data[0]?.guidelines?.url}
+                      // download // tells the browser “download, don’t just navigate”
+                      target="_blank" // open in a new tab (optional, since download often auto-saves)
+                      rel="noopener noreferrer"
+                      download
+
+                    >
+                  <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white transition-all duration-300 cursor-pointer">
+                      LOCATION BOOKING GUIDELINE
                   </button>
+                    </a>
                 </div>
               </div>
             </div>

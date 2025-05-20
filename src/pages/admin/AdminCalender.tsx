@@ -76,7 +76,6 @@ const AdminCalender: React.FC = () => {
   
     try {
       const response = await getAllSlotByDate({
-        token: sessionStorage.getItem('token'),
         date: dateKey,
       });
   

@@ -200,7 +200,7 @@ const token = sessionStorage.getItem('token');
     ];
   useEffect(() => {
     setLoading(true);
-      getAllBookingsForAdmin({ token: token })
+      getAllBookingsForAdmin({})
       .then((res) => {
         setData1(res?.data);
         console.log(res?.data, 'res?.data?.data');

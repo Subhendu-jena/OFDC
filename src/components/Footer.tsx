@@ -12,11 +12,11 @@ import { useEffect, useState } from 'react';
 import { contact } from '../config/strapiController';
 
 const QuickLinks: FooterLink[] = [
-  { text: 'About us', href: paths.aCursoryLook },
-  { text: 'Climate', href: '/climate' },
-  { text: 'Geographical Features', href: '/features' },
-  { text: 'Contact us', href: '/contact-us' },
-  { text: 'How it works', href: '/how-it-works' },
+  { text: 'Publications', href: paths.publications },
+  { text: 'Tender', href: '/climate' },
+  { text: 'RTI', href: "https://rtiodisha.gov.in/pa/T1RILzE5LzEzNDUvNw==",target:"_blank" },
+  { text: 'Feedback', href: '/contact-us' },
+  { text: 'Contact Us', href: paths.contactUs },
 ];
 
 const Footer = () => {
@@ -125,6 +125,7 @@ const Footer = () => {
                 <li key={index}>
                   <a
                     href={link.href}
+                    target={link.target ? link.target : '_self'}
                     className="text-gray-100 hover:text-white transition-colors  text-sm duration-300 flex flex-row gap-2 items-center"
                   >
                     <div>
