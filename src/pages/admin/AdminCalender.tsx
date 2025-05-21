@@ -17,7 +17,7 @@ import {
   Plus,
   Calendar as CalendarIcon,
 } from 'lucide-react';
-import { getAllSlotByDate } from '../../config/controller';
+import { getAllSlotByDate, ghostBooking } from '../../config/controller';
 interface Slot {
   id: string;
   time: string;
@@ -47,62 +47,39 @@ const AdminCalender: React.FC = () => {
 
   const handlePreviousMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
-
-  // const handleDateClick = (date: Date) => {
-  //   if (isSameMonth(date, currentDate)) {
-  //     setSelectedDate(date);
-
-  //     // Initialize slots for the selected date if they don't exist
-  //     const dateKey = format(date, 'yyyy-MM-dd');
-  //     if (!slots[dateKey]) {
-  //       setSlots((prev) => ({
-  //         ...prev,
-  //         [dateKey]: timeSlots.map((time) => ({
-  //           id: `${dateKey}-${time}`,
-  //           time,
-  //           note: '',
-  //           isBooked: false,
-  //         })),
-  //       }));
-  //     }
-  //   }
-  // };
-
   const handleDateClick = async (date: Date) => {
     if (!isSameMonth(date, currentDate)) return;
-  
+
     setSelectedDate(date);
     const dateKey = format(date, 'yyyy-MM-dd');
-  
+
     try {
-      const response = await getAllSlotByDate({
-        token: sessionStorage.getItem('token'),
-        date: dateKey,
+      const response = await getAllSlotByDate({ date: dateKey });
+      const apiSlots = response.data || [];
+
+      // const bookedTimes = apiSlots.map(
+      //   (slot: any) => slot.bookingDetails.timeSlot
+      // );
+
+      const updatedSlots = timeSlots.map((time) => {
+        const matchingSlot = apiSlots.find(
+          (slot: any) => slot.bookingDetails.timeSlot === time
+        );
+        return {
+          id: `${dateKey}-${time}`,
+          time,
+          note: matchingSlot?.reason || '',
+          isBooked: Boolean(matchingSlot),
+        };
       });
-  
-      const apiSlots = response.data || []; // adjust if needed
-  console.log(apiSlots,"IEWUUIYUI")
-      const mappedSlots = apiSlots.map((slot: any) => ({
-        id: slot.id || `${dateKey}-${slot.time}`, // fallback id
-        time: slot.bookingDetails.timeSlot,
-        note: slot.bookingType || '',
-        isBooked: slot.isBooked ?? false,
-      }));
-  
+
       setSlots((prev) => ({
         ...prev,
-        [dateKey]: mappedSlots.length
-          ? mappedSlots
-          : timeSlots.map((time) => ({
-              id: `${dateKey}-${time}`,
-              time,
-              note: '',
-              isBooked: false,
-            })),
+        [dateKey]: updatedSlots,
       }));
     } catch (error) {
       console.error('Failed to fetch slots:', error);
-      // fallback if API fails
+      // fallback to all unbooked
       setSlots((prev) => ({
         ...prev,
         [dateKey]: timeSlots.map((time) => ({
@@ -114,7 +91,6 @@ const AdminCalender: React.FC = () => {
       }));
     }
   };
-  
 
   const handleSlotClick = (slot: Slot) => {
     setSelectedSlot(slot);
@@ -122,20 +98,36 @@ const AdminCalender: React.FC = () => {
     setShowNoteModal(true);
   };
 
-  const handleSaveNote = () => {
-    if (selectedSlot && selectedDate) {
-      const dateKey = format(selectedDate, 'yyyy-MM-dd');
-      setSlots((prev) => ({
-        ...prev,
-        [dateKey]: prev[dateKey].map((slot) =>
-          slot.id === selectedSlot.id
-            ? { ...slot, note: noteText, isBooked: true }
-            : slot
-        ),
-      }));
-      setShowNoteModal(false);
-      setNoteText('');
-      setSelectedSlot(null);
+  const handleSaveNote = async () => {
+    if (selectedSlot && selectedDate && !selectedSlot.isBooked) {
+      const bookingDate = format(selectedDate, 'MM-dd-yyyy');
+
+      try {
+        await ghostBooking({
+          data: {
+            bookingDate: bookingDate,
+            timeSlot: selectedSlot.time,
+            reason: noteText,
+          }
+        });
+
+        const dateKey = format(selectedDate, 'yyyy-MM-dd');
+        setSlots((prev) => ({
+          ...prev,
+          [dateKey]: prev[dateKey].map((slot) =>
+            slot.id === selectedSlot.id
+              ? { ...slot, note: noteText, isBooked: true }
+              : slot
+          ),
+        }));
+
+        setShowNoteModal(false);
+        setNoteText('');
+        setSelectedSlot(null);
+      } catch (error) {
+        console.error('Ghost booking failed:', error);
+        alert('Failed to book the slot.');
+      }
     }
   };
 

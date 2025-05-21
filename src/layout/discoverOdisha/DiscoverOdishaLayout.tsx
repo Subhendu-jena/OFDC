@@ -89,18 +89,6 @@ const DiscoverOdishaLayout = () => {
   }, [navigate]);
   return (
     <div className="w-full">
-      {/* <div className="fixed top-0 left-0 w-full h-[50vh] bg-black flex items-center justify-center z-10">
-        <div className="absolute inset-0 bg-[url('/OFDC-MISSION.png')] bg-cover bg-center opacity-60"></div>
-
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-
-        <div className="relative z-20 flex flex-col items-center text-center px-4 mt-8">
-          <Film className="text-3xl md:text-5xl font-bold text-white mb-4" size={50}/>
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            Odisha Film Development Corporation
-          </h1>
-        </div>
-      </div> */}
       {currentSection ? (
         <KHeroSection
           subHead1={currentSection.subHead1}
@@ -112,7 +100,7 @@ const DiscoverOdishaLayout = () => {
           img={bg}
         />
       ) : (
-        <p>No section found for "{title}"</p>
+        <div className='mt-20'></div>
       )}
 
       {/* Main Content - Ensure it starts after the fixed section */}

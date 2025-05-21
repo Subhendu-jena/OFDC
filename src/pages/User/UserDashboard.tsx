@@ -17,8 +17,8 @@ import Table1 from '../../components/Table1';
 import { ScanEye } from 'lucide-react';
 
 const UserDashboard: React.FC = () => {
-  const token = sessionStorage.getItem('token');
   const userId = sessionStorage.getItem('userID');
+  console.log(userId, 'userId');
   const name = sessionStorage.getItem('name');
   const [data, setData] = useState<any>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -127,7 +127,7 @@ const UserDashboard: React.FC = () => {
   ];
   useEffect(() => {
     setLoading(true);
-    getAllBookingsOfUser({ token: token, userId: userId || '' })
+    getAllBookingsOfUser({ userId: userId || '' })
       .then((res) => {
         setData(res?.data);
         //  setCurrentBooking(res?.at(-1)?.data[0])

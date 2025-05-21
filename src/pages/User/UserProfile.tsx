@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, User, Lock, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
-import { checkCorrectPassword, updateUser } from '../../config/controller';
+import { changePassword, updateUser } from '../../config/controller';
 import { toast } from 'react-toastify';
 
 const userProfile: React.FC = () => {
@@ -35,28 +35,35 @@ const userProfile: React.FC = () => {
   };
   const handleChangePassword = async () => {
     try {
-      const response = await checkCorrectPassword({
-        token: token,
-        data: {
-          currentPassword: formData.currentPassword,
-        },
-      });
-      if (response.success) {
-        if (formData.newPassword !== formData.confirmPassword) {
+       if (formData.newPassword !== formData.confirmPassword) {
           toast.error('New password and confirm password do not match.');
           return;
         }
-        await updateUser({
-          data: {
-            password: formData.newPassword,
-          },
-          token: token,
-        });
+      const response = await changePassword({
+        token: token,
+        data: {
+          currentPassword: formData.currentPassword,
+          newPassword: formData.newPassword,
+        },
+      });
+      if (response.success) {
+        toast.success('Password changed successfully.');
+        // if (formData.newPassword !== formData.confirmPassword) {
+        //   toast.error('New password and confirm password do not match.');
+        //   return;
+        // }
+        // await updateUser({
+        //   data: {
+        //   },
+        //   token: token,
+        // });
         if (response.success) {
-          toast.success('Password changed successfully.');
         }
       }
-    } catch (error) {}
+    } catch (error:any) {
+      console.error('Error changing password:', error);
+      toast.error(error.response.data.message);
+    }
   };
   const handleSave = async () => {
     try {

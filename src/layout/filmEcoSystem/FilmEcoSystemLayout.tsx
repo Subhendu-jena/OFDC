@@ -9,8 +9,8 @@ const  FilmEcoSystemLayout = () => {
   const navigate = useNavigate();
   const menuItems = [
     { label: 'Film Policy', url: paths.filmEcoSystem },
-    { label: 'Policy Guidelines', url: '#' },
-    { label: 'Odisha and Silver Screen', url: '#' }
+    { label: 'Policy Guidelines', url: paths.policyGuidelines },
+    { label: 'Odisha and Silver Screen', url: paths.odishaSilverScreen }
   ];
   const section = [
     {
@@ -22,7 +22,7 @@ const  FilmEcoSystemLayout = () => {
       tag: 'Odisha',
     },
     {
-      page: '/location-details',
+      page: '/policy-guidelines',
       subHead1: 'Our Mission',
       subHead2:
         ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',
@@ -30,26 +30,11 @@ const  FilmEcoSystemLayout = () => {
       tag: 'Odisha',
     },
     {
-      page: '/vault-of-preserved-films',
+      page: '/odisha-silver-screen',
       subHead1: 'Studio’s Past Glory',
       heading: 'Vault of Preserved Films',
       subHead2:
         "From 'Sita Bibaha' in 1934 to the digital era, shaping the cinematic landscape of Odisha and beyond.",
-      tag: 'Odisha',
-    },
-    {
-      page: '/odia-film-anthology',
-      subHead1: 'Board of Directors',
-      heading: 'Odia Film Anthology',
-      subHead2:
-        'Meet the visionary leaders guiding the Odisha Film Development Corporation Ltd. toward excellence in film production and promotion.',
-      tag: 'Odisha',
-    },
-    {
-      page: '/archival-gallery',
-      subHead1: 'Odisha Film Development Corporation',
-      heading: 'Archival Gallery',
-      subHead2: 'Find officials and their contact information',
       tag: 'Odisha',
     },
   ];

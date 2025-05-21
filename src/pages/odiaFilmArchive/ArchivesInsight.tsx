@@ -26,7 +26,7 @@ const ArchivesInsight: React.FC = () => {
   return (
     <div className="m-5">
       <div className="m-5 p-5 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-rose-400 to-red-500 text-transparent bg-clip-text " >Archives Insight
+        <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r  text-red-500  bg-clip-text " >Archives Insight
         </h2>
         <div className="grid grid-cols-5">
           <div className="col-span-2 relative group">
@@ -35,9 +35,9 @@ const ArchivesInsight: React.FC = () => {
               src={archive}
               alt="Odisha Landscape"
             />
-            <div
+            {/* <div
               className="absolute inset-0 bg-black opacity-50 rounded-xl transition-opacity duration-300 group-hover:opacity-0"
-            ></div>
+            ></div> */}
           </div>
           <div className="m-2 col-span-3">
             <p className="text-gray-700 mb-4 text-justify p-1">

@@ -17,9 +17,9 @@ import { MenuItem } from '../types/global';
 import { useFontSize } from './home/FontSizeContext';
 import { LogOut } from 'lucide-react';
 import { LayoutDashboardIcon } from 'lucide-react';
-
+import OFDCLOGO from "../../public/Logo/OFDC Logo Black.png"
 export const TopHeader = () => {
-  const token = sessionStorage.getItem('token');
+  const id = sessionStorage.getItem('userID');
   // const [isAdmin, setIsAdmin] = useState(false);
   // const [isLoggedIn, setisLoggedIn] = useState(false);
   // console.log(setIsAdmin, setisLoggedIn);
@@ -80,19 +80,8 @@ export const TopHeader = () => {
             <Mail size={16} />
             <span>Contact Us</span>
           </Link>
-          {/* <div
-            onClick={() => {
-              sessionStorage.removeItem('token');
-              sessionStorage.removeItem('userID');
-              sessionStorage.removeItem('role');
-            }}
-            className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
-          >
-            <Mail size={16} />
-            <span>Logout</span>
-          </div> */}
           <span>/</span>
-            {token ? (
+            {id ? (
             <Link
               to={paths.RoleBasedRedirect}
               className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
@@ -108,11 +97,10 @@ export const TopHeader = () => {
             <span>Register</span>
           </Link>)}
           <span>/</span>
-          {token ? (
+          {id ? (
             <Link
               to=" "
               onClick={() => {
-                sessionStorage.removeItem('token');
                 sessionStorage.removeItem('userID');
                 sessionStorage.removeItem('role');
               }}
@@ -233,8 +221,8 @@ const MainHeader = () => {
       url: paths.flimEcoSystem,
       children: [
         { label: 'Film Policy', url: paths.flimEcoSystem },
-        { label: 'Policy Guidelines', url: '#' },
-        { label: 'Odisha and Silver Screen', url: '#' },
+        { label: 'Policy Guidelines', url: paths.policyGuidelines },
+        { label: 'Odisha and Silver Screen', url: paths.odishaSilverScreen },
       ],
     },
     {
@@ -307,7 +295,7 @@ const MainHeader = () => {
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-  const token =sessionStorage.getItem('token');
+  const id =sessionStorage.getItem('userID');
   return (
     <>
       <div
@@ -394,7 +382,7 @@ const MainHeader = () => {
           <div className="flex justify-between items-center p-4 border-b border-gray-700">
             <Link to="/" className="flex items-center">
               <img
-                src="https://ofdc.octamy.com/wp-content/uploads/2020/09/odisha-logo-dark-1-svg-3.png"
+                src={OFDCLOGO}
                 alt="OFDC Logo"
                 className="h-12 w-auto"
               />
@@ -417,7 +405,7 @@ const MainHeader = () => {
                 <Home size={16} />
                 <span className="text-sm">Home</span>
               </Link>
-              {token ? (
+              {id ? (
                 <Link
                   to="/login"
                   className="flex items-center space-x-1 text-white hover:text-orange-500"

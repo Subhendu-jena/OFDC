@@ -7,7 +7,6 @@ import Preview from '../../components/BookingForm/Preview';
 import { formatDateToMMDDYYYY } from '../../variables/utils';
 
 const UserBookingHistory: React.FC = () => {
-  const token = sessionStorage.getItem('token');
   const userId = sessionStorage.getItem('userID');
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
@@ -117,7 +116,7 @@ const UserBookingHistory: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    getAllBookingsOfUser({ token: token, userId: userId || '' })
+    getAllBookingsOfUser({ userId: userId || '' })
       .then((res) => {
         setData(res?.data);
         console.log(res?.data, 'res?.data?.data1111111');

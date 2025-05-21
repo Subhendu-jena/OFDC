@@ -32,7 +32,7 @@ function WorkShopOrSeminar() {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const token = sessionStorage.getItem('token');
   const userId = sessionStorage.getItem('userID');
-  const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
+  const allSlots = ['10AM-1PM', '2PM-5PM', '6PM-9PM'];
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [bookingData, setBookingData] = useState<any>(null);
@@ -62,7 +62,6 @@ function WorkShopOrSeminar() {
     setSelectedDate(selectedDate);
     try {
       const response = await getAllSlotByDate({
-        token: token,
         date: selectedDate,
       });
 
@@ -148,8 +147,8 @@ function WorkShopOrSeminar() {
       if (response.success) {
         if (response?.data) {
           const createorderresponse = await createOrder({
-            id: response?.data?._id ?? '',
-            token: token,
+            bookingId: response?.data?._id ?? '',
+            // token: token,
             data: { orderedBy: userId },
           });
           if (createorderresponse.success) {

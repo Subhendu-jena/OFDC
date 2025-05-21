@@ -27,18 +27,20 @@ const AdminBookingHistory: React.FC = () => {
     },
     {
       header: 'Applicant Name',
-      accessor: 'applicantDetails',
-      render: (row: any) => {
-        return <div>{row?.applicantDetails?.nameOfApplicant}</div>;
+      accessor: 'bookedBy',
+     render: (row: any) => {
+        const bookingType = row?.bookedBy?.name;
+        return <div>{bookingType ? bookingType : '-'}</div>;
       },
       size: 200,
 
     },
     {
       header: 'Contact Number',
-      accessor: 'billingDetails',
+      accessor: 'bookedBy',
       render: (row: any) => {
-        return <div>{row?.billingDetails?.contactNo}</div>;
+        const bookingType = row?.bookedBy?.phoneNo;
+        return <div>{bookingType ? bookingType : '-'}</div>;
       },
     },
      {
@@ -104,7 +106,7 @@ const AdminBookingHistory: React.FC = () => {
       render: (row: any) => {
         return (
           <div>
-            <p>{row?.bookingDetails?.timeSlot}</p>
+            <p>{row?.bookingDetails?.timeSlot || 'N/A'}</p>
           </div>
         );
       },
@@ -133,28 +135,21 @@ const AdminBookingHistory: React.FC = () => {
   ];
     const handleConfirm = () => {
       setShowPreview(false);
-      adminApprove({
-        token: sessionStorage.getItem('token'),
-        data: previewData,
-        id: previewData?._id,
-      });
+     adminApprove({ data: { bookingId: previewData?._id } });
     };
     const handlereject = async () => {
       setShowPreview(false);
       try {
-        const response = await adminReject({
-          token: sessionStorage.getItem('token'),
-          id: previewData?._id,
-        });
+        const response = await adminReject({data:{
+          bookingId: previewData?._id,
+        }});
         if (response.success) {
           const response = await userCancel({
-            token: sessionStorage.getItem('token'),
-            id: previewData?._id,
+           data:{ bookingId: previewData?._id},
           });
           if (response.success) {
             refund({
-              token: sessionStorage.getItem('token'),
-              id: previewData?._id,
+              data:{bookingId: previewData?._id},
             });
              getAllBookingsForAdmin({ token: token })
           }
@@ -173,7 +168,16 @@ const AdminBookingHistory: React.FC = () => {
         setLoading(false);
       });
   }, []);
-  const filteredData = data.filter((row: any) => {
+  // const filteredData = data.filter((row: any) => {
+  //   const search = searchTerm.toLowerCase();
+  //   return (
+  //     row.bookingType?.toLowerCase().includes(search) ||
+  //     row.status?.toLowerCase().includes(search)
+  //   );
+  // });
+  const filteredData = data
+  .filter((row: any) => row.bookingType !== "Ghost Booking")
+  .filter((row: any) => {
     const search = searchTerm.toLowerCase();
     return (
       row.bookingType?.toLowerCase().includes(search) ||

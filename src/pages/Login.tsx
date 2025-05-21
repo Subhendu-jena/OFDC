@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Film, Clapperboard, User, Lock, ArrowRight } from 'lucide-react';
 import { paths } from '../routes/Path';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { LoginData } from '../types/global';
 import { loginController } from '../config/controller';
 import { toast } from 'react-toastify';
 import { ArrowLeft } from 'lucide-react';
+import { Eye } from 'lucide-react';
+import { EyeOff } from 'lucide-react';
 
 const Login: React.FC = () => {
   // State for form data
@@ -18,6 +20,7 @@ const Login: React.FC = () => {
     email: '',
     password: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
   const validateForm = () => {
     const errors = { email: '', password: '' };
     let isValid = true;
@@ -29,12 +32,16 @@ const Login: React.FC = () => {
       errors.email = 'Email is invalid';
       isValid = false;
     }
-
     if (!formData.password) {
       errors.password = 'Password is required';
       isValid = false;
-    } else if (formData.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters';
+    } else if (
+      !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/.test(
+        formData.password
+      )
+    ) {
+      errors.password =
+        'Password must be at least 12 characters and include one uppercase letter, one number, and one special character';
       isValid = false;
     }
 
@@ -49,6 +56,19 @@ const Login: React.FC = () => {
       [name]: type === 'checkbox' ? checked : value,
     });
   };
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail');
+    const savedPassword = localStorage.getItem('savedPassword');
+    const remember = localStorage.getItem('rememberMe') === 'true';
+
+    if (remember && savedEmail && savedPassword) {
+      setFormData({
+        email: savedEmail,
+        password: savedPassword,
+        rememberMe: true,
+      });
+    }
+  }, []);
   const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,12 +78,19 @@ const Login: React.FC = () => {
       password: formData.password,
       rememberMe: formData.rememberMe,
     };
-
+    if (formData.rememberMe) {
+      localStorage.setItem('savedEmail', formData.email);
+      localStorage.setItem('savedPassword', formData.password);
+      localStorage.setItem('rememberMe', 'true');
+    } else {
+      localStorage.removeItem('savedEmail');
+      localStorage.removeItem('savedPassword');
+      localStorage.removeItem('rememberMe');
+    }
     loginController({ data: payload })
       .then((response) => {
         toast.success('Login successful');
-        if (response?.token) {
-          sessionStorage.setItem('token', response?.token);
+        if (response?.user) {
           sessionStorage.setItem('userID', response?.user?._id);
           sessionStorage.setItem('role', response?.user?.role);
           sessionStorage.setItem('name', response?.user?.name);
@@ -81,21 +108,18 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
-      
       {/* Left side - Login Form */}
       <div className="w-full md:w-1/2 flex  justify-center p-6 md:p-10">
-        
         <div className="w-full max-w-md">
           <button
-          onClick={() => navigate(paths.home)}
-          className="mb-8 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
-        </button>
+            onClick={() => navigate(paths.home)}
+            className="mb-8 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to home
+          </button>
           {/* Logo and Title */}
           <div className="flex justify-center items-center space-x-2 ">
-            
             <img
               src="/Logo\Logo_OFDC_Booking_Page-removebg-preview.png"
               alt="OFDC Logo"
@@ -151,7 +175,7 @@ const Login: React.FC = () => {
                 >
                   Password <span className="text-red-500">*</span>
                 </label>
-                <div className="relative">
+                {/* <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Lock className="h-5 w-5 text-gray-400" />
                   </div>
@@ -164,7 +188,30 @@ const Login: React.FC = () => {
                     className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                     placeholder="Enter your password"
                   />
+                </div> */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="pl-10 pr-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    placeholder="Enter your password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <Eye /> : <EyeOff />}
+                  </button>
                 </div>
+
                 {formErrors.password && (
                   <p className="text-sm text-red-500 mt-1">
                     {formErrors.password}

@@ -135,7 +135,7 @@ export const film = {
         name: 'aspectRatio',
         label: 'Aspect Ratio',
         type: 'text',
-        required: false,
+        required: true,
         pattern: {
           value: /^\d+(\.\d+)?:\d+(\.\d+)?$/,
           message: 'Enter a valid aspect ratio like 16:9 or 2.39:1',

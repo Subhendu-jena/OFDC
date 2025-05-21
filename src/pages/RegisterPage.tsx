@@ -13,6 +13,8 @@ import { FormData, signupData } from '../types/global';
 import { signUpController } from '../config/controller';
 import { toast } from 'react-toastify';
 import { ArrowLeft } from 'lucide-react';
+import { EyeOff } from 'lucide-react';
+import { Eye } from 'lucide-react';
 
 const RegisterPage: React.FC = () => {
   // State for form data
@@ -32,6 +34,8 @@ const RegisterPage: React.FC = () => {
     phoneNo: '',
     termsAccepted: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -76,17 +80,21 @@ const RegisterPage: React.FC = () => {
     }
 
     // Password validation
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
     if (!password) {
-      errors.password = 'Required';
+      errors.password = 'is required';
       isValid = false;
-    } else if (password.length < 6) {
-      errors.password = 'must be 6 letters';
+    } else if (!passwordRegex.test(password)) {
+      errors.password =
+        'Password must be at least 12 characters, include an uppercase letter, a number, and a special character';
       isValid = false;
     }
     if (formData.password !== formData.confirmPassword) {
       errors.confirmPassword = 'mismatch';
       isValid = false;
     }
+
     // Phone validation
     if (!phone) {
       errors.phoneNo = 'Phone number is required';
@@ -141,12 +149,12 @@ const RegisterPage: React.FC = () => {
       <div className="w-full md:w-1/2 flex  justify-center p-2 ">
         <div className="w-full max-w-md">
           <button
-          onClick={() => navigate(paths.home)}
-          className="mb-8 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
-        </button>
+            onClick={() => navigate(paths.home)}
+            className="mb-8 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to home
+          </button>
           {/* Logo and Title */}
           <div className="flex items-center justify-center w-full space-x-2">
             <img
@@ -260,7 +268,7 @@ const RegisterPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex gap-3">
+              <div className="grid md:grid-cols-2 gap-3">
                 {' '}
                 {/* Password Field */}
                 <div>
@@ -278,7 +286,7 @@ const RegisterPage: React.FC = () => {
                       </p>
                     )}
                   </label>
-                  <div className="relative">
+                  {/* <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Lock className="h-5 w-5 text-gray-400" />
                     </div>
@@ -291,6 +299,32 @@ const RegisterPage: React.FC = () => {
                       className="pl-10 w-full placeholder:text-sm py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       placeholder="Create a password"
                     />
+                  </div> */}
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Lock className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="pl-10 pr-10 w-full placeholder:text-sm py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                      placeholder="Create a password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                      tabIndex={-1}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
                   </div>
                 </div>
                 {/* Confirm Password Field */}
@@ -309,7 +343,7 @@ const RegisterPage: React.FC = () => {
                       </p>
                     )}
                   </label>
-                  <div className="relative">
+                  {/* <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Lock className="h-5 w-5 text-gray-400" />
                     </div>
@@ -322,6 +356,34 @@ const RegisterPage: React.FC = () => {
                       className="pl-10 w-full placeholder:text-sm py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                       placeholder="Re-enter password"
                     />
+                  </div> */}
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Lock className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      className="pl-10 pr-10 w-full placeholder:text-sm py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                      placeholder="Re-enter password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                      tabIndex={-1}
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
                   </div>
                 </div>
               </div>

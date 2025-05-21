@@ -345,13 +345,13 @@ console.log(formData, 'formdata at preview');
                 <div>
                   <p className="text-sm text-gray-500">Booking Date</p>
                   <p className="text-base font-medium">
-                    {selectedDate || formatDateToMMDDYYYY(formData?.bookingDetails?.bookingDate) || 'Not selected'}
+                    {selectedDate || formatDateToMMDDYYYY(formData?.bookingDetails?.bookingDate) || 'N/A'}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Time Slot</p>
                   <p className="text-base font-medium">
-                    {selectedSlot || formData?.bookingDetails?.timeSlot || 'Not selected'}
+                    {selectedSlot || formData?.bookingDetails?.timeSlot || 'N/A'}
                   </p>
                 </div>
                 {/* {bookingResponse?.data?._id && (
@@ -373,13 +373,13 @@ console.log(formData, 'formdata at preview');
                 <div>
                   <p className="text-sm text-gray-500">Payment Status</p>
                   <p className="text-base font-medium">
-                    {formData?.status || 'Not selected'}
+                    {formData?.status || 'N/A'}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500"> Admin Approval</p>
                   <p className="text-base font-medium">
-                    {formData?.approval || 'Not selected'}
+                    {formData?.approval || 'N/A'}
                   </p>
                 </div>
                 {/* {bookingResponse?.data?._id && (

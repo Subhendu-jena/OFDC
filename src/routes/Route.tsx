@@ -59,6 +59,11 @@ import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 import ForgetPassword from '../pages/ForgetPassword';
 import ResetPassword from '../pages/ResetPassword';
 import PolicyGuidelines from '../pages/filmEcoSystem/PolicyGuidelines';
+import OdishaAndSilverScreen from '../pages/filmEcoSystem/OdishaAndSilverScreen';
+import QuickLinksLayout from '../layout/quickLinks/QuickLinksLayout';
+import Publications from '../pages/quickLinks/Publications';
+import Tenders from '../pages/quickLinks/Tenders';
+import Policy from '../pages/quickLinks/Policy';
 
 const RoutePage: React.FC = () => {
   return (
@@ -108,6 +113,7 @@ const RoutePage: React.FC = () => {
           <Route element={<FilmEcoSystemLayout />}>
             <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
             <Route path={paths.policyGuidelines} element={<PolicyGuidelines />} />
+            <Route path={paths.odishaSilverScreen} element={<OdishaAndSilverScreen />} />
           </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
@@ -186,6 +192,11 @@ const RoutePage: React.FC = () => {
               element={<LocationCategory />}
             />
             <Route path={paths.locationDetails} element={<LocationDetails />} />
+          </Route>
+          <Route element={<QuickLinksLayout/>}>
+         <Route path={paths.publications} element={<Publications />} />
+         <Route path={paths.tender} element={<Tenders/>} />
+         <Route path={paths.policy} element={<Policy/>} />
           </Route>
           {/* FilmEcoSystemLayout */}
           {/* <Route element={<FilmEcoSystemLayout />}>
