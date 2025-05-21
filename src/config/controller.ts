@@ -52,6 +52,19 @@ export const createBooking = async ({
     // token,
   });
 };
+export const ghostBooking = async ({
+  // token,
+  data,
+}: {
+  data: any;
+}): Promise<ApiResponse<signupData>> => {
+  return apiCaller({
+    uri: '/booking/create-ghost-booking',
+    method: 'POST',
+    data,
+    // token,
+  });
+};
 export const createOrder = async ({
   bookingId,
 }: {
@@ -79,59 +92,47 @@ export const verifyOrder = async ({
   });
 };
 export const userCancel = async ({
-  token,
-  id,
+ data
 }: {
-  token: string | null;
-  id: string;
+data: any;
 }): Promise<ApiResponse<signupData>> => {
   return apiCaller({
-    uri: `/booking/cancel/${id}`,
-    method: 'PATCH',
-    token,
+    uri: `/booking/cancel`,
+    method: 'POST',
+    data,
   });
 };
 export const adminApprove = async ({
-  token,
-  id,
+  data,
 }: {
   data: any;
-  token: string | null;
-  id: string;
 }): Promise<ApiResponse<signupData>> => {
   return apiCaller({
-    uri: `/booking/approve/${id}`,
-    method: 'PATCH',
-    token,
-    //  data,
+    uri: `/booking/approve`,
+    method: 'POST',
+     data,
   });
 };
 export const adminReject = async ({
-  token,
-  id,
+  data
 }: {
-  token: string | null;
-  id: string;
+  data: any;
 }): Promise<ApiResponse<any>> => {
   return apiCaller({
-    uri: `/booking/reject/${id}`,
-    method: 'PATCH',
-    token,
-    //  data,
+    uri: `/booking/reject`,
+    method: 'POST',
+     data,
   });
 };
 export const refund = async ({
-  token,
-  id,
+  data
 }: {
-  token: string | null;
-  id: string;
+  data: any;
 }): Promise<ApiResponse<any>> => {
   return apiCaller({
-    uri: `/payment/refund/${id}`,
+    uri: `/payment/refund`,
     method: 'POST',
-    token,
-    //  data,
+     data,
   });
 };
 export const changePassword = async ({
@@ -224,6 +225,20 @@ export const getAllBookingsForAdmin = async ({}: {}): Promise<
 > => {
   return apiCaller({
     uri: `/booking/get-all-booked-data`,
+    method: 'GET',
+  });
+};
+export const getAllPaymentsForAdmin = async ({}: {}):
+ Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/payment/all_payments`,
+    method: 'GET',
+  });
+};
+export const dashboardData = async ({}: {}):
+ Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/booking/getBookingCount`,
     method: 'GET',
   });
 };

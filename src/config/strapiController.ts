@@ -108,3 +108,13 @@ export const publications = async (): Promise<ApiResponse<[]>> => {
     uri: `/api/quick-links-publications?populate[publication][populate]=*`,
   });
 };
+export const tenders = async (): Promise<ApiResponse<[]>> => {
+  return strapiCaller({
+    uri: `/api/quick-links-tenders?populate[publication][populate]=*`,
+  });
+};
+export const majorFestivals = async (): Promise<ApiResponse<[]>> => {
+  return strapiCaller({
+    uri: `/api/discover-odisha-major-festivals?populate[majorFestival][populate]=*`,
+  });
+};

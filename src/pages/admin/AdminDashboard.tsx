@@ -12,7 +12,14 @@ import {
 import { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import { paths } from '../../routes/Path';
-import { adminApprove, adminReject, getAllBookingsForAdmin, refund, userCancel } from '../../config/controller';
+import {
+  adminApprove,
+  adminReject,
+  dashboardData,
+  getAllBookingsForAdmin,
+  refund,
+  userCancel,
+} from '../../config/controller';
 import { Star } from 'lucide-react';
 import Preview from '../../components/BookingForm/Preview';
 import Table1 from '../../components/Table1';
@@ -34,14 +41,15 @@ const AdminDashboard = () => {
     { name: 'Jan 11', blog: 410, social: 20 },
     { name: 'Jan 12', blog: 250, social: 12 },
   ];
-const token = sessionStorage.getItem('token');
-  const [filter, setFilter] = useState('monthly');
+  const token = sessionStorage.getItem('token');
+  // const [filter, setFilter] = useState('monthly');
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<any>(null);
-   const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [data1, setData1] = useState<any>([]);
-  const cardData: any = [
+  const [cardData, setCardData] = useState<any>([]);
+  const cardData1: any = [
     {
       title: 'Total Bookings',
       value: '12',
@@ -50,7 +58,7 @@ const token = sessionStorage.getItem('token');
       showDropdown: true,
       lastMonth: '10',
       lastYear: '100',
-      totalValue: '1000',
+      totalValue: cardData?.bookingCount,
     },
     {
       title: 'Rejected Applications',
@@ -59,7 +67,7 @@ const token = sessionStorage.getItem('token');
       bg: 'bg-red-100',
       lastMonth: '10',
       lastYear: '100',
-      totalValue: '1000',
+      totalValue: cardData?.rejectedCount,
     },
     {
       title: 'Confirmed Applications',
@@ -68,7 +76,7 @@ const token = sessionStorage.getItem('token');
       bg: 'bg-green-100',
       lastMonth: '10',
       lastYear: '100',
-      totalValue: '1000',
+      totalValue: cardData?.confirmedCount,
     },
     {
       title: 'Pending Approvals',
@@ -77,178 +85,185 @@ const token = sessionStorage.getItem('token');
       bg: 'bg-yellow-100',
       lastMonth: '10',
       lastYear: '100',
-      totalValue: '1000',
+      totalValue: cardData?.pendingCount,
     },
   ];
-   const columns: {
-      header: string;
-      accessor: string;
-      render?: (row: any) => any;
-      size?: number;
-    }[] = [
-      { header: 'Sl No.', accessor: 'slno' },
-      {
-        header: 'Booking Name',
-        accessor: 'bookingType',
-        size: 250,
+  const columns: {
+    header: string;
+    accessor: string;
+    render?: (row: any) => any;
+    size?: number;
+  }[] = [
+    { header: 'Sl No.', accessor: 'slno' },
+    {
+      header: 'Booking Name',
+      accessor: 'bookingType',
+      size: 250,
+    },
+    {
+      header: 'Applicant Name',
+      accessor: 'bookedBy',
+      render: (row: any) => {
+        const bookingType = row?.bookedBy?.name;
+        return <div>{bookingType ? bookingType : '-'}</div>;
       },
-      {
-        header: 'Applicant Name',
-        accessor: 'applicantDetails',
-        render: (row: any) => {
-          return <div>{row?.applicantDetails?.nameOfApplicant}</div>;
-        },
-        size: 200,
-  
+      size: 200,
+    },
+    {
+      header: 'Contact Number',
+      accessor: 'bookedBy',
+      render: (row: any) => {
+        const bookingType = row?.bookedBy?.phoneNo;
+        return <div>{bookingType ? bookingType : '-'}</div>;
       },
-      {
-        header: 'Contact Number',
-        accessor: 'billingDetails',
-        render: (row: any) => {
-          return <div>{row?.billingDetails?.contactNo}</div>;
-        },
+    },
+    {
+      header: 'Payment Status',
+      accessor: 'status',
+      render: (row: any) => {
+        return (
+          <div
+            className={`px-2 py-1   rounded-full w-max inline-block ${
+              row.status === 'CONFIRMED'
+                ? 'bg-green-100 text-green-800'
+                : row.status === 'PENDING'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : row.status === 'CANCELLED'
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-gray-100 text-gray-800'
+            }`}
+          >
+            {row.status}
+          </div>
+        );
       },
-       {
-        header: 'Payment Status',
-        accessor: 'status',
-        render: (row: any) => {
-          return (
-            <div
-              className={`px-2 py-1   rounded-full w-max inline-block ${
-                row.status === 'CONFIRMED'
-                  ? 'bg-green-100 text-green-800'
-                  : row.status === 'PENDING'
-                    ? 'bg-yellow-100 text-yellow-800'
-                    : row.status === 'CANCELLED'
-                      ? 'bg-red-100 text-red-800'
-                      : 'bg-gray-100 text-gray-800'
-              }`}
+    },
+    {
+      header: 'Booking Status',
+      accessor: 'approval',
+      render: (row: any) => {
+        return (
+          <div
+            className={`px-2 py-1   rounded-full w-max inline-block ${
+              row.approval === 'APPROVED'
+                ? 'bg-green-100 text-green-800'
+                : row.approval === 'PENDING'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : row.approval === 'REJECTED'
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-gray-100 text-gray-800'
+            }`}
+          >
+            {row.approval}
+          </div>
+        );
+      },
+    },
+
+    {
+      header: 'Booking Date',
+      accessor: 'bookingDetails',
+      render: (row: any) => {
+        return (
+          <div>
+            <p>{formatDateToMMDDYYYY(row?.bookingDetails?.bookingDate)}</p>
+          </div>
+        );
+      },
+      size: 200,
+    },
+    {
+      header: 'Time Slot',
+      accessor: 'timeSlot',
+      render: (row: any) => {
+        return (
+          <div>
+            <p>{row?.bookingDetails?.timeSlot || "N/A"}</p>
+          </div>
+        );
+      },
+      size: 150,
+    },
+    {
+      header: 'View',
+      accessor: 'view',
+      render: (row: any) => {
+        return (
+          <div>
+            <button
+              className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
+              onClick={() => {
+                setShowPreview(true);
+                setPreviewData(row);
+              }}
             >
-              {row.status}
-            </div>
-          );
-        },
+              <ScanEye />
+            </button>
+          </div>
+        );
       },
-      {
-        header: 'Booking Status',
-        accessor: 'approval',
-        render: (row: any) => {
-          return (
-            <div
-              className={`px-2 py-1   rounded-full w-max inline-block ${
-                row.approval === 'APPROVED'
-                  ? 'bg-green-100 text-green-800'
-                  : row.approval === 'PENDING'
-                    ? 'bg-yellow-100 text-yellow-800'
-                    : row.approval === 'REJECTED'
-                      ? 'bg-red-100 text-red-800'
-                      : 'bg-gray-100 text-gray-800'
-              }`}
-            >
-              {row.approval}
-            </div>
-          );
-        },
-        
-      },
-     
-      {
-        header: 'Booking Date',
-        accessor: 'bookingDetails',
-        render: (row: any) => {
-          return (
-            <div>
-              <p>{formatDateToMMDDYYYY(row?.bookingDetails?.bookingDate)}</p>
-            </div>
-          );
-        },
-        size: 200,
-  
-      },
-      {
-        header: 'Time Slot',
-        accessor: 'timeSlot',
-        render: (row: any) => {
-          return (
-            <div>
-              <p>{row?.bookingDetails?.timeSlot}</p>
-            </div>
-          );
-        },
-        size: 150,
-  
-      },
-      {
-        header: 'View',
-        accessor: 'view',
-        render: (row: any) => {
-          return (
-            <div>
-              <button
-                className="border border-red-500 p-2 bg-red-600 text-white rounded-2xl   cursor-pointer"
-                onClick={() => {
-                  setShowPreview(true);
-                  setPreviewData(row);
-                }}
-              >
-                <ScanEye />
-              </button>
-            </div>
-          );
-        },
-      },
-    ];
+    },
+  ];
   useEffect(() => {
     setLoading(true);
-      getAllBookingsForAdmin({})
+    getAllBookingsForAdmin({})
       .then((res) => {
         setData1(res?.data);
-        console.log(res?.data, 'res?.data?.data');
-      }).catch((error) => {
-        console.log(error);
+      })
+      .catch((error) => {
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
-    }, []);
-       const handleConfirm = () => {
-          setShowPreview(false);
-          adminApprove({
-            token: sessionStorage.getItem('token'),
-            data: previewData,
-            id: previewData?._id,
+  }, []);
+  useEffect(() => {
+    setLoading(true);
+    dashboardData({})
+      .then((res) => {
+        setCardData(res?.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+  const handleConfirm = () => {
+    setShowPreview(false);
+    adminApprove({ data: { bookingId: previewData?._id } });
+  };
+  const handlereject = async () => {
+    setShowPreview(false);
+    try {
+      const response = await adminReject({
+        data: { bookingId: previewData?._id },
+      });
+      if (response.success) {
+        const response = await userCancel({
+          data: { bookingId: previewData?._id },
+        });
+        if (response.success) {
+          refund({
+            data: { bookingId: previewData?._id },
           });
-        };
-        const handlereject = async () => {
-          setShowPreview(false);
-          try {
-            const response = await adminReject({
-              token: sessionStorage.getItem('token'),
-              id: previewData?._id,
-            });
-            if (response.success) {
-              const response = await userCancel({
-                token: sessionStorage.getItem('token'),
-                id: previewData?._id,
-              });
-              if (response.success) {
-                refund({
-                  token: sessionStorage.getItem('token'),
-                  id: previewData?._id,
-                });
-                 getAllBookingsForAdmin({ token: token })
-              }
-            }
-          } catch (err) {}
-        };
-// const navigate = useNavigate();
-  const filteredData = data1.filter((row: any) => {
+          getAllBookingsForAdmin({ token: token });
+        }
+      }
+    } catch (err) {}
+  };
+  // const navigate = useNavigate();
+ const filteredData = data1
+  .filter((row: any) => row.bookingType !== "Ghost Booking")
+  .filter((row: any) => {
     const search = searchTerm.toLowerCase();
     return (
       row.bookingType?.toLowerCase().includes(search) ||
       row.status?.toLowerCase().includes(search)
     );
   });
+  console.log(data1, 'cardData');
   return (
     <div className="bg-white p-4 space-y-6 mx-auto">
       {/* <div className='text-right border border-amber-500 text-amber-600 p-2 rounded-md w-fit cursor-pointer ' onClick={() => {
@@ -261,7 +276,7 @@ const token = sessionStorage.getItem('token');
                     // window.location.reload();
                     navigate(paths.login, { replace: true });
                   }}>Logout</div> */}
-      <div className="mt-2 flex justify-end">
+      {/* <div className="mt-2 flex justify-end">
         <select
           className="border outline-none border-amber-500 text-amber-600 p-2 rounded-md "
           value={filter}
@@ -271,30 +286,25 @@ const token = sessionStorage.getItem('token');
           <option value="yearly">Yearly</option>
           <option value="total">Total</option>
         </select>
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {cardData.map((item: any, index: number) => (
-          <div
-            key={index}
-            className={`p-4 rounded-lg shadow-md ${item.bg} relative`}
-          >
-            {/* Card Title */}
-            <h6 className="text-lg font-semibold text-gray-700">
-              {item.title}
-            </h6>
-
-            {/* Dynamic Value Based on Filter */}
-            <div className=" flex gap-8 justify-between items-center">
-              <h4 className={`text-2xl font-bold ${item.color}`}>
-                {filter === 'monthly'
-                  ? item.lastMonth
-                  : filter === 'yearly'
-                    ? item.lastYear
-                    : item.totalValue}
-              </h4>
+        {cardData1.map((item: any, index: number) => {
+          return (
+            <div
+              key={index}
+              className={`p-4 rounded-lg shadow-md ${item.bg} relative`}
+            >
+              <h6 className="text-lg font-semibold text-gray-700">
+                {item.title}
+              </h6>
+              <div className=" flex gap-8 justify-between items-center">
+                <h4 className={`text-2xl font-bold ${item.color}`}>
+                  {item.totalValue}
+                </h4>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Graph & Income Section */}

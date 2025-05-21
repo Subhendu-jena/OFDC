@@ -14,7 +14,7 @@ function CbfcScreening() {
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const token = sessionStorage.getItem('token');
-  const allSlots = ['10AM-2PM', '2PM-6PM', '6PM-10PM'];
+  const allSlots = ['10AM-1PM', '2PM-5PM', '6PM-9PM'];
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [bookingData, setBookingData] = useState<any>(null);

@@ -13,10 +13,13 @@ import { contact } from '../config/strapiController';
 
 const QuickLinks: FooterLink[] = [
   { text: 'Publications', href: paths.publications },
-  { text: 'Tender', href: '/climate' },
+  { text: 'Tender', href: paths.tender },
   { text: 'RTI', href: "https://rtiodisha.gov.in/pa/T1RILzE5LzEzNDUvNw==",target:"_blank" },
   { text: 'Feedback', href: '/contact-us' },
   { text: 'Contact Us', href: paths.contactUs },
+  { text: 'Privacy Policy', href: paths.policy },
+  { text: 'Copyright Policy', href: paths.policy },
+  { text: 'Hyperlink Policy', href: paths.policy },
 ];
 
 const Footer = () => {

@@ -52,6 +52,8 @@ interface paths {
   policyGuidelines: string;
   odishaSilverScreen: string;
   publications: string;
+  tender: string;
+  policy: string;
 }
 
 export const paths: paths = {
@@ -108,4 +110,6 @@ export const paths: paths = {
   resetPassword: '/reset-password/:token',
   odishaSilverScreen: '/odisha-silver-screen',
   publications: '/publications',
+  tender: '/tender',
+  policy: '/policy',
 };

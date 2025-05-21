@@ -8,9 +8,8 @@ const QuickLinksLayout = () => {
   const title = window.location.pathname;
   const navigate = useNavigate();
   const menuItems = [
-
     { label: 'Publications', url: paths.publications },
-    { label: 'Tender', url: '#' },
+    { label: 'Tender', url: paths.tender },
     {
       label: 'RTI',
       url: 'https://rtiodisha.gov.in/pa/T1RILzE5LzEzNDUvNw==',
@@ -18,47 +17,25 @@ const QuickLinksLayout = () => {
     },
     { label: 'Feedback', url: '/contact-us' },
     { label: 'Contact Us', url: paths.contactUs },
-  ];
+    { label: 'Privacy Policy', url: paths.policy },
+     ];
   const section = [
     {
       page: '/publications',
-      subHead1: 'Established 1980',
-      subHead2:
-        'An ultra-modern, state-of-the-art film studio complex in the heart of Bhubaneswar, Odisha.',
-      heading: 'Archives Insight',
-      tag: 'Odisha',
+      // subHead1: 'Studio’s Past Glory',
+      // heading: 'Vault of Preserved Films',
+      // subHead2:
+      //   "From 'Sita Bibaha' in 1934 to the digital era, shaping the cinematic landscape of Odisha and beyond.",
+      // tag: 'Odisha',
     },
     {
-      page: '/key-priorities',
-      subHead1: 'Our Mission',
-      subHead2:
-        ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',
-      heading: 'Key Priorities',
-      tag: 'Odisha',
+      page: '/tender',
     },
     {
-      page: '/vault-of-preserved-films',
-      subHead1: 'Studio’s Past Glory',
-      heading: 'Vault of Preserved Films',
-      subHead2:
-        "From 'Sita Bibaha' in 1934 to the digital era, shaping the cinematic landscape of Odisha and beyond.",
-      tag: 'Odisha',
+      page: '/policy',
     },
-    {
-      page: '/odia-film-anthology',
-      subHead1: 'Board of Directors',
-      heading: 'Odia Film Anthology',
-      subHead2:
-        'Meet the visionary leaders guiding the Odisha Film Development Corporation Ltd. toward excellence in film production and promotion.',
-      tag: 'Odisha',
-    },
-    {
-      page: '/archival-gallery',
-      subHead1: 'Odisha Film Development Corporation',
-      heading: 'Archival Gallery',
-      subHead2: 'Find officials and their contact information',
-      tag: 'Odisha',
-    },
+   
+    
   ];
   const currentSection = section.find((sec) => sec.page === title);
   useEffect(() => {
@@ -71,7 +48,7 @@ const QuickLinksLayout = () => {
           subHead1=""
           subHead2=""
           heading="Quick Links"
-          tag={currentSection.tag}
+          tag="world"
           // vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
           link=""
           img={bg}

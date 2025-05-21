@@ -65,6 +65,7 @@ const KHeroSection: React.FC<{
             <img src={runningBoy} alt="" />
           </div>
         )}
+      </div>
         {user == true && (
           <div className="fixed top-0 left-0 w-full h-[50vh] bg-black flex items-center justify-center z-10">
             <div className="absolute inset-0 bg-[url('/3.jpeg')] bg-cover bg-center opacity-60"></div>
@@ -80,7 +81,6 @@ const KHeroSection: React.FC<{
             </div>
           </div>
         )}
-      </div>
     </>
   );
 };
