@@ -21,8 +21,8 @@ function FormerManagingDirectors() {
       header: 'Name',
       accessor: 'name',size:300,
       render: (row: any) => {
-        const imageUrl = row.image?.url
-          ? STRAPI_API_BASE_URL + row.image?.url || row.image?.url
+        const imageUrl = row.imgUrl?.url
+          ? STRAPI_API_BASE_URL + row.imgUrl?.url || row.imgUrl?.url
           : blankImage;
         return (
           <div className="flex items-center relative space-x-4 text-left">

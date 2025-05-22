@@ -118,3 +118,8 @@ export const majorFestivals = async (): Promise<ApiResponse<[]>> => {
     uri: `/api/discover-odisha-major-festivals?populate[majorFestival][populate]=*`,
   });
 };
+export const filmGallery = async (): Promise<ApiResponse<[]>> => {
+  return strapiCaller({
+    uri: `/api/odia-film-archive-film-archives?populate[filmArchive][populate]=*`,
+  });
+};

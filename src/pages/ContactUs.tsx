@@ -112,7 +112,7 @@ const ContactUs: React.FC = () => {
                 size={50}
               />
             </div>
-            <div className="text-2xl font-semibold pb-3">Toll Free</div>
+            <div className="text-2xl font-semibold pb-3">Office Contact</div>
             <div className="text-xl">{data.tollFree}</div>
           </div>
           <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
@@ -122,7 +122,7 @@ const ContactUs: React.FC = () => {
                 size={50}
               />
             </div>
-            <div className="text-2xl font-semibold pb-3">Call Center</div>
+            <div className="text-2xl font-semibold pb-3">Help Desk</div>
             <div className="text-xl">+91 {data.mobileNumber}</div>
           </div>
         </div>
@@ -131,7 +131,7 @@ const ContactUs: React.FC = () => {
       {/* Contact Form Section */}
      <div className='grid grid-cols-2'> <section className="py-12 bg-white flex justify-center">
         <div className="w-full max-w-3xl bg-gray-100 p-8 rounded-lg shadow-lg">
-          <h3 className="text-3xl font-bold text-center mb-6">Contact Us</h3>
+          <h3 className="text-3xl font-bold text-center mb-6">Feedback</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"

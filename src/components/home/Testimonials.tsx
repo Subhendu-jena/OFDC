@@ -17,7 +17,7 @@ function Testimonials() {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 6000,
@@ -54,15 +54,24 @@ function Testimonials() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ type: 'tween', duration: 1 }}
           >
-            <p className=" text-red-500 font-semibold " style={{ fontSize: `${fontSize}px` }}>Our Testimonials</p>
-            <p className=" text-gray-800 text-4xl font-bold" style={{ fontSize: `${fontSize + 20}px` }}>WHAT THEY SAY</p>
+            <p
+              className=" text-red-500 font-semibold "
+              style={{ fontSize: `${fontSize}px` }}
+            >
+              Our Testimonials
+            </p>
+            <p
+              className=" text-gray-800 text-4xl font-bold"
+              style={{ fontSize: `${fontSize + 20}px` }}
+            >
+              WHAT THEY SAY
+            </p>
           </motion.div>
-          <div className="w-full ">
+          <div className="w-full p-2">
             <Slider {...settings}>
-              {card.map((testimonial: any, index: number) => (
+              {/* {card.map((testimonial: any, index: number) => (
                 <div key={index} className="py-8">
                   <div className="relative group flex items-center">
-                    {/* Image Wrapper */}
                     <div
                       className="absolute left-2 top-1/2 transform -translate-y-1/2 
                    border-8 p-2 border-red-500 rounded-full bg-white z-10 "
@@ -76,7 +85,6 @@ function Testimonials() {
                         className="  rounded-full w-20 h-20 z-10 "
                       />
                     </div>
-                    {/* Testimonial Box */}
                     <div className="flex flex-col gap-4 rounded-lg pr-4 mx-16 bg-white pl-20 py-8  relative">
                       <div className="text-xl" style={{ fontSize: `${fontSize + 4}px` }}>{testimonial.description}</div>
                       <div className="text-xl font-semibold" style={{ fontSize: `${fontSize + 4}px` }}>
@@ -90,6 +98,48 @@ function Testimonials() {
                         className="absolute left-1/5 bottom-0 transform -translate-x-1/2 translate-y-full 
               w-0 h-0 border-l-32 border-r-32 border-t-32 border-t-white border-l-transparent border-r-transparent"
                       ></div>
+                    </div>
+                  </div>
+                </div>
+              ))} */}
+              {card.map((testimonial: any, index: number) => (
+                <div className="p-2">
+                  <div className="max-w-md mx-auto  rounded-2xl overflow-hidden" key={index}>
+                    {/* Header Image */}
+                    <div className=" relative h-75 w-full bg-gray-100 ">
+                      <img
+                        src={
+                          STRAPI_API_BASE_URL + testimonial?.image?.url ||
+                          STRAPI_API_BASE_URL + testimonial?.image?.url
+                        }
+                        alt="Professional headshot of Michael"
+                        className="w-full h-full object-center "
+                      />
+                    </div>
+
+                    {/* Content */}
+                      <div className=" absolute flex justify-start mt-[-25px] ml-4 mb-4">
+                        <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
+                          <Quote className="w-6 h-6 text-white" />
+                        </div>
+                      </div>
+                    <div className="p-6 bg-white pt-8 ">
+                      {/* Quote Icon */}
+
+                      {/* Quote Text */}
+                      <blockquote className="text-gray-700 text-base leading-relaxed mb-6">
+                        {testimonial.description}
+                      </blockquote>
+
+                      {/* Attribution */}
+                      <div className="border-t border-gray-100 pt-4">
+                        <h3 className="font-semibold text-gray-900 text-lg">
+                          {testimonial?.title}
+                        </h3>
+                        <p className="text-gray-500 text-sm italic">
+                          {testimonial?.designation || 'Designation'}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

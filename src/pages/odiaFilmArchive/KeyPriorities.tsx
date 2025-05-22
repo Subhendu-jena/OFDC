@@ -9,19 +9,19 @@ const KeyPriorities: React.FC = () => {
   const data = [
     'Trace, Acquire and Preserve the Cinematic Heritage of Odisha as well as a representative collection of Odia cinema for posterity',
     'Classify and document data pertaining to Odia films',
-      'Undertake and encourage research on cinema',
-      "Serve as a hub for the state's film culture's diffusion",
-      'Promote Odia cinema across the globe',
+    'Undertake and encourage research on cinema',
+    "Serve as a hub for the state's film culture's diffusion",
+    'Promote Odia cinema across the globe',
 
-      "Being the state custodian for preservation of cinematic heritage &  committed to acquisition, preservation, restoration and dissemination of Odisha's socio-cultural heritage",
-      'This heritage may be in the form of film including celluloid films, still photographs, wall posters, song booklets, posters, lobby cards, documentaries and VHS tapes',
-      'Odia Film Archives often collaborates with institutions to not only promote Odia cinema but also to bring world cinema to Odisha in the form of film festivals, seminars and workshops',
+    "Being the state custodian for preservation of cinematic heritage &  committed to acquisition, preservation, restoration and dissemination of Odisha's socio-cultural heritage",
+    'This heritage may be in the form of film including celluloid films, still photographs, wall posters, song booklets, posters, lobby cards, documentaries and VHS tapes',
+    'Odia Film Archives often collaborates with institutions to not only promote Odia cinema but also to bring world cinema to Odisha in the form of film festivals, seminars and workshops',
   ];
   // const icons = [<Archive />, <FileText />, <Search />, <Share2 />, <Globe />];
   return (
     <div className="m-5">
       {' '}
-      <div className="m-5 p-5 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="m-5 p-5 mx-auto rounded-lg  overflow-hidden">
         <h2 className="text-4xl font-bold mb-4">Key priorities</h2>
         {/* {data.map((locations) => (
     <div className="flex ">
@@ -53,12 +53,14 @@ const KeyPriorities: React.FC = () => {
             >
               <div className="absolute inset-0 bg-black opacity-50 rounded-2xl transition-opacity duration-300 hover:opacity-30"></div>
               <div className="relative z-10">
-                <h3 className="text-xl font-semibold text-gray-200 mb-3">  Heritage Promotion</h3>
+                <h3 className="text-xl font-semibold text-gray-200 mb-3">
+                  {' '}
+                  Heritage Promotion
+                </h3>
                 <p className="text-gray-300 mb-4">{location}</p>
               </div>
             </motion.div>
           ))}
-          
         </div>
       </div>
     </div>

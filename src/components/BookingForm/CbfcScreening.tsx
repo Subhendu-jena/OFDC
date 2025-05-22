@@ -9,6 +9,7 @@ import { cbfc } from './fields';
 import { loadRazorpay } from '../loadRazorpay';
 import Preview from './Preview';
 import Confirmation from './Confirmation';
+import axios from 'axios';
 function CbfcScreening() {
   const userId = sessionStorage.getItem('userID');
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
@@ -21,6 +22,9 @@ function CbfcScreening() {
   const [sendData, setSendData] = useState<any>(null);
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
+   const [uploadedFiles, setUploadedFiles] = useState<{
+    [key: string]: string;
+  }>({});
   const {
     register,
     handleSubmit,
@@ -88,12 +92,7 @@ function CbfcScreening() {
         bookingDate: selectedDate,
         timeSlot: selectedSlot,
       },
-      documentUploads: {
-        synopsis: '111',
-        castAndCredits: '1111',
-        songLines: '1111',
-        poster: '11111',
-      },
+      documentUploads:uploadedFiles,
     };
     setSendData(formattedData);
     setBookingData({
@@ -181,6 +180,42 @@ function CbfcScreening() {
     );
   }
 
+ 
+
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldName: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      const res = await axios.post(
+        'http://54.160.82.66:1337/api/upload/',
+        formData
+      );
+      const fileUrl = res.data[0]?.url;
+      if (fileUrl) {
+        setUploadedFiles((prev) => ({
+          ...prev,
+          [fieldName]: `http://54.160.82.66:1337${fileUrl}`,
+        }));
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }
+  };
+console.log(uploadedFiles, 'uploadedFiles');
+  const fields = [
+    { name: 'synopsis', label: 'Synopsis' },
+    { name: 'castAndCredits', label: 'Cast & Credits' },
+    { name: 'songLines', label: 'Song Lines' },
+    { name: 'poster', label: 'Poster' },
+  ];
+
   return (
     <div className=" bg-gray-50   text-sm rounded-lg">
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6 ">
@@ -225,8 +260,11 @@ function CbfcScreening() {
                   </div>
                 )
               )}
-              <div className="md:col-span-2 mb-2" >
-                <label className="block font-medium text-gray-700" style={{ marginBottom: '1rem' }}>
+              <div className="md:col-span-2 mb-2">
+                <label
+                  className="block font-medium text-gray-700"
+                  style={{ marginBottom: '1rem' }}
+                >
                   Duration of the Film (HH:MM:SS:FF):{' '}
                   <span className="text-red-600">*</span>
                 </label>
@@ -485,25 +523,43 @@ function CbfcScreening() {
               Document Uploads
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { name: 'synopsis', label: 'Synopsis' },
-                { name: 'castCredits', label: 'Cast & Credits' },
-                { name: 'songlines', label: 'Song Lines' },
-                { name: 'poster', label: 'Poster' },
-              ].map(({ name, label }, index) => (
+              {fields.map(({ name, label }, index) => (
                 <div
                   key={index}
                   className="grid grid-cols-3 items-center gap-4"
                 >
                   <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
+                    {label}:
                   </label>
-                  <input
-                    type="file"
-                    name={name}
-                    accept="application/pdf,image/svg+xml,image/png"
-                    className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                  />
+                  <div className="col-span-2 space-y-2">
+                    <input
+                      type="file"
+                      name={name}
+                      accept="application/pdf,image/svg+xml,image/png"
+                      className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500"
+                      onChange={(e) => handleFileChange(e, name)}
+                    />
+                    {uploadedFiles[name] && (
+                      <div className="mt-1">
+                        {uploadedFiles[name].endsWith('.pdf') ? (
+                          <a
+                            href={uploadedFiles[name]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline"
+                          >
+                            View Uploaded PDF
+                          </a>
+                        ) : (
+                          <img
+                            src={uploadedFiles[name]}
+                            alt={label}
+                            className="h-24 rounded border"
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
