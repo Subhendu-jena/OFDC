@@ -10,6 +10,8 @@ import { loadRazorpay } from '../loadRazorpay';
 import Preview from './Preview';
 import Confirmation from './Confirmation';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '../../routes/Path';
 function CbfcScreening() {
   const userId = sessionStorage.getItem('userID');
   const [bookedSlots, setBookedSlots] = useState<string[]>([]);
@@ -22,21 +24,16 @@ function CbfcScreening() {
   const [sendData, setSendData] = useState<any>(null);
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
-   const [uploadedFiles, setUploadedFiles] = useState<{
+  const [uploadedFiles, setUploadedFiles] = useState<{
     [key: string]: string;
   }>({});
+  const [uploading, setUploading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const handleChange = (e: any) => {
-  //   const { name, value, type, files } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: type === 'file' ? files[0] : value,
-  //   });
-  // };
+
   const handleCheckDateChange = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -67,6 +64,10 @@ function CbfcScreening() {
     )}:${String(data.durationSeconds).padStart(2, '0')}:${String(
       data.durationFrames
     ).padStart(2, '0')}`;
+    if (!selectedSlot) {
+      alert('Please select a slot before proceeding.');
+      return;
+    }
     const formattedData = {
       bookedBy: userId,
       bookingType: 'CBFC SCREENING',
@@ -92,7 +93,7 @@ function CbfcScreening() {
         bookingDate: selectedDate,
         timeSlot: selectedSlot,
       },
-      documentUploads:uploadedFiles,
+      documentUploads: uploadedFiles,
     };
     setSendData(formattedData);
     setBookingData({
@@ -101,23 +102,11 @@ function CbfcScreening() {
       selectedSlot,
     });
     setShowPreview(true);
-    // try {
-    //   const response = await createBooking({ token, data: formattedData });
-    //   if (response.success) {
-    //     createOrder({id:response?.data?._id ?? '', token: token , data: {orderedBy: userId}});
-    //     console.log(response?.data?._id,"hgfhgfhgf");
-    //     // navigate('/confirmation', { state: { bookingDetails: response } });
-    //   } else {
-    //     alert('Submission failed. Please try again.');
-    //   }
-    // } catch (error) {
-    //   console.error('Error:', error);
-    //   alert('An error occurred. Please try again.');
-    // }
   };
   const handleEdit = () => {
     setShowPreview(false);
   };
+  const navigate = useNavigate();
   const handleConfirm = async () => {
     // console.log('formatted data', sendData);
     try {
@@ -134,10 +123,6 @@ function CbfcScreening() {
           });
           if (createorderresponse.success) {
             const onSuccess = (verifiedData: any) => {
-              console.log('Final verified payment response:', verifiedData);
-              // navigate(paths.confirmation, {
-              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
-              // });
               setShowPreview(false);
               setShowReceipt(true);
               setReceiptData({ verifiedData, selectedDate, selectedSlot });
@@ -145,6 +130,7 @@ function CbfcScreening() {
             loadRazorpay(createorderresponse, onSuccess);
             console.log(onSuccess, 'onSuccess');
           } else {
+            navigate(paths.userDashboard);
             console.error('redirection failed:', createorderresponse.message);
             alert('redirection failed. Please try again.');
           }
@@ -152,9 +138,11 @@ function CbfcScreening() {
       } else {
         console.error('Submission failed:', response.message);
         alert('Submission failed. Please try again.');
+        navigate(paths.userDashboard);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      navigate(paths.userDashboard);
     }
   };
 
@@ -180,8 +168,6 @@ function CbfcScreening() {
     );
   }
 
- 
-
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
     fieldName: string
@@ -193,6 +179,7 @@ function CbfcScreening() {
     formData.append('files', file);
 
     try {
+      setUploading(true);
       const res = await axios.post(
         'http://54.160.82.66:1337/api/upload/',
         formData
@@ -206,15 +193,11 @@ function CbfcScreening() {
       }
     } catch (error) {
       console.error('Upload failed:', error);
+    } finally {
+      setUploading(false);
     }
   };
-console.log(uploadedFiles, 'uploadedFiles');
-  const fields = [
-    { name: 'synopsis', label: 'Synopsis' },
-    { name: 'castAndCredits', label: 'Cast & Credits' },
-    { name: 'songLines', label: 'Song Lines' },
-    { name: 'poster', label: 'Poster' },
-  ];
+  console.log(uploadedFiles, 'uploadedFiles');
 
   return (
     <div className=" bg-gray-50   text-sm rounded-lg">
@@ -475,12 +458,12 @@ console.log(uploadedFiles, 'uploadedFiles');
                 </div>
               ))}
               {selectedDate && (
-                <div className="grid grid-cols-3 mt-4 items-center ">
+                <div className="grid grid-cols-3 mt-4 ">
                   <label
                     htmlFor=""
                     className="text-gray-700 font-medium col-span-1"
                   >
-                    Available Slots :
+                    Available Slots : <span className="text-red-600">*</span>
                   </label>
                   <div className="col-span-2">
                     <div className="flex justify-around">
@@ -511,6 +494,11 @@ console.log(uploadedFiles, 'uploadedFiles');
                         );
                       })}
                     </div>
+                    {!selectedSlot && (
+                      <div className="text-red-500 mt-2 ml-3">
+                        <p>Please select a slot</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -523,40 +511,40 @@ console.log(uploadedFiles, 'uploadedFiles');
               Document Uploads
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {fields.map(({ name, label }, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-3 items-center gap-4"
-                >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label}:
+              {cbfc.Fields.map(({ name, label, required }) => (
+                <div key={name} className=" items-center gap-4">
+                  <label className="text-gray-700 font-medium ">
+                    {label}:{' '}
+                    <span className="text-red-600">{required && '*'}</span>
                   </label>
-                  <div className="col-span-2 space-y-2">
+                  <div className=" space-y-2">
                     <input
                       type="file"
-                      name={name}
+                      {...register(name, {
+                        required: required && `${label} is required`,
+                      })}
                       accept="application/pdf,image/svg+xml,image/png"
                       className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500"
                       onChange={(e) => handleFileChange(e, name)}
                     />
+                    {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {uploading && (
+                      <p style={{ color: 'green' }}>Uploading...</p>
+                    )}
                     {uploadedFiles[name] && (
                       <div className="mt-1">
-                        {uploadedFiles[name].endsWith('.pdf') ? (
-                          <a
-                            href={uploadedFiles[name]}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 underline"
-                          >
-                            View Uploaded PDF
-                          </a>
-                        ) : (
-                          <img
-                            src={uploadedFiles[name]}
-                            alt={label}
-                            className="h-24 rounded border"
-                          />
-                        )}
+                        <a
+                          href={uploadedFiles[name]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline"
+                        >
+                          View Uploaded PDF
+                        </a>
                       </div>
                     )}
                   </div>

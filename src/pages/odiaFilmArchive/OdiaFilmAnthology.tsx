@@ -26,14 +26,14 @@ const OdiaFilmAnthology: React.FC = () => {
   return (
     <div>
       {selectedFilm ? (
-        <div className="mt-8">
+        <div className="pt-8 bg-gray-900">
           <FilmDetail
             item={selectedFilm}
             onClose={() => setSelectedFilm(null)}
           />
         </div>
       ) : (
-        <div className=" p-8 rounded-2xl">
+        <div className=" p-8  bg-white">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-2 bg-red-500/20 rounded-lg">
               <Film className="w-6 h-6 text-red-500" />

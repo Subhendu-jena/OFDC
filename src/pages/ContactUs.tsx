@@ -114,6 +114,7 @@ const ContactUs: React.FC = () => {
             </div>
             <div className="text-2xl font-semibold pb-3">Office Contact</div>
             <div className="text-xl">{data.tollFree}</div>
+            <div className="text-md">{`(10AM - 5.30PM)`}</div>
           </div>
           <div className="bg-white/70 flex flex-col justify-center items-center rounded-md group relative hover:border-red-400 hover:border-b-2 w-[350px] h-[200px]">
             <div className="bg-red-400 rounded-full p-4 mt-[-180px] absolute">

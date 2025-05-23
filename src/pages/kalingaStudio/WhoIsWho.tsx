@@ -88,7 +88,7 @@ const WhoIsWho: React.FC = () => {
   });
   return (
     <>
-         <div className=" bg-white pt-2">
+         <div className=" bg-white pt-2 h-full">
         <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl ">
           <h2 className="text-xl font-bold text-white flex items-center">
             <Star size={20} className="mr-2" />

@@ -19,7 +19,7 @@ const KeyPriorities: React.FC = () => {
   ];
   // const icons = [<Archive />, <FileText />, <Search />, <Share2 />, <Globe />];
   return (
-    <div className="m-5">
+    <div className="p-5 bg-white">
       {' '}
       <div className="m-5 p-5 mx-auto rounded-lg  overflow-hidden">
         <h2 className="text-4xl font-bold mb-4">Key priorities</h2>

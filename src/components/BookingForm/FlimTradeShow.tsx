@@ -5,10 +5,12 @@ import {
   getAllSlotByDate,
 } from '../../config/controller';
 import { useForm } from 'react-hook-form';
-import { filmTradeShow } from './fields';
+import { cbfc, filmTradeShow } from './fields';
 import { loadRazorpay } from '../loadRazorpay';
 import Confirmation from './Confirmation';
 import Preview from './Preview';
+import axios from 'axios';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 
 export default function FlimTradeShow() {
   const [formData, setFormData] = useState<any>({
@@ -31,6 +33,10 @@ export default function FlimTradeShow() {
   const [sendData, setSendData] = useState<any>(null);
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
+   const [uploadedFiles, setUploadedFiles] = useState<{
+      [key: string]: string;
+    }>({});
+    const [uploading,setUploading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -116,12 +122,7 @@ export default function FlimTradeShow() {
         category: data.category,
         postalAddress: data.billingPostalAddress,
       },
-      documentUploads: {
-        synopsis: '11111',
-        castAndCredits: '11111',
-        songLines: '11111',
-        poster: '111111',
-      },
+      documentUploads: uploadedFiles,
       bookingDetails: {
         bookingDate: selectedDate,
         timeSlot: selectedSlot,
@@ -170,7 +171,6 @@ export default function FlimTradeShow() {
         if (response?.data) {
           const createorderresponse = await createOrder({
             bookingId: response?.data?._id ?? '',
-            // token: token,
             data: { orderedBy: userId },
           });
           if (createorderresponse.success) {
@@ -220,7 +220,36 @@ export default function FlimTradeShow() {
       />
     );
   }
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldName: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      setUploading(true);
+      const res = await axios.post(
+        `${STRAPI_API_BASE_URL}/api/upload/`,
+        formData
+      );
+      const fileUrl = res.data[0]?.url;
+      if (fileUrl) {
+        setUploadedFiles((prev) => ({
+          ...prev,
+          [fieldName]: `${STRAPI_API_BASE_URL}${fileUrl}`,
+        }));
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }
+    finally {
+      setUploading(false);
+    }
+  };
   return (
     <div className=" bg-gray-50  rounded-lg  text-sm">
       <h2 className="text-xl font-semibold text-center text-red-600 mb-6">
@@ -592,25 +621,42 @@ export default function FlimTradeShow() {
               Document Uploads
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { name: 'synopsis', label: 'Synopsis' },
-                { name: 'castCredits', label: 'Cast & Credits' },
-                { name: 'songlines', label: 'Song Lines' },
-                { name: 'poster', label: 'Poster' },
-              ].map(({ name, label }, index) => (
+              {cbfc.Fields.map(({ name, label,required }, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-3 items-center gap-4"
+                  className="items-center gap-4"
                 >
-                  <label className="text-gray-700 font-medium col-span-1">
-                    {label} :
+                  <label className="text-gray-700 font-medium">
+                    {label} : <span className="text-red-600">{required && '*'}</span>
                   </label>
                   <input
                     type="file"
-                    name={name}
-                    className="w-full py-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
-                    onChange={handleChange}
+                    {...register(name, {
+                        required: required && `${label} is required`,
+                      })}
+                    className="w-full py-2 mt-2 px-2 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 col-span-2"
+                                         onChange={(e) => handleFileChange(e, name)}
                   />
+                  {errors[name] && (
+                      <p style={{ color: 'red' }}>
+                        {String(errors[name]?.message)}
+                      </p>
+                    )}
+                    {uploading && (
+                      <p style={{ color: 'green' }}>Uploading...</p>
+                    )}
+                    {uploadedFiles[name] && (
+                      <div className="mt-1">
+                        <a
+                          href={uploadedFiles[name]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline"
+                        >
+                          View Uploaded PDF
+                        </a>
+                      </div>
+                    )}
                 </div>
               ))}
             </div>
@@ -649,7 +695,7 @@ export default function FlimTradeShow() {
                 </div>
               ))}
               {selectedDate && (
-                <div className="grid grid-cols-3 mt-4 items-center ">
+                <div className="grid grid-cols-3 mt-4  ">
                   <label
                     htmlFor=""
                     className="text-gray-700 font-medium col-span-1"
@@ -675,7 +721,7 @@ export default function FlimTradeShow() {
                               isBooked
                                 ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
                                 : isSelected
-                                  ? 'bg-red-400 text-white border-red-400'
+                                  ? 'bg-red-400 text-black border-red-400'
                                   : 'bg-white text-black border-gray-300 hover:border-red-400'
                             }`}
                             disabled={isBooked}
@@ -685,6 +731,11 @@ export default function FlimTradeShow() {
                         );
                       })}
                     </div>
+                     {!selectedSlot && ( 
+                    <div className="text-red-500 mt-2 ml-3">
+                      <p>Please select a slot</p>
+                    </div>
+                  )}
                   </div>
                 </div>
               )}

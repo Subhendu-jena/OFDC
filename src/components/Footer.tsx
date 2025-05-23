@@ -89,9 +89,9 @@ const Footer = () => {
       <img
         src="/foot.jpg"
         alt=""
-        className="absolute  w-full h-127 object-fill"
+        className="absolute opacity-60  w-full h-110 object-fill"
       />
-      <div className="w-full mx-auto pt-22  px-12 relative ">
+      <div className="w-full mx-auto pt-12  px-12 relative ">
         <div className="grid grid-cols-1 md:grid-cols-3  gap-12  ">
           {/* Company Info */}
           <div className=" space-y-6">

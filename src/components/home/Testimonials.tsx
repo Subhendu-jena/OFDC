@@ -7,22 +7,95 @@ import { testimonialsApi } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 import { useFontSize } from './FontSizeContext';
+import { ChevronRight } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 function Testimonials() {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3,
   });
+ function SampleNextArrow(props: any) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${className} custom-arrow next-arrow`}
+      style={{
+        ...style,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#e3342f', // Tailwind red-600
+        borderRadius: '50%',
+        height: '20px',
+        width: '20px',
+        cursor: 'pointer',
+        zIndex: 2,
+        right: '10px',
+      }}
+      onClick={onClick}
+    >
+      <ChevronRight color="white" size={20} />
+    </div>
+  );
+}
+
+// Custom Prev Arrow
+function SamplePrevArrow(props: any) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${className} custom-arrow prev-arrow`}
+      style={{
+        ...style,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#e3342f', // Tailwind green-600
+        borderRadius: '50%',
+        padding: '10px',
+        cursor: 'pointer',
+        zIndex: 2,
+        left: '10px',
+      }}
+      onClick={onClick}
+    >
+      <ChevronLeft color="white" size={20} />
+    </div>
+  );
+}
   const { fontSize } = useFontSize();
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 6000,
-    arrows: true,
-  };
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 6000,
+  arrows: true,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
+};
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
@@ -104,9 +177,9 @@ function Testimonials() {
               ))} */}
               {card.map((testimonial: any, index: number) => (
                 <div className="p-2">
-                  <div className="max-w-md mx-auto  rounded-2xl overflow-hidden" key={index}>
+                  <div className="max-w-md mx-auto h-[400px] rounded-2xl overflow-hidden" key={index}>
                     {/* Header Image */}
-                    <div className=" relative h-75 w-full bg-gray-100 ">
+                    <div className=" relative h-40 w-full bg-gray-100 ">
                       <img
                         src={
                           STRAPI_API_BASE_URL + testimonial?.image?.url ||
@@ -127,12 +200,12 @@ function Testimonials() {
                       {/* Quote Icon */}
 
                       {/* Quote Text */}
-                      <blockquote className="text-gray-700 text-base leading-relaxed mb-6">
+                      <blockquote className="text-gray-700 text-[14px] leading-relaxed mb-6 line-clamp-5 hover:line-clamp-none z-100">
                         {testimonial.description}
                       </blockquote>
 
                       {/* Attribution */}
-                      <div className="border-t border-gray-100 pt-4">
+                      <div className="border-t border-gray-100 ">
                         <h3 className="font-semibold text-gray-900 text-lg">
                           {testimonial?.title}
                         </h3>

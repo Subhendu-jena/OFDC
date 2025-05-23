@@ -36,7 +36,7 @@ const PolicyGuidelines: React.FC = () => {
   };
   return (
     <>
-      <div className="p-3">
+      <div className="p-3 bg-white h-full">
         <h2 className="text-4xl font-bold text-red-600  border-b pb-2">
           Operational Guidelines
         </h2>

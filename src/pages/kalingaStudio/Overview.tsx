@@ -12,7 +12,7 @@ import kalingastudio from '../../assets/KalingaAssets/kalingaStudio.jpg';
 import TimeLine from '../../components/KalingaStudio/TimeLine';
 const KalingaStudiosOverview = () => {
   return (
-    <div className="w-full px-5">
+    <div className="w-full px-5 bg-white">
       <div className="min-h-screen bg-gray-50">
         <section id="about" className=" md:py-10 bg-white">
           <div className="container mx-auto px-4">
