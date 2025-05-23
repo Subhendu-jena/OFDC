@@ -43,7 +43,7 @@ const OdishaIndiasBestKeptSecret: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen  text-white m-5">
+    <div className="min-h-screen bg-white  text-white p-5">
       {/* Immersive Hero Section */}
       {/* <header className="relative h-screen overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-80"></div>

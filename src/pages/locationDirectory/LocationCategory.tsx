@@ -61,15 +61,15 @@ const LocationCategory: React.FC = () => {
         <LocationDetails locationData={selectedProduct} setSelectedProduct={()=>setSelectedProduct(null)}/>
       ) : (
         <>
-          <h3 className="px-4 pt-2 text-2xl font-semibold text-gray-900 mb-6" style={{ fontSize: `${fontSize + 8}px` }}>
+         <div className='bg-white'> <h3 className="px-4 pt-2 text-2xl font-semibold text-gray-900 mb-6 bg-white" style={{ fontSize: `${fontSize + 8}px` }}>
             Featured Locations
           </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-4 px-6 gap-6 mt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-4 px-6 gap-6 bg-white mt-10">
             <LocationCard
               cardData={card}
               setSelectedProduct={setSelectedProduct}
             />
-          </div>
+          </div></div>
         </>
       )}
     </>

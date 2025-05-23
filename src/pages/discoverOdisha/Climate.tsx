@@ -3,7 +3,7 @@ import { Sun, CloudRain, Snowflake } from 'lucide-react';
 import chilika from '../../assets/Chilika.jpeg'
 const Climate:React.FC = () => {
   return (
-    <div className="m-5">
+    <div className="p-5 bg-white">
           <div className="m-5 p-5 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
               <h2 className="text-xl font-bold mb-2">Odisha’s Climate : A Land of Seasonal Splendor
               </h2><div className='grid grid-cols-5 '>

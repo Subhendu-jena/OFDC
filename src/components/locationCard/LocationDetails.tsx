@@ -100,8 +100,8 @@ const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData,setSelec
   // ];
   console.log(activeLocation?.images[0]?.url, 'activeLocation?.images');
   return (
-    <div className="min-h-screen bg-gray-50 mt-2">
-      <div className='p-3 bg-red-700 w-fit rounded-3xl' onClick={() => setSelectedProduct(null)}><ArrowLeft /></div>
+    <div className="min-h-screen bg-gray-50 pt-2">
+      <div className='p-3 bg-red-700 text-white w-fit rounded-3xl' onClick={() => setSelectedProduct(null)}><ArrowLeft /></div>
       {/* Image Carousel */}
       {/* <Swiper
           modules={[Navigation, Pagination, Autoplay]}

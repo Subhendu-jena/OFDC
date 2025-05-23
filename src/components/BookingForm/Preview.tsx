@@ -1,6 +1,7 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import { formatDateToMMDDYYYY } from '../../variables/utils';
+import { FileCheck } from 'lucide-react';
 const Preview = ({
   formData,
   selectedDate,
@@ -364,6 +365,39 @@ console.log(formData, 'formdata at preview');
                 )} */}
               </div>
             </div>
+            {formData?.documentUploads &&<div className="border-b pb-6">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Uploaded Documents
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <p className="text-sm text-gray-500">Synopsis</p>
+                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.synopsis}>
+                   <FileCheck /> Synopsis
+                  </a>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Cast & Credits</p>
+                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.songLines}>
+                   <FileCheck /> Cast & Credits
+                  </a>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <p className="text-sm text-gray-500">Song Lines</p>
+                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.songLines}>
+                    <FileCheck /> Song Lines
+                  </a>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Poster</p>
+                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.poster}>
+                    <FileCheck /> Poster
+                  </a>
+                </div>
+              </div>
+            </div>}
             {formData?.status && (
               <div className="border-b pb-6">
               <h3 className="text-lg font-semibold text-gray-900">

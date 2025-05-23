@@ -31,13 +31,13 @@ export default function OdishaFilmPolicy() {
     document.body.removeChild(link);
   };
   return (
-    <div className=" w-full min-h-screen">
+    <div className=" w-full bg-white min-h-screen">
       <div className="w-full mx-auto p-6">
-        <div className="bg-white shadow-md rounded-lg ">
+        <div className="bg-white  rounded-lg ">
           {/* Sidebar & Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Sidebar */}
-            <aside className="bg-gray-200 p-2 rounded-lg md:col-span-1">
+            <aside className=" p-2 rounded-lg md:col-span-1">
               <img
                 src={STRAPI_API_BASE_URL + data[0]?.headImage?.url}
                 alt="Kalinga Studio"

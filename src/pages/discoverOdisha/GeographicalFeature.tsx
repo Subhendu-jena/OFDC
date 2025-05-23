@@ -8,7 +8,7 @@ import React from 'react';
 import deomali from '../../assets/Deomali.jpeg';
 const GeographicalFeature: React.FC = () => {
   return (
-    <div className="m-5">
+    <div className="p-5 bg-white">
       <div className="m-5 p-5 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <h2 className="text-xl font-bold mb-2">
           Odisha : A Land of Diverse Landscapes

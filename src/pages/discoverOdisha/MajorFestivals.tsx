@@ -20,12 +20,12 @@ useEffect(() => {
 }, []);
   console.log(data, 'filteredData');
   return (
-    <>
-        <h2 className="text-4xl font-bold text-red-600  border-b p-2">
+    <div className="w-full bg-white min-h-full">
+        <h2 className="text-4xl font-bold text-red-600 bg-white border-b p-2">
           Major Festivals
         </h2>
          {data.map((item: any, index: number) => (
-      <div key={item.id || index} className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6 bg-white rounded-xl shadow p-4">
+      <div key={item.id || index} className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6 bg-white p-10 shadow">
         <div className="col-span-2">
           <img
             src={`${STRAPI_API_BASE_URL}${item.imageUrl?.url}`}
@@ -49,7 +49,7 @@ useEffect(() => {
         </div>
       </div>
     ))}
-    </>
+    </div>
   );
 };
 
