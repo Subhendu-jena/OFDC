@@ -30,7 +30,6 @@ const AdminPaymentHistory:React.FC = () => {
        header: 'Applicant Name',
        accessor: 'user',
        render: (row: any) => {
-        console.log(row, 'row');
          return <div>{row?.user.name}</div>;
        },
        size: 200,
@@ -99,9 +98,8 @@ const AdminPaymentHistory:React.FC = () => {
     getAllPaymentsForAdmin({ token: token }).then((res:any) => {
       const sendData = res?.payments
       setData(sendData);
-      console.log(sendData, 'res?.data?.data');
     }).catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
@@ -114,14 +112,13 @@ const AdminPaymentHistory:React.FC = () => {
       // row.status?.toLowerCase().includes(search)
     );
   });
-  console.log(filteredData, 'filteredData');
   return (
             <>
     <div className=" bg-white pt-2">
           <div className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-4 flex justify-between items-center rounded-2xl ">
             <h2 className="text-xl font-bold text-white flex items-center">
               <Star size={20} className="mr-2" />
-              Admin Booking History
+              Admin Payment History
             </h2>
             <div className="flex justify-end">
               <input
@@ -133,7 +130,7 @@ const AdminPaymentHistory:React.FC = () => {
               />
             </div>
           </div>
-          <Table1 columns={columns} isLoading={loading} data={filteredData} />
+          <Table1 columns={columns} isLoading={loading} data={filteredData?.reverse()} />
         </div>
    
     </>

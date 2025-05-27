@@ -25,6 +25,7 @@ import Preview from '../../components/BookingForm/Preview';
 import Table1 from '../../components/Table1';
 import { formatDateToMMDDYYYY } from '../../variables/utils';
 import { ScanEye } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const AdminDashboard = () => {
   const data = [
@@ -41,7 +42,6 @@ const AdminDashboard = () => {
     { name: 'Jan 11', blog: 410, social: 20 },
     { name: 'Jan 12', blog: 250, social: 12 },
   ];
-  const token = sessionStorage.getItem('token');
   // const [filter, setFilter] = useState('monthly');
   const [showPreview, setShowPreview] = useState(false);
   const [previewData, setPreviewData] = useState<any>(null);
@@ -178,7 +178,7 @@ const AdminDashboard = () => {
       render: (row: any) => {
         return (
           <div>
-            <p>{row?.bookingDetails?.timeSlot || "N/A"}</p>
+            <p>{row?.bookingDetails?.timeSlot || 'N/A'}</p>
           </div>
         );
       },
@@ -204,6 +204,7 @@ const AdminDashboard = () => {
       },
     },
   ];
+  
   useEffect(() => {
     setLoading(true);
     getAllBookingsForAdmin({})
@@ -216,7 +217,7 @@ const AdminDashboard = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [showPreview]);
   useEffect(() => {
     setLoading(true);
     dashboardData({})
@@ -230,9 +231,16 @@ const AdminDashboard = () => {
         setLoading(false);
       });
   }, []);
-  const handleConfirm = () => {
-    setShowPreview(false);
-    adminApprove({ data: { bookingId: previewData?._id } });
+  const handleConfirm = async () => {
+    const response = await adminApprove({
+      data: { bookingId: previewData?._id },
+    });
+    console.log(response, 'response');
+    if (response.success) {
+      toast.success(response.message);
+      setShowPreview(false);
+    }
+
   };
   const handlereject = async () => {
     setShowPreview(false);
@@ -248,22 +256,20 @@ const AdminDashboard = () => {
           refund({
             data: { bookingId: previewData?._id },
           });
-          getAllBookingsForAdmin({ token: token });
         }
       }
     } catch (err) {}
   };
   // const navigate = useNavigate();
- const filteredData = data1
-  .filter((row: any) => row.bookingType !== "Ghost Booking")
-  .filter((row: any) => {
-    const search = searchTerm.toLowerCase();
-    return (
-      row.bookingType?.toLowerCase().includes(search) ||
-      row.status?.toLowerCase().includes(search)
-    );
-  });
-  console.log(data1, 'cardData');
+  const filteredData = data1
+    .filter((row: any) => row.bookingType !== 'Ghost Booking')
+    .filter((row: any) => {
+      const search = searchTerm.toLowerCase();
+      return (
+        row.bookingType?.toLowerCase().includes(search) ||
+        row.status?.toLowerCase().includes(search)
+      );
+    });
   return (
     <div className="bg-white p-4 space-y-6 mx-auto">
       {/* <div className='text-right border border-amber-500 text-amber-600 p-2 rounded-md w-fit cursor-pointer ' onClick={() => {
@@ -396,7 +402,7 @@ const AdminDashboard = () => {
               />
             </div>
           </div>
-          <Table1 columns={columns} isLoading={loading} data={filteredData} />
+          <Table1 columns={columns} isLoading={loading} data={filteredData?.reverse()} />
         </div>
       )}
     </div>

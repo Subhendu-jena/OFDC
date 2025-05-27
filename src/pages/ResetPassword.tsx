@@ -27,7 +27,6 @@ const ResetPassword: React.FC = () => {
       return;
     }
     resetPassword({ token: token.token, data: { newPassword: password } });
-    console.log(token);
 
     setSuccess(true);
     setTimeout(() => {

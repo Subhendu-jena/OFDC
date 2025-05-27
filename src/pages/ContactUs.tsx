@@ -33,25 +33,17 @@ const ContactUs: React.FC = () => {
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     await contactUs({ data: formData });
-    console.log('Form Data Submitted:', formData);
   };
-  // const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  // const [loading, setLoading] = useState(true);
-  // const handleMapLoad = () => {
-  //   console.log('Google Map Loaded');
-  //   setLoading(false);
-  // };
    const [data, setData] = useState<any>([]);
     useEffect(() => {
       contact()
         .then(({ data }) => {
           if (data) {
-            // console.log(data, 'wwww11w');
             setData(data);
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         })
       }, []);
   

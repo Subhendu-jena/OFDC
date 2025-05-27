@@ -52,6 +52,19 @@ export const createBooking = async ({
     // token,
   });
 };
+export const confirmationEmail = async ({
+  // token,
+  data,
+}: {
+  data: any;
+}): Promise<ApiResponse<signupData>> => {
+  return apiCaller({
+    uri: '/mail/send_confirmation_email',
+    method: 'POST',
+    data,
+    // token,
+  });
+};
 export const ghostBooking = async ({
   // token,
   data,

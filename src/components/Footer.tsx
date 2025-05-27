@@ -28,16 +28,14 @@ const Footer = () => {
     contact()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, 'wwww11w');
           setData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
   // const card = data[0]?.socialLinks;
-  // console.log(card,"fdsjkg")
   return (
     <footer className="w-full relative bg-gray-700 text-gray-200">
       {/* Contact Info Bar */}

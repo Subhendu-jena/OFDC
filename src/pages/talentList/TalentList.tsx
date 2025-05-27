@@ -18,7 +18,6 @@ const TalentList:React.FC = () => {
     //             talentDirectory()
     //             .then(({ data }) => {
     //               if (data) {
-    //                   // console.log(data, "data");
     //                   setData(data);
     //               }
     //             })

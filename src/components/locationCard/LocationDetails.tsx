@@ -93,12 +93,6 @@ const LocationDetails: React.FC<LocationDetailsProps> = ({ locationData,setSelec
     { icon: Users, name: 'Tour Guide' },
   ];
 
-  // Placeholder images for demonstration
-  // const demoImages = [
-  //   'https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&q=80',
-  //   'https://images.unsplash.com/photo-1624806992066-5ffcf7ca186b?auto=format&fit=crop&q=80',
-  // ];
-  console.log(activeLocation?.images[0]?.url, 'activeLocation?.images');
   return (
     <div className="min-h-screen bg-gray-50 pt-2">
       <div className='p-3 bg-red-700 text-white w-fit rounded-3xl' onClick={() => setSelectedProduct(null)}><ArrowLeft /></div>

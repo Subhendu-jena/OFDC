@@ -15,11 +15,10 @@ const Publications: React.FC = () => {
         if (res) {
           const resData = res?.data[0].publication || [];;
           setData(resData);
-          console.log(resData, 'res?.data?.data1111111');
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
@@ -31,7 +30,6 @@ const Publications: React.FC = () => {
       row.name?.toLowerCase().includes(search)
     );
   });
-  console.log(data, 'filteredData');
   const columns: {
     header: string;
     accessor: string;

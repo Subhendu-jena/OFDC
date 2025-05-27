@@ -79,7 +79,6 @@ const UserPaymentHistory: React.FC = () => {
       .then((response) => {
         if (response.success) {
           setData(response?.payments ?? response?.payments);
-          console.log(response?.payments, 'res?.data?.payments');
         }
       })
       .catch((error) => {
@@ -114,7 +113,7 @@ const UserPaymentHistory: React.FC = () => {
             />
           </div>
         </div>
-        <Table1 columns={columns} isLoading={loading} data={filteredData} />
+        <Table1 columns={columns} isLoading={loading} data={filteredData?.reverse()} />
       </div>
     </>
   );

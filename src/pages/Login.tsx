@@ -8,7 +8,11 @@ import { toast } from 'react-toastify';
 import { ArrowLeft } from 'lucide-react';
 import { Eye } from 'lucide-react';
 import { EyeOff } from 'lucide-react';
-
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
 const Login: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<LoginData>({
@@ -70,41 +74,89 @@ const Login: React.FC = () => {
     }
   }, []);
   const navigate = useNavigate();
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) return;
+  //   const payload = {
+  //     identifier: formData.email,
+  //     password: formData.password,
+  //     rememberMe: formData.rememberMe,
+  //   };
+  //   if (formData.rememberMe) {
+  //     localStorage.setItem('savedEmail', formData.email);
+  //     localStorage.setItem('savedPassword', formData.password);
+  //     localStorage.setItem('rememberMe', 'true');
+  //   } else {
+  //     localStorage.removeItem('savedEmail');
+  //     localStorage.removeItem('savedPassword');
+  //     localStorage.removeItem('rememberMe');
+  //   }
+  //   loginController({ data: payload })
+  //     .then((response) => {
+  //       toast.success('Login successful');
+  //       if (response?.user) {
+  //         sessionStorage.setItem('userID', response?.user?._id);
+  //         sessionStorage.setItem('role', response?.user?.role);
+  //         sessionStorage.setItem('name', response?.user?.name);
+  //         sessionStorage.setItem('email', response?.user?.email);
+  //         sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
+  //       }
+  //       navigate(paths.RoleBasedRedirect);
+  //     })
+  //     .catch((err) => {
+  //       if (err) {
+  //         const errorMessage =err.response.data.message || 'An error occurred during login';
+  //         toast.error(errorMessage);
+  //       }
+  //     });
+  // };
+const key = '6LfhVksrAAAAABQboos0rSXuQkrUJ-KsOSNw9RW1'
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    const payload = {
-      identifier: formData.email,
-      password: formData.password,
-      rememberMe: formData.rememberMe,
-    };
-    if (formData.rememberMe) {
-      localStorage.setItem('savedEmail', formData.email);
-      localStorage.setItem('savedPassword', formData.password);
-      localStorage.setItem('rememberMe', 'true');
-    } else {
-      localStorage.removeItem('savedEmail');
-      localStorage.removeItem('savedPassword');
-      localStorage.removeItem('rememberMe');
-    }
-    loginController({ data: payload })
-      .then((response) => {
-        toast.success('Login successful');
-        if (response?.user) {
-          sessionStorage.setItem('userID', response?.user?._id);
-          sessionStorage.setItem('role', response?.user?.role);
-          sessionStorage.setItem('name', response?.user?.name);
-          sessionStorage.setItem('email', response?.user?.email);
-          sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
+  e.preventDefault();
+  if (!validateForm()) return;
+
+  window.grecaptcha.ready(() => {
+    window.grecaptcha
+      .execute(key, { action: 'login' }) // 👈 Use your site key
+      .then((token: string) => {
+        const payload = {
+          identifier: formData.email,
+          password: formData.password,
+          rememberMe: formData.rememberMe,
+          recaptchaToken: token, // 👈 Send token to backend
+        };
+
+        if (formData.rememberMe) {
+          localStorage.setItem('savedEmail', formData.email);
+          localStorage.setItem('savedPassword', formData.password);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('savedEmail');
+          localStorage.removeItem('savedPassword');
+          localStorage.removeItem('rememberMe');
         }
-        navigate(paths.RoleBasedRedirect);
-      })
-      .catch((err) => {
-        if (err) {
-          toast.error('Login failed. Please check your credentials.');
-        }
+
+        loginController({ data: payload })
+          .then((response) => {
+            toast.success('Login successful');
+            if (response?.user) {
+              sessionStorage.setItem('userID', response?.user?._id);
+              sessionStorage.setItem('role', response?.user?.role);
+              sessionStorage.setItem('name', response?.user?.name);
+              sessionStorage.setItem('email', response?.user?.email);
+              sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
+            }
+            navigate(paths.RoleBasedRedirect);
+          })
+          .catch((err) => {
+            const errorMessage =
+              err?.response?.data?.message ||
+              'An error occurred during login';
+            toast.error(errorMessage);
+          });
       });
-  };
+  });
+};
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">

@@ -83,7 +83,6 @@ const userProfile: React.FC = () => {
         sessionStorage.setItem('email', response?.user?.email);
         sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
       }
-      console.log(token, 'userPfofile');
     } catch (error) {
       console.error('Error saving profile:', error);
     }

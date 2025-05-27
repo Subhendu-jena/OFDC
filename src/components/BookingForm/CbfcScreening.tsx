@@ -108,7 +108,6 @@ function CbfcScreening() {
   };
   const navigate = useNavigate();
   const handleConfirm = async () => {
-    // console.log('formatted data', sendData);
     try {
       const response = await createBooking({
         token: token,
@@ -128,7 +127,6 @@ function CbfcScreening() {
               setReceiptData({ verifiedData, selectedDate, selectedSlot });
             };
             loadRazorpay(createorderresponse, onSuccess);
-            console.log(onSuccess, 'onSuccess');
           } else {
             navigate(paths.userDashboard);
             console.error('redirection failed:', createorderresponse.message);
@@ -197,7 +195,6 @@ function CbfcScreening() {
       setUploading(false);
     }
   };
-  console.log(uploadedFiles, 'uploadedFiles');
 
   return (
     <div className=" bg-gray-50   text-sm rounded-lg">

@@ -160,14 +160,13 @@ const AdminBookingHistory: React.FC = () => {
     setLoading(true);
     getAllBookingsForAdmin({ token: token }).then((res) => {
       setData(res?.data);
-      console.log(res?.data, 'res?.data?.data');
     }).catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [showPreview]);
   // const filteredData = data.filter((row: any) => {
   //   const search = searchTerm.toLowerCase();
   //   return (
@@ -210,7 +209,7 @@ const AdminBookingHistory: React.FC = () => {
               />
             </div>
           </div>
-          <Table1 columns={columns} isLoading={loading} data={filteredData} />
+          <Table1 columns={columns} isLoading={loading} data={filteredData?.reverse()} />
         </div>
       )}
     </>
