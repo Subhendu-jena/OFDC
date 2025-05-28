@@ -14,7 +14,7 @@ declare global {
     grecaptcha: any;
   }
 }
-const SITE_KEY = import.meta.env.VITE_SITE_KEY
+const SITE_KEY = import.meta.env.VITE_SITE_KEY ?? '';
 const Login: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<LoginData>({
@@ -76,43 +76,7 @@ const Login: React.FC = () => {
     }
   }, []);
   const navigate = useNavigate();
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) return;
-  //   const payload = {
-  //     identifier: formData.email,
-  //     password: formData.password,
-  //     rememberMe: formData.rememberMe,
-  //   };
-  //   if (formData.rememberMe) {
-  //     localStorage.setItem('savedEmail', formData.email);
-  //     localStorage.setItem('savedPassword', formData.password);
-  //     localStorage.setItem('rememberMe', 'true');
-  //   } else {
-  //     localStorage.removeItem('savedEmail');
-  //     localStorage.removeItem('savedPassword');
-  //     localStorage.removeItem('rememberMe');
-  //   }
-  //   loginController({ data: payload })
-  //     .then((response) => {
-  //       toast.success('Login successful');
-  //       if (response?.user) {
-  //         sessionStorage.setItem('userID', response?.user?._id);
-  //         sessionStorage.setItem('role', response?.user?.role);
-  //         sessionStorage.setItem('name', response?.user?.name);
-  //         sessionStorage.setItem('email', response?.user?.email);
-  //         sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
-  //       }
-  //       navigate(paths.RoleBasedRedirect);
-  //     })
-  //     .catch((err) => {
-  //       if (err) {
-  //         const errorMessage =err.response.data.message || 'An error occurred during login';
-  //         toast.error(errorMessage);
-  //       }
-  //     });
-  // };
-  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY ?? '';
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
@@ -141,14 +105,14 @@ const Login: React.FC = () => {
     }
 
     try {
-      await window.grecaptcha.ready(async () => {
+      await window?.grecaptcha?.ready(async () => {
         try {
-          const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+          const token = await window?.grecaptcha?.execute(RECAPTCHA_SITE_KEY, {
             action: 'login',
           });
 
           if (!token) {
-            toast.info('Please complete the CAPTCHA');
+            toast?.info('Please complete the CAPTCHA');
             return;
           }
 
@@ -181,13 +145,13 @@ const Login: React.FC = () => {
             sessionStorage.setItem('phoneNo', response.user.phoneNo);
           }
 
-          navigate(paths.RoleBasedRedirect);
+          navigate(paths?.RoleBasedRedirect);
         } catch (apiError: any) {
           const errorMessage =
             apiError?.response?.data?.message ||
             apiError?.message ||
             'Login failed';
-          toast.error(errorMessage);
+          toast.error(errorMessage );
         }
       });
     } catch (err: any) {

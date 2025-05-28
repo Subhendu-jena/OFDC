@@ -52,8 +52,8 @@ const userProfile: React.FC = () => {
         }
       }
     } catch (error:any) {
-      console.error('Error changing password:', error);
-      const errorMessage = error.response?.data?.message || 'An error occurred';
+      // console.error('Error changing password:', error);
+      const errorMessage = error.message || 'An error occurred';
       toast.error(errorMessage);
     }
   };

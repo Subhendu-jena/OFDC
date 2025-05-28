@@ -200,7 +200,7 @@ const settings = {
                       {/* Quote Icon */}
 
                       {/* Quote Text */}
-                      <blockquote className="text-gray-700 text-[14px] leading-relaxed mb-6 line-clamp-5 hover:line-clamp-none z-100">
+                      <blockquote className="text-gray-700 text-[14px] leading-relaxed mb-6 line-clamp-5  hover:line-clamp-5 hover:overflow-auto  z-100">
                         {testimonial.description}
                       </blockquote>
 
