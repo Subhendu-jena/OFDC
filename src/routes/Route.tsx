@@ -65,6 +65,7 @@ import Publications from '../pages/quickLinks/Publications';
 import Tenders from '../pages/quickLinks/Tenders';
 import Policy from '../pages/quickLinks/Policy';
 import TermsAndConditions from '../pages/TermsAndConditions';
+import NotFound from '../pages/Notfound';
 
 const RoutePage: React.FC = () => {
   return (
@@ -72,6 +73,7 @@ const RoutePage: React.FC = () => {
       <ScrollToTop />
       <Routes>
         {/* <Route path={paths.test} element={<BookingReceipt />} /> */}
+           <Route path="*" element={<NotFound />} />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
         <Route path={paths.termsAndCondition} element={<TermsAndConditions/>} />
