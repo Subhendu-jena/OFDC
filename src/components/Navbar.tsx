@@ -17,7 +17,7 @@ import { MenuItem } from '../types/global';
 import { useFontSize } from './home/FontSizeContext';
 import { LogOut } from 'lucide-react';
 import { LayoutDashboardIcon } from 'lucide-react';
-import OFDCLOGO from "../../public/Logo/OFDC Logo Black.png"
+import OFDCLOGO from '.././assets/Logo/OFDC Logo White.png';
 export const TopHeader = () => {
   const id = sessionStorage.getItem('userID');
   // const [isAdmin, setIsAdmin] = useState(false);
@@ -28,7 +28,10 @@ export const TopHeader = () => {
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
       <div className=" flex justify-between px-16 items-center">
         <div className="flex items-center ">
-          <span className="hover:text-orange-500 cursor-pointer mr-4" onClick={() => navigate(paths.home)}>
+          <span
+            className="hover:text-orange-500 cursor-pointer mr-4"
+            onClick={() => navigate(paths.home)}
+          >
             Skip to main Content /
           </span>
           <div className="flex space-x-4">
@@ -80,21 +83,23 @@ export const TopHeader = () => {
             <span>Contact Us</span>
           </Link>
           <span>/</span>
-            {id ? (
+          {id ? (
             <Link
               to={paths.RoleBasedRedirect}
               className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
             >
-              <LayoutDashboardIcon size={16}/>
+              <LayoutDashboardIcon size={16} />
               <span>Go to Dashboard</span>
             </Link>
-          ) : (<Link
-            to="/register"
-            className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
-          >
-            <UserPlus size={16} />
-            <span>Register</span>
-          </Link>)}
+          ) : (
+            <Link
+              to="/register"
+              className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
+            >
+              <UserPlus size={16} />
+              <span>Register</span>
+            </Link>
+          )}
           <span>/</span>
           {id ? (
             <Link
@@ -105,7 +110,7 @@ export const TopHeader = () => {
               }}
               className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
             >
-             <LogOut size={16}/>
+              <LogOut size={16} />
               <span>Log Out</span>
             </Link>
           ) : (
@@ -117,53 +122,6 @@ export const TopHeader = () => {
               <span>Login</span>
             </Link>
           )}
-          {/* {!isAdmin ? (
-            !isLoggedIn ? (
-              <>
-                <span>/</span>
-                <Link
-                  to={paths.userDashboard}
-                  className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
-                >
-                  <User size={16} />
-                  <span>User Dashboard</span>
-                </Link>
-              </>
-            ) : (
-              <>
-                <span>/</span>
-                <Link
-                  to="/"
-                  className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
-                >
-                  <User size={16} />
-                  <span>User Login</span>
-                </Link>
-              </>
-            )
-          ) : !isLoggedIn ? (
-            <>
-              <span>/</span>
-              <Link
-                to={paths.dashboard}
-                className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
-              >
-                <Users size={16} />
-                <span>Dashboard</span>
-              </Link>
-            </>
-          ) : (
-            <>
-              <span>/</span>
-              <Link
-                to="/"
-                className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
-              >
-                <Users size={16} />
-                <span>Dept. Login</span>
-              </Link>
-            </>
-          )} */}
         </div>
       </div>
     </div>
@@ -294,7 +252,7 @@ const MainHeader = () => {
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-  const id =sessionStorage.getItem('userID');
+  const id = sessionStorage.getItem('userID');
   return (
     <>
       <div
@@ -302,28 +260,30 @@ const MainHeader = () => {
           isScrolled ? 'bg-[#11161F]' : 'bg-[#00000085] md:mt-9'
         }`}
       >
-        <div className=" flex gap-4 justify-between items-center px-4 ">
+        <div className=" flex gap-4 justify-between items-center px-0 lg:px-4">
           <div className="flex items-center max-w-[400px]">
-            <Link to="/" className="flex items-center">
-              <img
-                src="/Logo\OFDC Logo White.png"
-                alt="OFDC Logo"
-                className="h-12  w-auto"
-              />
-              <div className="ml-3 hidden sm:block">
-                <h3 className="text-sm md:text-lg  font-semibold">
-                  Odisha Film Development Corporation
-                </h3>
-              </div>
-            </Link>
+           
+              <Link to="/" className="flex items-center">
+                <img src={OFDCLOGO} alt="OFDC Logo" className="h-12  w-auto" />
+                <div className="ml-3 hidden sm:block">
+                  <h3 className="text-sm md:text-lg  font-semibold">
+                    Odisha Film Development Corporation
+                  </h3>
+                </div>
+              </Link>
+          
           </div>
 
           {/* Mobile menu toggle button */}
           <button
             className="md:hidden text-white focus:outline-none"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={() => {
+              mobileMenuOpen
+                ? setMobileMenuOpen(false)
+                : setMobileMenuOpen(true);
+            }}
           >
-            <Menu size={24} />
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
           {/* Desktop navigation */}
@@ -378,27 +338,18 @@ const MainHeader = () => {
             mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
-          <div className="flex justify-between items-center p-4 border-b border-gray-700">
+          {/* <div className="flex justify-between items-center p-4 border-b border-gray-700">
             <Link to="/" className="flex items-center">
-              <img
-                src={OFDCLOGO}
-                alt="OFDC Logo"
-                className="h-12 w-auto"
-              />
+              <img src={OFDCLOGO} alt="OFDC Logo" className="h-12 w-auto" />
             </Link>
-            <button
-              className="text-white focus:outline-none"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <X size={24} />
-            </button>
-          </div>
+          </div> */}
 
           {/* Mobile header links */}
-          <div className="p-4 border-b border-gray-700">
+          <div className="p-4 border-y border-gray-700 mt-20 md:mt-40">
             <div className="grid grid-cols-2 gap-4">
               <Link
                 to="/"
+                onClick={() => setMobileMenuOpen(false)} // 👈 close sidebar
                 className="flex items-center space-x-1 text-white hover:text-orange-500"
               >
                 <Home size={16} />
@@ -407,6 +358,7 @@ const MainHeader = () => {
               {id ? (
                 <Link
                   to="/login"
+                  onClick={() => setMobileMenuOpen(false)} // 👈 close sidebar
                   className="flex items-center space-x-1 text-white hover:text-orange-500"
                 >
                   <User size={16} />
@@ -415,6 +367,7 @@ const MainHeader = () => {
               ) : (
                 <Link
                   to="/login"
+                  onClick={() => setMobileMenuOpen(false)} // 👈 close sidebar
                   className="flex items-center space-x-1 text-white hover:text-orange-500"
                 >
                   <User size={16} />
@@ -423,6 +376,7 @@ const MainHeader = () => {
               )}
               <Link
                 to="/register"
+                onClick={() => setMobileMenuOpen(false)} // 👈 close sidebar
                 className="flex items-center space-x-1 text-white hover:text-orange-500"
               >
                 <UserPlus size={16} />
@@ -430,6 +384,7 @@ const MainHeader = () => {
               </Link>
               <Link
                 to="/contact"
+                onClick={() => setMobileMenuOpen(false)} // 👈 close sidebar
                 className="flex items-center space-x-1 text-white hover:text-orange-500"
               >
                 <Mail size={16} />
@@ -469,6 +424,7 @@ const MainHeader = () => {
                       <Link
                         key={childIndex}
                         to={child.url}
+                        onClick={() => setMobileMenuOpen(false)} // 👈 close sidebar
                         className="block px-8 py-2 text-sm text-gray-300 hover:text-orange-500"
                       >
                         {child.label}
