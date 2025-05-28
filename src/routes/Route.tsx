@@ -54,7 +54,7 @@ import LocationDetails from '../components/locationCard/LocationDetails';
 import ScrollToTop from '../components/home/ScrollToTop';
 import ProtectedRoute from './ProtectedRoute';
 import RoleBasedRedirect from './RoleBasedRedirect';
-import BookingReceipt from '../components/BookingForm/BookingReceipt';
+// import BookingReceipt from '../components/BookingForm/BookingReceipt';
 import FilmEcoSystemLayout from '../layout/filmEcoSystem/FilmEcoSystemLayout';
 import ForgetPassword from '../pages/ForgetPassword';
 import ResetPassword from '../pages/ResetPassword';
@@ -71,7 +71,7 @@ const RoutePage: React.FC = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        <Route path={paths.test} element={<BookingReceipt />} />
+        {/* <Route path={paths.test} element={<BookingReceipt />} /> */}
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
         <Route path={paths.termsAndCondition} element={<TermsAndConditions/>} />
