@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { formatDateToMMDDYYYY } from '../../variables/utils';
 import { FileCheck } from 'lucide-react';
 import { confirmationEmail } from '../../config/controller';
+import { toast } from 'react-toastify';
 const Preview = ({
   formData,
   selectedDate,
@@ -16,7 +17,6 @@ const Preview = ({
   const role = sessionStorage.getItem('role');
   const [sendEmail, setSendEmail] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  console.log(formData, 'formData in preview');
   const handleCancelSubmit = () => {
     onEdit();
   };
@@ -32,8 +32,8 @@ const Preview = ({
           fromEmail:"abcd",
           toEmail:"iamsikun99@gmail.com",
           bookingId:formData?._id,}
-        const res = await confirmationEmail({data: sendData}); 
-        console.log('✅ Email sent:', res.data);
+      await confirmationEmail({data: sendData}); 
+        toast.success('Email sent successfully!');
       } catch (err) {
         console.error('❌ Failed to send email:', err);
       } finally {

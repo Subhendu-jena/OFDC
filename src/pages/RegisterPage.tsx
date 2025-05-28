@@ -21,7 +21,7 @@ declare global {
     grecaptcha: any;
   }
 }
-const SITE_KEY = '6LdwzksrAAAAAPWofaTYPFnfN7KGVRgb_PqGrcCK';
+const SITE_KEY = import.meta.env.VITE_SITE_KEY
 const RegisterPage: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<FormData>({
@@ -118,12 +118,11 @@ const RegisterPage: React.FC = () => {
     setFormErrors(errors);
     return isValid;
   };
-// const RECAPTCHA_SITE_KEY = '6LfLtEsrAAAAAID21eJtA62IJDot6OPuRM7zQjl4'
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleCaptchaChange = (token: string | null) => {
-    console.log('Captcha token:', token);
+    // console.log('Captcha token:', token);
     setCaptchaToken(token);
   };
   // Handle form submission

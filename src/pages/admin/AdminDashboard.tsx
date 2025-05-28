@@ -235,7 +235,6 @@ const AdminDashboard = () => {
     const response = await adminApprove({
       data: { bookingId: previewData?._id },
     });
-    console.log(response, 'response');
     if (response.success) {
       toast.success(response.message);
       setShowPreview(false);

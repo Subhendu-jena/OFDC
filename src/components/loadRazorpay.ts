@@ -33,7 +33,7 @@ export  const loadRazorpay = (orderData: any, onSuccess: (data: any) => void) =>
     email: sessionStorage.getItem('email'),
     phoneNo: sessionStorage.getItem('phoneNo'),
   };
-  console.log(orderData,"orderData");
+  // console.log(orderData,"orderData");
     const options: RazorpayOptions = {
       key:import.meta.env.VITE_RAZORPAY_KEY, // from Razorpay Dashboardzz
       amount: orderData?.amount, // amount in paise
@@ -47,7 +47,7 @@ export  const loadRazorpay = (orderData: any, onSuccess: (data: any) => void) =>
         };
         verifyOrder({data :data,token:sessionData.token})
         .then((res:any) => {
-          console.log(res, "verifyOrder response");
+          // console.log(res, "verifyOrder response");
           onSuccess(res.payment); // ✅ Pass data to parent
         })
         .catch((err) => {
