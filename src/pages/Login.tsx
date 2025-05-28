@@ -14,7 +14,7 @@ declare global {
     grecaptcha: any;
   }
 }
-const SITE_KEY = '6LdwzksrAAAAAPWofaTYPFnfN7KGVRgb_PqGrcCK';
+const SITE_KEY = import.meta.env.VITE_SITE_KEY
 const Login: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<LoginData>({
@@ -112,12 +112,12 @@ const Login: React.FC = () => {
   //       }
   //     });
   // };
-  const RECAPTCHA_SITE_KEY = '6LfLtEsrAAAAAID21eJtA62IJDot6OPuRM7zQjl4';
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleCaptchaChange = (token: string | null) => {
-    console.log('Captcha token:', token);
+    // console.log('Captcha token:', token);
     setCaptchaToken(token);
   };
 
@@ -142,54 +142,56 @@ const Login: React.FC = () => {
 
     try {
       await window.grecaptcha.ready(async () => {
-        await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
-          action: 'login',
-        });
-
-        if (!captchaToken) {
-          toast.info('Please complete the CAPTCHA');
-          return;
-        }
-        const payload = {
-          identifier: formData.email,
-          password: formData.password,
-          rememberMe: formData.rememberMe,
-          recaptchaToken: captchaToken,
-        };
-
-        if (formData.rememberMe) {
-          localStorage.setItem('savedEmail', formData.email);
-          localStorage.setItem('savedPassword', formData.password);
-          localStorage.setItem('rememberMe', 'true');
-        } else {
-          localStorage.removeItem('savedEmail');
-          localStorage.removeItem('savedPassword');
-          localStorage.removeItem('rememberMe');
-        }
-
         try {
+          const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+            action: 'login',
+          });
+
+          if (!token) {
+            toast.info('Please complete the CAPTCHA');
+            return;
+          }
+
+          const payload = {
+            identifier: formData.email,
+            password: formData.password,
+            rememberMe: formData.rememberMe,
+            recaptchaToken: captchaToken,
+          };
+
+          if (formData.rememberMe) {
+            localStorage.setItem('savedEmail', formData.email);
+            localStorage.setItem('savedPassword', formData.password);
+            localStorage.setItem('rememberMe', 'true');
+          } else {
+            localStorage.removeItem('savedEmail');
+            localStorage.removeItem('savedPassword');
+            localStorage.removeItem('rememberMe');
+          }
+
           const response = await loginController({ data: payload });
 
-          if (response.success) {
-            toast.success('Login successful');
-            if (response?.user) {
-              sessionStorage.setItem('userID', response.user._id);
-              sessionStorage.setItem('role', response.user.role);
-              sessionStorage.setItem('name', response.user.name);
-              sessionStorage.setItem('email', response.user.email);
-              sessionStorage.setItem('phoneNo', response.user.phoneNo);
-            }
+          toast.success('Login successful');
 
-            navigate(paths.RoleBasedRedirect);
+          if (response?.user) {
+            sessionStorage.setItem('userID', response.user._id);
+            sessionStorage.setItem('role', response.user.role);
+            sessionStorage.setItem('name', response.user.name);
+            sessionStorage.setItem('email', response.user.email);
+            sessionStorage.setItem('phoneNo', response.user.phoneNo);
           }
-        } catch (error:any) {
-          const errorMessage = error?.message || 'An error occurred during login';
+
+          navigate(paths.RoleBasedRedirect);
+        } catch (apiError: any) {
+          const errorMessage =
+            apiError?.response?.data?.message ||
+            apiError?.message ||
+            'Login failed';
           toast.error(errorMessage);
         }
       });
     } catch (err: any) {
       const errorMessage = err?.message || 'An error occurred during login';
-      console.log(err, 'errorMessage');
       toast.error(errorMessage);
     }
   };
