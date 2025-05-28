@@ -8,9 +8,10 @@ import { FontSizeProvider } from './components/home/FontSizeContext.tsx';
 import 'react-toastify/dist/ReactToastify.css';
 import Toast from './variables/Toast.tsx';
 import { ErrorBoundary } from "react-error-boundary";
+import ErrorBoundaryy from './components/home/ErrorBoundary.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <ErrorBoundary  FallbackComponent={ErrorBoundaryy}>
     <Provider store={store}>
       <Toast />
       <FontSizeProvider>

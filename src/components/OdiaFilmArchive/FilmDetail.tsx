@@ -63,10 +63,7 @@ const FilmDetail: React.FC<FilmDetailProps> = ({ item, onClose }) => {
                 </button>
               </div>
               {preview && (
-                <div
-                  className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center"
-                  onClick={() => setPreview(false)}
-                >
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
                   <div className="relative w-full max-w-4xl mx-auto p-4">
                     {/* Close Button */}
                     <button
@@ -78,15 +75,21 @@ const FilmDetail: React.FC<FilmDetailProps> = ({ item, onClose }) => {
 
                     {/* Image Slider */}
                     <Slider {...settings}>
-                      {item?.images.map((image: any, index: number) => (
-                        <div key={index} className="w-full">
-                          <img
-                            src={STRAPI_API_BASE_URL + image?.url}
-                            alt={`Gallery image ${index + 1}`}
-                            className="w-full h-[80vh] object-contain rounded-lg"
-                          />
+                      {item?.images && item.images.length > 0 ? (
+                        item.images.map((image: any, index: number) => (
+                          <div key={index} className="w-full">
+                            <img
+                              src={STRAPI_API_BASE_URL + image?.url}
+                              alt={`Gallery image ${index + 1}`}
+                              className="w-full h-[80vh] object-contain rounded-lg"
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center text-gray-500 py-8">
+                          No images available to show.
                         </div>
-                      ))}
+                      )}
                     </Slider>
                   </div>
                 </div>
@@ -207,49 +210,50 @@ const FilmDetail: React.FC<FilmDetailProps> = ({ item, onClose }) => {
                 </div>
               </div>
 
-   {item.songs && item.songs[0]?.children && (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Featured Songs</h2>
-    <div className="space-y-2">
-      {item.songs[0].children.map((listItem: any, index: number) => {
-        const contentNode = listItem.children.find(
-          (child: any) => child.type === 'link'
-        );
+              {item.songs && item.songs[0]?.children && (
+                <div>
+                  <h2 className="text-xl font-semibold mb-4">Featured Songs</h2>
+                  <div className="space-y-2">
+                    {item.songs[0].children.map(
+                      (listItem: any, index: number) => {
+                        const contentNode = listItem.children.find(
+                          (child: any) => child.type === 'link'
+                        );
 
-        const text = listItem.children
-          .map((child: any) =>
-            child.type === 'link'
-              ? child.children?.[0]?.text || ''
-              : child.text || ''
-          )
-          .join(' ')
-          .trim();
+                        const text = listItem.children
+                          .map((child: any) =>
+                            child.type === 'link'
+                              ? child.children?.[0]?.text || ''
+                              : child.text || ''
+                          )
+                          .join(' ')
+                          .trim();
 
-        return (
-          <div
-            key={index}
-            className="p-3 bg-gray-800 rounded-lg text-gray-300 flex items-center gap-2"
-          >
-            <Music className="w-4 h-4 text-red-400" />
-            {contentNode ? (
-              <a
-                href={contentNode.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline "
-              >
-                {text}
-              </a>
-            ) : (
-              <span>{text}</span>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  </div>
-)}
-
+                        return (
+                          <div
+                            key={index}
+                            className="p-3 bg-gray-800 rounded-lg text-gray-300 flex items-center gap-2"
+                          >
+                            <Music className="w-4 h-4 text-red-400" />
+                            {contentNode ? (
+                              <a
+                                href={contentNode.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline "
+                              >
+                                {text}
+                              </a>
+                            ) : (
+                              <span>{text}</span>
+                            )}
+                          </div>
+                        );
+                      }
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

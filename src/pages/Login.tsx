@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Film, Clapperboard, User, Lock, ArrowRight } from 'lucide-react';
 import { paths } from '../routes/Path';
 import { useNavigate } from 'react-router-dom';
@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 import { ArrowLeft } from 'lucide-react';
 import { Eye } from 'lucide-react';
 import { EyeOff } from 'lucide-react';
+import ReCAPTCHA from 'react-google-recaptcha';
 declare global {
   interface Window {
     grecaptcha: any;
   }
 }
+const SITE_KEY = '6LdwzksrAAAAAPWofaTYPFnfN7KGVRgb_PqGrcCK';
 const Login: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<LoginData>({
@@ -110,20 +112,49 @@ const Login: React.FC = () => {
   //       }
   //     });
   // };
-const key = '6LfhVksrAAAAABQboos0rSXuQkrUJ-KsOSNw9RW1'
-  const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!validateForm()) return;
+  const RECAPTCHA_SITE_KEY = '6LfLtEsrAAAAAID21eJtA62IJDot6OPuRM7zQjl4';
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-  window.grecaptcha.ready(() => {
-    window.grecaptcha
-      .execute(key, { action: 'login' }) // 👈 Use your site key
-      .then((token: string) => {
+  const handleCaptchaChange = (token: string | null) => {
+    console.log('Captcha token:', token);
+    setCaptchaToken(token);
+  };
+
+  useEffect(() => {
+    const scriptId = 'recaptcha-v3-script';
+    if (document.getElementById(scriptId)) return;
+
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    if (!window.grecaptcha) {
+      toast.error('reCAPTCHA is still loading. Please try again.');
+      return;
+    }
+
+    try {
+      await window.grecaptcha.ready(async () => {
+        await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+          action: 'login',
+        });
+
+        if (!captchaToken) {
+          toast.info('Please complete the CAPTCHA');
+          return;
+        }
         const payload = {
           identifier: formData.email,
           password: formData.password,
           rememberMe: formData.rememberMe,
-          recaptchaToken: token, // 👈 Send token to backend
+          recaptchaToken: captchaToken,
         };
 
         if (formData.rememberMe) {
@@ -136,27 +167,32 @@ const key = '6LfhVksrAAAAABQboos0rSXuQkrUJ-KsOSNw9RW1'
           localStorage.removeItem('rememberMe');
         }
 
-        loginController({ data: payload })
-          .then((response) => {
+        try {
+          const response = await loginController({ data: payload });
+
+          if (response.success) {
             toast.success('Login successful');
             if (response?.user) {
-              sessionStorage.setItem('userID', response?.user?._id);
-              sessionStorage.setItem('role', response?.user?.role);
-              sessionStorage.setItem('name', response?.user?.name);
-              sessionStorage.setItem('email', response?.user?.email);
-              sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
+              sessionStorage.setItem('userID', response.user._id);
+              sessionStorage.setItem('role', response.user.role);
+              sessionStorage.setItem('name', response.user.name);
+              sessionStorage.setItem('email', response.user.email);
+              sessionStorage.setItem('phoneNo', response.user.phoneNo);
             }
+
             navigate(paths.RoleBasedRedirect);
-          })
-          .catch((err) => {
-            const errorMessage =
-              err?.response?.data?.message ||
-              'An error occurred during login';
-            toast.error(errorMessage);
-          });
+          }
+        } catch (error:any) {
+          const errorMessage = error?.message || 'An error occurred during login';
+          toast.error(errorMessage);
+        }
       });
-  });
-};
+    } catch (err: any) {
+      const errorMessage = err?.message || 'An error occurred during login';
+      console.log(err, 'errorMessage');
+      toast.error(errorMessage);
+    }
+  };
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50">
@@ -270,7 +306,11 @@ const key = '6LfhVksrAAAAABQboos0rSXuQkrUJ-KsOSNw9RW1'
                   </p>
                 )}
               </div>
-
+              <ReCAPTCHA
+                sitekey={SITE_KEY}
+                onChange={handleCaptchaChange}
+                ref={recaptchaRef}
+              />
               {/* Remember Me and Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">

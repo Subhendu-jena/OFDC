@@ -54,6 +54,7 @@ interface paths {
   publications: string;
   tender: string;
   policy: string;
+  termsAndCondition: string;
 }
 
 export const paths: paths = {
@@ -112,4 +113,5 @@ export const paths: paths = {
   publications: '/publications',
   tender: '/tender',
   policy: '/policy',
+  termsAndCondition: '/terms-and-condition',
 };

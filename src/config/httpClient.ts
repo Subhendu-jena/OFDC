@@ -7,7 +7,7 @@ import {
 import { decryptData, encryptData } from './cryptoUtils';
 
 // export const API_BASE_URL = "http://192.168.29.184:3000/api/v1";
-export const API_BASE_URL = "http://localhost:3000/api/v1";
+export const API_BASE_URL = 'http://localhost:3000/api/v1';
 // export const API_BASE_URL = 'http://44.209.151.89:3000/api/v1';
 // export const API_BASE_URL = 'https://ofdc-portal.octamy.com/api/v1';
 // export const STRAPI_API_BASE_URL = "http://localhost:1337";
@@ -74,7 +74,7 @@ export const apiCaller = async <T>({
 }: ApiCallerProps): Promise<ApiResponse<T>> => {
   return new Promise((resolve, reject) => {
     const encryptedPayload = encryptData(data);
-// console.log(encryptedPayload, "encryptedPayload");
+    // console.log(encryptedPayload, "encryptedPayload");
 
     const config: AxiosRequestConfig = {
       method,
@@ -92,9 +92,13 @@ export const apiCaller = async <T>({
       .then((response) => {
         const decrypted = decryptData<ApiResponse<T>>(response.data.data);
         resolve(decrypted);
-        console.log(decrypted," decrypted");
+        console.log(decrypted, ' decrypted');
       })
-      .catch((error) => reject(error));
+      .catch((error) => {
+        const decrypted = decryptData<ErrorResponse<T>>(error.response.data.data);
+        reject(decrypted);
+        console.log(decrypted, 'decrypted error');
+      });
   });
 };
 // interface ApiCallerProps {
