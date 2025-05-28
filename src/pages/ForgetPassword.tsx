@@ -21,22 +21,8 @@ const ForgetPassword: React.FC = () => {
       setError('Please enter your email address');
       return;
     }
-    //    forgotPassword({data:{email:email}});
-    //    .then((res) => {
-    //     console.log(res);
-    //     setSuccess(true);
-    //     setTimeout(() => {
-    //       navigate('/');
-    //     }, 2000);
-    //    });
-    //    .catch((err) => {
-    //     console.log(err);
-    //    });
-    //    if (error) {
-    //      setError('');
     try {
       const res = await forgotPassword({ data: { email:email } });
-      console.log(res);
       if (res.message) {
       setSuccess(true);
       toast.success('Reset link sent! Please check your email.');

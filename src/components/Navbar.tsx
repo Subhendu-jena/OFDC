@@ -22,7 +22,6 @@ export const TopHeader = () => {
   const id = sessionStorage.getItem('userID');
   // const [isAdmin, setIsAdmin] = useState(false);
   // const [isLoggedIn, setisLoggedIn] = useState(false);
-  // console.log(setIsAdmin, setisLoggedIn);
   const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
   const navigate = useNavigate();
   return (

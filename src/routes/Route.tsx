@@ -64,6 +64,7 @@ import QuickLinksLayout from '../layout/quickLinks/QuickLinksLayout';
 import Publications from '../pages/quickLinks/Publications';
 import Tenders from '../pages/quickLinks/Tenders';
 import Policy from '../pages/quickLinks/Policy';
+import TermsAndConditions from '../pages/TermsAndConditions';
 
 const RoutePage: React.FC = () => {
   return (
@@ -73,7 +74,8 @@ const RoutePage: React.FC = () => {
         <Route path={paths.test} element={<BookingReceipt />} />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path={paths.termsAndCondition} element={<TermsAndConditions/>} />
+        <Route path="/reset-password/:ResetToken" element={<ResetPassword />} />
         <Route path={paths.forgetPassword} element={<ForgetPassword />} />
 
         <Route element={<ProtectedRoute />}>

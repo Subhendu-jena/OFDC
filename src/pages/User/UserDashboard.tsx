@@ -18,7 +18,6 @@ import { ScanEye } from 'lucide-react';
 
 const UserDashboard: React.FC = () => {
   const userId = sessionStorage.getItem('userID');
-  console.log(userId, 'userId');
   const name = sessionStorage.getItem('name');
   const [data, setData] = useState<any>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -132,15 +131,14 @@ const UserDashboard: React.FC = () => {
         setData(res?.data);
         //  setCurrentBooking(res?.at(-1)?.data[0])
         setCurrentBooking(res?.data?.slice(-1)?.[0]);
-        console.log(res?.data?.slice(-1)?.[0], 'res?.data[0]');
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [showPreview]);
   const viewCurrentBooking = () => {
     setViewApplicationForm(true);
   };
@@ -276,7 +274,7 @@ const UserDashboard: React.FC = () => {
                 <Table1
                   columns={columns}
                   isLoading={loading}
-                  data={filteredData}
+                  data={filteredData?.reverse()}
                 />
               </div>
             </main>

@@ -13,18 +13,16 @@ const Leadership: React.FC = () => {
     leaderships()
       .then(({ data }) => {
         if (data) {
-          console.log(data, 'data');
           setData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
-  // console.log(data[0]?.managingDirector[0]?.imageUrl?.url, '1data');
   return (
    <>
    {loading ? (<Loader/>):( <div className="bg-white min-h-screen py-2">

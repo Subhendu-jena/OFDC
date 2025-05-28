@@ -119,10 +119,9 @@ const UserBookingHistory: React.FC = () => {
     getAllBookingsOfUser({ userId: userId || '' })
       .then((res) => {
         setData(res?.data);
-        console.log(res?.data, 'res?.data?.data1111111');
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
@@ -160,7 +159,7 @@ const UserBookingHistory: React.FC = () => {
               />
             </div>
           </div>
-          <Table1 columns={columns} isLoading={loading} data={filteredData} />
+          <Table1 columns={columns} isLoading={loading} data={filteredData?.reverse()} />
         </div>
       )}
     </>

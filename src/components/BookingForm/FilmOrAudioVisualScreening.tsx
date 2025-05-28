@@ -71,8 +71,6 @@ function FilmOrAudioVisualScreening() {
       },
     };
     setSendData(formattedData);
-    console.log(formattedData, 'formattedData');
-    console.log(data, 'data');
     setBookingData({
       formData: formattedData,
       selectedDate,
@@ -84,7 +82,6 @@ function FilmOrAudioVisualScreening() {
     setShowPreview(false);
   };
   const handleConfirm = async () => {
-    // console.log('formatted data', sendData);
     try {
       const response = await createBooking({
         token: token,
@@ -100,12 +97,10 @@ function FilmOrAudioVisualScreening() {
           });
           if (createorderresponse.success) {
             const onSuccess = (verifiedData: any) => {
-              console.log('Final verified payment response:', verifiedData);
               setShowPreview(false);
               setShowReceipt(true);
               setReceiptData({verifiedData, selectedDate, selectedSlot});
             };
-            console.log(createorderresponse, 'loadRazorpay response');
             loadRazorpay(createorderresponse, onSuccess);
           } else {
             console.error('redirection failed:', createorderresponse.message);

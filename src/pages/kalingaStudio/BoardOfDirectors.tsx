@@ -11,12 +11,11 @@ const BoardOfDirectors: React.FC = () => {
     getAllBoardofDirectors()
       .then(({ data }) => {
         if (data) {
-          console.log(data, 'daata');
           setData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);

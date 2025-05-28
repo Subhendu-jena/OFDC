@@ -48,21 +48,13 @@ const userProfile: React.FC = () => {
       });
       if (response.success) {
         toast.success('Password changed successfully.');
-        // if (formData.newPassword !== formData.confirmPassword) {
-        //   toast.error('New password and confirm password do not match.');
-        //   return;
-        // }
-        // await updateUser({
-        //   data: {
-        //   },
-        //   token: token,
-        // });
         if (response.success) {
         }
       }
     } catch (error:any) {
       console.error('Error changing password:', error);
-      toast.error(error.response.data.message);
+      const errorMessage = error.response?.data?.message || 'An error occurred';
+      toast.error(errorMessage);
     }
   };
   const handleSave = async () => {
@@ -83,7 +75,6 @@ const userProfile: React.FC = () => {
         sessionStorage.setItem('email', response?.user?.email);
         sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
       }
-      console.log(token, 'userPfofile');
     } catch (error) {
       console.error('Error saving profile:', error);
     }
@@ -284,7 +275,7 @@ const userProfile: React.FC = () => {
                   />
                 </div>
                 <button
-                  className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
+                  className="w-[50%] bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
                   onClick={(e) => {
                     e.preventDefault();
                     handleChangePassword();

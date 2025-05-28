@@ -11,7 +11,6 @@ export default function OdishaFilmPolicy() {
         const response = await filmPolicy();
         if (response.data) {
           setData(response.data);
-          // console.log(response.data[0] , 'resrrrrrrr')
         }
       } catch (error) {
         console.error('Error fetching film policy:', error);
@@ -105,7 +104,6 @@ export default function OdishaFilmPolicy() {
                 <div className="mt-2 space-y-2">
                   {data[0] &&
                     data[0]?.filmPolicy.map((text: any) => {
-                      console.log(data[0]?.filmPolicy, 'text');
                       return (
                         <div
                           className="flex gap-3 p-3 rounded-md shadow-sm bg-gradient-to-r from-red-700 to-transparent text-white border-l-4 border-l-black cursor-pointer"

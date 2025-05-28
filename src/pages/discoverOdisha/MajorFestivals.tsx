@@ -11,14 +11,12 @@ useEffect(() => {
       if (res) {
         const resData = res.data?.[0]?.majorFestival || [];
         setData(resData);
-        console.log(resData, 'res?.data?.majorFestival');
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }, []);
-  console.log(data, 'filteredData');
   return (
     <div className="w-full bg-white min-h-full">
         <h2 className="text-4xl font-bold text-red-600 bg-white border-b p-2">

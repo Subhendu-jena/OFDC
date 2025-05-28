@@ -129,38 +129,18 @@ export default function FlimTradeShow() {
       },
     };
     setSendData(formattedJsonData);
-    console.log(formattedJsonData, 'formattedData');
-    console.log(data, 'data');
     setBookingData({
       formData: formattedJsonData,
       selectedDate,
       selectedSlot,
     });
     setShowPreview(true);
-    // try {
-    //   const response = await createBooking({
-    //     token: token,
-    //     data: formattedJsonData,
-    //   });
-
-    //   if (response.success) {
-    //     // navigate('/confirmation', { state: { bookingDetails: response } });
-    //   } else {
-    //     console.error('Submission failed:', response.message);
-    //     alert('Submission failed. Please try again.');
-    //   }
-    // } catch (error) {
-    //   console.error('Error submitting form:', error);
-    //   // alert('An error occurred. Please try again.');
-    // }
-    // console.log('Form Submitted:', formData);
   };
 
   const handleEdit = () => {
     setShowPreview(false);
   };
   const handleConfirm = async () => {
-    // console.log('formatted data', sendData);
     try {
       const response = await createBooking({
         token: token,
@@ -175,16 +155,11 @@ export default function FlimTradeShow() {
           });
           if (createorderresponse.success) {
             const onSuccess = (verifiedData: any) => {
-              console.log('Final verified payment response:', verifiedData);
-              // navigate(paths.confirmation, {
-              //   state: { bookingDetails: verifiedData,selectedDate,selectedSlot },
-              // });
               setShowPreview(false);
               setShowReceipt(true);
               setReceiptData({ verifiedData, selectedDate, selectedSlot });
             };
             loadRazorpay(createorderresponse, onSuccess);
-            console.log(onSuccess, 'onSuccess');
           } else {
             console.error('redirection failed:', createorderresponse.message);
             alert('redirection failed. Please try again.');

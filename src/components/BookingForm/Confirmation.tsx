@@ -25,7 +25,6 @@ const Confirmation: React.FC<ConfirmationProps> = ({bookingDetails,selectedDate,
     return () => clearTimeout(timer); 
   }, [navigate]);
   
-  console.log(selectedDate, 'bookingDetails23524');
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       <div className="max-w-3xl mx-auto pt-16 px-4 sm:px-6 lg:px-8">

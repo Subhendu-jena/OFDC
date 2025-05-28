@@ -44,13 +44,12 @@ function OdishStories() {
     setLoading(true);
     odishaStories()
       .then(({ data }) => {
-        // console.log(data[0].images[0].url,"odishastories")
         if (data) {
           setData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);

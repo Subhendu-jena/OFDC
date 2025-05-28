@@ -76,19 +76,17 @@ function FormerChairpersons() {
     getAllFormerChairpersons()
       .then(({ data }) => {
         if (data) {
-          console.log(data, 'getAllFormerChairpersons');
           setData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
   const card = data[0]?.formerChairpersons || [];
-  console.log(card, '1data');
   const filteredData = card.filter((row: any) => {
     const search = searchTerm.toLowerCase();
     return (

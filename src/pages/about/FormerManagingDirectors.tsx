@@ -101,19 +101,18 @@ function FormerManagingDirectors() {
     getAllManagingDirectors()
       .then(({ data }) => {
         if (data) {
-          console.log(data, 'data');
           setData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
   const card = data[0]?.formerManagingDirectors || [];
-  const card1 = data?.formerManagingDirectors || [];
+  // const card1 = data?.formerManagingDirectors || [];
     const filteredData = card.filter((row: any) => {
     const search = searchTerm.toLowerCase();
     return (
@@ -124,8 +123,6 @@ function FormerManagingDirectors() {
       row.email?.toLowerCase().includes(search)
     );
   });
-// console.log(card, '1data');
-  console.log(card1, 'card1data');
   return (
     <>
        <div className=" bg-white pt-2">

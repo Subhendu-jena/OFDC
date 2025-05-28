@@ -128,7 +128,6 @@
 //           <tbody>
 //             {currentData.length > 0 ? (
 //               currentData.map((official: any, index: number) => {
-//                 console.log(official, 'official');
 //                 return (
 //                   <tr key={index} className="hover:bg-gray-50">
 //                     <td className="px-6 py-4 whitespace-nowrap   text-gray-900">

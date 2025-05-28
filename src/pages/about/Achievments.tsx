@@ -122,12 +122,11 @@ const Achievements = () => {
     achivements()
       .then(({ data }) => {
         if (data) {
-          // console.log(data, "data");
           setData(data);
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading(false);

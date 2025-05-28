@@ -2,6 +2,7 @@ import { X } from 'lucide-react';
 import { useState } from 'react';
 import { formatDateToMMDDYYYY } from '../../variables/utils';
 import { FileCheck } from 'lucide-react';
+import { confirmationEmail } from '../../config/controller';
 const Preview = ({
   formData,
   selectedDate,
@@ -13,11 +14,33 @@ const Preview = ({
   const [cancel, setCancel] = useState(false);
   const [remark, setRemark] = useState('');
   const role = sessionStorage.getItem('role');
-
+  const [sendEmail, setSendEmail] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  console.log(formData, 'formData in preview');
   const handleCancelSubmit = () => {
     onEdit();
   };
-console.log(formData, 'formdata at preview');
+    const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setSendEmail(checked);
+
+    if (checked) {
+      try {
+        setIsSending(true);
+        const sendData ={
+          name:formData?.bookedBy?.name,
+          fromEmail:"abcd",
+          toEmail:"iamsikun99@gmail.com",
+          bookingId:formData?._id,}
+        const res = await confirmationEmail({data: sendData}); 
+        console.log('✅ Email sent:', res.data);
+      } catch (err) {
+        console.error('❌ Failed to send email:', err);
+      } finally {
+        setIsSending(false);
+      }
+    }
+  };
   return (
     <div className="min-h-screen  py-8 px-2 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -346,13 +369,19 @@ console.log(formData, 'formdata at preview');
                 <div>
                   <p className="text-sm text-gray-500">Booking Date</p>
                   <p className="text-base font-medium">
-                    {selectedDate || formatDateToMMDDYYYY(formData?.bookingDetails?.bookingDate) || 'N/A'}
+                    {selectedDate ||
+                      formatDateToMMDDYYYY(
+                        formData?.bookingDetails?.bookingDate
+                      ) ||
+                      'N/A'}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Time Slot</p>
                   <p className="text-base font-medium">
-                    {selectedSlot || formData?.bookingDetails?.timeSlot || 'N/A'}
+                    {selectedSlot ||
+                      formData?.bookingDetails?.timeSlot ||
+                      'N/A'}
                   </p>
                 </div>
                 {/* {bookingResponse?.data?._id && (
@@ -365,58 +394,76 @@ console.log(formData, 'formdata at preview');
                 )} */}
               </div>
             </div>
-            {formData?.documentUploads &&<div className="border-b pb-6">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Uploaded Documents
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <p className="text-sm text-gray-500">Synopsis</p>
-                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.synopsis}>
-                   <FileCheck /> Synopsis
-                  </a>
+            {formData?.documentUploads && (
+              <div className="border-b pb-6">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Uploaded Documents
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Synopsis</p>
+                    <a
+                      className="text-base flex gap-3 font-medium underline"
+                      target="_blank"
+                      href={formData?.documentUploads?.synopsis}
+                    >
+                      <FileCheck /> Synopsis
+                    </a>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Cast & Credits</p>
+                    <a
+                      className="text-base flex gap-3 font-medium underline"
+                      target="_blank"
+                      href={formData?.documentUploads?.songLines}
+                    >
+                      <FileCheck /> Cast & Credits
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Cast & Credits</p>
-                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.songLines}>
-                   <FileCheck /> Cast & Credits
-                  </a>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Song Lines</p>
+                    <a
+                      className="text-base flex gap-3 font-medium underline"
+                      target="_blank"
+                      href={formData?.documentUploads?.songLines}
+                    >
+                      <FileCheck /> Song Lines
+                    </a>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Poster</p>
+                    <a
+                      className="text-base flex gap-3 font-medium underline"
+                      target="_blank"
+                      href={formData?.documentUploads?.poster}
+                    >
+                      <FileCheck /> Poster
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <p className="text-sm text-gray-500">Song Lines</p>
-                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.songLines}>
-                    <FileCheck /> Song Lines
-                  </a>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Poster</p>
-                  <a className="text-base flex gap-3 font-medium underline" target='_blank' href={formData?.documentUploads?.poster}>
-                    <FileCheck /> Poster
-                  </a>
-                </div>
-              </div>
-            </div>}
+            )}
             {formData?.status && (
               <div className="border-b pb-6">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Booking Status
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <p className="text-sm text-gray-500">Payment Status</p>
-                  <p className="text-base font-medium">
-                    {formData?.status || 'N/A'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500"> Admin Approval</p>
-                  <p className="text-base font-medium">
-                    {formData?.approval || 'N/A'}
-                  </p>
-                </div>
-                {/* {bookingResponse?.data?._id && (
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Booking Status
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Payment Status</p>
+                    <p className="text-base font-medium">
+                      {formData?.status || 'N/A'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500"> Admin Approval</p>
+                    <p className="text-base font-medium">
+                      {formData?.approval || 'N/A'}
+                    </p>
+                  </div>
+                  {/* {bookingResponse?.data?._id && (
                   <div>
                     <p className="text-sm text-gray-500">Booking Reference</p>
                     <p className="text-base font-medium">
@@ -424,8 +471,8 @@ console.log(formData, 'formdata at preview');
                     </p>
                   </div>
                 )} */}
+                </div>
               </div>
-            </div>
             )}
           </div>
 
@@ -434,8 +481,15 @@ console.log(formData, 'formdata at preview');
           >
             {!isEditMode && role === 'ADMIN' && (
               <div className="flex items-center">
-                <input type="checkbox" className="mr-3" id="sendEmail" />
-                <label htmlFor="sendEmail">Send confirmation email</label>
+                <input
+                  type="checkbox"
+                  className="mr-3"
+                  id="sendEmail"
+                  checked={sendEmail}
+                  onChange={handleCheckboxChange}
+                  disabled={isSending}
+                />
+                <label htmlFor="sendEmail"> {isSending ? 'Sending email...' : 'Send confirmation email'}</label>
               </div>
             )}
             <div className="flex gap-4">
@@ -444,7 +498,7 @@ console.log(formData, 'formdata at preview');
                   isEditMode
                     ? onEdit()
                     : role === 'ADMIN'
-                      ?  setCancel(true)
+                      ? setCancel(true)
                       : onEdit()
                 }
                 className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
@@ -463,14 +517,16 @@ console.log(formData, 'formdata at preview');
               </button> */}
               {(isEditMode || (role === 'ADMIN' && formData)) && (
                 <button
-                  onClick={() => {if(onConfirm)onConfirm() ??  onEdit()}}
+                  onClick={() => {
+                    if (onConfirm) onConfirm() ?? onEdit();
+                  }}
                   className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
                 >
-                   {isEditMode
-                  ? 'Confirm & Pay'
-                  : role === 'ADMIN'
-                    ? 'Confirm Booking'
-                    : 'GoTo dashboard'}
+                  {isEditMode
+                    ? 'Confirm & Pay'
+                    : role === 'ADMIN'
+                      ? 'Confirm Booking'
+                      : 'GoTo dashboard'}
                   {/* {isEditMode ? 'Confirm & Pay' : 'Confirm Booking'} */}
                 </button>
               )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Clapperboard,
   User,
@@ -15,7 +15,13 @@ import { toast } from 'react-toastify';
 import { ArrowLeft } from 'lucide-react';
 import { EyeOff } from 'lucide-react';
 import { Eye } from 'lucide-react';
-
+import ReCAPTCHA from 'react-google-recaptcha';
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
+const SITE_KEY = '6LdwzksrAAAAAPWofaTYPFnfN7KGVRgb_PqGrcCK';
 const RegisterPage: React.FC = () => {
   // State for form data
   const [formData, setFormData] = useState<FormData>({
@@ -99,7 +105,8 @@ const RegisterPage: React.FC = () => {
     if (!phone) {
       errors.phoneNo = 'Phone number is required';
       isValid = false;
-    } else if (!/^\d{10}$/.test(phone)) {
+    } else if (!/^[6-9]\d{9}$/.test(phone)) {
+      
       errors.phoneNo = 'Phone number must be exactly 10 digits';
       isValid = false;
     }
@@ -111,7 +118,14 @@ const RegisterPage: React.FC = () => {
     setFormErrors(errors);
     return isValid;
   };
+// const RECAPTCHA_SITE_KEY = '6LfLtEsrAAAAAID21eJtA62IJDot6OPuRM7zQjl4'
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
+  const handleCaptchaChange = (token: string | null) => {
+    console.log('Captcha token:', token);
+    setCaptchaToken(token);
+  };
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,6 +139,10 @@ const RegisterPage: React.FC = () => {
       alert("Passwords don't match");
       return;
     }
+     if (!captchaToken) {
+          toast.success('Please complete the CAPTCHA');
+          return;
+        }
     signUpController({
       data: {
         ...formData,
@@ -404,7 +422,7 @@ const RegisterPage: React.FC = () => {
                 >
                   <div>
                     I accept the{' '}
-                    <a href="#" className="text-red-500 hover:text-red-400">
+                    <a href={paths.termsAndCondition} target='_blank' className="text-red-500 hover:text-red-400">
                       Terms and Conditions{' '}
                       <span className="text-red-500">*</span>
                     </a>
@@ -417,7 +435,11 @@ const RegisterPage: React.FC = () => {
                   </div>
                 </label>
               </div>
-
+ <ReCAPTCHA
+        sitekey={SITE_KEY}
+        onChange={handleCaptchaChange}
+        ref={recaptchaRef}
+      />
               {/* Submit Button */}
               <button
                 type="submit"
