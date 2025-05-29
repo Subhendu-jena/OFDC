@@ -255,3 +255,10 @@ export const dashboardData = async ({}: {}):
     method: 'GET',
   });
 };
+export const userData = async ({}: {}):
+ Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/user/find-own-user`,
+    method: 'GET',
+  });
+};

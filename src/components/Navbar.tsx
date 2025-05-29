@@ -18,8 +18,10 @@ import { useFontSize } from './home/FontSizeContext';
 import { LogOut } from 'lucide-react';
 import { LayoutDashboardIcon } from 'lucide-react';
 import OFDCLOGO from '.././assets/Logo/OFDC Logo White.png';
+import { useAuth } from '../config/authContext';
 export const TopHeader = () => {
-  const id = sessionStorage.getItem('userID');
+  // const id = sessionStorage.getItem('userID');
+ const { user } = useAuth();
   // const [isAdmin, setIsAdmin] = useState(false);
   // const [isLoggedIn, setisLoggedIn] = useState(false);
   const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
@@ -83,7 +85,7 @@ export const TopHeader = () => {
             <span>Contact Us</span>
           </Link>
           <span>/</span>
-          {id ? (
+          {user?._id ? (
             <Link
               to={paths.RoleBasedRedirect}
               className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
@@ -101,7 +103,7 @@ export const TopHeader = () => {
             </Link>
           )}
           <span>/</span>
-          {id ? (
+          {user?._id ? (
             <Link
               to=" "
               onClick={() => {
@@ -252,7 +254,8 @@ const MainHeader = () => {
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
-  const id = sessionStorage.getItem('userID');
+  // const id = sessionStorage.getItem('userID');
+   const { user } = useAuth();
   return (
     <>
       <div
@@ -355,7 +358,7 @@ const MainHeader = () => {
                 <Home size={16} />
                 <span className="text-sm">Home</span>
               </Link>
-              {id ? (
+              {user?._id ? (
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)} // 👈 close sidebar

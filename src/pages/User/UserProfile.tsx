@@ -1,44 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Mail, Phone, User, Lock, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
-import { changePassword, updateUser } from '../../config/controller';
+import { changePassword, updateUser, userData } from '../../config/controller';
 import { toast } from 'react-toastify';
-
+import blankImage from '../../assets/blankImage.webp';
+import axios from 'axios';
 const userProfile: React.FC = () => {
+  const [data, setData] = useState<any>([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<any>({});
   const [formData, setFormData] = useState({
-    name: sessionStorage.getItem('name') ?? '',
-    email: sessionStorage.getItem('email') ?? '',
-    phoneNo: sessionStorage.getItem('phoneNo') ?? '',
+    name: data?.name ?? '',
+    email: data?.email ?? '',
+    phoneNo: data?.phoneNo ?? '',
     currentPassword: '',
+    profilePic: '',
     newPassword: '',
     confirmPassword: '',
   });
+  useEffect(() => {
+    userData({})
+      .then((response: any) => {
+        console.log(response, 'user data');
+        if (response) {
+          setData(response?.user);
+        } else {
+          console.warn('User data fetch failed:', response);
+        }
+      })
+      .catch((error: any) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [formData]);
   const profile = {
-    name: sessionStorage.getItem('name') ?? '',
-    email: sessionStorage.getItem('email') ?? '',
-    phoneNo: sessionStorage.getItem('phoneNo') ?? '',
-    role: sessionStorage.getItem('role'),
-    avatar:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=150',
+    name: data?.name ?? '',
+    email: data?.email ?? '',
+    phoneNo: data?.phoneNo ?? '',
+    role: data?.role ?? '',
+    profilePic: data?.profilePic || { blankImage },
   };
+  console.log(profile.profilePic, 'profilePic');
   const token = sessionStorage.getItem('token');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [image, setImage] = useState<string>();
-
-  const handleImageChange = ({ event }: any) => {
-    const file = event.target.files[0]; // Get the selected file
-    if (file) {
-      const imageUrl = URL.createObjectURL(file); // Convert file to URL
-      setImage(imageUrl);
-    }
-  };
   const handleChangePassword = async () => {
     try {
-       if (formData.newPassword !== formData.confirmPassword) {
-          toast.error('New password and confirm password do not match.');
-          return;
-        }
+      if (formData.newPassword !== formData.confirmPassword) {
+        toast.error('New password and confirm password do not match.');
+        return;
+      }
       const response = await changePassword({
         token: token,
         data: {
@@ -51,35 +61,61 @@ const userProfile: React.FC = () => {
         if (response.success) {
         }
       }
-    } catch (error:any) {
+    } catch (error: any) {
       // console.error('Error changing password:', error);
       const errorMessage = error.message || 'An error occurred';
       toast.error(errorMessage);
+    } finally {
+      setIsChangingPassword(false);
     }
   };
   const handleSave = async () => {
     try {
-      const response = await updateUser({
+      await updateUser({
         data: {
           name: formData.name,
           email: formData.email,
           phoneNo: formData.phoneNo,
+          profilePic: uploadedFiles.profilePic,
         },
         token: token,
       });
-      if (response.success) {
-        toast.success('Profile updated successfully.');
-        sessionStorage.setItem('userID', response?.user?._id);
-        sessionStorage.setItem('role', response?.user?.role);
-        sessionStorage.setItem('name', response?.user?.name);
-        sessionStorage.setItem('email', response?.user?.email);
-        sessionStorage.setItem('phoneNo', response?.user?.phoneNo);
-      }
+
     } catch (error) {
       console.error('Error saving profile:', error);
     }
   };
 
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldName: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      setUploading(true);
+      const res = await axios.post(
+        'http://54.160.82.66:1337/api/upload/',
+        formData
+      );
+      const fileUrl = res.data[0]?.url;
+      if (fileUrl) {
+        setUploadedFiles((prev: any) => ({
+          ...prev,
+          [fieldName]: `http://54.160.82.66:1337${fileUrl}`,
+        }));
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+    } finally {
+      setUploading(false);
+    }
+  };
+  console.log(uploadedFiles, 'uploadedFiles');  
   const navigate = useNavigate();
   return (
     <main className="max-w-screen bg-white mx-auto px-4 sm:px-6 py-8 ">
@@ -87,19 +123,13 @@ const userProfile: React.FC = () => {
         {/* Profile Header */}
         <div className="flex items-center gap-6">
           <div className="relative">
-            {image ? (
+         
               <img
-                src={image}
+                src={uploadedFiles.profilePic || profile?.profilePic}
                 alt="Profile"
                 className="w-20 h-20 object-cover rounded-full"
               />
-            ) : (
-              <img
-                src={profile.avatar}
-                alt="Profile"
-                className="w-20 h-20 object-cover rounded-full"
-              />
-            )}
+          
 
             <label
               htmlFor="fileInput"
@@ -108,7 +138,7 @@ const userProfile: React.FC = () => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange}
+                onChange={(e) => handleFileChange(e, 'profilePic')}
                 className="hidden"
                 id="fileInput"
               />
@@ -123,6 +153,7 @@ const userProfile: React.FC = () => {
               Update your personal information
             </p>
           </div>
+          {uploading && (<div className='text-sm text-red-500'>Uploading...</div>)}
         </div>
 
         {/* Profile Form */}
@@ -136,7 +167,7 @@ const userProfile: React.FC = () => {
               >
                 Username
               </label>
-              <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center gap-2 p-3 bg-gray-200 rounded-lg">
                 <User className="w-5 h-5 text-gray-400" />
                 <input
                   type="text"
@@ -157,7 +188,7 @@ const userProfile: React.FC = () => {
               >
                 Email
               </label>
-              <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center gap-2 p-3 bg-gray-200 rounded-lg">
                 <Mail className="w-5 h-5 text-gray-400" />
                 <input
                   type="email"
@@ -178,7 +209,7 @@ const userProfile: React.FC = () => {
               >
                 Phone Number
               </label>
-              <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center gap-2 p-3 bg-gray-200 rounded-lg">
                 <Phone className="w-5 h-5 text-gray-400" />
                 <input
                   type="tel"
@@ -199,7 +230,7 @@ const userProfile: React.FC = () => {
               >
                 Role
               </label>
-              <div className="p-3 bg-gray-50 rounded-lg text-gray-500">
+              <div className="p-3 bg-gray-200 rounded-lg text-gray-500">
                 {profile.role}
               </div>
             </div>
@@ -223,6 +254,10 @@ const userProfile: React.FC = () => {
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
                     Current Password
+                    <span className="text-red-500 mx-2">*</span>
+                    <span className="text-xs text-gray-500">
+                      You can't set any old passwords as new password
+                    </span>
                   </label>
                   <input
                     type="currentPassword"
@@ -233,56 +268,60 @@ const userProfile: React.FC = () => {
                         currentPassword: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-50 rounded-lg outline-none"
+                    className="w-full p-3 bg-gray-200 rounded-lg outline-none"
                   />
                 </div>
-                <div>
-                  <label
-                    htmlFor="new-password"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {' '}
+                  <div>
+                    <label
+                      htmlFor="new-password"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      New Password<span className="text-red-500 mx-2">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      id="new-password"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          newPassword: e.target.value,
+                        })
+                      }
+                      className="w-full p-3 bg-gray-200 rounded-lg outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="confirm-password"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Confirm New Password
+                      <span className="text-red-500 mx-2">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      id="confirm-password"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          confirmPassword: e.target.value,
+                        })
+                      }
+                      className="w-full p-3 bg-gray-200 rounded-lg outline-none"
+                    />
+                  </div>
+                  <button
+                    className="w-[50%] bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleChangePassword();
+                    }}
                   >
-                    New Password
-                  </label>
-                  <input
-                    type="password"
-                    id="new-password"
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        newPassword: e.target.value,
-                      })
-                    }
-                    className="w-full p-3 bg-gray-50 rounded-lg outline-none"
-                  />
+                    Change Password
+                  </button>
                 </div>
-                <div>
-                  <label
-                    htmlFor="confirm-password"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Confirm New Password
-                  </label>
-                  <input
-                    type="password"
-                    id="confirm-password"
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        confirmPassword: e.target.value,
-                      })
-                    }
-                    className="w-full p-3 bg-gray-50 rounded-lg outline-none"
-                  />
-                </div>
-                <button
-                  className="w-[50%] bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleChangePassword();
-                  }}
-                >
-                  Change Password
-                </button>
               </div>
             )}
           </div>
