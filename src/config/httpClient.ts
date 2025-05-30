@@ -7,9 +7,9 @@ import {
 import { decryptData, encryptData } from './cryptoUtils';
 
 // export const API_BASE_URL = "http://192.168.29.184:3000/api/v1";
-export const API_BASE_URL = 'http://localhost:3000/api/v1';
+// export const API_BASE_URL = 'http://localhost:3000/api/v1';
 // export const API_BASE_URL = 'http://44.209.151.89:3000/api/v1';
-// export const API_BASE_URL = 'https://ofdc-portal.octamy.com/api/v1';
+export const API_BASE_URL = 'https://ofdc-portal.octamy.com/api/v1';
 // export const STRAPI_API_BASE_URL = "http://localhost:1337";
 // export const STRAPI_API_BASE_URL = 'http://54.160.82.66:1337';
 export const STRAPI_API_BASE_URL = 'https://ofdcadm.octamy.com';

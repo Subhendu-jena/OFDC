@@ -16,6 +16,17 @@ export const loginController = async ({
     data,
   });
 };
+export const logoutController = async ({
+  // data,
+}: {
+  // data: loginData;
+}): Promise<ApiResponse<loginResponse>> => {
+  return apiCaller({
+    uri: '/user/logout',
+    method: 'GET',
+    // data,
+  });
+};
 export const signUpController = async ({
   data,
 }: {

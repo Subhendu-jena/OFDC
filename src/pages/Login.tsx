@@ -9,7 +9,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Eye } from 'lucide-react';
 import { EyeOff } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useAuth } from '../config/authContext';
+// import { useAuth } from '../config/authContext';
 declare global {
   interface Window {
     grecaptcha: any;
@@ -18,7 +18,7 @@ declare global {
 const SITE_KEY = import.meta.env.VITE_SITE_KEY ?? '';
 const Login: React.FC = () => {
   // State for form data
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const [formData, setFormData] = useState<LoginData>({
     email: '',
     password: '',
@@ -121,7 +121,7 @@ const Login: React.FC = () => {
           const payload = {
             identifier: formData.email,
             password: formData.password,
-            rememberMe: formData.rememberMe,
+            // rememberMe: formData.rememberMe,
             recaptchaToken: captchaToken,
           };
 
@@ -135,23 +135,25 @@ const Login: React.FC = () => {
             localStorage.removeItem('rememberMe');
           }
 
-          // const response = await loginController({ data: payload });
-
-          // toast.success('Login successful');
-
-          // if (response?.user) {
-          //   sessionStorage.setItem('userID', response.user._id);
-          //   sessionStorage.setItem('role', response.user.role);
-          // }
-
-          // navigate(paths?.RoleBasedRedirect);
           const response = await loginController({ data: payload });
 
           if (response?.user) {
             toast.success('Login successful');
-            login(response.user); // Save user in context
-            navigate(paths.RoleBasedRedirect);
+            sessionStorage.setItem('userID', response.user._id);
+            sessionStorage.setItem('name', response.user.name);
+            sessionStorage.setItem('role', response.user.role);
+            sessionStorage.setItem('phoneNo', response.user.phoneNo);
+            sessionStorage.setItem('email', response.user.email);
+            navigate(paths?.RoleBasedRedirect);
           }
+
+          // const response = await loginController({ data: payload });
+
+          // if (response?.user) {
+          //   toast.success('Login successful');
+          //   // login(response.user); // Save user in context
+          //   navigate(paths.RoleBasedRedirect);
+          // }
         } catch (apiError: any) {
           const errorMessage =
             apiError?.response?.data?.message ||

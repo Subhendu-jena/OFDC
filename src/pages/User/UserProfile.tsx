@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Mail, Phone, User, Lock, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../routes/Path';
-import { changePassword, updateUser, userData } from '../../config/controller';
+import {
+  changePassword,
+  logoutController,
+  updateUser,
+  userData,
+} from '../../config/controller';
 import { toast } from 'react-toastify';
 import blankImage from '../../assets/blankImage.webp';
 import axios from 'axios';
@@ -80,7 +85,6 @@ const userProfile: React.FC = () => {
         },
         token: token,
       });
-
     } catch (error) {
       console.error('Error saving profile:', error);
     }
@@ -115,45 +119,74 @@ const userProfile: React.FC = () => {
       setUploading(false);
     }
   };
-  console.log(uploadedFiles, 'uploadedFiles');  
+  const handleLogout = async () => {
+    try {
+      const response = await logoutController({});
+      if (response) {
+        toast.success(response.message);
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('userID');
+        sessionStorage.removeItem('role');
+        sessionStorage.removeItem('name');
+        sessionStorage.removeItem('email');
+        sessionStorage.removeItem('phoneNo');
+        // window.location.reload();
+        navigate(paths.login, { replace: true });
+      }
+    } catch (error) {}
+  };
+  console.log(uploadedFiles, 'uploadedFiles');
   const navigate = useNavigate();
   return (
     <main className="max-w-screen bg-white mx-auto px-4 sm:px-6 py-8 ">
       <div className="bg-white rounded-2xl shadow-lg p-6 space-y-8">
         {/* Profile Header */}
-        <div className="flex items-center gap-6">
-          <div className="relative">
-         
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-center gap-6">
+            <div className="relative">
               <img
                 src={uploadedFiles.profilePic || profile?.profilePic}
                 alt="Profile"
                 className="w-20 h-20 object-cover rounded-full"
               />
-          
 
-            <label
-              htmlFor="fileInput"
-              className="absolute bottom-0 right-0 p-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition-colors cursor-pointer"
+              <label
+                htmlFor="fileInput"
+                className="absolute bottom-0 right-0 p-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition-colors cursor-pointer"
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileChange(e, 'profilePic')}
+                  className="hidden"
+                  id="fileInput"
+                />
+                <Upload className="w-4 h-4" />
+              </label>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Profile Settings
+              </h1>
+              <p className="text-sm text-gray-500">
+                Update your personal information
+              </p>
+            </div>
+            {uploading && (
+              <div className="text-sm text-red-500">Uploading...</div>
+            )}
+          </div>
+          <div className="flex justify-end">
+            {' '}
+            <button
+              className="w-[20%] h-15 bg-red-600 text-white py-3 px-4 rounded-4xl hover:bg-red-700 transition-colors"
+              onClick={() => {
+                handleLogout();
+              }}
             >
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleFileChange(e, 'profilePic')}
-                className="hidden"
-                id="fileInput"
-              />
-              <Upload className="w-4 h-4" />
-            </label>
+              Logout
+            </button>
           </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              Profile Settings
-            </h1>
-            <p className="text-sm text-gray-500">
-              Update your personal information
-            </p>
-          </div>
-          {uploading && (<div className='text-sm text-red-500'>Uploading...</div>)}
         </div>
 
         {/* Profile Form */}
@@ -338,7 +371,7 @@ const userProfile: React.FC = () => {
               Save Changes
             </button>
           </div>
-          <div className="pt-4">
+          {/* <div className="pt-4">
             <button
               className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors"
               onClick={() => {
@@ -354,7 +387,7 @@ const userProfile: React.FC = () => {
             >
               Logout
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

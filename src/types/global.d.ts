@@ -65,7 +65,7 @@ export interface LoginData {
   phoneNo?: string;
   name?: string;
   rememberme?: boolean;
-  rememberMe: boolean;
+  rememberMe?: boolean;
 }
 export interface Section {
   title: string;
@@ -155,7 +155,7 @@ export interface loginResponse {
 export interface loginData {
   identifier: string;
   password: string;
-  rememberMe: boolean;
+  rememberMe?: boolean;
 }
 export interface director {
   url?: string;

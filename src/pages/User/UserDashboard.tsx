@@ -15,12 +15,12 @@ import Preview from '../../components/BookingForm/Preview';
 import { Star } from 'lucide-react';
 import Table1 from '../../components/Table1';
 import { ScanEye } from 'lucide-react';
-import { useAuth } from '../../config/authContext';
+// import { useAuth } from '../../config/authContext';
 
 const UserDashboard: React.FC = () => {
-  // const userId = sessionStorage.getItem('userID');
-  // const name = sessionStorage.getItem('name');
-   const { user } = useAuth();
+  const userId = sessionStorage.getItem('userID');
+  const name = sessionStorage.getItem('name');
+  //  const { user } = useAuth();
   const [data, setData] = useState<any>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
@@ -128,7 +128,7 @@ const UserDashboard: React.FC = () => {
   ];
   useEffect(() => {
     setLoading(true);
-    getAllBookingsOfUser({ userId: user?._id || '' })
+    getAllBookingsOfUser({ userId: userId || '' })
       .then((res) => {
         setData(res?.data);
         //  setCurrentBooking(res?.at(-1)?.data[0])
@@ -176,7 +176,7 @@ const UserDashboard: React.FC = () => {
           <div className="pt-10  bg-white">
             <main className="max-w-8xl mx-auto px-4 sm:px-6 lg: py-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">
-                Welcome back, {user?.name} !
+                Welcome back, {name} !
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
