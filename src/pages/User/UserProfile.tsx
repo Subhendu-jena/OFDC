@@ -61,10 +61,9 @@ const userProfile: React.FC = () => {
           newPassword: formData.newPassword,
         },
       });
-      if (response.success) {
+      if (response) {
         toast.success('Password changed successfully.');
-        if (response.success) {
-        }
+       
       }
     } catch (error: any) {
       // console.error('Error changing password:', error);

@@ -146,7 +146,9 @@ const Login: React.FC = () => {
             sessionStorage.setItem('email', response.user.email);
             navigate(paths?.RoleBasedRedirect);
           }
-
+          if (!response.success) {
+            toast.error(response.message);
+          }
           // const response = await loginController({ data: payload });
 
           // if (response?.user) {
