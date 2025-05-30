@@ -18,12 +18,12 @@ export function decryptData<T>(ciphertext: string): T {
   const decrypted = bytes.toString(CryptoJS.enc.Utf8);
   return JSON.parse(decrypted);
 }
-// console.log(
-//   decryptData(
-//     "U2FsdGVkX19po7XAk2XST0At7zCcVwtsTrfx5H7smV3kfKIsb/w5ftp9gN1Xf30FHB7Q53Vu4Hwwi00jFm4X/apQgiHThRPAM44IyQFkmSnV/OQBykPIhpTZwTgCbY9NRPJ+GU/mo1liPHp0BMwi88i3Kaa/UbMUvTeBYOXvgdxdKq/ji5vqBsxYJd8JDSU8"
-//   ),
-//   'payload'
-// );
+console.log(
+  decryptData(
+    "U2FsdGVkX1+R8C2/kc1NMKRCIKLZW5+XOOJ9OSeFYgUdlhQ1nS3vKvG7Y4veW2RR6EJqqL9OJxN9KDhUJrTyG8A+q1sLfetJlvVS0rD1SKq0+ON+J94zWjFdHnPCMHAadFcrfkEgQAKWHoZ61RMquY9an520Etb3l5yHEwLEEWME92kvvv2C7SNuB19mx2rz"
+  ),
+  'payload'
+);
 // console.log(
 //   decryptData(
 //     "U2FsdGVkX195InFNqwXZ4Dh3p9J+1TLKlgXDXWUm18+/AWTYniXOKk8Jcv4Zs6NuK/2XcZX5Fae9sFqT5HNosL4YRsdX+QOP8KxX1HxSY9gIPjpNoiktNtwrL8VvqmVsUGrFybKOqA2C8rgLmipN0A=="

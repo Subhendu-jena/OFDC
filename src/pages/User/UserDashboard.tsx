@@ -15,10 +15,12 @@ import Preview from '../../components/BookingForm/Preview';
 import { Star } from 'lucide-react';
 import Table1 from '../../components/Table1';
 import { ScanEye } from 'lucide-react';
+// import { useAuth } from '../../config/authContext';
 
 const UserDashboard: React.FC = () => {
   const userId = sessionStorage.getItem('userID');
   const name = sessionStorage.getItem('name');
+  //  const { user } = useAuth();
   const [data, setData] = useState<any>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);

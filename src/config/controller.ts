@@ -16,6 +16,17 @@ export const loginController = async ({
     data,
   });
 };
+export const logoutController = async ({
+  // data,
+}: {
+  // data: loginData;
+}): Promise<ApiResponse<loginResponse>> => {
+  return apiCaller({
+    uri: '/user/logout',
+    method: 'GET',
+    // data,
+  });
+};
 export const signUpController = async ({
   data,
 }: {
@@ -252,6 +263,13 @@ export const dashboardData = async ({}: {}):
  Promise<ApiResponse<any>> => {
   return apiCaller({
     uri: `/booking/getBookingCount`,
+    method: 'GET',
+  });
+};
+export const userData = async ({}: {}):
+ Promise<ApiResponse<any>> => {
+  return apiCaller({
+    uri: `/user/find-own-user`,
     method: 'GET',
   });
 };

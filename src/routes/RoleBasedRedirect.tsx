@@ -1,8 +1,10 @@
 import { Navigate } from 'react-router-dom';
 import { paths } from './Path';
+// import { useAuth } from '../config/authContext';
 
 const RoleBasedRedirect = () => {
   const role = sessionStorage.getItem('role');
+  //  const { user } = useAuth();
 
   if (role === 'ADMIN') return <Navigate to={paths.adminDashboard} replace />;
   if (role === 'USER') return <Navigate to={paths.userDashboard} replace />;

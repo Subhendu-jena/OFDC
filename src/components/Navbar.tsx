@@ -18,11 +18,31 @@ import { useFontSize } from './home/FontSizeContext';
 import { LogOut } from 'lucide-react';
 import { LayoutDashboardIcon } from 'lucide-react';
 import OFDCLOGO from '.././assets/Logo/OFDC Logo White.png';
+import { logoutController } from '../config/controller';
+import { toast } from 'react-toastify';
+// import { useAuth } from '../config/authContext';
 export const TopHeader = () => {
   const id = sessionStorage.getItem('userID');
+  //  const { user } = useAuth();
   // const [isAdmin, setIsAdmin] = useState(false);
   // const [isLoggedIn, setisLoggedIn] = useState(false);
   const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
+  const handleLogout = async () => {
+    try {
+      const response = await logoutController({});
+      if (response) {
+        toast.success(response.message);
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('userID');
+        sessionStorage.removeItem('role');
+        sessionStorage.removeItem('name');
+        sessionStorage.removeItem('email');
+        sessionStorage.removeItem('phoneNo');
+        // window.location.reload();
+        navigate(paths.login, { replace: true });
+      }
+    } catch (error) {}
+  };
   const navigate = useNavigate();
   return (
     <div className="w-full text-white bg-[#11161F] py-2 text-sm hidden md:block">
@@ -105,8 +125,7 @@ export const TopHeader = () => {
             <Link
               to=" "
               onClick={() => {
-                sessionStorage.removeItem('userID');
-                sessionStorage.removeItem('role');
+                handleLogout();
               }}
               className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
             >
@@ -253,6 +272,7 @@ const MainHeader = () => {
     );
   };
   const id = sessionStorage.getItem('userID');
+  //  const { user } = useAuth();
   return (
     <>
       <div
@@ -262,16 +282,14 @@ const MainHeader = () => {
       >
         <div className=" flex gap-4 justify-between items-center px-0 lg:px-4">
           <div className="flex items-center max-w-[400px]">
-           
-              <Link to="/" className="flex items-center">
-                <img src={OFDCLOGO} alt="OFDC Logo" className="h-12  w-auto" />
-                <div className="ml-3 hidden sm:block">
-                  <h3 className="text-sm md:text-lg  font-semibold">
-                    Odisha Film Development Corporation
-                  </h3>
-                </div>
-              </Link>
-          
+            <Link to="/" className="flex items-center">
+              <img src={OFDCLOGO} alt="OFDC Logo" className="h-12  w-auto" />
+              <div className="ml-3 hidden sm:block">
+                <h3 className="text-sm md:text-lg  font-semibold">
+                  Odisha Film Development Corporation
+                </h3>
+              </div>
+            </Link>
           </div>
 
           {/* Mobile menu toggle button */}
