@@ -1,29 +1,37 @@
-// import { Navigate, Outlet } from 'react-router-dom';
-// // import { useAuth } from '../config/authContext';
-
-// const ProtectedRoute = () => {
-//   // const { user } = useAuth();
-//   const id = sessionStorage.getItem('userID');
-//   return id ? <Outlet /> : <Navigate to="/login" replace />;
-// };
-
-// export default ProtectedRoute;
-
-
-
-
+import { useEffect, useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { userData } from '../config/controller';
 
-const ProtectedRoute = ({ requiredRole }:any) => {
+const ProtectedRoute = ({ requiredRole }: { requiredRole?: string }) => {
   const id = sessionStorage.getItem('userID');
-  const role = sessionStorage.getItem('role'); // make sure you store this at login
   const location = useLocation();
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    userData({})
+      .then((response: any) => {
+        if (response?.user?.role) {
+          setRole(response.user.role.toUpperCase());
+        } else {
+          console.warn('User data fetch failed:', response);
+          setRole('UNKNOWN');
+        }
+      })
+      .catch((error: any) => {
+        console.error('Error fetching user data:', error);
+        setRole('UNKNOWN');
+      });
+  }, []);
 
   if (!id) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  if (requiredRole && role !== requiredRole) {
+  if (role === null) {
+    return <div>Loading...</div>;
+  }
+
+  if (requiredRole && role !== requiredRole.toUpperCase()) {
     return <Navigate to="*" replace />;
   }
 

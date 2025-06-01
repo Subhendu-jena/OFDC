@@ -43,15 +43,16 @@ const Login: React.FC = () => {
     if (!formData.password) {
       errors.password = 'Password is required';
       isValid = false;
-    } else if (
-      !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/.test(
-        formData.password
-      )
-    ) {
-      errors.password =
-        'Password must be at least 12 characters and include one uppercase letter, one number, and one special character';
-      isValid = false;
-    }
+    } 
+    // else if (
+    //   !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/.test(
+    //     formData.password
+    //   )
+    // ) {
+    //   errors.password =
+    //     'Password must be at least 12 characters and include one uppercase letter, one number, and one special character';
+    //   isValid = false;
+    // }
 
     setFormErrors(errors);
     return isValid;
@@ -166,6 +167,7 @@ const Login: React.FC = () => {
       });
     } catch (err: any) {
       const errorMessage = err?.message || 'An error occurred during login';
+
       toast.error(errorMessage);
     }
   };
