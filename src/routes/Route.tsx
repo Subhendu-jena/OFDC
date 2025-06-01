@@ -73,14 +73,17 @@ const RoutePage: React.FC = () => {
       <ScrollToTop />
       <Routes>
         {/* <Route path={paths.test} element={<BookingReceipt />} /> */}
-           <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
         <Route path={paths.register} element={<RegisterPage />} />
         <Route path={paths.login} element={<Login />} />
-        <Route path={paths.termsAndCondition} element={<TermsAndConditions/>} />
+        <Route
+          path={paths.termsAndCondition}
+          element={<TermsAndConditions />}
+        />
         <Route path="/reset-password/:ResetToken" element={<ResetPassword />} />
         <Route path={paths.forgetPassword} element={<ForgetPassword />} />
 
-        <Route element={<ProtectedRoute />}>
+        {/* <Route element={<ProtectedRoute  />}>
           <Route
             path={paths.RoleBasedRedirect}
             element={<RoleBasedRedirect />}
@@ -108,7 +111,47 @@ const RoutePage: React.FC = () => {
             <Route path={paths.newBooking} element={<BookingForm />} />
             <Route path={paths.profile} element={<UserProfile />} />
           </Route>
+        </Route> */}
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path={paths.RoleBasedRedirect}
+            element={<RoleBasedRedirect />}
+          />
+
+          {/* Admin Routes - require admin role */}
+          <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
+            <Route element={<AdminLayout />}>
+              <Route path={paths.adminDashboard} element={<AdminDashboard />} />
+              <Route
+                path={paths.allBookings}
+                element={<AdminBookingHistory />}
+              />
+              <Route
+                path={paths.paymentDetails}
+                element={<AdminPaymentHistory />}
+              />
+              <Route path={paths.calender} element={<AdminCalender />} />
+            </Route>
+          </Route>
+
+          {/* User Routes - require user role */}
+          <Route element={<ProtectedRoute requiredRole="USER" />}>
+            <Route element={<LoggedUserLayout />}>
+              <Route path={paths.userDashboard} element={<UserDashboard />} />
+              <Route
+                path={paths.bookingHistory}
+                element={<UserBookingHistory />}
+              />
+              <Route
+                path={paths.paymentHistory}
+                element={<UserPaymentHistory />}
+              />
+              <Route path={paths.newBooking} element={<BookingForm />} />
+              <Route path={paths.profile} element={<UserProfile />} />
+            </Route>
+          </Route>
         </Route>
+
         <Route element={<Layout />}>
           <Route path={paths.home} element={<Home />} />
           <Route path={paths.bookingForm} element={<BookingForm />} />
@@ -116,8 +159,14 @@ const RoutePage: React.FC = () => {
           <Route path={paths.contactUs} element={<ContactUs />} />
           <Route element={<FilmEcoSystemLayout />}>
             <Route path={paths.flimEcoSystem} element={<FlimEcoSystem />} />
-            <Route path={paths.policyGuidelines} element={<PolicyGuidelines />} />
-            <Route path={paths.odishaSilverScreen} element={<OdishaAndSilverScreen />} />
+            <Route
+              path={paths.policyGuidelines}
+              element={<PolicyGuidelines />}
+            />
+            <Route
+              path={paths.odishaSilverScreen}
+              element={<OdishaAndSilverScreen />}
+            />
           </Route>
           {/* OdiaFilmArchiveLayout */}
           <Route element={<OdiaFilmArchiveLayout />}>
@@ -197,10 +246,10 @@ const RoutePage: React.FC = () => {
             />
             <Route path={paths.locationDetails} element={<LocationDetails />} />
           </Route>
-          <Route element={<QuickLinksLayout/>}>
-         <Route path={paths.publications} element={<Publications />} />
-         <Route path={paths.tender} element={<Tenders/>} />
-         <Route path={paths.policy} element={<Policy/>} />
+          <Route element={<QuickLinksLayout />}>
+            <Route path={paths.publications} element={<Publications />} />
+            <Route path={paths.tender} element={<Tenders />} />
+            <Route path={paths.policy} element={<Policy />} />
           </Route>
           {/* FilmEcoSystemLayout */}
           {/* <Route element={<FilmEcoSystemLayout />}>
