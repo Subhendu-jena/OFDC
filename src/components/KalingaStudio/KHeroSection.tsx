@@ -8,10 +8,11 @@ const KHeroSection: React.FC<{
   subHead2: string;
   tag: string;
   vdo?: string;
-  link: string;
+  link?: string;
   img?: string;
+  target?:boolean;
   user?: boolean;
-}> = ({ subHead1, heading, subHead2, tag, vdo, link, img, user }) => {
+}> = ({ subHead1, heading, subHead2, tag, vdo, link, img, user,target }) => {
   return (
     <div className="w-full">
       {/* Hero Section - Fixed height header */}
@@ -74,7 +75,7 @@ const KHeroSection: React.FC<{
               </p>
               <a
                 href={link || '#'}
-                target={link ? '_blank' : '_self'}
+                target={target ? 'self' :'blank'}
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full font-bold transition-colors flex items-center justify-center gap-2 mx-auto w-fit"
               >

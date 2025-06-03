@@ -24,63 +24,63 @@ const DiscoverOdishaLayout = () => {
   const section = [
     {
       page: '/odisha-indias-best-kept-secret',
-      subHead1: 'Established 1980',
-      subHead2:
-        'An ultra-modern, state-of-the-art film studio complex in the heart of Bhubaneswar, Odisha.',
-      heading: "ODISHA : India's Best Kept Secret",
+      subHead1: 'Odisha : India’s Best Kept Secret',
+      subHead2:'Odisha: India’s unexplored treasure- the place which is home to ancient marvels, rich traditions, and stunning landscapes.',
+      heading: "Discover Odisha.",
       tag: 'Odisha',
     },
     {
       page: '/echoes-of-history',
-      subHead1: 'Our Mission',
-      subHead2:
-        ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',
+      subHead1: 'Odisha : India’s Best Kept Secret',
+      subHead2:'Odisha’s history reverberates—an eternal song of heritage and identity.',
       heading: 'Echoes of History',
       tag: 'Odisha',
     },
     {
       page: '/climate',
-      subHead1: 'Studio’s Past Glory',
+      subHead1: 'Odisha : India’s Best Kept Secret',
       heading: 'Climate',
-      subHead2:
-        "From 'Sita Bibaha' in 1934 to the digital era, shaping the cinematic landscape of Odisha and beyond.",
+      subHead2:"Odisha thrives in its seasons—melodies of monsoon, golden rays of sunshine, and tropical allure.",
       tag: 'Odisha',
     },
     {
       page: '/geographical-feature',
-      subHead1: 'Board of Directors',
+      subHead1: 'Odisha : India’s Best Kept Secret',
       heading: 'Geographical Feature',
-      subHead2:
-        'Meet the visionary leaders guiding the Odisha Film Development Corporation Ltd. toward excellence in film production and promotion.',
+      subHead2:'Explore Odisha’s natural mosaic—mountains, mangroves, plains, and pristine shores.',
       tag: 'Odisha',
     },
     {
       page: '/cultural-legacy',
-      subHead1: 'Odisha Film Development Corporation',
+      subHead1: 'Odisha : India’s Best Kept Secret',
       heading: 'Cultural Legacy',
-      subHead2: 'Find officials and their contact information',
+      subHead2:
+        'Odisha’s traditions dance through centuries, weaving history with vibrant creativity.',
       tag: 'Odisha',
     },
     {
       page: '/major-festivals',
-      subHead1: 'Odisha Film Development Corporation',
+      subHead1: 'Odisha : India’s Best Kept Secret',
       heading: 'Major Festivals',
-      subHead2: 'Find officials and their contact information',
+      subHead2:
+        ' Odisha’s festive heartbeat pulses with age-old traditions and joyous gatherings.',
       tag: 'Odisha',
     },
     {
       page: '/cinematic-heritage',
-      subHead1: 'Odisha Film Development Corporation',
+      subHead1: 'Odisha : India’s Best Kept Secret',
       heading: 'Cinematic Heritage',
-      subHead2: 'Find officials and their contact information',
+      subHead2:
+        'Odia cinema: weaving heritage, heart, and history into every frame.',
       tag: 'Odisha',
     },
     {
       page: '/whos-who',
-      subHead1: 'Odisha Film Development Corporation',
+      subHead1: 'Odisha : India’s Best Kept Secret',
       heading: 'Explore Odisha',
       subHead2: 'Find officials and their contact information',
       tag: 'Odisha',
+      target:true
     },
   ];
   const currentSection = section.find((sec) => sec.page === title);
@@ -100,7 +100,7 @@ const DiscoverOdishaLayout = () => {
           img={bg}
         />
       ) : (
-        <div className='mt-20'></div>
+        <div className="mt-20"></div>
       )}
 
       {/* Main Content - Ensure it starts after the fixed section */}

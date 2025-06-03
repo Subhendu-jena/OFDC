@@ -4,6 +4,7 @@ import { Star } from 'lucide-react';
 import Table1 from '../../components/Table1';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import blankImage from '../../../public/blankImage.webp';
+import { formatDateTime } from '../../variables/utils';
 
 function FormerManagingDirectors() {
   const [loading, setLoading] = useState(false);
@@ -56,8 +57,14 @@ function FormerManagingDirectors() {
         );
       },
     },
-    { header: 'Start Date', accessor: 'from' },
-    { header: 'End Date', accessor: 'to' },
+    { header: 'Start Date', accessor: 'from',
+          render: (row: any) => {
+            return <div>{formatDateTime(row.from)}</div>;
+          }, },
+    { header: 'End Date', accessor: 'to',
+      render: (row: any) => {
+        return <div>{formatDateTime(row.to)}</div>;
+      }, },
   ];
   // const dataTable:Official[] = [
   //   { slNo: 1, name: 'Sri Nilamadhab Mohanty, IAS', from: '22.04.1976', to: '23.03.1977' },

@@ -61,10 +61,10 @@ const LocationLayout = () => {
     <div className="w-full">
       {currentSection ? (
         <KHeroSection
-          subHead1={currentSection.subHead1}
-          subHead2={currentSection.subHead2}
+          subHead1='Odisha : India’s Cinematic Canvas'
+          subHead2=" Discover Odisha’s stunning shooting locales—diverse landscapes, rich heritage, and cinematic beauty in every frame."
           heading="Location Directory"
-          tag={currentSection.tag}
+          tag="Odisha"
           // vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
           link=""
           img={bg}

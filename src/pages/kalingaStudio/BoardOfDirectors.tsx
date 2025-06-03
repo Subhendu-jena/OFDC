@@ -37,7 +37,7 @@ const BoardOfDirectors: React.FC = () => {
               <p className="text-gray-700 text-center max-w-4xl mx-auto">
                 Our board comprises distinguished individuals who bring diverse
                 expertise from government, media, and culture sectors. Together,
-                they steer OFDC's mission to develop and promote Odisha's rich
+                they steer Kalinga Studio's mission to develop and promote Odisha's rich
                 cinematic heritage and support the growth of the film industry
                 in the state.
               </p>

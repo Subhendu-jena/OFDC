@@ -39,7 +39,7 @@ const FilmComponent: React.FC<ArchiveGalleryProps> = ({
           className="bg-gray-800 rounded-xl overflow-hidden cursor-pointer transform hover:scale-[1.02] transition-all duration-300"
           onClick={() => onSelectFilm(item)}
         >
-          <div className="relative h-48">
+          <div className="relative h-max">
             <img
               src={STRAPI_API_BASE_URL + item?.posterImage?.url}
               alt={item?.filmName}
@@ -49,9 +49,9 @@ const FilmComponent: React.FC<ArchiveGalleryProps> = ({
             <div className="absolute top-4 right-4 px-3 py-1 bg-red-500 text-white rounded-full text-sm">
               {item.Category || 'N/A'}
             </div>
-          </div>
+        
 
-          <div className="p-6">
+          <div className="absolute bottom-0 p-6 bg-gray-200 opacity-70">
             <h3 className="text-xl font-bold text-white mb-2">
               {item?.filmName}
             </h3>
@@ -61,7 +61,7 @@ const FilmComponent: React.FC<ArchiveGalleryProps> = ({
                 <Calendar className="w-4 h-4" />
                 <span>{item.releaseDate || 'N/A'}</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-black ">
                 <User className="w-4 h-4" />
                 <span>{item.director || 'N/A'}</span>
               </div>
@@ -85,10 +85,11 @@ const FilmComponent: React.FC<ArchiveGalleryProps> = ({
                 No description available.
               </p>
             )}
-            {/* <p className="text-gray-400 line-clamp-2">{item.description}</p> */}
           </div>
         </div>
+          </div>
       ))}
+      
       </div>
     </>
   );

@@ -62,14 +62,16 @@ function FormerChairpersons() {
       header: 'From',
       accessor: 'from',
       render: (row: any) => {
-        return (
-          <div>
-            {formatDateTime(row.from)}
-          </div>
-        );
+        return <div>{formatDateTime(row.from)}</div>;
       },
     },
-    { header: 'To', accessor: 'to' },
+    {
+      header: 'To',
+      accessor: 'to',
+      render: (row: any) => {
+        return <div>{formatDateTime(row.to)}</div>;
+      },
+    },
   ];
   useEffect(() => {
     setLoading(true);

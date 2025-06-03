@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import archive from '../../assets/Odia Film Archives Entrance copy.jpg';
 import { motion } from 'framer-motion';
 import { Archive, Camera, Film } from 'lucide-react';
@@ -7,6 +7,24 @@ import { Book } from 'lucide-react';
 import { Ticket } from 'lucide-react';
 import { FileText } from 'lucide-react';
 const ArchivesInsight: React.FC = () => {
+  const CountUp = ({ end }: { end: number }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      current += 1;
+      setCount(current);
+      if (current === end) {
+        clearInterval(interval);
+      }
+    }, 20); // Speed of count-up (lower = faster)
+
+    return () => clearInterval(interval);
+  }, [end]);
+
+  return <h1>{count} +</h1>;
+};
   const archiveSections = [
     {
       title: 'Cinematic Legacy',
@@ -29,7 +47,7 @@ const ArchivesInsight: React.FC = () => {
   ];
   interface StatItem {
   label: string;
-  value: string;
+  value: number;
   icon: React.ReactNode;
   color: string;
 }
@@ -37,37 +55,37 @@ const ArchivesInsight: React.FC = () => {
 const stats: StatItem[] = [
   {
     label: 'Films',
-    value: '100+',
+    value: 100,
     icon: <Film className="w-6 h-6" />,
     color: 'from-orange-500 to-red-500'
   },
   {
     label: 'Film Posters',
-    value: '150+',
+    value: 150,
     icon: <Image className="w-6 h-6" />,
     color: 'from-blue-500 to-indigo-500'
   },
   {
     label: 'Film Stills/Photographs',
-    value: '500+',
+    value: 500,
     icon: <Camera className="w-6 h-6" />,
     color: 'from-green-500 to-emerald-500'
   },
   {
     label: 'Lyrics Books',
-    value: '10+',
+    value: 10,
     icon: <Book className="w-6 h-6" />,
     color: 'from-purple-500 to-pink-500'
   },
   {
     label: 'Lobby Cards',
-    value: '10+',
+    value: 10,
     icon: <Ticket className="w-6 h-6" />,
     color: 'from-yellow-500 to-amber-500'
   },
   {
     label: 'Film Scripts',
-    value: '10+',
+    value: 10,
     icon: <FileText className="w-6 h-6" />,
     color: 'from-teal-500 to-cyan-500'
   }
@@ -170,7 +188,7 @@ const stats: StatItem[] = [
                   {stat.label}
                 </h3>
                 <p className="text-3xl font-bold bg-gradient-to-br bg-clip-text text-black ${stat.color}">
-                  {stat.value}
+                  <CountUp end={stat.value} /> 
                 </p>
               </div>
 
