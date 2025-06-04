@@ -1,16 +1,18 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/about/Sidebar';
 import KHeroSection from '../../components/KalingaStudio/KHeroSection';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { paths } from '../../routes/Path';
-import bg from "../../assets/162597.jpg"
-const  FilmEcoSystemLayout = () => {
+import bg from '../../assets/162597.jpg';
+import { filmPolicy } from '../../config/strapiController';
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+const FilmEcoSystemLayout = () => {
   const title = window.location.pathname;
   const navigate = useNavigate();
   const menuItems = [
     { label: 'Film Policy', url: paths.filmEcoSystem },
     { label: 'Policy Guidelines', url: paths.policyGuidelines },
-    { label: 'Odisha and Silver Screen', url: paths.odishaSilverScreen }
+    { label: 'Odisha and Silver Screen', url: paths.odishaSilverScreen },
   ];
   const section = [
     {
@@ -18,7 +20,7 @@ const  FilmEcoSystemLayout = () => {
       subHead1: 'Established 1980',
       subHead2:
         'An ultra-modern, state-of-the-art film studio complex in the heart of Bhubaneswar, Odisha.',
-      heading: "Talent List",
+      heading: 'Talent List',
       tag: 'Odisha',
     },
     {
@@ -42,18 +44,36 @@ const  FilmEcoSystemLayout = () => {
   useEffect(() => {
     // console.log(currentSection);
   }, [navigate]);
+  const [data, setData] = useState<any>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await filmPolicy();
+
+        if (response.data) {
+          setData(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching film policy:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(data, 'urll');
+  const url = STRAPI_API_BASE_URL + data[0]?.filmPolicyDocs?.url;
+
   return (
     <div className="w-full">
       {currentSection ? (
         <KHeroSection
-          subHead1='Eco System'
-          subHead2=''
+          subHead1="Eco System"
+          subHead2="Odisha drives cinematic growth—supporting filmmakers, infrastructure, and opportunities through a thriving, film-friendly ecosystem."
           heading="Film Eco System"
           tag="Eco System"
           // vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
-          link=""
+          link={url}
           img={bg}
-          
         />
       ) : (
         <p>No section found for "{title}"</p>
@@ -71,4 +91,4 @@ const  FilmEcoSystemLayout = () => {
   );
 };
 
-export default  FilmEcoSystemLayout;
+export default FilmEcoSystemLayout;

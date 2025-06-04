@@ -17,7 +17,7 @@ const DiscoverOdishaLayout = () => {
   const section = [
     {
       page: '/archives-insight',
-      subHead1: 'Established 1980',
+      subHead1: 'Established in 2024',
       subHead2:
         'An ultra-modern, state-of-the-art film studio complex in the heart of Bhubaneswar, Odisha.',
       heading: "Archives Insight",
@@ -25,34 +25,32 @@ const DiscoverOdishaLayout = () => {
     },
     {
       page: '/key-priorities',
-      subHead1: 'Our Mission',
+      subHead1: 'Odia Film Archives',
       subHead2:
-        ' Kalinga Studios is committed to elevating regional cinema through world-class infrastructure and innovative technology.',
+        ' Safeguarding stories, reviving reels, and inspiring generations—the heart of Odia Film Archives’ enduring mission.',
       heading: 'Key Priorities',
       tag: 'Odisha',
     },
     {
       page: '/vault-of-preserved-films',
-      subHead1: 'Studio’s Past Glory',
+      subHead1: 'Odia Film Archives',
       heading: 'Vault of Preserved Films',
-      subHead2:
-        "From 'Sita Bibaha' in 1934 to the digital era, shaping the cinematic landscape of Odisha and beyond.",
+      subHead2:"Yesterday’s masterpieces, today’s legacy— Films safeguarded at the Archives",
       tag: 'Odisha',
     },
     {
       page: '/odia-film-anthology',
-      subHead1: 'Board of Directors',
+      subHead1: 'Odia Film Archives',
       heading: 'Odia Film Anthology',
-      subHead2:
-        'Meet the visionary leaders guiding the Odisha Film Development Corporation Ltd. toward excellence in film production and promotion.',
+      subHead2:'A vibrant journey from 1936, weaving stories that inspire and endure through time',
       tag: 'Odisha',
     },
     {
       page: '/archival-gallery',
-      subHead1: 'Odisha Film Development Corporation',
+      subHead1: 'Odia Film Archives',
       heading: 'Archival Gallery',
-      subHead2: 'Find officials and their contact information',
-      tag: 'Odisha',
+      subHead2: 'A treasure trove of cinematic dreams—Odisha’s film legacy in every frame',
+      tag: 'preserved films',
     },
   ];
   const currentSection = section.find((sec) => sec.page === title);
@@ -66,9 +64,9 @@ const DiscoverOdishaLayout = () => {
           subHead1={currentSection.subHead1}
           subHead2={currentSection.subHead2}
           heading={currentSection.heading}
-          tag={currentSection.tag}
+          tag="Odia Film Archives"
           // vdo="https://cdn.pixabay.com/video/2023/04/11/158349-816637197_large.mp4"
-          link=""
+          link={paths.archivalGallery}
           img={bg}
           
         />

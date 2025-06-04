@@ -37,7 +37,7 @@ const KalingaStudioLayout = () => {
       subHead1: 'Board of Directors',
       heading: 'Meet the Visionaries',
       subHead2:
-        'Meet the visionary leaders guiding the Odisha Film Development Corporation Ltd. toward excellence in film production and promotion.',
+        'Meet the visionary leaders guiding the Kalinga Studio Ltd. toward excellence in film production and promotion.',
       tag: 'Directors',
     },
     {

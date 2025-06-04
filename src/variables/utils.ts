@@ -8,15 +8,12 @@ export function formatDateToMMDDYYYY(date: Date) {
   }
 
 
-  export const formatDateTime = (isoString: string) => {
-    const date = new Date(isoString);
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    };
-    return date.toLocaleString('en-IN', options); // Adjust locale as needed
-  };
+ export const formatDateTime = (isoString: string) => {
+  const date = new Date(isoString);
+
+  const year = date.getFullYear();
+  const month = (`0${date.getMonth() + 1}`).slice(-2); // Months are 0-indexed
+  const day = (`0${date.getDate()}`).slice(-2);
+
+  return `${day}-${month}-${year}`; // Format: DD-MM-YYYY
+};

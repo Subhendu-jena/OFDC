@@ -6,7 +6,7 @@ const CinematicHeritage: React.FC = () => {
       <div className="p-3 bg-white h-full">
         {' '}
         <h2 className="text-4xl font-bold text-red-600 border-b pb-2">
-          Odisha And Silver Screen
+          Cinematic Heritage
         </h2>
         <div className="text-justify text-gray-700 text-lg  p-3">
           {' '}
