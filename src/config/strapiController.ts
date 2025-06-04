@@ -123,3 +123,8 @@ export const filmGallery = async (): Promise<ApiResponse<[]>> => {
     uri: `/api/odia-film-archive-film-archives?populate[filmArchive][populate]=*`,
   });
 };
+export const archivalGallery = async (): Promise<ApiResponse<[]>> => {
+  return strapiCaller({
+    uri: `/api/odia-film-archive-archival-galleries?populate[archivalGallery][populate]=*`,
+  });
+};

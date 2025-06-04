@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-
-const ArchivalGallery: React.FC = () => {
-  const GalleryCard = ({
-    imageSrc,
-    title,
-    description,
-  }: {
-    imageSrc: string;
-    title: string;
-    description: string;
+import { STRAPI_API_BASE_URL } from '../../config/httpClient';
+import { archivalGallery } from '../../config/strapiController';
+type GalleryItem = {
+  posterImage: { url: string };
+  heading: string;
+  description: string;
+  images: { url: string }[];
+};
+  const GalleryCard: React.FC<GalleryItem>  = ({
+   posterImage,
+  heading,
+  description,
+  images,
   }) => {
     const [preview, setPreview] = useState(false);
     const settings = {
@@ -25,12 +28,12 @@ const ArchivalGallery: React.FC = () => {
     };
     return (
       <>
-        <div className="relative w-[300px] h-max bg-white rounded-tl-[2rem] rounded-br-[2rem] shadow-md  border border-green-200">
+        <div className="relative w-[300px] h-max bg-white rounded-tl-[2rem] rounded-br-[2rem] shadow-md   border border-red-200">
           {/* Green shadow corner effect */}
-          <div className="absolute bottom-0 right-0 w-full h-full rounded-tl-[9rem] rounded-br-[2rem] bg-red-500 -z-10 translate-x-2 translate-y-2"></div>
+          <div className="absolute bottom-0 right-0 w-full h-full rounded-tl-[9rem] rounded-br-[2rem] bg-red-300 -z-10 translate-x-2 translate-y-2"></div>
           <div onClick={() => setPreview(true)}>
             <img
-              src={imageSrc}
+              src={STRAPI_API_BASE_URL + posterImage?.url}
               alt="Gallery"
               className="w-full h-48 object-cover rounded-tl-[2rem]"
             />
@@ -38,8 +41,8 @@ const ArchivalGallery: React.FC = () => {
           {/* Main content */}
 
           <div className="p-4 text-center">
-            <h2 className="text-lg font-semibold"> {title} </h2>
-            <p className="text-gray-600 text-sm"> {description} </p>
+            <h2 className="text-lg font-semibold"> {heading} </h2>
+            <p className="text-gray-600 text-sm line-clamp-3 text-justify"> {description} </p>
           </div>
         </div>
         {preview && (
@@ -55,8 +58,8 @@ const ArchivalGallery: React.FC = () => {
 
               {/* Image Slider */}
               <Slider {...settings}>
-                {/* {item?.images && item.images.length > 0 ? (
-                  item.images.map((image: any, index: number) => (
+                {images && images.length > 0 ? (
+                images.map((image, index) => (
                     <div key={index} className="w-full">
                       <img
                         src={STRAPI_API_BASE_URL + image?.url}
@@ -69,7 +72,7 @@ const ArchivalGallery: React.FC = () => {
                   <div className="text-center text-gray-500 py-8">
                     No images available to show.
                   </div>
-                )} */}
+                )}
               </Slider>
             </div>
           </div>
@@ -77,16 +80,38 @@ const ArchivalGallery: React.FC = () => {
       </>
     );
   };
+const ArchivalGallery: React.FC = () => {
+  const [data, setData] = useState<GalleryItem[]>([]);
+
+  useEffect(() => {
+    archivalGallery()
+      .then((response: any) => {
+        const archiveEntry = response.data[0];
+        if (archiveEntry?.archivalGallery) {
+          setData(archiveEntry.archivalGallery);
+        } else {
+          setData([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to fetch archive data:', error);
+      });
+  }, []);
   return (
     <>
       {/* <ComingSoon/> */}
-      <div className="min-h-screen grid grid-cols-4 gap-4  top-0">
-        <GalleryCard
-          imageSrc="https://cdn.pixabay.com/photo/2025/05/17/16/56/bunny-9605962_1280.jpg"
-          title="Description here"
-          description="Paragraph here"
-        />
-      </div>
+      <div><h2 className="text-4xl font-bold text-red-600 border-b pb-2 bg-white py-2">Archival Gallery</h2></div>
+      <div className='bg-white -z-40 relative'><div className="min-h-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 ">
+        {data.map((item, idx) => (
+          <GalleryCard
+            key={idx}
+            posterImage={item.posterImage}
+            heading={item.heading}
+            description={item.description}
+            images={item.images}
+          />
+        ))}
+      </div></div>
     </>
   );
 };
