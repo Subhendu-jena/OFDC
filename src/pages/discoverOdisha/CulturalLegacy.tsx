@@ -6,7 +6,7 @@ const CulturalLegacy:React.FC = () => {
   return (
     <div>
       <div className="p-5 bg-white">
-        <div className="m-5 p-5 mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="m-5  mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           {/* <h2 className="text-xl font-bold mb-2">
             Odisha’s Cultural Heritage : A Timeless Legacy
           </h2>

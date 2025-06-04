@@ -33,8 +33,8 @@ const OdiaFilmAnthology: React.FC = () => {
           />
         </div>
       ) : (
-        <div className=" p-8  bg-white">
-          <div className="flex items-center gap-3 mb-8">
+        <div className=" p-8  bg-white h-full relative z-10">
+          <div className="flex items-center gap-3 ">
             <div className="p-2 bg-red-500/20 rounded-lg">
               <Film className="w-6 h-6 text-red-500" />
             </div>
@@ -47,6 +47,7 @@ const OdiaFilmAnthology: React.FC = () => {
               archiveData={filmData}
               onSelectFilm={setSelectedFilm}
             />
+            
         </div>
       )}
     </div>
