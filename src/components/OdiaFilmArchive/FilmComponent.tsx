@@ -43,21 +43,21 @@ const FilmComponent: React.FC<ArchiveGalleryProps> = ({
             <img
               src={STRAPI_API_BASE_URL + item?.posterImage?.url}
               alt={item?.filmName}
-              className="w-full h-full object-cover"
+              className="w-full h-max object-fill"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
-            <div className="absolute top-4 right-4 px-3 py-1 bg-red-500 text-white rounded-full text-sm">
+            <div className="absolute top-4 right-4 px-3 py-1 bg-red-500 text-black rounded-full text-sm">
               {item.Category || 'N/A'}
             </div>
         
 
           <div className="absolute bottom-0 p-6 bg-gray-200 opacity-70">
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-xl font-bold text-black mb-2">
               {item?.filmName}
             </h3>
 
-            <div className="space-y-2 mb-4">
-              <div className="flex items-center gap-2 text-gray-400">
+            <div className="">
+              <div className="flex items-center gap-2 text-black">
                 <Calendar className="w-4 h-4" />
                 <span>{item.releaseDate || 'N/A'}</span>
               </div>
@@ -65,11 +65,11 @@ const FilmComponent: React.FC<ArchiveGalleryProps> = ({
                 <User className="w-4 h-4" />
                 <span>{item.director || 'N/A'}</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-black">
                 <Music className="w-4 h-4" />
                 <span>{item.music || 'N/A'}</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-black">
                 <Users className="w-4 h-4" />
                 <span>
                   {item.cast?.[0]?.children?.length || 0} Cast Members
@@ -77,7 +77,7 @@ const FilmComponent: React.FC<ArchiveGalleryProps> = ({
               </div>
             </div>
             {item.description?.[0]?.children?.[0]?.text ? (
-              <p className="text-gray-400 line-clamp-3 mt-2">
+              <p className="text-black line-clamp-3 mt-2">
                 {item.description[0].children[0].text}
               </p>
             ) : (

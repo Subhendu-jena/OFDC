@@ -41,8 +41,8 @@ type GalleryItem = {
           {/* Main content */}
 
           <div className="p-4 text-center">
-            <h2 className="text-lg font-semibold"> {heading} </h2>
-            <p className="text-gray-600 text-sm line-clamp-3 text-justify"> {description} </p>
+            <h2 className="text-[16px] font-semibold"> {heading} </h2>
+            <p className="text-gray-600 text-[12px] line-clamp-3 text-justify"> {description} </p>
           </div>
         </div>
         {preview && (
@@ -101,7 +101,7 @@ const ArchivalGallery: React.FC = () => {
     <>
       {/* <ComingSoon/> */}
       <div><h2 className="text-4xl font-bold text-red-600 border-b pb-2 bg-white py-2">Archival Gallery</h2></div>
-      <div className='bg-white -z-40 relative'><div className="min-h-screen grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 ">
+      <div className='bg-white -z-40 relative'><div className="min-h-screen grid grid-cols-1 gap-2 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
         {data.map((item, idx) => (
           <GalleryCard
             key={idx}
