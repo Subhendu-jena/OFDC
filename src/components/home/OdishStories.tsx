@@ -5,6 +5,7 @@ import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 import { useFontSize } from './FontSizeContext';
 import Slider from 'react-slick';
+import { useSelector } from 'react-redux';
 
 function OdishStories() {
   const settings = {
@@ -40,6 +41,8 @@ function OdishStories() {
   const [loading, setLoading] = useState(false);
   const { fontSize } = useFontSize();
   const [data, setData] = useState<any>([]);
+    const locale = useSelector((state: any) => state.language.locale);
+
   useEffect(() => {
     setLoading(true);
     odishaStories()
@@ -54,7 +57,7 @@ function OdishStories() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [locale]);
   return (
     <>
       {loading ? (
@@ -87,14 +90,14 @@ function OdishStories() {
                           className="text-[#FC3C3C] font-semibold "
                           style={{ fontSize: `${fontSize + 4}px` }}
                         >
-                          <span>ODISHA</span>
+                          <span>{locale === 'en' ? 'ODISHA':'ଓଡ଼ିଶା'}</span>
                         </div>
                       </div>
                       <h2
                         className="text-2xl md:text-4xl font-bold text-gray-800 "
                         style={{ fontSize: `${fontSize + 20}px` }}
                       >
-                        <span>Odisha: Stories Beyond The Lens</span>
+                        <span>{locale === 'en' ?"Odisha: Stories Beyond The Lens" : "ଓଡ଼ିଶା: ଦୃଷ୍ଟିକୋଣରୁ ବାହାରେ କାହାଣୀ"}</span>
                       </h2>
                     </div>
                   </div>

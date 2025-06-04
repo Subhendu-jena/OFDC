@@ -9,6 +9,7 @@ import { locationDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 import { useFontSize } from './FontSizeContext';
+import { useSelector } from 'react-redux';
 const LocationDirectory = ({setSelectedProduct}:any) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -49,9 +50,11 @@ const LocationDirectory = ({setSelectedProduct}:any) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
   const { fontSize } = useFontSize();
+    const locale = useSelector((state: any) => state.language.locale);
+
   useEffect(() => {
     setLoading(true);
-    locationDirectory()
+    locationDirectory(locale)
       .then(({ data }) => {
         if (data) {
           setData(data);
@@ -63,7 +66,7 @@ const LocationDirectory = ({setSelectedProduct}:any) => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [locale]);
   const card = data[0]?.locationsCard || [];
   return (
     <>
@@ -92,10 +95,10 @@ const LocationDirectory = ({setSelectedProduct}:any) => {
             transition={{ type: 'tween', duration: 1 }}
           >
             <div className="text-xl text-red-500 text-center"  style={{ fontSize: `${fontSize + 4}px` }}>
-              Around the Odisha
+             {locale === 'en' ?" Around the Odisha" : "ଓଡ଼ିଶାର ଚାରିପାଖରେ"}
             </div>
             <div className="text-2xl text-white font-bold md:text-4xl text-center"  style={{ fontSize: `${fontSize + 20}px` }}>
-              LOCATION DIRECTORY
+              {locale === 'en' ?"LOCATION DIRECTORY":'ସ୍ଥାନ ନିର୍ଦ୍ଦେଶିକା'}
             </div>
           </motion.div>
           <div className=" px-4 flex justify-center items-center w-full">

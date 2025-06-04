@@ -20,6 +20,10 @@ import { LayoutDashboardIcon } from 'lucide-react';
 import OFDCLOGO from '.././assets/Logo/OFDC Logo White.png';
 import { logoutController } from '../config/controller';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { setLocale } from '../config/redux/slice/languageSlice';
+
 // import { useAuth } from '../config/authContext';
 export const TopHeader = () => {
   const id = sessionStorage.getItem('userID');
@@ -27,6 +31,22 @@ export const TopHeader = () => {
   // const [isAdmin, setIsAdmin] = useState(false);
   // const [isLoggedIn, setisLoggedIn] = useState(false);
   const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontSize();
+  const dispatch = useDispatch();
+  const locale = useSelector((state: any) => state.language.locale);
+  const toggleLanguage = () => {
+  const newLocale = locale === 'en' ? 'or' : 'en';
+
+  const confirmed = window.confirm(
+    newLocale === 'en'
+      ? 'Are you sure you want to switch to English?'
+      : 'ଆପଣ ନିଶ୍ଚିତ ଭାବେ ଓଡ଼ିଆକୁ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?'
+  );
+
+  if (confirmed) {
+    dispatch(setLocale(newLocale));
+   
+  }
+};
   const handleLogout = async () => {
     try {
       const response = await logoutController({});
@@ -52,9 +72,9 @@ export const TopHeader = () => {
             className="hover:text-orange-500 cursor-pointer mr-4"
             onClick={() => navigate(paths.home)}
           >
-            Skip to main Content /
+            Skip to main Content 
           </span>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 mr-4 ">
             <button
               onClick={decreaseFontSize}
               className="hover:text-orange-500 cursor-pointer"
@@ -74,6 +94,12 @@ export const TopHeader = () => {
               A+
             </button>
           </div>
+          <div>
+            {' '}
+            <button onClick={toggleLanguage}>
+              {locale === 'en' ? 'ଓଡ଼ିଆ' : 'English'}
+            </button>
+          </div>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -82,7 +108,7 @@ export const TopHeader = () => {
             className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer"
           >
             <Home size={16} />
-            <h5>Home</h5>
+            <h5>{locale === 'en' ?"Home" : "ପ୍ରଧାନ ପୃଷ୍ଠା"}</h5>
           </Link>
           <span>/</span>
           {/* <div className="flex items-center space-x-1 hover:text-orange-500 cursor-pointer">
@@ -100,7 +126,7 @@ export const TopHeader = () => {
             className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
           >
             <Mail size={16} />
-            <span>Contact Us</span>
+            <span>{locale === 'en' ? "Contact Us" : "ଯୋଗାଯୋଗ କରନ୍ତୁ"}</span>
           </Link>
           <span>/</span>
           {id ? (
@@ -117,7 +143,7 @@ export const TopHeader = () => {
               className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
             >
               <UserPlus size={16} />
-              <span>Register</span>
+              <span>{locale === 'en' ?"Register": "ପଞ୍ଜିକରଣ କର"}</span>
             </Link>
           )}
           <span>/</span>
@@ -138,7 +164,7 @@ export const TopHeader = () => {
               className="flex hover:text-orange-500 cursor-pointer items-center space-x-1"
             >
               <User size={16} />
-              <span>Login</span>
+              <span>{locale === 'en' ?"Login":"ଲଗଇନ୍"}</span>
             </Link>
           )}
         </div>
@@ -265,12 +291,104 @@ const MainHeader = () => {
       ],
     },
   ];
+  const odiaMenuItems: MenuItem[] = [
+    {
+      label: 'ଆମ ବିଷୟରେ',
+      url: paths.aCursoryLook,
+      children: [
+        { label: ' A Cursory Look', url: paths.aCursoryLook },
+        { label: 'Our Vision & Mission', url: paths.ourVisionMission },
+        { label: 'Achievments', url: paths.achievments },
+        { label: 'Leadership', url: paths.leadership },
+        { label: 'Former Chairpersons', url: paths.formerChairpersons },
+        {
+          label: 'Former Managing Directors',
+          url: paths.formerManagingDirectors,
+        },
+        { label: "Who's Who", url: paths.whoIsWho },
+      ],
+    },
+    {
+      label: 'ଚଳଚ୍ଚିତ୍ର ଇକୋ ସିଷ୍ଟମ୍',
+      url: paths.flimEcoSystem,
+      children: [
+        { label: 'Film Policy', url: paths.flimEcoSystem },
+        { label: 'Policy Guidelines', url: paths.policyGuidelines },
+        { label: 'Odisha and Silver Screen', url: paths.odishaSilverScreen },
+      ],
+    },
+    {
+      label: 'ଅବସ୍ଥାନ ଡିରେକ୍ଟୋରୀ',
+      url: paths.locationDirectory,
+      children: [
+        { label: 'Location Category', url: paths.locationDirectory },
+        // { label: 'Book a Location', url: '#' },
+        {
+          label: 'Movie Shooting Permissions',
+          url: 'https://investodisha.gov.in/goswift/ServiceDetails.aspx?enc=bJ1nLSOgxhIyHc4RPqgFjV0+I1NqvCn1RkVLG8RuJGLPkDO/ZKgIlgUXr1Wvp8GGiMXct0/yz+1HrhWGwFvG/EHWAIByvuhiuflkzkRUa0cPjIJq5NVE65iyeTM/mWEl',
+          target: '_blank',
+        },
+      ],
+    },
+    {
+      label: 'ପ୍ରତିଭା ଡିରେକ୍ଟୋରୀ',
+      url: paths.talentlist,
+      children: [
+        { label: 'Talent List', url: paths.talentlist },
+        { label: 'Individual', url: '#' },
+        { label: 'Group', url: '#' },
+        { label: 'Agency', url: '#' },
+        { label: 'Register as Talent', url: '#' },
+      ],
+    },
+    {
+      label: 'ଓଡିଆ ଚଳଚ୍ଚିତ୍ର ଅଭିଲେଖାଗାର',
+      url: paths.archivesInsight,
+      children: [
+        { label: 'Archives Insight', url: paths.archivesInsight },
+        { label: 'Key Priorities', url: paths.keyPriorities },
+        { label: 'Vault of Preserved Films', url: paths.vaultofPreservedFilms },
+        { label: 'Odia Film Anthology', url: paths.odiaFilmAnthology },
+        { label: 'Archival Gallery', url: paths.archivalGallery },
+      ],
+    },
+    {
+      label: 'ଓଡିଶା ଆବିଷ୍କାର କରନ୍ତୁ',
+      url: paths.odishaIndiasBestKeptSecret,
+      children: [
+        {
+          label: "ODISHA : India's Best Kept Secret",
+          url: paths.odishaIndiasBestKeptSecret,
+        },
+        { label: 'Echoes of History', url: paths.echoesofhistory },
+        { label: 'Climate', url: paths.climate },
+        { label: 'Geographical Feature', url: paths.geographicalFeature },
+        { label: 'Cultural Legacy', url: paths.culturalLegacy },
+        { label: 'Major Festivals', url: paths.majorFestivals },
+        { label: 'Cinematic Heritage', url: paths.cinematicHeritage },
+        // { label: 'Explore Odisha', url: },
+      ],
+    },
+    {
+      label: 'କଲିଙ୍ଗ ଷ୍ଟୁଡିଓ',
+      url: paths.overview,
+      children: [
+        { label: 'Overview', url: paths.overview },
+        { label: 'Objectives', url: paths.objectives },
+        { label: 'Studios Past Glory', url: paths.studiosPastGlory },
+        { label: 'Board of Directors', url: paths.boardOfDirectors },
+        { label: "Who's Who", url: paths.whosWho },
+      ],
+    },
+  ];
   const [openSubMenus, setOpenSubMenus] = useState<number[]>([]);
   const toggleSubMenu = (index: number) => {
     setOpenSubMenus((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
+  const locale = useSelector((state: any) => state.language.locale);
+
   const id = sessionStorage.getItem('userID');
   //  const { user } = useAuth();
   return (
@@ -286,7 +404,7 @@ const MainHeader = () => {
               <img src={OFDCLOGO} alt="OFDC Logo" className="h-12  w-auto" />
               <div className="ml-3 hidden sm:block">
                 <h3 className="text-sm md:text-lg  font-semibold">
-                  Odisha Film Development Corporation
+                  {locale === 'en' ? 'Odisha Film Development Corporation' : 'ଓଡ଼ିଶା ଚଳଚିତ୍ର ଉନ୍ନୟନ ନିଗମ'}
                 </h3>
               </div>
             </Link>
@@ -306,7 +424,7 @@ const MainHeader = () => {
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center space-x-4 md:space-x-2">
-            {menuItems.map((item, index) => (
+            {(locale === 'en' ? menuItems : odiaMenuItems ).map((item, index) => (
               <div key={index} className="relative group">
                 <Link
                   to={item.url}
