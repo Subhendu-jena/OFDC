@@ -4,6 +4,7 @@ import { locationDirectory } from '../../config/strapiController';
 import LocationDetails from '../../components/locationCard/LocationDetails';
 import { Loader } from 'lucide-react';
 import { useFontSize } from '../../components/home/FontSizeContext';
+import { useSelector } from 'react-redux';
 
 const LocationCategory: React.FC = () => {
   // const featuredLocations = [
@@ -36,9 +37,11 @@ const LocationCategory: React.FC = () => {
   const [data, setData] = useState<any>([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { fontSize } = useFontSize();
+  const locale = useSelector((state: any) => state.language.locale);
+
   useEffect(() => {
     setLoading(true);
-    locationDirectory()
+    locationDirectory(locale)
       .then(({ data }) => {
         if (data) {
           setData(data);

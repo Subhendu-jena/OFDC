@@ -6,6 +6,7 @@ import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 // import curve from '../../../public/curve.png';
 import { useFontSize } from './FontSizeContext';
+import { useSelector } from 'react-redux';
 function MessageFromCm() {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -14,9 +15,11 @@ function MessageFromCm() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
   const { fontSize } = useFontSize();
+    const locale = useSelector((state: any) => state.language.locale);
+
   useEffect(() => {
     setLoading(true);
-    messageCM()
+    messageCM(locale)
       .then(({ data }) => {
         if (data) {
           setData(data);
@@ -28,7 +31,8 @@ function MessageFromCm() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [locale]);
+  console.log(data)
   return (
     <>
       {loading ? (
@@ -43,7 +47,7 @@ function MessageFromCm() {
               transition={{ type: 'tween', duration: 1 }}
             >
               <h1  style={{ fontSize: `${fontSize+14}px` }}>
-              Message From Hon'ble Chief Minister of Odisha
+            {  locale === 'en' ?"Message From Hon'ble Chief Minister of Odisha" : "ମାନ୍ୟବର ମୁଖ୍ୟମନ୍ତ୍ରୀଙ୍କ ବାର୍ତ୍ତା"}
             </h1>
             </motion.div>
 

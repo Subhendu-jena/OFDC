@@ -9,6 +9,7 @@ import { Loader } from 'lucide-react';
 import { useFontSize } from './FontSizeContext';
 import { ChevronRight } from 'lucide-react';
 import { ChevronLeft } from 'lucide-react';
+import { useSelector } from 'react-redux';
 function Testimonials() {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -99,9 +100,11 @@ const settings = {
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
+  const locale = useSelector((state: any) => state.language.locale);
+
   useEffect(() => {
     setLoading(true);
-    testimonialsApi()
+    testimonialsApi(locale)
       .then(({ data }) => {
         if (data) {
           setData(data);
@@ -113,7 +116,7 @@ const settings = {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [locale]);
   const card = data[0]?.testimonials || [];
   return (
     <>
@@ -131,13 +134,13 @@ const settings = {
               className=" text-red-500 font-semibold "
               style={{ fontSize: `${fontSize}px` }}
             >
-              Our Testimonials
+             {locale === 'en' ? "Our Testimonials" : "ଆମର ପ୍ରଶଂସାପତ୍ର"}
             </p>
             <p
               className=" text-gray-800 text-4xl font-bold"
               style={{ fontSize: `${fontSize + 20}px` }}
             >
-              WHAT THEY SAY
+             {locale === 'en' ? "WHAT THEY SAY" : "ସେମାନେ କଣ କୁହନ୍ତି"}
             </p>
           </motion.div>
           <div className="w-full p-2">

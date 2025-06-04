@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { latestNews } from '../../config/strapiController';
 import { useFontSize } from './FontSizeContext';
+import { useSelector } from 'react-redux';
 
 const LatestNews: React.FC = () => {
     const [data, setData] = useState<any>([]);
      const { fontSize } = useFontSize();
+       const locale = useSelector((state: any) => state.language.locale);
+
       useEffect(() => {
-        latestNews()
-          .then(({ data }) => {
+        latestNews(locale)
+          .then(({ data }: any) => {
             if (data) {
               setData(data);
             }
@@ -16,12 +19,13 @@ const LatestNews: React.FC = () => {
             console.error(error);
           })
          
-      }, []);
+      }, [locale]);
+     
   return (
     <>
       <button className=" w-full md:w-[15%] px-4  text-white font-bold bg-[#0B0035] text-lg"
        style={{ fontSize: `${fontSize}px` }}>
-        Latest News
+      { locale === 'en' ? "Latest News" : "ସର୍ବଶେଷ ଖବର"}
       </button>
       <div className="w-full md:w-[85%] justify-between h-10 flex flex-col ">
         <div className="bg-[#F47216] h-[80%] items-center flex overflow-hidden">

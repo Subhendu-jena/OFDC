@@ -9,19 +9,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import Toast from './variables/Toast.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorBoundaryy from './components/home/ErrorBoundary.tsx';
+import { Provider } from 'react-redux';
+import { store } from './config/redux/store.ts';
 // import { AuthProvider } from './config/authContext.tsx';
 createRoot(document.getElementById('root')!).render(
   
   <StrictMode>
     <ErrorBoundary FallbackComponent={ErrorBoundaryy}>
-      {/* <Provider store={store}> */}
+      <Provider store={store}>
         <Toast />
         {/* <AuthProvider> */}
           <FontSizeProvider>
             <App />
           </FontSizeProvider>
         {/* </AuthProvider> */}
-      {/* </Provider> */}
+      </Provider>
     </ErrorBoundary>
   </StrictMode>
 );

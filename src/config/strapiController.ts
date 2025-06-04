@@ -20,9 +20,9 @@ export const getAllManagingDirectors = async (): Promise<ApiResponse<[]>> => {
     uri: `/api/former-managing-directors?populate[formerManagingDirectors][populate]=*`,
   });
 };
-export const herosection = async (): Promise<ApiResponse<[]>> => {
+export const herosection = async (locale: string): Promise<ApiResponse<[]>> => {
   return strapiCaller({
-    uri: `/api/hero-sections?populate=*`,
+    uri: `/api/hero-sections?locale=${locale}&populate=*`,
   });
 };
 export const leaderships = async (): Promise<ApiResponse<[]>> => {
@@ -30,9 +30,9 @@ export const leaderships = async (): Promise<ApiResponse<[]>> => {
     uri: `/api/leaderships?populate[mainDescription]=*&populate[managingDirector][populate]=imageUrl&populate[chairman][populate]=imageUrl&populate[independentDirector][populate]=imageUrl&populate[nomineeDirectors][populate]=imageUrl`,
   });
 };
-export const latestNews = async (): Promise<ApiResponse<[]>> => {
+export const latestNews = async (locale: string): Promise<ApiResponse<[]>> => {
   return strapiCaller({
-    uri: `/api/latest-newss`,
+    uri: `/api/latest-newss?locale=${locale}&populate=*`,
   });
 };
 export const odishaStories = async (): Promise<ApiResponse<[]>> => {
@@ -40,9 +40,9 @@ export const odishaStories = async (): Promise<ApiResponse<[]>> => {
     uri: `/api/odisha-stories?populate=*`,
   });
 };
-export const locationDirectory = async (): Promise<ApiResponse<[]>> => {
+export const locationDirectory = async (locale: string): Promise<ApiResponse<[]>> => {
   return strapiCaller({
-    uri: `/api/location-directories?populate[locationsCard][populate]=*`,
+    uri: `/api/location-directories?locale=${locale}&populate[locationsCard][populate]=*`,
   });
 };
 export const talentDirectory = async (): Promise<ApiResponse<[]>> => {
@@ -55,14 +55,14 @@ export const equipmentDirectory = async (): Promise<ApiResponse<[]>> => {
     uri: `/api/equipment-directories?populate[equipmentDirectory][populate]=image`,
   });
 };
-export const testimonialsApi = async (): Promise<ApiResponse<[]>> => {
+export const testimonialsApi = async (locale: string): Promise<ApiResponse<[]>> => {
   return strapiCaller({
-    uri: `/api/testimonialss?populate[testimonials][populate]=image`,
+    uri: `/api/testimonialss?locale=${locale}&populate[testimonials][populate]=image`,
   });
 };
-export const messageCM = async (): Promise<ApiResponse<[]>> => {
+export const messageCM = async (locale: string): Promise<ApiResponse<[]>> => {
   return strapiCaller({
-    uri: `/api/cm-block?populate[cm][populate]=image`,
+    uri: `/api/cm-block?locale=${locale}&populate[cm][populate]=image`,
   });
 };
 

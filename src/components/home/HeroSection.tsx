@@ -8,15 +8,17 @@ import { herosection } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 import { useFontSize } from './FontSizeContext';
+import { useSelector } from 'react-redux';
 
 const HeroSection = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any[]>([]);
   const navigate = useNavigate();
   const { fontSize } = useFontSize();
+  const locale = useSelector((state: any) => state.language.locale);
   useEffect(() => {
     setLoading(true);
-    herosection()
+    herosection(locale)
       .then(({ data }) => {
         if (data) {
           setData(data);
@@ -28,8 +30,7 @@ const HeroSection = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
-
+  }, [locale]);
   const images = data[0]?.heroCaraousel || [];
 
   const settings = {
@@ -85,18 +86,17 @@ const HeroSection = () => {
                   >
                     BOOK FOR PREVIEW SCREEN
                   </button>
-                    <a
-                      href={STRAPI_API_BASE_URL + data[0]?.guidelines?.url}
-                      // download // tells the browser “download, don’t just navigate”
-                      target="_blank" // open in a new tab (optional, since download often auto-saves)
-                      rel="noopener noreferrer"
-                      download
-
-                    >
-                  <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white transition-all duration-300 cursor-pointer">
+                  <a
+                    href={STRAPI_API_BASE_URL + data[0]?.guidelines?.url}
+                    // download // tells the browser “download, don’t just navigate”
+                    target="_blank" // open in a new tab (optional, since download often auto-saves)
+                    rel="noopener noreferrer"
+                    download
+                  >
+                    <button className="px-6 py-3 font-bold rounded-xl bg-orange-500 hover:bg-orange-400 text-white transition-all duration-300 cursor-pointer">
                       LOCATION BOOKING GUIDELINE
-                  </button>
-                    </a>
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>

@@ -8,6 +8,7 @@ import { locationDirectory } from '../../config/strapiController';
 import { STRAPI_API_BASE_URL } from '../../config/httpClient';
 import { Loader } from 'lucide-react';
 import { useFontSize } from './FontSizeContext';
+import { useSelector } from 'react-redux';
 
 function LatestVideo() {
   const [loading, setLoading] = useState(false);
@@ -17,6 +18,8 @@ function LatestVideo() {
     triggerOnce: true,
     threshold: 0.3,
   });
+    const locale = useSelector((state: any) => state.language.locale);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -60,7 +63,7 @@ function LatestVideo() {
 
   useEffect(() => {
     setLoading(true);
-    locationDirectory()
+    locationDirectory(locale)
       .then(({ data }) => {
         if (data) {
           setData(data);
@@ -72,7 +75,7 @@ function LatestVideo() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [locale]);
   const card = data[0]?.locationsCard || [];
   return (
     <>
@@ -94,14 +97,14 @@ function LatestVideo() {
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ type: 'tween', duration: 1 }}
             >
-              LOCATION VIDEOS
+              {locale === 'en' ? "LOCATION VIDEOS" : "ସ୍ଥାନ ଭିଡିଓଗୁଡିକ" } 
             </motion.p>
             <motion.p
               initial={{ y: '10vh', opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ type: 'tween', duration: 1 }}
             >
-              LATEST SHOOTING
+              {locale === 'en' ? "LATEST SHOOTING" : "ଶେଷ ଶୁଟିଂ"}
             </motion.p>
           </div>
           <div className=" w-full flex md:flex-row flex-col">
